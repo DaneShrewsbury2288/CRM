@@ -24,4 +24,3 @@ Deployed:
 * Anthony Lam
 * Jonah Severn
 * Dane Shrewsbury
-* Created 2019
