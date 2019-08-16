@@ -3,15 +3,15 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 
-var InventorySchema = new Schema({
+var productSchema = new Schema({
     productId: {
         type: Number,
     },
-    name: {
+    productName: {
         type: String,
         required: true
     },
-    stock: {
+    quantity: {
         type: Number,
     },
     cost: {
@@ -23,6 +23,6 @@ var InventorySchema = new Schema({
 });
 
 
-var Inventory = mongoose.model("Inventory", InventorySchema);
+var Product = mongoose.model("Product", productSchema);
 
-module.exports = Inventory;
+module.exports = Product;
