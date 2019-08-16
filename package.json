@@ -1,34 +1,27 @@
 {
-  "name": "crm",
-  "version": "0.1.0",
-  "private": true,
+  "name": "CRM",
+  "version": "1.0.0",
+  "description": "This is a mock CRM using React and Material-UI for the UI. This project also uses MongoDB for DB storage.",
+  "main": "server.js",
   "dependencies": {
-    "@material-ui/core": "^4.3.1",
-    "@material-ui/icons": "^4.2.1",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "3.0.1",
-    "recharts": "^1.7.0"
+    "axios": "^0.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.9"
   },
+  "devDependencies": {},
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaneShrewsbury2288/CRM.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaneShrewsbury2288/CRM/issues"
+  },
+  "homepage": "https://github.com/DaneShrewsbury2288/CRM#readme"
 }

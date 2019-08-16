@@ -4,11 +4,19 @@ var Schema = mongoose.Schema;
 
 
 var UserSchema = new Schema({
-    UserId: {
+    userKey: {
         type: Number,
         required: true
     },
-    name: {
+    userId: {
+        type: Number,
+        required: true
+    },
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
         type: String,
         required: true
     },
@@ -16,8 +24,9 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
-    authentication: {
+    permissions: {
         type: Number,
+        required: true
     }
 });
 
