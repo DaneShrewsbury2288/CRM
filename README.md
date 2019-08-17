@@ -13,6 +13,7 @@ Deployed:
 * React
 * Javascript
 * Mongo
+* Mongoose
 * ES6
 * Bootstrap
 * Material UI

@@ -11,6 +11,8 @@ import LayersIcon from '@material-ui/icons/Layers';
 import BusinessIcon from '@material-ui/icons/Business';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import MoneyIcon from '@material-ui/icons/AttachMoney';
+import LockIcon from '@material-ui/icons/Lock';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 
 export const mainListItems = (
@@ -19,55 +21,120 @@ export const mainListItems = (
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Sales Team Daily" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Inventory" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BusinessIcon />
-      </ListItemIcon>
-      <ListItemText primary="B2B Orders" />
+      <a href="/">
+      <ListItemText primary="News Feed" />
+      </a>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
+      <a href="/SalesTeamDaily">
+      <ListItemText primary="Sales Team Daily" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+
+      <a href="/Inventory">
+      <ListItemText primary="Inventory" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <ShoppingCartIcon />
+      </ListItemIcon>
+      <a href="/ClientSmall">
+      <ListItemText primary="Client Small" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <PeopleIcon />
+      </ListItemIcon>
+      <a href="/ClientLarge">
+      <ListItemText primary="Client Large" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <BusinessIcon />
+      </ListItemIcon>
+      <a href="/Orders">
+      <ListItemText primary="Orders" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <MoneyIcon />
+      </ListItemIcon>
+      <a href="/PurchasingTool">
+      <ListItemText primary="Purchasing Tool" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <MoneyIcon />
+      </ListItemIcon>
+      <a href="/SalesAnalytics">
       <ListItemText primary="Sales Analytics" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <BarChartIcon />
+      </ListItemIcon>
+      <a href="/MapOfSales">
+      <ListItemText primary="Map Of Sales" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <PieChartIcon />
+      </ListItemIcon>
+      <a href="/Discover">
+      <ListItemText primary="Discover" />
+      </a>
     </ListItem>
   </div>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Manager+</ListSubheader>
+    <ListSubheader inset>Manager</ListSubheader>
     <ListItem button>
       <ListItemIcon>
-        <PieChartIcon />
+        <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Sales Team Analytics" />
+      <a href="/ManagerTaskAssignment">
+      <ListItemText primary="Manager Task Assignment" />
+      </a>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <MoneyIcon />
       </ListItemIcon>
-      <ListItemText primary="Purchasing" />
+      <a href="/SalesTeamAnalytics">
+      <ListItemText primary="Sales Team Analytics" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <PersonAddIcon />
+      </ListItemIcon>
+      <a href="/AddRemoveUsers">
+      <ListItemText primary="Add/Remove Users" />
+      </a>
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <LockIcon />
+      </ListItemIcon>
+      <a href="/Permissions">
+      <ListItemText primary="Permissions" />
+      </a>
     </ListItem>
   </div>
 );
