@@ -6,6 +6,7 @@ function Inventory() {
     return (
         <div>
             <Dashboard />
+            
         </div>
 
     )
