@@ -1,11 +1,11 @@
 import React from "react";
 import "./style.css";
-import Dashboard from "../../components/Dashboard";
+import DashboardClientSmall from "../../components/ClientSmall/DashboardClientSmall";
 
 function ClientSmall() {
     return (
         <div>
-            <Dashboard />
+            <DashboardClientSmall />
         </div>
 
     )

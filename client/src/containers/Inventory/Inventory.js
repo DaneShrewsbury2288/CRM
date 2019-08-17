@@ -1,11 +1,11 @@
 import React from "react";
 import "./style.css";
-import Dashboard from "../../components/Dashboard";
+import DashboardInventory from "../../components/Inventory/DashboardInventory";
 
 function Inventory() {
     return (
         <div>
-            <Dashboard />
+            <DashboardInventory />
             
         </div>
 
