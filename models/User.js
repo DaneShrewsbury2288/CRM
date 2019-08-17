@@ -1,12 +1,21 @@
 var mongoose = require("mongoose");
+
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
+    userKey: {
+        type: Number,
+        required: true
+    },
     userId: {
         type: Number,
         required: true
     },
-    name: {
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
         type: String,
         required: true
     },
@@ -14,8 +23,9 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
-    authentication: {
+    permissions: {
         type: Number,
+        required: true
     }
 });
 

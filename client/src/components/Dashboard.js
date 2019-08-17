@@ -17,7 +17,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -155,7 +154,6 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-          {/* A JSX comment */}
           </Grid>
         </Container>
       </main>

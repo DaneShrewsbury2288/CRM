@@ -37,6 +37,7 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
+
       <a href="/Inventory">
       <ListItemText primary="Inventory" />
       </a>
