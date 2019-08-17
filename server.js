@@ -1,8 +1,12 @@
 const express = require("express");
 
 const mongoose = require("mongoose");
+<<<<<<< HEAD
 const routes = require("./routes");
 const bcrypt = require("bcrypt");
+=======
+// const routes = require("./routes");
+>>>>>>> 6fe6663ae2813a44695b0b05f095084fa3b7ea23
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -14,7 +18,7 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
 // Add routes, both API and view
-app.use(routes);
+// app.use(routes);
 
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/crm");

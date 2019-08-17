@@ -1,5 +1,7 @@
+// Exporting an object containing all of our models
+
 module.exports = {
-    Order: require("./Order"),
-    Product: require("./Product"),
-    User: require("./User")
-};
+    Sales: require("./Sales"),
+    User: require("./User"),
+    Inventory: require("./Inventory")
+  };
