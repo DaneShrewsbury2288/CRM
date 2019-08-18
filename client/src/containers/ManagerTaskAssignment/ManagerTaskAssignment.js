@@ -5,7 +5,7 @@ import Dashboard from "../../components/Dashboard";
 function ManagerTaskAssignment() {
     return (
         <div>
-            <Dashboard />
+
         </div>
 
     )

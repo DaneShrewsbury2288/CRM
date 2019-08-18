@@ -5,7 +5,6 @@ import Dashboard from "../../components/Dashboard";
 function NewsFeed() {
     return (
         <div>
-            <Dashboard />
         </div>
 
     )

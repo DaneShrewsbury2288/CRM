@@ -5,7 +5,7 @@ import Dashboard from "../../components/Dashboard";
 function Discover() {
     return (
         <div>
-            <Dashboard />
+
         </div>
 
     )

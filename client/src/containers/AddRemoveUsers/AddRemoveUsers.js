@@ -5,7 +5,7 @@ import Dashboard from "../../components/Dashboard";
 function AddRemoveUsers() {
     return (
         <div>
-            <Dashboard />
+            
         </div>
 
     )

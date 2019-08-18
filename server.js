@@ -1,12 +1,8 @@
 const express = require("express");
 
 const mongoose = require("mongoose");
-<<<<<<< HEAD
 const routes = require("./routes");
 const bcrypt = require("bcrypt");
-=======
-// const routes = require("./routes");
->>>>>>> 6fe6663ae2813a44695b0b05f095084fa3b7ea23
 const app = express();
 const PORT = process.env.PORT || 3001;
 

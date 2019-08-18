@@ -5,7 +5,7 @@ import Dashboard from "../../components/Dashboard";
 function Permissions() {
     return (
         <div>
-            <Dashboard />
+
         </div>
 
     )

@@ -5,7 +5,6 @@ import DashboardTwo from "../../components/DashboardTwo";
 function SalesAnalytics() {
     return (
         <div>
-            <DashboardTwo />
         </div>
 
     )

@@ -5,7 +5,7 @@ import Dashboard from "../../components/Dashboard";
 function ClientSmall() {
     return (
         <div>
-            <Dashboard />
+
         </div>
 
     )

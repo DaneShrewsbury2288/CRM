@@ -5,7 +5,6 @@ import Dashboard from "../../components/Dashboard";
 function SalesTeamDaily() {
     return (
         <div>
-            <Dashboard />
         </div>
 
     )

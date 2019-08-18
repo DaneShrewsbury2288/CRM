@@ -5,7 +5,6 @@ import Dashboard from "../../components/Dashboard";
 function MapOfSales() {
     return (
         <div>
-            <Dashboard />
         </div>
 
     )

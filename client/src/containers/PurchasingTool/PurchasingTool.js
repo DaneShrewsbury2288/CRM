@@ -5,7 +5,6 @@ import Dashboard from "../../components/Dashboard";
 function PurchasingTool() {
     return (
         <div>
-            <Dashboard />
         </div>
 
     )

@@ -1,0 +1,34 @@
+{
+  "name": "crm",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.3.0"
+  },
+  "description": "CRM",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "author": "Dane Shrewsbury",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.1.2",
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.3.2",
+    "@material-ui/icons": "^4.2.1",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.19.1",
+    "if-env": "^1.0.4",
+    "material-ui": "^0.20.2",
+    "mongoose": "^5.6.9",
+    "react-scripts": "^3.1.1"
+  }
+}
