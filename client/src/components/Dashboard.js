@@ -147,9 +147,9 @@ export default function Dashboard(props) {
           </IconButton>
         </div>
         <Divider />
-        {/* <List>
-          <ListItems permissions="11101011000111"/>
-        </List> */}
+        <List>
+          <ListItems permissions="11111111111111"/>
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
