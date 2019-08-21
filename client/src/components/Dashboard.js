@@ -17,7 +17,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ListItems from './listItems';
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -98,80 +98,67 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-class Dashboard extends Component {
+export default function Dashboard(props) {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  //  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); 
 
-  constructor(props) {
-    super(props)
-    this.classes = useStyles();
+  return (
+    <div className={classes.root}>
 
-    this.state = {
-      open: true,
-      permissions: "11111111111111"
-    }
-    this.handleDrawerOpen = () => {
-      this.setState({open: true});
-    };
-    this.handleDrawerClose = () => {
-      this.setState({open: false});
-    };
-  }
-
-
-  /* const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); */
-  render() {
-
-    return (
-      <div className={this.classes.root}>
-        <CssBaseline />
-        <AppBar position="absolute" className={clsx(this.classes.appBar, this.state.open && this.classes.appBarShift)}>
-          <Toolbar className={this.classes.toolbar}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={this.andleDrawerOpen}
-              className={clsx(this.classes.menuButton, this.state.open && this.classes.menuButtonHidden)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography component="h1" variant="h6" color="inherit" noWrap className={this.classes.title}>
-              DJAC Brewing Inc.
+      <CssBaseline />
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+            DJAC Brewing Inc.
           </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={0} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(this.classes.drawerPaper, !this.state.open && this.classes.drawerPaperClose),
-          }}
-          open={this.state.open}
-        >
-          <div className={this.classes.toolbarIcon}>
-            <IconButton onClick={this.handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            <ListItems permissions={ this.state.permissions}/>
-          </List>
-          <Divider />
-        </Drawer>
-        <main className={this.classes.content}>
-          <div className={this.classes.appBarSpacer} />
-          <Container maxWidth="lg" className={this.classes.container}>
-            <Grid container spacing={3}>
-            </Grid>
-          </Container>
-        </main>
-      </div>
-    );
-  }
+          <IconButton color="inherit">
+            <Badge badgeContent={0} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+        }}
+        open={open}
+      >
+        <div className={classes.toolbarIcon}>
+          <IconButton onClick={handleDrawerClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>{mainListItems}</List>
+        <Divider />
+        <List>{secondaryListItems}</List>
+      </Drawer>
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={3}>
+            {props.children}
+          </Grid>
+        </Container>
+      </main>
+    </div>
+  );
 }
-
-export default Dashboard;
