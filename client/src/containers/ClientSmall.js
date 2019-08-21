@@ -1,14 +1,15 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function Orders() {
+
+function ClientSmall() {
     return (
         <div>
-          <PageTitle title="Orders"/>
+            <PageTitle title="Client Small" />
         </div>
 
     )
 };
 
 
-export default Orders;
+export default ClientSmall;

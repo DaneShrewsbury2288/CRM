@@ -1,14 +1,14 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function Orders() {
+function ManagerTaskAssignment() {
     return (
         <div>
-          <PageTitle title="Orders"/>
+            <PageTitle title="Manager Task Assignment"/>
         </div>
 
     )
 };
 
 
-export default Orders;
+export default ManagerTaskAssignment;

@@ -1,14 +1,14 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function Orders() {
+function Discover() {
     return (
         <div>
-          <PageTitle title="Orders"/>
+            <PageTitle title="Discover"/>
         </div>
 
     )
 };
 
 
-export default Orders;
+export default Discover;

@@ -1,14 +1,14 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function Orders() {
+function Permissions() {
     return (
         <div>
-          <PageTitle title="Orders"/>
+         <PageTitle title="Permissions"/>
         </div>
 
     )
 };
 
 
-export default Orders;
+export default Permissions;

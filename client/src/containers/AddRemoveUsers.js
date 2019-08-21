@@ -1,14 +1,13 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function Orders() {
+function AddRemoveUsers() {
     return (
         <div>
-          <PageTitle title="Orders"/>
+            <PageTitle title="Inventory" />
         </div>
-
     )
 };
 
 
-export default Orders;
+export default AddRemoveUsers;
