@@ -151,7 +151,7 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>
-          <ListItems permissions="10101111111"/>
+          <ListItems permissions="01111111000111"/>
         </List>
       </Drawer>
       <main className={classes.content}>

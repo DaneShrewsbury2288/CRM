@@ -103,9 +103,6 @@ class ListItems extends Component {
         permissionsArray.push(i);
         console.log("pushed");
       }
-      else {
-        console.log("nothing pushed");
-      }
     }
     console.log(permissionsArray);
     this.setState({ load: permissionsArray }, () => {
