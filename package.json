@@ -18,7 +18,7 @@
   "author": "Dane Shrewsbury",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^4.1.1",
+    "concurrently": "^4.1.2",
     "nodemon": "^1.19.1"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "material-ui": "^0.20.2",
     "mongoose": "^5.6.9",
     "mui-datatables": "^2.8.1",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "^3.1.1"
   }
 }
