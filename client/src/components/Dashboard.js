@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -147,9 +147,9 @@ export default function Dashboard(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        {/* <List>
+          <ListItems permissions="11101011000111"/>
+        </List> */}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
