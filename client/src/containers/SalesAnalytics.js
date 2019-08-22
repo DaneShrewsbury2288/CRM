@@ -4,7 +4,13 @@ import PageTitle from "../components/PageTitle";
 function SalesAnalytics() {
     // profit per product
         // cost of product
+            // Product.findByID({
+            //     cost
+            // }) => { _id: objectID, Product.cost: cost }
         // price product is sold for
+            // Product.findByID({
+            //     price
+            // }) => { _id: objectID, Product.price: price }
         // length of time not sold
             // cost of holding product / total # of products
         // cost of shipping - shipstation connection?
@@ -18,7 +24,8 @@ function SalesAnalytics() {
                 //         $lt: ISODate("2010-05-01T00:00:00.000Z")
                 //     }
                 // })
-                // => { "_id" : ObjectId("4c0791e2b9ec877893f3363b"), "name" : "example", "created_at" : "Sun May 30 2010 00:00:00 GMT+0300 (EEST)" }
+                // => { "_id" : objectID), "purchases.name" : "product name", "purchase.quantity" : "amount purchased within time period" }
+                    // save each product to a variable and add to total for each purchase quantity
             // product id
             // product profit
             // product quantity

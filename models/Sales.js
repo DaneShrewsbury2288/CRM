@@ -31,13 +31,14 @@ var SalesSchema = new Schema({
     }),
     created_at: {
         type: Date,
-        required: true,
+        required: true
     },
     total: {
         type: Number,
     },
     salesAgent: {
         type: String,
+        required: true
     }
     // customer zip code
     // cost of storing inventory - quickbooks or ecomdash connection?
