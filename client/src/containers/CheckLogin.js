@@ -1,14 +1,14 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function AddRemoveUsers() {
+function CheckLogin() {
     return (
         <div>
-            <PageTitle title="Inventory" />
+            <PageTitle title="Please Login to Continue" />
             
         </div>
     )
 };
 
 
-export default AddRemoveUsers;
+export default CheckLogin;

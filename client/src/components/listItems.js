@@ -96,18 +96,14 @@ class ListItems extends Component {
   }
 
   componentDidMount() {
-    console.log("mounted")
     var permissions = this.state.permissions.split('').reverse()
     var permissionsArray = []
     for (var i = 0; i < permissions.length; i++) {
       if (parseInt(permissions[i])) {
         permissionsArray.push(i);
-        console.log("pushed");
       }
     }
-    console.log(permissionsArray);
     this.setState({ load: permissionsArray }, () => {
-
     });
   }
 
@@ -115,7 +111,10 @@ class ListItems extends Component {
     return (
       <div>
         {this.state.load.map(permission => (
-          <Link to={`${this.state.icons[permission].href}`}>
+          <Link 
+          to={`${this.state.icons[permission].href}`}
+          key={`${this.state.icons[permission].href}`}
+          >
             <ListItem button>
               <ListItemIcon>
                 {this.state.icons[permission].icon}
