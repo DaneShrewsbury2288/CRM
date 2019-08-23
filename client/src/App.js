@@ -1,10 +1,15 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect
+} from "react-router-dom";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
+import Login from "./containers/Login";
 
-
-
+// import CheckLogin from "./containers/CheckLogin";
 import NewsFeed from "./containers/NewsFeed";
 import Inventory from "./containers/Inventory";
 import ClientSmall from "./containers/ClientSmall";
@@ -84,24 +89,43 @@ const routes = [
     },
 ];
 
+
 class App extends Component {
+
+    state = {
+        redirect: false
+      }
+      setRedirect = () => {
+        this.setState({
+          redirect: true
+        })
+      }
+      renderRedirect = () => {
+        if (this.state.redirect) {
+          return <Redirect to='/target' />
+        }
+      }
+
     render() {
         return (
             <div>
                 <Router>
-                    <div>
+                    <Switch>
+                        <Route path="/Login" component={Login} />
                         <Dashboard>
                             <Switch>
                                 {routes.map(({ path, component: C }) => (
                                     <Route
                                         exact path={path}
+                                        key={path}
                                         render={(props) => <C {...props} />}
                                     />
                                 ))}
-                                <Route component={NoMatch} />
+                                }
+                                    <Route component={NoMatch} />
                             </Switch>
                         </Dashboard>
-                    </div>
+                    </Switch>
                 </Router>
             </div>
         )
@@ -109,4 +133,3 @@ class App extends Component {
 };
 
 export default App;
-
