@@ -12,6 +12,10 @@ const TaskSchema = new Schema({
         type: Number,
         required: true
     },
+    teamMemberName: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true
