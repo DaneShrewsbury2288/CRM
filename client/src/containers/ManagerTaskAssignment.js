@@ -6,7 +6,6 @@ function ManagerTaskAssignment() {
         <div>
             <PageTitle title="Manager Task Assignment"/>
         </div>
-
     )
 };
 
