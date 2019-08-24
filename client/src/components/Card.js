@@ -23,25 +23,24 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function SimpleCard(clientName, salesPerson, clientDescription, link) {
   const classes = useStyles();
-//   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} id="task-card">
       <CardContent>
         <Typography variant="h5" component="h2">
-          Client Name
+          {clientName}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          Salesperson
+          {salesPerson}
         </Typography>
         <Typography variant="body2" component="p">
-          Information about the client goes here
+          {clientDescription}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">{link}</Button>
       </CardActions>
     </Card>
   );

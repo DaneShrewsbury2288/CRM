@@ -8,6 +8,10 @@ const TaskSchema = new Schema({
         type: String,
         required: true
     },
+    client: {
+        type: String,
+        required: true
+    },
     teamMemberID: {
         type: Number,
         required: true

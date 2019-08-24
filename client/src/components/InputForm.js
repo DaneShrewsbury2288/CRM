@@ -147,7 +147,7 @@ export default function OutlinedTextFields() {
       />
       <TextField
         id="outlined-full-width"
-        label="Kind of business"
+        label="Industry"
         style={{ margin: 8 }}
         placeholder="What kind of business is this?"
         fullWidth
