@@ -12,6 +12,21 @@ const TaskSchema = new Schema({
         type: String,
         required: true
     },
+    clientEmail: {
+        type: String,
+        required: true
+    },
+    clientPhone: {
+        type: Number,
+        required: true
+    },
+    potential: {
+        type: Number,
+        required: true
+    },
+    industry: {
+        type: String
+    },
     teamMemberID: {
         type: Number,
         required: true

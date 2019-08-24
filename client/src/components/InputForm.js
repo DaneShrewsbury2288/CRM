@@ -1,27 +1,8 @@
 import React from 'react';
-import clsx from 'clsx';
+// import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -40,18 +21,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function OutlinedTextFields() {
+export default function OutlinedTextFields(client, agent, clientEmail, clientPhone, description, potentialValue, industry) {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'USD',
-  });
+  // const [values, setValues] = React.useState({
+  //   name: 'Cat in the Hat',
+  //   age: '',
+  //   multiline: 'Controlled'
+  // });
 
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
-  };
+  // const handleChange = name => event => {
+  //   setValues({ ...values, [name]: event.target.value });
+  // };
 
   return (
     <form className={classes.container} noValidate autoComplete="off">
@@ -61,8 +41,7 @@ export default function OutlinedTextFields() {
         label="Client Name"
         placeholder="Client Name"
         className={classes.textField}
-        value={values.name}
-        onChange={handleChange('name')}
+        value={client}
         margin="normal"
         variant="outlined"
       />
@@ -72,15 +51,16 @@ export default function OutlinedTextFields() {
         label="Sales Agent"
         placeholder="Assigned Agent Name"
         className={classes.textField}
-        value={values.name}
-        onChange={handleChange('name')}
+        value={agent}
         margin="normal"
         variant="outlined"
       />
       <TextField
+        required
         id="outlined-email-input"
         label="Email"
         className={classes.textField}
+        value={clientEmail}
         type="email"
         name="email"
         autoComplete="email"
@@ -88,10 +68,10 @@ export default function OutlinedTextFields() {
         variant="outlined"
       />
       <TextField
+        required
         id="outlined-number"
         label="Phone Number"
-        value={values.age}
-        onChange={handleChange('age')}
+        value={clientPhone}
         type="number"
         className={classes.textField}
         InputLabelProps={{
@@ -101,42 +81,22 @@ export default function OutlinedTextFields() {
         variant="outlined"
       />
       <TextField
+        required
         id="outlined-multiline-static"
         label="Description"
         multiline
         rows="4"
-        defaultValue="User would input description of client business"
+        defaultValue={description}
         className={classes.textField}
+        value={description}
         margin="normal"
         variant="outlined"
       />
       <TextField
-        id="outlined-select-currency"
-        select
-        label="Select"
-        className={classes.textField}
-        value={values.currency}
-        onChange={handleChange('currency')}
-        SelectProps={{
-          MenuProps: {
-            className: classes.menu,
-          },
-        }}
-        helperText="Please select your currency"
-        margin="normal"
-        variant="outlined"
-      >
-        {currencies.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
+        required
         id="outlined-number"
         label="Potential Value"
-        value={values.age}
-        onChange={handleChange('age')}
+        value={potentialValue}
         type="number"
         className={classes.textField}
         InputLabelProps={{
@@ -150,6 +110,7 @@ export default function OutlinedTextFields() {
         label="Industry"
         style={{ margin: 8 }}
         placeholder="What kind of business is this?"
+        value={industry}
         fullWidth
         margin="normal"
         variant="outlined"
