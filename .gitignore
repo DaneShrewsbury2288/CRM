@@ -2,4 +2,6 @@
 
 # dependencies
 node_modules
-client/src/.DS_Store
+.DS_Store
+build
+
