@@ -2,10 +2,11 @@ const express = require("express");
 
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const routes = require("./routes");
+require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 const passport = require("passport");
-const routes = require("./routes");
 
 // Define middleware here
 app.use(
@@ -21,8 +22,8 @@ if (process.env.NODE_ENV === "production") {
 // Add routes, both API and view
 app.use(routes);
 
-// Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/crm", { useNewUrlParser: true });
+// mongoose connection
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
 
 // Passport config
