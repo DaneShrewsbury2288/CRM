@@ -67,11 +67,14 @@ class Login extends Component {
                                     id="userId"
                                     type="text"
                                     className={classnames("", {
-                                        invalid: errors.userId
+                                        invalid: errors.userId || errors.userIdnotfound
                                     })}
                                 />
                                 <label htmlFor="userId">User ID</label>
-                                <span className="red-text">{errors.userId}</span>
+                                <span className="red-text">
+                                    {errors.userId}
+                                    {errors.userIdnotfound}
+                                </span>
                             </div>
                             <div className="input-field col s12">
                                 <input
