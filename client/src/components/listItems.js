@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
@@ -14,127 +14,118 @@ import MoneyIcon from '@material-ui/icons/AttachMoney';
 import LockIcon from '@material-ui/icons/Lock';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
+class ListItems extends Component {
 
-export const mainListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <a href="/">
-      <ListItemText primary="News Feed" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <a href="/SalesTeamDaily">
-      <ListItemText primary="Sales Team Daily" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
+  state = {
+    permissions: this.props.permissions,
+    load: [0],
+    icons: [
+      {
+        title: "News Feed",
+        href: "/",
+        icon: <LayersIcon />
+      },
+      {
+        title: "Sales Team Daily",
+        href: "/salesteamdaily",
+        icon: <BarChartIcon />
+      },
+      {
+        title: "Inventory",
+        href: "/inventory",
+        icon: <DashboardIcon />
+      },
+      {
+        title: "Client Small",
+        href: "/clientsmall",
+        icon: <ShoppingCartIcon />
+      },
+      {
+        title: "Client Large",
+        href: "/clientlarge",
+        icon: <PeopleIcon />
+      },
+      {
+        title: "Orders",
+        href: "/orders",
+        icon: <BusinessIcon />
+      },
+      {
+        title: "Purchasing Tool",
+        href: "/purchasingtool",
+        icon: <MoneyIcon />
+      },
+      {
+        title: "Sales Analytics",
+        href: "/salesanalytics",
+        icon: <MoneyIcon />
+      },
+      {
+        title: "Map of Sales",
+        href: "/mapofsales",
+        icon: <BarChartIcon />
+      },
+      {
+        title: "Discover",
+        href: "/discover",
+        icon: <PieChartIcon />
+      },
+      {
+        title: "Manager Task Assignment",
+        href: "/managertaskassignment",
+        icon: <BarChartIcon />
+      },
+      {
+        title: "Sales Team Analytics",
+        href: "/salesteamanalytics",
+        icon: <MoneyIcon />
+      },
+      {
+        title: "Add/Remove Users",
+        href: "/addremoveusers",
+        icon: <PersonAddIcon />
+      },
+      {
+        title: "Permissions",
+        href: "/Permissions",
+        icon: <LockIcon />
+      }
 
-      <a href="/Inventory">
-      <ListItemText primary="Inventory" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <a href="/ClientSmall">
-      <ListItemText primary="Client Small" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <a href="/ClientLarge">
-      <ListItemText primary="Client Large" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BusinessIcon />
-      </ListItemIcon>
-      <a href="/Orders">
-      <ListItemText primary="Orders" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <MoneyIcon />
-      </ListItemIcon>
-      <a href="/PurchasingTool">
-      <ListItemText primary="Purchasing Tool" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <MoneyIcon />
-      </ListItemIcon>
-      <a href="/SalesAnalytics">
-      <ListItemText primary="Sales Analytics" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <a href="/MapOfSales">
-      <ListItemText primary="Map Of Sales" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PieChartIcon />
-      </ListItemIcon>
-      <a href="/Discover">
-      <ListItemText primary="Discover" />
-      </a>
-    </ListItem>
-  </div>
-);
+    ]
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Manager</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <a href="/ManagerTaskAssignment">
-      <ListItemText primary="Manager Task Assignment" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <MoneyIcon />
-      </ListItemIcon>
-      <a href="/SalesTeamAnalytics">
-      <ListItemText primary="Sales Team Analytics" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PersonAddIcon />
-      </ListItemIcon>
-      <a href="/AddRemoveUsers">
-      <ListItemText primary="Add/Remove Users" />
-      </a>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LockIcon />
-      </ListItemIcon>
-      <a href="/Permissions">
-      <ListItemText primary="Permissions" />
-      </a>
-    </ListItem>
-  </div>
-);
+  }
+
+  componentDidMount() {
+    var permissions = this.state.permissions.split('').reverse()
+    var permissionsArray = []
+    for (var i = 0; i < permissions.length; i++) {
+      if (parseInt(permissions[i])) {
+        permissionsArray.push(i);
+      }
+    }
+    this.setState({ load: permissionsArray }, () => {
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.load.map(permission => (
+          <Link 
+          to={`${this.state.icons[permission].href}`}
+          key={`${this.state.icons[permission].href}`}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                {this.state.icons[permission].icon}
+              </ListItemIcon>
+              <ListItemText primary={`${this.state.icons[permission].title}`} />
+            </ListItem>
+          </Link>
+        ))}
+      </div>
+    )
+  }
+}
+
+export default ListItems;

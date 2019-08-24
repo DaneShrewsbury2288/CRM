@@ -2,8 +2,9 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var SalesSchema = new Schema({
-    saleId: {
-        type: Number,
+    _id: {
+        type: String,
+        require: true
     },
     customerId: {
         type: Number,
@@ -26,8 +27,9 @@ var SalesSchema = new Schema({
             type: Number,
             required: true
         }
+        // price per item
     }),
-    date: {
+    created_at: {
         type: Date,
         required: true,
     },
@@ -37,7 +39,8 @@ var SalesSchema = new Schema({
     salesAgent: {
         type: String,
     }
-
+    // customer zip code
+    // cost of storing inventory - quickbooks or ecomdash connection?
 });
 
 

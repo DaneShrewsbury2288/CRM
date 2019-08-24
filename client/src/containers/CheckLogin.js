@@ -1,14 +1,14 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function Orders() {
+function CheckLogin() {
     return (
         <div>
-          <PageTitle title="Orders"/>
+            <PageTitle title="Please Login to Continue" />
+            
         </div>
-
     )
 };
 
 
-export default Orders;
+export default CheckLogin;

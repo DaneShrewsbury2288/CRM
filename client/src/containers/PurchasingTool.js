@@ -1,14 +1,14 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function Orders() {
+function PurchasingTool() {
     return (
         <div>
-          <PageTitle title="Orders"/>
+         <PageTitle title="Purchasing Tool"/>
         </div>
 
     )
 };
 
 
-export default Orders;
+export default PurchasingTool;

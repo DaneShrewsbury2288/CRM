@@ -18,17 +18,21 @@
   "author": "Dane Shrewsbury",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^4.1.1",
+    "concurrently": "^4.1.2",
     "nodemon": "^1.19.1"
   },
   "dependencies": {
     "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.2.1",
+    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "http-proxy-middleware": "^0.19.1",
     "if-env": "^1.0.4",
     "material-ui": "^0.20.2",
     "mongoose": "^5.6.9",
+    "mui-datatables": "^2.8.1",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "^3.1.1"
   }
 }

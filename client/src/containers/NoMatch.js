@@ -1,14 +1,14 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 
-function Orders() {
+function NoMatch() {
     return (
         <div>
-          <PageTitle title="Orders"/>
+         <PageTitle title="No Match"/>
         </div>
 
     )
 };
 
 
-export default Orders;
+export default NoMatch;
