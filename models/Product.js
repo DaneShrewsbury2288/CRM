@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var productSchema = new Schema({
     productId: {
         type: Number,
+        required: true
     },
     productName: {
         type: String,
@@ -13,13 +14,21 @@ var productSchema = new Schema({
     },
     quantity: {
         type: Number,
+        required: true
     },
     cost: {
         type: Number,
+        required: true
     },
     price: {
         type: Number,
-    }
+        required: true
+    },
+    created_at: {
+        type: Date,
+        required: true
+    },
+
 });
 
 

@@ -31,7 +31,7 @@ var SalesSchema = new Schema({
     }),
     created_at: {
         type: Date,
-        required: true,
+        required: true
     },
     total: {
         type: Number,
