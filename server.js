@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
+const path = require('path')
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
