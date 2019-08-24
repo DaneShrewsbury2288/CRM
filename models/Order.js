@@ -19,7 +19,7 @@ var orderSchema = new Schema({
         {
             reference: {
                 type: Schema.Types.ObjectId,
-                ref: "Note"
+                ref: "Product"
             },
             productId: {
                 type: Number,

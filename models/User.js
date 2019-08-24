@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-var bcrypt = require('bcryptjs');
 
 var Schema = mongoose.Schema;
 
@@ -13,12 +12,10 @@ var UserSchema = new Schema({
         required: true
     },
     firstName: {
-        type: String,
-        required: true
+        type: String
     },
     lastName: {
-        type: String,
-        required: true
+        type: String
     },
     password: {
         type: String,
@@ -26,7 +23,7 @@ var UserSchema = new Schema({
     },
     permissions: {
         type: Number,
-        required: true
+        default: 7
     }
 });
 
@@ -34,3 +31,4 @@ var UserSchema = new Schema({
 var User = mongoose.model("User", UserSchema);
 
 module.exports = User;
+

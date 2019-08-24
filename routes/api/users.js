@@ -3,8 +3,13 @@ const usersController = require("../../controllers/usersController");
 
 // Matches with "/api/books"
 router.route("/")
-  .get(usersController.findAll)
+  .get(usersController.findAll);
+
+router.route("/create")
   .post(usersController.create);
+
+router.route("/login")
+  .post(usersController.login);
 
 // Matches with "/api/books/:id"
 router
@@ -14,3 +19,4 @@ router
   .delete(usersController.remove);
 
 module.exports = router;
+
