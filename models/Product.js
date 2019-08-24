@@ -28,10 +28,7 @@ var productSchema = new Schema({
         type: Date,
         required: true
     },
-    shipping: {
-        type: Number,
-        required: true
-    }
+
 });
 
 
