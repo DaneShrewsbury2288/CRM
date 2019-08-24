@@ -33,7 +33,3 @@ require("./config/passport")(passport);
 app.listen(PORT, function () {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
-
-function permissionConverter(num) {
-    return num.toString(2)
-}

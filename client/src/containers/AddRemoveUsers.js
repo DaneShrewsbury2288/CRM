@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../actions/authActions";
+import classnames from "classnames";
 import PageTitle from "../components/PageTitle";
 
 
@@ -15,11 +20,22 @@ class AddRemoveUsers extends Component {
             errors: {}
         };
     }
+
+    getDerivedStateFromProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
+
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+
     onSubmit = e => {
         e.preventDefault();
+
         const newUser = {
             userKey: this.state.userKey,
             userId: this.state.userId,
@@ -28,8 +44,10 @@ class AddRemoveUsers extends Component {
             password: this.state.password,
             password2: this.state.password2
         };
-        console.log(newUser);
+
+        this.props.registerUser(newUser, this.props.history);
     };
+
     render() {
         const { errors } = this.state;
         return (
@@ -45,30 +63,42 @@ class AddRemoveUsers extends Component {
                                     onChange={this.onChange}
                                     value={this.state.userKey}
                                     error={errors.userKey}
-                                    id="email"
-                                    type="email"
+                                    id="userKey"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.userKey
+                                    })}
                                 />
-                                <label htmlFor="email">User Key</label>
+                                <label htmlFor="userKey">User Key</label>
+                                <span className="red-text">{errors.userKey}</span>
                             </div>
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
                                     value={this.state.userId}
                                     error={errors.userId}
-                                    id="email"
-                                    type="email"
+                                    id="userId"
+                                    type="text"
+                                    className={classnames("", {
+                                        invalid: errors.userId
+                                    })}
                                 />
-                                <label htmlFor="email">User ID</label>
+                                <label htmlFor="userId">User ID</label>
+                                <span className="red-text">{errors.userId}</span>
                             </div>
                             <div className="input-field col s12">
                                 <input
                                     onChange={this.onChange}
-                                    value={this.state.fistName}
-                                    error={errors.fistName}
-                                    id="fistName"
+                                    value={this.state.firstName}
+                                    error={errors.firstName}
+                                    id="firstName"
                                     type="text"
+                                    className={classnames("", {
+                                        invalid: errors.firstName
+                                    })}
                                 />
-                                <label htmlFor="name">First Name</label>
+                                <label htmlFor="firstName">First Name</label>
+                                <span className="red-text">{errors.firstName}</span>
                             </div>
                             <div className="input-field col s12">
                                 <input
@@ -77,8 +107,12 @@ class AddRemoveUsers extends Component {
                                     error={errors.lastName}
                                     id="lastName"
                                     type="text"
+                                    className={classnames("", {
+                                        invalid: errors.lastName
+                                    })}
                                 />
-                                <label htmlFor="name">Last Name</label>
+                                <label htmlFor="lastName">Last Name</label>
+                                <span className="red-text">{errors.lastName}</span>
                             </div>
                             <div className="input-field col s12">
                                 <input
@@ -87,8 +121,12 @@ class AddRemoveUsers extends Component {
                                     error={errors.password}
                                     id="password"
                                     type="password"
+                                    className={classnames("", {
+                                        invalid: errors.password
+                                    })}
                                 />
                                 <label htmlFor="password">Password</label>
+                                <span className="red-text">{errors.password}</span>
                             </div>
                             <div className="input-field col s12">
                                 <input
@@ -97,8 +135,12 @@ class AddRemoveUsers extends Component {
                                     error={errors.password2}
                                     id="password2"
                                     type="password"
+                                    className={classnames("", {
+                                        invalid: errors.password2
+                                    })}
                                 />
                                 <label htmlFor="password2">Confirm Password</label>
+                                <span className="red-text">{errors.password2}</span>
                             </div>
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                                 <button
@@ -121,4 +163,18 @@ class AddRemoveUsers extends Component {
         );
     }
 }
-export default AddRemoveUsers;
+
+AddRemoveUsers.propTypes = {
+    registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps,
+    { registerUser }
+)(withRouter(AddRemoveUsers));
