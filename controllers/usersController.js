@@ -32,7 +32,7 @@ module.exports = {
       .findOne({ userId: req.body.userId }).then(user => {
         //if user with this userId exists, send error - otherwise create new user
         if (user) {
-          return res.status(400).json({ email: "User ID already exists" });
+          return res.status(400).json({ userId: "User ID already exists" });
         } else {
           const newUser = new User({
             firstName: req.body.firstName,

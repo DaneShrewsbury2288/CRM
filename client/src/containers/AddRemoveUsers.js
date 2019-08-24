@@ -21,7 +21,7 @@ class AddRemoveUsers extends Component {
         };
     }
 
-    getDerivedStateFromProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({
                 errors: nextProps.errors
@@ -51,112 +51,114 @@ class AddRemoveUsers extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div className="container">
+            <div>
                 <PageTitle title="Add or Remove Users" />
-                <div className="row">
-                    <div className="col s8 offset-s2">
-                        <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                        </div>
-                        <form noValidate onSubmit={this.onSubmit}>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.userKey}
-                                    error={errors.userKey}
-                                    id="userKey"
-                                    type="text"
-                                    className={classnames("", {
-                                        invalid: errors.userKey
-                                    })}
-                                />
-                                <label htmlFor="userKey">User Key</label>
-                                <span className="red-text">{errors.userKey}</span>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.userId}
-                                    error={errors.userId}
-                                    id="userId"
-                                    type="text"
-                                    className={classnames("", {
-                                        invalid: errors.userId
-                                    })}
-                                />
-                                <label htmlFor="userId">User ID</label>
-                                <span className="red-text">{errors.userId}</span>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.firstName}
-                                    error={errors.firstName}
-                                    id="firstName"
-                                    type="text"
-                                    className={classnames("", {
-                                        invalid: errors.firstName
-                                    })}
-                                />
-                                <label htmlFor="firstName">First Name</label>
-                                <span className="red-text">{errors.firstName}</span>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.lastName}
-                                    error={errors.lastName}
-                                    id="lastName"
-                                    type="text"
-                                    className={classnames("", {
-                                        invalid: errors.lastName
-                                    })}
-                                />
-                                <label htmlFor="lastName">Last Name</label>
-                                <span className="red-text">{errors.lastName}</span>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password}
-                                    error={errors.password}
-                                    id="password"
-                                    type="password"
-                                    className={classnames("", {
-                                        invalid: errors.password
-                                    })}
-                                />
-                                <label htmlFor="password">Password</label>
-                                <span className="red-text">{errors.password}</span>
-                            </div>
-                            <div className="input-field col s12">
-                                <input
-                                    onChange={this.onChange}
-                                    value={this.state.password2}
-                                    error={errors.password2}
-                                    id="password2"
-                                    type="password"
-                                    className={classnames("", {
-                                        invalid: errors.password2
-                                    })}
-                                />
-                                <label htmlFor="password2">Confirm Password</label>
-                                <span className="red-text">{errors.password2}</span>
-                            </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col s8 offset-s2">
                             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                                <button
-                                    style={{
-                                        width: "150px",
-                                        borderRadius: "3px",
-                                        letterSpacing: "1.5px",
-                                        marginTop: "1rem"
-                                    }}
-                                    type="submit"
-                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                                >
-                                    Add User
-                                </button>
                             </div>
-                        </form>
+                            <form noValidate onSubmit={this.onSubmit}>
+                                <div className="input-field col s12">
+                                    <input
+                                        onChange={this.onChange}
+                                        value={this.state.userKey}
+                                        error={errors.userKey}
+                                        id="userKey"
+                                        type="text"
+                                        className={classnames("", {
+                                            invalid: errors.userKey
+                                        })}
+                                    />
+                                    <label htmlFor="userKey">User Key</label>
+                                    <span className="red-text">{errors.userKey}</span>
+                                </div>
+                                <div className="input-field col s12">
+                                    <input
+                                        onChange={this.onChange}
+                                        value={this.state.userId}
+                                        error={errors.userId}
+                                        id="userId"
+                                        type="text"
+                                        className={classnames("", {
+                                            invalid: errors.userId
+                                        })}
+                                    />
+                                    <label htmlFor="userId">User ID</label>
+                                    <span className="red-text">{errors.userId}</span>
+                                </div>
+                                <div className="input-field col s12">
+                                    <input
+                                        onChange={this.onChange}
+                                        value={this.state.firstName}
+                                        error={errors.firstName}
+                                        id="firstName"
+                                        type="text"
+                                        className={classnames("", {
+                                            invalid: errors.firstName
+                                        })}
+                                    />
+                                    <label htmlFor="firstName">First Name</label>
+                                    <span className="red-text">{errors.firstName}</span>
+                                </div>
+                                <div className="input-field col s12">
+                                    <input
+                                        onChange={this.onChange}
+                                        value={this.state.lastName}
+                                        error={errors.lastName}
+                                        id="lastName"
+                                        type="text"
+                                        className={classnames("", {
+                                            invalid: errors.lastName
+                                        })}
+                                    />
+                                    <label htmlFor="lastName">Last Name</label>
+                                    <span className="red-text">{errors.lastName}</span>
+                                </div>
+                                <div className="input-field col s12">
+                                    <input
+                                        onChange={this.onChange}
+                                        value={this.state.password}
+                                        error={errors.password}
+                                        id="password"
+                                        type="password"
+                                        className={classnames("", {
+                                            invalid: errors.password
+                                        })}
+                                    />
+                                    <label htmlFor="password">Password</label>
+                                    <span className="red-text">{errors.password}</span>
+                                </div>
+                                <div className="input-field col s12">
+                                    <input
+                                        onChange={this.onChange}
+                                        value={this.state.password2}
+                                        error={errors.password2}
+                                        id="password2"
+                                        type="password"
+                                        className={classnames("", {
+                                            invalid: errors.password2
+                                        })}
+                                    />
+                                    <label htmlFor="password2">Confirm Password</label>
+                                    <span className="red-text">{errors.password2}</span>
+                                </div>
+                                <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                                    <button
+                                        style={{
+                                            width: "150px",
+                                            borderRadius: "3px",
+                                            letterSpacing: "1.5px",
+                                            marginTop: "1rem"
+                                        }}
+                                        type="submit"
+                                        className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                                    >
+                                        Add User
+                                </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

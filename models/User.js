@@ -22,7 +22,8 @@ var UserSchema = new Schema({
         required: true
     },
     permissions: {
-        type: Number
+        type: Number,
+        default: 7
     }
 });
 
