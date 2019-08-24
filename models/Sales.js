@@ -38,7 +38,6 @@ var SalesSchema = new Schema({
     },
     salesAgent: {
         type: String,
-        required: true
     }
     // customer zip code
     // cost of storing inventory - quickbooks or ecomdash connection?
