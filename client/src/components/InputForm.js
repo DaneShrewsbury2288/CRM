@@ -3,6 +3,14 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import PersonIcon from '@material-ui/icons/Person';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import RingVolumeIcon from '@material-ui/icons/RingVolume';
+import NotesIcon from '@material-ui/icons/Notes';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import BusinessIcon from '@material-ui/icons/Business';
+
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -35,6 +43,10 @@ export default function OutlinedTextFields(client, agent, clientEmail, clientPho
 
   return (
     <form className={classes.container} noValidate autoComplete="off">
+    <div>
+
+    </div>
+    <AssignmentIcon />
       <TextField
         required
         id="outlined-required"
@@ -45,6 +57,8 @@ export default function OutlinedTextFields(client, agent, clientEmail, clientPho
         margin="normal"
         variant="outlined"
       />
+      <div>
+      <PersonIcon />
       <TextField
         required
         id="outlined-required"
@@ -55,6 +69,9 @@ export default function OutlinedTextFields(client, agent, clientEmail, clientPho
         margin="normal"
         variant="outlined"
       />
+      </div>
+      <div>
+      <AlternateEmailIcon />
       <TextField
         required
         id="outlined-email-input"
@@ -67,6 +84,9 @@ export default function OutlinedTextFields(client, agent, clientEmail, clientPho
         margin="normal"
         variant="outlined"
       />
+      </div>
+      <div>
+      <RingVolumeIcon />
       <TextField
         required
         id="outlined-number"
@@ -80,6 +100,9 @@ export default function OutlinedTextFields(client, agent, clientEmail, clientPho
         margin="normal"
         variant="outlined"
       />
+      </div>
+      <div>
+      <NotesIcon />
       <TextField
         required
         id="outlined-multiline-static"
@@ -92,6 +115,9 @@ export default function OutlinedTextFields(client, agent, clientEmail, clientPho
         margin="normal"
         variant="outlined"
       />
+      </div>
+      <div>
+      <LocalAtmIcon />
       <TextField
         required
         id="outlined-number"
@@ -105,6 +131,9 @@ export default function OutlinedTextFields(client, agent, clientEmail, clientPho
         margin="normal"
         variant="outlined"
       />
+      </div>
+      <div>
+      <BusinessIcon />
       <TextField
         id="outlined-full-width"
         label="Industry"
@@ -118,6 +147,7 @@ export default function OutlinedTextFields(client, agent, clientEmail, clientPho
           shrink: true,
         }}
       />
+      </div>
     </form>
   );
 }
