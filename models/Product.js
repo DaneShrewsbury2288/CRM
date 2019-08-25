@@ -1,13 +1,7 @@
 var mongoose = require("mongoose");
-
 var Schema = mongoose.Schema;
 
-
 var productSchema = new Schema({
-    productId: {
-        type: Number,
-        required: true
-    },
     productName: {
         type: String,
         required: true
@@ -26,11 +20,17 @@ var productSchema = new Schema({
     },
     created_at: {
         type: Date,
+        default: Date.now,
         required: true
     },
-
+    // gives user ability to specify...
+    details: {
+        // if they have different locations(warehouses) for their inventory
+        location: String,
+        // exactly where in storage it is located
+        aisle: String
+    }
 });
-
 
 var Product = mongoose.model("Product", productSchema);
 

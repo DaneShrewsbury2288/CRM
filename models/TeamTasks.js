@@ -8,7 +8,9 @@ const TaskSchema = new Schema({
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
             // The ObjectIds will refer to the ids in the Clients model
-            ref: "Client"
+            ref: "Client",
+            // Each task must be associated with a client
+            required: true
         }
     ],
     // user schema reference for user id associated with this task
@@ -22,9 +24,8 @@ const TaskSchema = new Schema({
     ],
     // when this task was set to assigned
     assignDate: {
-        type: {
-            default: Date.now
-        },
+        type: Date,
+        default: Date.now,
         required: true
     },
     // if the task has been assigned or not

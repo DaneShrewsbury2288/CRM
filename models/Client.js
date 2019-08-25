@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// client can be used for businesses or individual customers
 const ClientSchema = new Schema({
     // client info
     name: {
@@ -15,11 +16,13 @@ const ClientSchema = new Schema({
         type: Number,
         required: true
     },
+    zipCode: {
+        type: Number
+    },
     // when the client became a client
     joinedDate: {
-        type: {
-            default: Date.now
-        },
+        type: Date,
+        default: Date.now,
         required: true
     },
     // sales schema reference for sales for the client

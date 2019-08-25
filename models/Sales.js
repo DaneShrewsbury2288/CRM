@@ -2,47 +2,51 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var SalesSchema = new Schema({
-    _id: {
-        type: String,
-        require: true
-    },
-    customerId: {
-        type: Number,
-        required: true
-    },
-    customerName: {
-        type: String,
-        required: true
-    },
-    purchases: new Schema({
-        productId: {
-            type: Number,
-            required: true
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        quantity: {
-            type: Number,
+    // client id associated with the sale
+    client: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the Client model
+            ref: "Client",
             required: true
         }
-        // price per item
-    }),
+    ],
+    // id of product
+    productID: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the Product model
+            ref: "Product",
+            required: true
+        }
+    ],
+    // when the sale happened
     created_at: {
         type: Date,
+        default: Date.now,
         required: true
     },
-    total: {
-        type: Number,
-    },
-    salesAgent: {
-        type: String,
+    // employee id associated with the sale
+    user: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the User model
+            ref: "User",
+            required: true
+        }
+    ],
+    // if the sale has been fulfilled
+    fulfilled: {
+        type: {
+            Boolean,
+            default: false
+        },
+        required: true
     }
-    // customer zip code
-    // cost of storing inventory - quickbooks or ecomdash connection?
 });
-
 
 var Sales = mongoose.model("Sales", SalesSchema);
 
