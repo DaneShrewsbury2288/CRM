@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const SalesSchema = new Schema({
+const SaleSchema = new Schema({
     // client id associated with the sale
     client: [
         {
@@ -48,6 +48,6 @@ const SalesSchema = new Schema({
     }
 });
 
-const Sales = mongoose.model("Sales", SalesSchema);
+const Sale = mongoose.model("Sale", SaleSchema);
 
-module.exports = Sales;
+module.exports = Sale;
