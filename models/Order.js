@@ -1,9 +1,9 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 
-var orderSchema = new Schema({
+const orderSchema = new Schema({
     orderID: {
         type: Number,
     },
@@ -48,6 +48,6 @@ var orderSchema = new Schema({
 });
 
 
-var Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;
