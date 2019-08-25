@@ -1,32 +1,40 @@
 const db = require("../models");
 
 module.exports = {
-  findAll: function(req, res) {
+  findAll: function (req, res) {
     db.Sales
       .find(req.query)
       .sort({ date: -1 })
+      .populate("clients")
+      .populate("products")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findById: function(req, res) {
+  findById: function (req, res) {
     db.Sales
       .findById(req.params.id)
+      .populate("clients")
+      .populate("products")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  create: function(req, res) {
+  create: function (req, res) {
     db.Sales
       .create(req.body)
+      // update product quantity
+      // associate client ID with sale
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  update: function(req, res) {
+  // if sale needs to be updated after client completes sale
+  update: function (req, res) {
     db.Sales
+      // update product quantity
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  remove: function(req, res) {
+  remove: function (req, res) {
     db.Sales
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())

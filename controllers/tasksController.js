@@ -5,12 +5,14 @@ module.exports = {
     db.Task
       .find(req.query)
       .sort({ date: -1 })
+      .populate("clients")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
     db.Task
       .findById(req.params.id)
+      .populate("clients")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
