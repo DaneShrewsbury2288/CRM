@@ -5,7 +5,7 @@ module.exports = {
     db.Task
       .find(req.query)
       .sort({ date: -1 })
-      .populate("clients")
+      // .populate("clients")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
