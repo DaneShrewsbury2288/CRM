@@ -5,6 +5,9 @@ const salesController = require("../../controllers/salesController");
 router.route("/")
   .get(salesController.findAll)
   .post(salesController.create);
+//   router.get('/', (req, res) => {
+//   res.send('you have requested a task')
+// })
 
 // Matches with "/api/sales/:id"
 router

@@ -1,9 +1,9 @@
 const db = require("../models");
-const Sales = db.Sales;
+const Sale = db.Sale;
 
 module.exports = {
   findAll: function (req, res) {
-    Sales
+    Sale
       .find(req.query)
       .sort({ date: -1 })
       // .populate("clients")
@@ -12,7 +12,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findById: function (req, res) {
-    Sales
+    Sale
       .findById(req.params.id)
       // .populate("clients")
       // .populate("products")
@@ -20,7 +20,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
-    Sales
+    Sale
       .create(req.body)
       // update product quantity
       // associate client ID with sale
@@ -29,14 +29,14 @@ module.exports = {
   },
   // if sale needs to be updated after client completes sale
   update: function (req, res) {
-    Sales
+    Sale
       // update product quantity
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   remove: function (req, res) {
-    Sales
+    Sale
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
