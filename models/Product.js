@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var productSchema = new Schema({
+const productSchema = new Schema({
     productName: {
         type: String,
         required: true
@@ -32,6 +32,6 @@ var productSchema = new Schema({
     }
 });
 
-var Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;

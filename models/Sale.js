@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var SalesSchema = new Schema({
+const SaleSchema = new Schema({
     // client id associated with the sale
     client: [
         {
@@ -13,7 +13,7 @@ var SalesSchema = new Schema({
         }
     ],
     // id of product
-    productID: [
+    product: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
@@ -48,6 +48,6 @@ var SalesSchema = new Schema({
     }
 });
 
-var Sales = mongoose.model("Sales", SalesSchema);
+const Sale = mongoose.model("Sale", SaleSchema);
 
-module.exports = Sales;
+module.exports = Sale;

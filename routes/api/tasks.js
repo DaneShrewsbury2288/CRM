@@ -5,6 +5,9 @@ const tasksController = require("../../controllers/tasksController");
 router.route("/")
   .get(tasksController.findAll)
   .post(tasksController.create);
+// router.get('/', (req, res) => {
+//   res.send('you have requested a task')
+// })
 
 // Matches with "/api/tasks/:id"
 router

@@ -1,36 +1,36 @@
 const db = require("../models");
-const Task = db.Task;
+const Client = db.Client;
 
 module.exports = {
   findAll: function(req, res) {
-    Task
+    Client
       .find(req.query)
       .sort({ date: -1 })
-      // .populate("clients")
+      // .populate("sales")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
-    Task
+    Client
       .findById(req.params.id)
-      // .populate("clients")
+      // .populate("sales")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    Task
+    Client
       .create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    Task
+    Client
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    Task
+    Client
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
