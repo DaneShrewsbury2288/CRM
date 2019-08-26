@@ -1,12 +1,16 @@
 const router = require("express").Router();
 const clientController = require("../../controllers/clientController");
 
-// Matches with "/api/sales"
+// Matches with "/api/clients"
 router.route("/")
   .get(clientController.findAll)
   .post(clientController.create);
 
-// Matches with "/api/sales/:id"
+// router.get('/', (req, res) => {
+//   res.send('you have requested a task')
+// })
+
+// Matches with "/api/clients/:id"
 router
   .route("/:id")
   .get(clientController.findById)
