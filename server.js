@@ -1,5 +1,4 @@
 const express = require("express");
-
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const routes = require("./routes");
@@ -38,7 +37,6 @@ else {
 
 // mongoose connection
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/crm", { useNewUrlParser: true });
-
 
 // Passport config
 app.use(passport.initialize());
