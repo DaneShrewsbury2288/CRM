@@ -38,6 +38,8 @@ else {
 // mongoose connection
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/crm", { useNewUrlParser: true });
 
+mongoose.set('useFindAndModify', false)
+
 // Passport config
 app.use(passport.initialize());
 require("./config/passport")(passport);

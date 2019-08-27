@@ -4,31 +4,27 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
     productName: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     quantity: {
         type: Number,
-        required: true
+        required: true,
+        trim: true
     },
     cost: {
         type: Number,
-        required: true
+        required: true,
+        trim: true
     },
     price: {
         type: Number,
-        required: true
+        required: true,
+        trim: true
     },
     created_at: {
         type: Date,
-        default: Date.now,
-        required: true
-    },
-    // gives user ability to specify...
-    details: {
-        // if they have different locations(warehouses) for their inventory
-        location: String,
-        // exactly where in storage it is located
-        aisle: String
+        default: Date.now
     }
 });
 

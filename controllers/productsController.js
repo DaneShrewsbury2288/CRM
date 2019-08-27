@@ -1,34 +1,36 @@
 const db = require("../models");
+const Product = db.Product;
 
-// Defining methods for the booksController
+// Defining methods for the productsController
 module.exports = {
   findAll: function(req, res) {
-    db.Product
+    Product
       .find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
-    db.Product
+    Product
       .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    db.Product
-      .create(req.body)
+    console.log(req.query);
+    Product
+      .create(req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    db.Product
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+    Product
+      .findOneAndUpdate({ _id: req.params.id }, req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    db.Product
+    Product
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
