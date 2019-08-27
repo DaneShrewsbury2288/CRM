@@ -6,22 +6,24 @@ module.exports = {
     Sale
       .find(req.query)
       .sort({ date: -1 })
-      // .populate("clients")
-      // .populate("products")
+      .populate("clients")
+      .populate("products")
+      .populate("users")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function (req, res) {
     Sale
       .findById(req.params.id)
-      // .populate("clients")
-      // .populate("products")
+      .populate("clients")
+      .populate("products")
+      .populate("users")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
     Sale
-      .create(req.body)
+      .create(req.query)
       // update product quantity
       // associate client ID with sale
       .then(dbModel => res.json(dbModel))
@@ -31,7 +33,7 @@ module.exports = {
   update: function (req, res) {
     Sale
       // update product quantity
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate({ _id: req.params.id }, req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

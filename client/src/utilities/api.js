@@ -23,8 +23,8 @@ export default {
       return axios.delete("/api/sales/" + id);
     },
     // Saves a sale to the database
-    saveSale: function(taskData) {
-      return axios.post("/api/sale", taskData);
+    saveSale: function(saleData) {
+      return axios.post("/api/sale", saleData);
     },
 
     // Gets all clients
@@ -36,8 +36,8 @@ export default {
       return axios.delete("/api/clients/" + id);
     },
     // Saves a client to the database
-    saveClient: function(taskData) {
-      return axios.post("/api/clients", taskData);
+    saveClient: function(clientData) {
+      return axios.post("/api/clients", clientData);
     },
 
     // Gets all products
@@ -49,8 +49,9 @@ export default {
       return axios.delete("/api/products/" + id);
     },
     // Saves a product to the database
-    saveProduct: function(taskData) {
-      return axios.post("/api/Products", taskData);
+    saveProduct: function(productData) {
+      console.log("here is the data " + productData);
+      return axios.post("/api/products", productData);
     }
     
   };

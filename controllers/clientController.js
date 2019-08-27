@@ -6,26 +6,26 @@ module.exports = {
     Client
       .find(req.query)
       .sort({ date: -1 })
-      // .populate("sales")
+      .populate("sales")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
     Client
       .findById(req.params.id)
-      // .populate("sales")
+      .populate("sales")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
     Client
-      .create(req.body)
+      .create(req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
     Client
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate({ _id: req.params.id }, req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

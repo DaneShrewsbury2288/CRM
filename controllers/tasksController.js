@@ -6,26 +6,27 @@ module.exports = {
     Task
       .find(req.query)
       .sort({ date: -1 })
-      // .populate("clients")
+      .populate("clients")
+      .populate("users")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
     Task
       .findById(req.params.id)
-      // .populate("clients")
+      .populate("clients")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
     Task
-      .create(req.body)
+      .create(req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
     Task
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate({ _id: req.params.id }, req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
