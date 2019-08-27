@@ -17,7 +17,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log(req.query);
     Product
       .create(req.query)
       .then(dbModel => res.json(dbModel))

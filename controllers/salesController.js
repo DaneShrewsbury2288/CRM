@@ -8,6 +8,7 @@ module.exports = {
       .sort({ date: -1 })
       .populate("clients")
       .populate("products")
+      .populate("users")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -16,6 +17,7 @@ module.exports = {
       .findById(req.params.id)
       .populate("clients")
       .populate("products")
+      .populate("users")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
