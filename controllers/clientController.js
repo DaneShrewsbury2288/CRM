@@ -6,14 +6,14 @@ module.exports = {
     Client
       .find(req.query)
       .sort({ date: -1 })
-      .populate("sales")
+      .populate("orders")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
     Client
       .findById(req.params.id)
-      .populate("sales")
+      .populate("orders")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

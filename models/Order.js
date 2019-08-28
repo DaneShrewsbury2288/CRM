@@ -1,53 +1,53 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
-
-const orderSchema = new Schema({
-    orderID: {
-        type: Number,
-    },
-    clientID: {
-        type: String,
-        required: true
-    },
-    clientName: {
-        type: String,
-        required: true
-    },
-    products: [
+const OrderSchema = new Schema({
+    // client id associated with the order
+    client: [
         {
-            reference: {
-                type: Schema.Types.ObjectId,
-                ref: "Product"
-            },
-            productId: {
-                type: Number,
-                required: true
-            },
-            productName: {
-                type: String,
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true
-            }
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the Client model
+            ref: "Client",
+            required: true
         }
     ],
-    date: {
+    // id of product
+    product: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the Product model
+            ref: "Product",
+            required: true
+        }
+    ],
+    // when the order happened
+    created_at: {
         type: Date,
+        default: Date.now,
+        required: true
     },
-    total: {
-        type: Number,
-    },
-    salesAgent: {
-        type: String,
+    // employee id associated with the order
+    user: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the User model
+            ref: "User",
+            required: true
+        }
+    ],
+    // if the order has been fulfilled
+    fulfilled: {
+        type: {
+            Boolean,
+            default: false
+        },
+        required: true
     }
-
 });
 
-
-const Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", OrderSchema);
 
 module.exports = Order;

@@ -25,14 +25,14 @@ const ClientSchema = new Schema({
         default: Date.now,
         required: true
     },
-    // sales schema reference for sales for the client
+    // order schema reference for orders for the client
     // can be used to show how much money has been made on the client
-    sales: [
+    orders: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
-            // The ObjectIds will refer to the ids in the Sales model
-            ref: "Sales"
+            // The ObjectIds will refer to the ids in the Order model
+            ref: "Order"
         }
     ]
 });

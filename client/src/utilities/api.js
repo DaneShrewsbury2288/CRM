@@ -14,17 +14,17 @@ export default {
       return axios.post("/api/tasks", taskData);
     },
 
-    // Gets all sales
-    getSales: function() {
-      return axios.get("/api/sales");
+    // Gets all orders
+    getOrders: function() {
+      return axios.get("/api/orders");
     },
-    // Deletes the sale with the given id
-    deleteSale: function(id) {
-      return axios.delete("/api/sales/" + id);
+    // Deletes the order with the given id
+    deleteOrder: function(id) {
+      return axios.delete("/api/orders/" + id);
     },
-    // Saves a sale to the database
-    saveSale: function(saleData) {
-      return axios.post("/api/sale", saleData);
+    // Saves a order to the database
+    saveOrder: function(orderData) {
+      return axios.post("/api/orders", orderData);
     },
 
     // Gets all clients

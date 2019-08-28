@@ -148,7 +148,7 @@ export default function Dashboard(props) {
         </div>
         <Divider />
         <List>
-          <ListItems/>
+          <ListItems />
         </List>
       </Drawer>
       <main className={classes.content}>
