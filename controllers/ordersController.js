@@ -6,16 +6,20 @@ module.exports = {
     Order
       .find(req.query)
       .sort({ date: -1 })
+      // populate products
       .populate("product", "_id productName quantity price")
-      // .populate("user", "_id firstName lastName")
-      // .populate("client", "_id name")
+      // populate associated user
+      .populate("user", "_id firstName lastName")
+      // populate associate client
+      .populate("client", "_id name")
       .then(dbModel => {
         res.status(200).json({
           orders: dbModel.map(model => {
             return {
               _id: model._id,
               product: model.product,
-              quantity: model.quantity
+              user: model.user,
+              client: model.client
             };
           })
         })
@@ -35,15 +39,15 @@ module.exports = {
     Order
       .create(req.query)
       // associate client ID with order
-      .then(function(dbClient) {
+      .then(function (dbClient) {
         return db.Client.findOneAndUpdate({}, { $push: { clients: dbClient._id } }, { new: true });
       })
       // update product quantity
-      .then(function(dbProduct) {
+      .then(function (dbProduct) {
         return db.Product.findOneAndUpdate({}, { $push: { products: dbProduct._id } }, { new: true });
       })
       // associate user ID with order
-      .then(function(dbUser) {
+      .then(function (dbUser) {
         return db.User.findOneAndUpdate({}, { $push: { users: dbUser._id } }, { new: true });
       })
       .then(dbModel => res.json(dbModel))
