@@ -21,57 +21,71 @@ const styles = theme => ({
 });
 
 
+function priceRow(Quantity, Price) {
+    return Quantity * Price;
+}
 
-function createData(name, ProductID, Quantity, Cost, Price, Total) {
-    return { name, ProductID, Quantity, Cost, Price, Total };
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+function createData(name, ProductID, Quantity, Cost, Price) {
+    return { name, ProductID, Quantity, Cost, Price};
 }
 
 const rows = [
-    createData('IPA', 1, 6.0, 24, 4.0, 100),
-    createData('Amber Ale', 2, 9.0, 37, 4.3, 100),
-    createData('Porter', 3, 16.0, 24, 6.0, 100),
-    createData('Stout', 4, 200, 67, 4.3, 100),
-    createData('Hefeweizen', 5, 16.0, 49, 3.9, 100),
-    createData('Blonde Ale', 6, 16.0, 49, 3.9, 100),
+    createData('IPA', 1, 1000, 30, 40),
+    createData('Amber Ale', 2, 600, 30, 50),
+    createData('Porter', 3, 300, 30, 60),
+    createData('Stout', 4, 400, 30, 40),
+    createData('Hefeweizen', 5, 400, 30, 40),
+    createData('Blonde Ale', 6, 400, 40, 50),
 ];
 
 class Inventory extends Component {
     render() {
         const { classes } = this.props;
+
         return (
             <div>
                 <PageTitle title="Inventory" />
-                    <Paper className={classes.root}>
-                        <Table className={classes.table}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Product Name</TableCell>
-                                    <TableCell align="right">Product ID</TableCell>
-                                    <TableCell align="right">Quantity&nbsp;</TableCell>
-                                    <TableCell align="right">Cost&nbsp;($)</TableCell>
-                                    <TableCell align="right">Price&nbsp;($)</TableCell>
-                                    <TableCell align="right">Total&nbsp;($)</TableCell>
+                <Paper className={classes.root}>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Product Name</TableCell>
+                                <TableCell align="right">Product ID</TableCell>
+                                <TableCell align="right">Quantity&nbsp;</TableCell>
+                                <TableCell align="right">Cost&nbsp;($)</TableCell>
+                                <TableCell align="right">Price&nbsp;($)</TableCell>
+                                <TableCell align="right">Total Cost&nbsp;($)</TableCell>
+                                <TableCell align="right">Total Price&nbsp;($)</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map(row => (
+                                <TableRow key={row.name}>
+                                    <TableCell component="th" scope="row">
+                                        {row.name}
+                                    </TableCell>
+                                    <TableCell align="right">{row.ProductID}</TableCell>
+                                    <TableCell align="right">{row.Quantity}</TableCell>
+                                    <TableCell align="right">{row.Cost}</TableCell>
+                                    <TableCell align="right">{row.Price}</TableCell>
+                                    <TableCell align="right">{numberWithCommas(priceRow(row.Quantity, row.Cost))}</TableCell>
+                                    <TableCell align="right">{numberWithCommas(priceRow(row.Quantity, row.Price))}</TableCell>
                                 </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map(row => (
-                                    <TableRow key={row.name}>
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell align="right">{row.ProductID}</TableCell>
-                                        <TableCell align="right">{row.Quantity}</TableCell>
-                                        <TableCell align="right">{row.Cost}</TableCell>
-                                        <TableCell align="right">{row.Price}</TableCell>
-                                        <TableCell align="right">{row.Total}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </Paper>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Paper>
             </div>
         )
     };
 }
 
 export default withStyles(styles)(Inventory);
+
+
+
