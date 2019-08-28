@@ -9,6 +9,7 @@ const productSchema = new Schema({
     },
     quantity: {
         type: Number,
+        default: 1,
         required: true,
         trim: true
     },

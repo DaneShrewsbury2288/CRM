@@ -6,10 +6,6 @@ router.route("/")
   .get(clientController.findAll)
   .post(clientController.create);
 
-// router.get('/', (req, res) => {
-//   res.send('you have requested a task')
-// })
-
 // Matches with "/api/clients/:id"
 router
   .route("/:id")
