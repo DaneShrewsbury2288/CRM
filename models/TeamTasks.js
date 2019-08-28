@@ -4,21 +4,9 @@ const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
-    _id: {
-        type: String,
-        required: true
-    },
-    client: {
-        type: String,
-        required: true
-    },
-    clientEmail: {
-        type: String,
-        required: true
-    },
-    clientPhone: {
-        type: Number,
-        required: true
+    clientId: {
+      type: Schema.Types.ObjectId,
+      ref: "Client"
     },
     potential: {
         type: Number,
@@ -28,19 +16,16 @@ const TaskSchema = new Schema({
         type: String
     },
     teamMemberID: {
-        type: Number,
-        required: true
-    },
-    teamMemberName: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
     description: {
         type: String,
         required: true
     },
     assignDate: {
-        type: Date.now,
+        type: Date,
+        default: Date.now,
         required: true
     },
     completed: {

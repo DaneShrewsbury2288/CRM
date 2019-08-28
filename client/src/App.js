@@ -44,7 +44,7 @@ class App extends Component {
                         <Switch>
                             <Route path="/Login" component={Login} />
                             <Dashboard>
-                                    <Routes/>
+                                <Routes/>
                             </Dashboard>
                         </Switch>
                     </div>
