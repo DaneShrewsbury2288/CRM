@@ -10,7 +10,7 @@ module.exports = {
       .populate("product", "_id productName quantity price")
       // populate associated user
       .populate("user", "_id firstName lastName")
-      // populate associate client
+      // populate associated client
       .populate("client", "_id name")
       .then(dbModel => {
         res.status(200).json({
@@ -29,9 +29,6 @@ module.exports = {
   findById: function (req, res) {
     Order
       .findById(req.params.id)
-      // .populate("client")
-      // .populate("product")
-      // .populate("user")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
