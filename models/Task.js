@@ -25,8 +25,7 @@ const TaskSchema = new Schema({
     // when this task was set to assigned
     assignDate: {
         type: Date,
-        default: Date.now,
-        required: true
+        default: Date.now
     },
     // if the task has been assigned or not
     assignedStatus: {
