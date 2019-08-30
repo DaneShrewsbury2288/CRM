@@ -95,14 +95,14 @@ const styles = theme => ({
     },
 });
 
-function CenteredTabs() {
-    const classes = styles();
-    const [value, setValue] = React.useState(0);
+// function CenteredTabs() {
+//     const classes = styles();
+//     const [value, setValue] = React.useState(0);
 
-    function handleChange(onSelect, newValue) {
-        setValue(newValue);
-    };
-};
+//     function handleChange(onSelect, newValue) {
+//         setValue(newValue);
+//     };
+// };
 
 class SalesAnalytics extends Component {
     render() {
@@ -116,8 +116,8 @@ class SalesAnalytics extends Component {
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper>
                             <Tabs
-                                value={CenteredTabs.value}
-                                onChange={CenteredTabs.handleChange}
+                                //value={CenteredTabs.value}
+                                //onChange={CenteredTabs.handleChange}
                                 indicatorColor="primary"
                                 textColor="primary"
                                 //onSelect={CenteredTabs.handleChange}
@@ -147,8 +147,8 @@ class SalesAnalytics extends Component {
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
                         <Tabs
-                                value={CenteredTabs.value}
-                                onChange={CenteredTabs.handleChange}
+                                //value={CenteredTabs.value}
+                                //onChange={CenteredTabs.handleChange}
                                 indicatorColor="primary"
                                 textColor="primary"
                                 //onSelect={this.handleChange}
