@@ -1,14 +1,17 @@
-import React from "react";
+import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 
-function ClientLarge() {
-    return (
-        <div>
-            <PageTitle title="Client Large" />
-        </div>
 
-    )
-};
+class ClientLarge extends Component {
+    render() {
+        return (
+            <div>
+                <PageTitle title="Client Large" />
+            </div>
+
+        )
+    };
+}
 
 
 export default ClientLarge;

@@ -148,7 +148,7 @@ export default function Dashboard(props) {
         </div>
         <Divider />
         <List>
-          <ListItems permissions="11111111111111"/>
+          <ListItems />
         </List>
       </Drawer>
       <main className={classes.content}>
