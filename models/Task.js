@@ -23,6 +23,7 @@ const TaskSchema = new Schema({
         }
     ],
     // when this task was set to assigned
+    // dates can be passed in as "2018-12-09"
     assignDate: {
         type: Date,
         default: Date.now
@@ -32,16 +33,14 @@ const TaskSchema = new Schema({
         type: {
             Boolean,
             default: false
-        },
-        required: true
+        }
     },
-    // if task is completed or not
+    // status of task for kanban cards
     completionStatus: {
         type: {
-            Boolean,
-            default: false
-        },
-        required: true
+            String,
+            default: "to-do"
+        }
     }
 });
 

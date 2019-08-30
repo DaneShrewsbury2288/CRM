@@ -6,17 +6,11 @@ module.exports = {
     Task
       .find(req.query)
       .sort({ date: -1 })
-      // populate associated client
-      .populate("client", "_id name")
-      // populate associated user
-      .populate("user", "_id firstName lastName")
       .then(dbModel => {
         res.status(200).json({
           tasks: dbModel.map(model => {
             return {
               _id: model._id,
-              user: model.user,
-              client: model.client,
               assignDate: model.assignDate,
               assignedStatus: model.assignedStatus,
               completionStatus: model.completionStatus
@@ -49,6 +43,10 @@ module.exports = {
   update: function (req, res) {
     Task
       .findOneAndUpdate({ _id: req.params.id }, req.query)
+      // associate user ID with task
+      .then(function (dbUser) {
+        return db.User.findOneAndUpdate({}, { $push: { users: dbUser._id } }, { new: true });
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

@@ -1,56 +1,46 @@
 import React, { Component } from "react";
-import PageTitle from "../components/PageTitle";
-import Card from '../components/Card';
-import InputForm from '../components/InputForm';
+// import PageTitle from "../components/PageTitle";
+// import Card from '../components/Card';
+// import InputForm from '../components/InputForm';
 import API from '../utilities/api';
 
 class ManagerTaskAssignment extends Component {
     state = {
-        clients: []
+        tasks: [],
+        clients: [],
+        users: []
     }
-    componentDidMount() {
-        this.getClients();
+    UNSAFE_componentWillMount() {
+        this.checkTasks();
     }
-    // get clients/tasks from db
-    getClients = () => {
+    // get tasks
+    checkTasks = () => {
         API.getTasks()
             .then(res =>
-                this.setState({ clients: res.data }, () => {
-                    console.log(this.state.clients)
-                })
-            )
-            .catch(err => console.log(err))
+                this.setState({ tasks: res.data.tasks})
+                )
+                .catch(error => console.log("Check task error: " + error))
     }
-    // save task to db
-    addTask = () => {
-        API.saveTask()
-            // re-run get request with updated tasks
-            .then(() => this.getClients());
+    checkState = () => {
+        console.log(this.state.tasks);
     }
+        // assigned status
+        // completion status
+        // assigned date
+        // last contacted date
+        // get individual ids
+        // get user associated with each task
+            // get each individual ids
+            // get clients associated with each task
+    // get clients
+    // get users
+
     render() {
         return (
             <div>
-                <PageTitle title="Manager Task Assignment" />
-                <p>Add New Client</p>
-                <InputForm />
-                <button
-                    onClick={this.addTask}
-                    className="">
-                    Add Task
+                <button onClick={this.checkState}>
+                Check tasks
                 </button>
-                {/* map all task cards */}
-                {this.state.clients.map(client => (
-                    <div>
-                        <Card
-                            key={client.id}
-                            id={client.id}
-                            salesPerson={client.teamMemberName}
-                            clientDescription={client.description}
-                        />
-                        {/* place delete button for each saved task */}
-                        {/* completed button */}
-                    </div>
-                ))}
             </div>
         )
     }

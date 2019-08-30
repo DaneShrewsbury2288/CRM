@@ -25,6 +25,11 @@ const ClientSchema = new Schema({
         default: Date.now,
         required: true
     },
+    // when this client was last contacted
+    lastContacted: {
+        type: Date,
+        default: Date
+    },
     // order schema reference for orders for the client
     // can be used to show how much money has been made on the client
     orders: [
