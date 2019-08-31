@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
+      width: 1000,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -95,11 +95,10 @@ export default function PurchasingTool() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  You have created an order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  You can refer to the order created in the orders tab.
                 </Typography>
               </React.Fragment>
             ) : (
