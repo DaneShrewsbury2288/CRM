@@ -11,7 +11,7 @@ import {
 export const registerUser = (userData, history) => dispatch => {
     axios
         .post("/api/users/create", userData)
-        .then(res => history.push("/login")) // re-direct to login on successful register
+        .then(res => history.push("/")) // re-direct to dashboard after creating new user
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
@@ -28,7 +28,6 @@ export const loginUser = userData => dispatch => {
             // Save to localStorage
             // Set token to localStorage
             const { token } = res.data;
-            console.log(token);
             localStorage.setItem("jwtToken", token);
             // Set token to Auth header
             setAuthToken(token);

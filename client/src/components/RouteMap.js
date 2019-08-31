@@ -2,9 +2,7 @@ import React, { Component } from "react";
 
 import NewsFeed from "../containers/NewsFeed";
 import Inventory from "../containers/Inventory";
-import ClientSmall from "../containers/ClientSmall";
-import ClientLarge from "../containers/ClientLarge";
-import Orders from "../containers/Orders";
+import ClientList from "../containers/ClientSmall";
 import PurchasingTool from "../containers/PurchasingTool";
 import SalesAnalytics from "../containers/SalesAnalytics";
 import ManagerTaskAssignment from "../containers/ManagerTaskAssignment";
@@ -22,93 +20,84 @@ const routes = [
     {
         path: "/",
         component: NewsFeed,
+        bitmask: 0b1
     },
     {
         path: "/SalesTeamDaily",
         component: SalesTeamDaily,
+        bitmask: 0b10
     },
     {
         path: "/Inventory",
         component: Inventory,
+        bitmask: 0b100
     },
     {
-        path: "/ClientSmall",
-        component: ClientSmall,
-    },
-    {
-        path: "/ClientLarge",
-        component: ClientLarge,
-    },
-    {
-        path: "/Orders",
-        component: Orders,
+        path: "/Clientlist",
+        component: ClientList,
+        bitmask: 0b1000
     },
     {
         path: "/PurchasingTool",
         component: PurchasingTool,
+        bitmask: 0b10000
     },
     {
         path: "/SalesAnalytics",
         component: SalesAnalytics,
+        bitmask: 0b100000
     },
     {
         path: "/ManagerTaskAssignment",
         component: ManagerTaskAssignment,
+        bitmask: 0b1000000
     },
     {
         path: "/SalesTeamAnalytics",
         component: SalesTeamAnalytics,
+        bitmask: 0b10000000
     },
     {
         path: "/MapOfSales",
         component: MapOfSales,
+        bitmask: 0b100000000
     },
     {
         path: "/Discover",
         component: Discover,
+        bitmask: 0b1000000000
     },
     {
         path: "/AddRemoveUsers",
         component: AddRemoveUsers,
+        bitmask: 0b10000000000
     },
     {
         path: "/Permissions",
         component: Permissions,
+        bitmask: 0b100000000000
     }
 ];
 
 class RouteMap extends Component {
 
     state = {
-        permissions: this.props.permissions,
-        load: [0],
-        routes
-    }
-
-    componentDidMount() {
-        if (this.state.permissions) {
-            var binary = this.state.permissions.toString(2)
-            var permissions = binary.split('').reverse()
-            var permissionsArray = []
-            for (var i = 0; i < permissions.length; i++) {
-                if (parseInt(permissions[i])) {
-                    permissionsArray.push(i);
-                }
-            }
-            this.setState({ load: permissionsArray }, () => {
-            });
-        }
+        permissions: parseInt(this.props.permissions)
     }
 
     render() {
         return (
             <Switch>
-                {this.state.load.map(permission => (
-                    <PrivateRoute
-                        exact path={`${this.state.routes[permission].path}`}
-                        key={`${this.state.routes[permission].path}`}
-                        component={this.state.routes[permission].component}
-                    />
+                {routes.map(permission => (
+                    this.state.permissions & permission.bitmask
+                        ?
+                        <PrivateRoute
+                            exact path={`${permission.path}`}
+                            key={`${permission.path}`}
+                            component={permission.component}
+                        />
+                        :
+                        null
                 ))}
                 <PrivateRoute component={NoMatch} />
             </Switch>
