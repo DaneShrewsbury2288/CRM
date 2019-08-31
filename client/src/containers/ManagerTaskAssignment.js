@@ -9,7 +9,7 @@ class ManagerTaskAssignment extends Component {
     state = {
         tasks: [],
         clients: [],
-        users: []
+        users: [],
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -28,12 +28,19 @@ class ManagerTaskAssignment extends Component {
                     this.matchUserToTask(users[i]._id, users[i].firstName, users[i].lastName);
                 }
     }
+    // get users
+    checkUsers = () => {
+        UserAPI.getUsers()
+            .then(res =>
+                this.setState({ users: res.data })
+                )
+    }
     // match user id with task user id and display user name
     matchUserToTask = (id, firstName, lastName) => {
         let tasks = this.state.tasks;
         for (let i = 0; i < tasks.length; i++) {
             if (tasks[i].user[0]._id === id) {
-                // console.log("Task number " + tasks[i]._id + " has been assigned to " + firstName + " " + lastName)
+                // console.log("Task number " + tasks[i]._id + " has been assigned to " + firstName + " " + lastName + "\n Task Description: " + tasks[i].description)
             }
         }
     }
@@ -44,23 +51,36 @@ class ManagerTaskAssignment extends Component {
                 this.setState({ clients: res.data.clients })
                 )
                 .catch(error => console.log("Check task error: " + error))
-                // for each client
-                let clients = this.state.clients;
-                for (let i = 0; i < clients.length; i++) {
-                    this.checkClient(clients[i]._id);
+                // for each task
+                let tasks = this.state.tasks;
+                for (let i = 0; i < tasks.length; i++) {
+                    this.getSingleTask(tasks[i]._id);
                 }
     }
-    // get sincle client
-    checkClient = (id) => {
-        console.log(id);
-    }
-    // get users
-    checkUsers = () => {
-        UserAPI.getUsers()
+    // get each single task and match to a client id
+    getSingleTask = (id) => {
+        API.getTask(id)
             .then(res =>
-                this.setState({ users: res.data })
+                // client id
+                this.matchClientToTask(res.data.clients[0], res.data._id)
                 )
     }
+    matchClientToTask = (clientID, taskID) => {
+        let clients = this.state.clients;
+        for (let i = 0; i < clients.length; i++) {
+            if (clients[i]._id === clientID) {
+                console.log("Task number " + taskID + " is for client " + clients[i].name);
+            }
+        }
+    }
+    // // get single client
+    // checkClient = (id) => {
+    //     API.getClient(id)
+    //         .then(res =>
+    //             console.log(res.data)
+    //             )
+    // }
+    
     checkState = () => {
         this.checkClients();
         this.checkUsers();
