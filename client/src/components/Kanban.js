@@ -5,10 +5,10 @@ import data from '../components/JSON/NFkanban'
 
 export default class App extends React.Component {
   render() {
-    return <Board data={data} 
-    style={{backgroundColor: '#3f51b5'}
-  }
-    
+    return <Board 
+    editable
+    data={data} 
+    style={{backgroundColor: '#3f51b5'}}
     />
   }
 }
