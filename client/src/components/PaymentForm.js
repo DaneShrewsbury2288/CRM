@@ -12,7 +12,6 @@ export default function PaymentForm() {
         Product Selection
       </Typography>
       <Grid container spacing={3}>
-        {/* TABLE WITH ABILITY TO INPUT IDS, HOW MANY PURCHASED, PRICE */}
         <EditableTable />
       </Grid>
     </React.Fragment>

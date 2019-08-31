@@ -5,7 +5,18 @@ import TextField from '@material-ui/core/TextField';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Checkbox from '@material-ui/core/Checkbox';
 
+
 export default function ClientInformation() {
+  const [name, email, phone, zipcode, setName] = React.useState('');
+  const [count, setCount] = React.useState(0);
+
+  // Similar to componentDidMount and componentDidUpdate:
+  React.useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `You clicked ${count} times`;
+  });
+
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -15,11 +26,13 @@ export default function ClientInformation() {
         <Grid item xs={12}>
           <TextField
             required
+            value=""
             id="businessName"
             name="address1"
             label="Business Name"
             fullWidth
             autoComplete="Business Name"
+            onChange={() => setName(name)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -28,7 +41,7 @@ export default function ClientInformation() {
             name="email"
             label="Email"
             fullWidth
-            autoComplete="email address-line"
+            autoComplete="email-address-line"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -38,7 +51,7 @@ export default function ClientInformation() {
             name="phone"
             label="Phone"
             fullWidth
-            autoComplete="phone phone-line"
+            autoComplete="phone-number"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -48,10 +61,18 @@ export default function ClientInformation() {
             name="zip"
             label="Zip / Postal code"
             fullWidth
-            autoComplete="billing postal-code"
+            autoComplete="billing-postal-code"
           />
         </Grid>
       </Grid>
+
+      <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+
     </React.Fragment>
   );
 }
