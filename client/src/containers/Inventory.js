@@ -7,6 +7,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import AddButton from "../components/AddButton";
+
 
 const styles = theme => ({
     root: {
@@ -15,13 +17,13 @@ const styles = theme => ({
         overflowX: 'auto',
     },
     table: {
-        minWidth: 1300,
+        minWidth: 1000,
         minHeight: 500,
     },
 });
 
 
-function priceRow(Quantity, Price) {
+function totalRow(Quantity, Price) {
     return Quantity * Price;
 }
 
@@ -31,7 +33,7 @@ function numberWithCommas(x) {
 
 
 function createData(name, ProductID, Quantity, Cost, Price) {
-    return { name, ProductID, Quantity, Cost, Price};
+    return { name, ProductID, Quantity, Cost, Price };
 }
 
 const rows = [
@@ -43,13 +45,19 @@ const rows = [
     createData('Blonde Ale', 6, 400, 40, 50),
 ];
 
+
 class Inventory extends Component {
+
     render() {
+
         const { classes } = this.props;
 
         return (
             <div>
+                <div>
                 <PageTitle title="Inventory" />
+
+                </div>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                         <TableHead>
@@ -61,6 +69,7 @@ class Inventory extends Component {
                                 <TableCell align="right">Price&nbsp;($)</TableCell>
                                 <TableCell align="right">Total Cost&nbsp;($)</TableCell>
                                 <TableCell align="right">Total Price&nbsp;($)</TableCell>
+                                <TableCell align="right">Order More&nbsp;</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -73,8 +82,11 @@ class Inventory extends Component {
                                     <TableCell align="right">{row.Quantity}</TableCell>
                                     <TableCell align="right">{row.Cost}</TableCell>
                                     <TableCell align="right">{row.Price}</TableCell>
-                                    <TableCell align="right">{numberWithCommas(priceRow(row.Quantity, row.Cost))}</TableCell>
-                                    <TableCell align="right">{numberWithCommas(priceRow(row.Quantity, row.Price))}</TableCell>
+                                    <TableCell align="right">{numberWithCommas(totalRow(row.Quantity, row.Cost))}</TableCell>
+                                    <TableCell align="right">{numberWithCommas(totalRow(row.Quantity, row.Price))}</TableCell>
+                                    <TableCell align="right">
+                                        {<AddButton/>}
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

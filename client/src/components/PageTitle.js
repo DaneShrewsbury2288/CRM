@@ -1,9 +1,5 @@
 import React from "react";
-
-// styles
 import { makeStyles } from "@material-ui/core/styles";
-
-// components
 import { Typography } from "@material-ui/core";
 
 const PageStyles = makeStyles(theme => ({
