@@ -92,12 +92,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CenteredTabs() {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+    // const classes = useStyles();
+    // const [value, setValue] = React.useState(0);
 
-    function handleChange(event, newValue) {
-        setValue(newValue);
-    };
+    // function handleChange(event, newValue) {
+    //     setValue(newValue);
+    // };
 };
 
 function SalesAnalytics() {
