@@ -14,6 +14,7 @@ import Discover from "../containers/Discover";
 import AddRemoveUsers from "../containers/AddRemoveUsers";
 import Permissions from "../containers/Permissions";
 import SalesTeamDaily from "../containers/SalesTeamDaily";
+import Login2 from "../containers/Login2";
 import NoMatch from "../containers/NoMatch";
 import PrivateRoute from "./PrivateRoute";
 import { Switch } from "react-router-dom";
