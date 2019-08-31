@@ -38,69 +38,57 @@ const icons = [
         icon: <DashboardIcon />
     },
     {
-        title: "Client Small",
-        href: "/clientsmall",
+        title: "Client List",
+        href: "/clientlist",
         bitmask: 0b1000,
         icon: <ShoppingCartIcon />
     },
     {
-        title: "Client Large",
-        href: "/clientlarge",
-        bitmask: 0b10000,
-        icon: <PeopleIcon />
-    },
-    {
-        title: "Orders",
-        href: "/orders",
-        bitmask: 0b100000,
-        icon: <BusinessIcon />
-    },
-    {
         title: "Purchasing Tool",
         href: "/purchasingtool",
-        bitmask: 0b1000000,
+        bitmask: 0b10000,
         icon: <MoneyIcon />
     },
     {
         title: "Sales Analytics",
         href: "/salesanalytics",
-        bitmask: 0b10000000,
+        bitmask: 0b100000,
         icon: <MoneyIcon />
     },
     {
         title: "Manager Task Assignment",
         href: "/managertaskassignment",
-        bitmask: 0b10000000,
+        bitmask: 0b1000000,
         icon: <BarChartIcon />
     },
     {
         title: "Sales Team Analytics",
         href: "/salesteamanalytics",
-        bitmask: 0b100000000,
+        bitmask: 0b10000000,
         icon: <MoneyIcon />
     },
     {
         title: "Map of Sales",
         href: "/mapofsales",
-        bitmask: 0b1000000000,
+        bitmask: 0b100000000,
         icon: <BarChartIcon />
     },
     {
         title: "Discover",
         href: "/discover",
-        bitmask: 0b10000000000,
+        bitmask: 0b1000000000,
         icon: <PieChartIcon />
     },
     {
         title: "Add/Remove Users",
         href: "/addremoveusers",
-        bitmask: 0b100000000000,
+        bitmask: 0b10000000000,
         icon: <PersonAddIcon />
     },
     {
         title: "Permissions",
         href: "/Permissions",
-        bitmask: 0b10000000000000,
+        bitmask: 0b1000000000000,
         icon: <LockIcon />
     }
 

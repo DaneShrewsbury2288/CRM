@@ -2,9 +2,7 @@ import React, { Component } from "react";
 
 import NewsFeed from "../containers/NewsFeed";
 import Inventory from "../containers/Inventory";
-import ClientSmall from "../containers/ClientSmall";
-import ClientLarge from "../containers/ClientLarge";
-import Orders from "../containers/Orders";
+import ClientList from "../containers/ClientSmall";
 import PurchasingTool from "../containers/PurchasingTool";
 import SalesAnalytics from "../containers/SalesAnalytics";
 import ManagerTaskAssignment from "../containers/ManagerTaskAssignment";
@@ -14,7 +12,6 @@ import Discover from "../containers/Discover";
 import AddRemoveUsers from "../containers/AddRemoveUsers";
 import Permissions from "../containers/Permissions";
 import SalesTeamDaily from "../containers/SalesTeamDaily";
-import Login2 from "../containers/Login2";
 import NoMatch from "../containers/NoMatch";
 import PrivateRoute from "./PrivateRoute";
 import { Switch } from "react-router-dom";
@@ -36,59 +33,49 @@ const routes = [
         bitmask: 0b100
     },
     {
-        path: "/ClientSmall",
-        component: ClientSmall,
+        path: "/Clientlist",
+        component: ClientList,
         bitmask: 0b1000
-    },
-    {
-        path: "/ClientLarge",
-        component: ClientLarge,
-        bitmask: 0b10000
-    },
-    {
-        path: "/Orders",
-        component: Orders,
-        bitmask: 0b100000
     },
     {
         path: "/PurchasingTool",
         component: PurchasingTool,
-        bitmask: 0b1000000
+        bitmask: 0b10000
     },
     {
         path: "/SalesAnalytics",
         component: SalesAnalytics,
-        bitmask: 0b10000000
+        bitmask: 0b100000
     },
     {
         path: "/ManagerTaskAssignment",
         component: ManagerTaskAssignment,
-        bitmask: 0b100000000
+        bitmask: 0b1000000
     },
     {
         path: "/SalesTeamAnalytics",
         component: SalesTeamAnalytics,
-        bitmask: 0b1000000000
+        bitmask: 0b10000000
     },
     {
         path: "/MapOfSales",
         component: MapOfSales,
-        bitmask: 0b10000000000
+        bitmask: 0b100000000
     },
     {
         path: "/Discover",
         component: Discover,
-        bitmask: 0b100000000000
+        bitmask: 0b1000000000
     },
     {
         path: "/AddRemoveUsers",
         component: AddRemoveUsers,
-        bitmask: 0b1000000000000
+        bitmask: 0b10000000000
     },
     {
         path: "/Permissions",
         component: Permissions,
-        bitmask: 0b10000000000000
+        bitmask: 0b100000000000
     }
 ];
 
