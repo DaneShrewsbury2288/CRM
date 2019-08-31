@@ -8,12 +8,15 @@ module.exports = {
       .sort({ date: -1 })
       // populate associated user
       .populate("user", "_id firstName lastName")
+      // populate associated client
+      .populate("client", "_id name")
       .then(dbModel => {
         res.status(200).json({
           tasks: dbModel.map(model => {
             return {
               _id: model._id,
               user: model.user,
+              client: model.client,
               assignDate: model.assignDate,
               assignedStatus: model.assignedStatus,
               completionStatus: model.completionStatus,

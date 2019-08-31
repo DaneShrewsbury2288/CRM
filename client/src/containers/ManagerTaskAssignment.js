@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import PageTitle from "../components/PageTitle";
+import PageTitle from "../components/PageTitle";
 // import Card from '../components/Card';
 // import InputForm from '../components/InputForm';
 import API from '../utilities/api';
@@ -40,7 +40,7 @@ class ManagerTaskAssignment extends Component {
         let tasks = this.state.tasks;
         for (let i = 0; i < tasks.length; i++) {
             if (tasks[i].user[0]._id === id) {
-                // console.log("Task number " + tasks[i]._id + " has been assigned to " + firstName + " " + lastName + "\n Task Description: " + tasks[i].description)
+                console.log("Task number " + tasks[i]._id + " has been assigned to " + firstName + " " + lastName + "\n Description: " + tasks[i].description + "\n Assigned Date: " + tasks[i].assignDate.replace("T00:00:00.000Z", "") + "\n Completion Status: " + tasks[i].completionStatus)
             }
         }
     }
@@ -57,7 +57,7 @@ class ManagerTaskAssignment extends Component {
                     this.getSingleTask(tasks[i]._id);
                 }
     }
-    // get each single task and match to a client id
+    // get each single task
     getSingleTask = (id) => {
         API.getTask(id)
             .then(res =>
@@ -65,6 +65,7 @@ class ManagerTaskAssignment extends Component {
                 this.matchClientToTask(res.data.clients[0], res.data._id)
                 )
     }
+    // match client to task id
     matchClientToTask = (clientID, taskID) => {
         let clients = this.state.clients;
         for (let i = 0; i < clients.length; i++) {
@@ -73,20 +74,11 @@ class ManagerTaskAssignment extends Component {
             }
         }
     }
-    // // get single client
-    // checkClient = (id) => {
-    //     API.getClient(id)
-    //         .then(res =>
-    //             console.log(res.data)
-    //             )
-    // }
     
     checkState = () => {
         this.checkClients();
         this.checkUsers();
         this.checkTasks();
-        // console.log(this.state.clients);
-        // console.log(this.state.users);
     }
         // assigned status
         // completion status
@@ -101,6 +93,7 @@ class ManagerTaskAssignment extends Component {
     render() {
         return (
             <div>
+            <PageTitle title="Manager Task Assignment"/>
                 <button onClick={this.checkState}>
                 Check tasks
                 </button>
