@@ -27,35 +27,32 @@ class ManagerTaskAssignment extends Component {
                 for (let i = 0; i < users.length; i++) {
                     this.matchUserToTask(users[i]._id, users[i].firstName, users[i].lastName);
                 }
-                // this.state.clients.forEach(function(client) {
-                //     console.log(client);
-                // });
     }
     // match user id with task user id and display user name
     matchUserToTask = (id, firstName, lastName) => {
-        // console.log(id);
-        // console.log(firstName);
-        // console.log(lastName);
         let tasks = this.state.tasks;
         for (let i = 0; i < tasks.length; i++) {
-            // if (!tasks[i].user[0]._id) {
-            //     break;
-            // }
-            // console.log(tasks[i]._id);
             if (tasks[i].user[0]._id === id) {
-                console.log("Task number " + tasks[i]._id + " has been assigned to " + firstName + " " + lastName)
+                // console.log("Task number " + tasks[i]._id + " has been assigned to " + firstName + " " + lastName)
             }
-            // console.log(tasks[i]);
         }
-        // console.log(id)
     }
-    // get clients
+    // get all clients
     checkClients = () => {
         API.getClients()
             .then(res => 
                 this.setState({ clients: res.data.clients })
                 )
                 .catch(error => console.log("Check task error: " + error))
+                // for each client
+                let clients = this.state.clients;
+                for (let i = 0; i < clients.length; i++) {
+                    this.checkClient(clients[i]._id);
+                }
+    }
+    // get sincle client
+    checkClient = (id) => {
+        console.log(id);
     }
     // get users
     checkUsers = () => {
@@ -65,7 +62,7 @@ class ManagerTaskAssignment extends Component {
                 )
     }
     checkState = () => {
-        // console.log(this.state.tasks);
+        this.checkClients();
         this.checkUsers();
         this.checkTasks();
         // console.log(this.state.clients);
