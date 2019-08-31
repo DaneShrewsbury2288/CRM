@@ -27,6 +27,7 @@
     "@material-ui/icons": "^4.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "date-fns": "^2.0.0-beta.5",
     "express": "^4.17.1",
     "http-proxy-middleware": "^0.19.1",
     "if-env": "^1.0.4",
