@@ -1,18 +1,22 @@
-import React from "react";
+import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
+import { withStyles } from '@material-ui/core/styles';
 import Chart from "../components/Chart";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Orders from '../components/Orders';
+//import Order from '../components/Order';
 import clsx from 'clsx';
 import Deposits from '../components/Deposits';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { makeStyles } from '@material-ui/core/styles';
+import ProductProfit from '../components/ProductProfit';
+import AggregateSales from '../components/AggregateSales';
+
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+
+const styles = theme => ({
     root: {
         display: 'flex',
     },
@@ -89,104 +93,134 @@ const useStyles = makeStyles(theme => ({
     fixedHeight: {
         height: 240,
     },
-}));
+});
 
-function CenteredTabs() {
-    // const classes = useStyles();
-    // const [value, setValue] = React.useState(0);
+// function CenteredTabs() {
+//     const classes = styles();
+//     const [value, setValue] = React.useState(0);
 
-    // function handleChange(event, newValue) {
-    //     setValue(newValue);
-    // };
-};
+//     function handleChange(onSelect, newValue) {
+//         setValue(newValue);
+//     };
+// };
 
-function SalesAnalytics() {
-    const classes = useStyles();
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    return (
-        <div>
-            <PageTitle title="Sales Analytics" />
-            <Grid container spacing={3}>
-                {/* Chart */}
-                <Grid item xs={12} md={8} lg={9}>
-                    <Paper>
+class SalesAnalytics extends Component {
+    render() {
+        const { classes } = this.props;
+        const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+        return (
+            <div>
+                <PageTitle title="Sales Analytics" />
+                <Grid container spacing={3}>
+                    {/* Chart */}
+                    <Grid item xs={12} md={8} lg={9}>
+                        <Paper>
+                            <Tabs
+                                //value={CenteredTabs.value}
+                                //onChange={CenteredTabs.handleChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                //onSelect={CenteredTabs.handleChange}
+                                centered
+                            >
+                                <Tab label="Daily" />
+                                <Tab label="Weekly" />
+                                <Tab label="Monthly" >
+
+                                    <Paper className={fixedHeightPaper}>
+                                        <Chart />
+                                    </Paper>
+                                </Tab>
+                            </Tabs>
+                        </Paper>
+                        <Paper className={fixedHeightPaper}>
+                            <Chart />
+                        </Paper>
+                    </Grid>
+                    {/* Recent Deposits */}
+                    <Grid item xs={1} md={4} lg={3}>
+                        <Paper className={fixedHeightPaper}>
+                            <Deposits />
+                        </Paper>
+                    </Grid>
+                    {/* Recent Orders */}
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
                         <Tabs
-                            value={CenteredTabs.value}
-                            onChange={CenteredTabs.handleChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            //onSelect={this.handleChange}
-                            centered
-                        >
-                            <Tab label="Daily" />
-                            <Tab label="Weekly" />
-                            <Tab label="Monthly" >
-                            <Tab label="Yearly" />
+                                //value={CenteredTabs.value}
+                                //onChange={CenteredTabs.handleChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                //onSelect={this.handleChange}
+                                centered
+                            >
+                                <Tab label="Aggregate" />
+                                <Tab label="Business" />
+                                <Tab label="Consumer" >
+                                </Tab>
+                            </Tabs>
+                            <AggregateSales />
+                        </Paper>
+                    </Grid>
 
-                                <Paper className={fixedHeightPaper}>
-                                    <Chart />
-                                </Paper>
-                            </Tab>
-                        </Tabs>
-                    </Paper>
-                    <Paper className={fixedHeightPaper}>
-                        <Chart />
-                    </Paper>
-                </Grid>
-                {/* Recent Deposits */}
-                <Grid item xs={1} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <Deposits />
-                    </Paper>
-                </Grid>
-                {/* Recent Orders */}
-                <Grid item xs={12}>
-                    <Paper className={classes.paper}>
-                        <Orders />
-                    </Paper>
-                </Grid>
+                    {/* Profit per product  */}
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                            <ProductProfit />
+                        </Paper>
+                    </Grid>
 
-                {/* Profit per product  */}
-                {/* Trends */}
-                {/* Recent Orders */}
-            </Grid>
-        </div>
 
-        
-    )
+                    {/* Lifetime Sales of Customer*/}
+                    {/* Pull ID and aggregate all sales data for ID */}
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                        </Paper>
+                    </Grid>
+
+                    {/* Recent Orders */}
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+
+                        </Paper>
+                    </Grid>
+                </Grid>
+            </div>
+
+
+        )
+    }
 };
 
-  // profit per product
-        // cost of product
-            // Product.findByID({
-            //     cost
-            // }) => { _id: objectID, Product.cost: cost }
-        // price product is sold for
-            // Product.findByID({
-            //     price
-            // }) => { _id: objectID, Product.price: price }
-        // length of time not sold
-            // cost of holding product / total # of products
-        // cost of shipping - shipstation connection?
+export default withStyles(styles)(SalesAnalytics);
+
+    // profit per product
+    // cost of product
+    // Product.findByID({
+    //     cost
+    // }) => { _id: objectID, Product.cost: cost }
+    // price product is sold for
+    // Product.findByID({
+    //     price
+    // }) => { _id: objectID, Product.price: price }
+    // length of time not sold
+    // cost of holding product / total # of products
+    // cost of shipping - shipstation connection?
     // trends
-        // total sales in time period
-            // date range
-                // exclude time less than first date and more than last date
-                // Orders.find({
-                //     created_at: {
-                //         $gte: ISODate("2010-04-29T00:00:00.000Z"),
-                //         $lt: ISODate("2010-05-01T00:00:00.000Z")
-                //     }
-                // })
-                // => { "_id" : objectID), "purchases.name" : "product name", "purchase.quantity" : "amount purchased within time period" }
-                    // save each product to a variable and add to total for each purchase quantity
-            // product id
-            // product profit
-            // product quantity
-        // individual product sales in time period
-        // areas with most sales
-            // zip code heat map (https://www.tableau.com/about/blog/2018/11/density-mark-type-brings-new-kind-heatmap-tableau-98488)
-
-export default SalesAnalytics;
-
-
+    // total sales in time period
+    // date range
+    // exclude time less than first date and more than last date
+    // Sales.find({
+    //     created_at: {
+    //         $gte: ISODate("2010-04-29T00:00:00.000Z"),
+    //         $lt: ISODate("2010-05-01T00:00:00.000Z")
+    //     }
+    // })
+    // => { "_id" : objectID), "purchases.name" : "product name", "purchase.quantity" : "amount purchased within time period" }
+    // save each product to a variable and add to total for each purchase quantity
+    // product id
+    // product profit
+    // product quantity
+    // individual product sales in time period
+    // areas with most sales
+    // zip code heat map (https://www.tableau.com/about/blog/2018/11/density-mark-type-brings-new-kind-heatmap-tableau-98488)

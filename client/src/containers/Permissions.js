@@ -13,7 +13,8 @@ class Permissions extends Component {
 
   state = {
     users: [],
-    user: null
+    user: null,
+    permissions: null
   };
 
   componentDidMount() {
@@ -21,8 +22,10 @@ class Permissions extends Component {
   }
 
   handleUser = event => {
-    this.setState({ user: event.target.id }, () => {
-      console.log(this.state.user)
+    console.log(event.target)
+    this.setState({ user: event.target.id, permissions: parseInt(event.target.getAttribute('permissions')) }, () => {
+      console.log(this.state.user);
+      console.log(this.state.permissions);
     });
   };
 
@@ -44,29 +47,31 @@ class Permissions extends Component {
       .catch(err => console.log(err))
   }
 
+  back = () => {
+    this.setState({user: null})
+  }
+
   render() {
     return (
       <div>
         <PageTitle title="Permissions" />
-        <div className="row">
-          <div className="col s6">
-            <List>
-              {this.state.users.map(user => (
-                <ListItem key={user._id}>
-                  <h4 id={user._id} onClick={this.handleUser}>
-                    {user.firstName} {user.lastName}
-                  </h4>
-                </ListItem>
-              ))}
-            </List>
+        {this.state.user
+          ?
+          <div>
+            <h4 onClick={this.back}>Back</h4>
+          <PermissionsSwitch user={this.state.user} permissions={this.state.permissions} />
           </div>
-          <div className="col s6">
-            {this.state.user ?
-                <PermissionsSwitch/> :
-              null
-            }
-          </div>
-        </div>
+          :
+          <List>
+            {this.state.users.map(user => (
+              <ListItem key={user._id}>
+                <h4 id={user._id} permissions={user.permissions} onClick={this.handleUser}>
+                  {user.firstName} {user.lastName}
+                </h4>
+              </ListItem>
+            ))}
+          </List>
+        }
       </div>
     )
   }

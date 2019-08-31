@@ -6,26 +6,47 @@ module.exports = {
     Order
       .find(req.query)
       .sort({ date: -1 })
-      .populate("clients")
-      .populate("products")
-      .populate("users")
-      .then(dbModel => res.json(dbModel))
+      // populate products
+      .populate("product", "_id productName quantity price")
+      // populate associated user
+      .populate("user", "_id firstName lastName")
+      // populate associated client
+      .populate("client", "_id name")
+      .then(dbModel => {
+        res.status(200).json({
+          orders: dbModel.map(model => {
+            return {
+              _id: model._id,
+              product: model.product,
+              user: model.user,
+              client: model.client
+            };
+          })
+        })
+      })
       .catch(err => res.status(422).json(err));
   },
   findById: function (req, res) {
     Order
       .findById(req.params.id)
-      .populate("clients")
-      .populate("products")
-      .populate("users")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
     Order
       .create(req.query)
-      // update product quantity
       // associate client ID with order
+      .then(function (dbClient) {
+        return db.Client.findOneAndUpdate({}, { $push: { clients: dbClient._id } }, { new: true });
+      })
+      // update product quantity
+      .then(function (dbProduct) {
+        return db.Product.findOneAndUpdate({}, { $push: { products: dbProduct._id } }, { new: true });
+      })
+      // associate user ID with order
+      .then(function (dbUser) {
+        return db.User.findOneAndUpdate({}, { $push: { users: dbUser._id } }, { new: true });
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

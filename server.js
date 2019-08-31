@@ -37,6 +37,7 @@ else {
 
 // mongoose connection
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/crm", { useNewUrlParser: true });
+
 // allows us to use .findOneAndUpdate in controllers
 mongoose.set('useFindAndModify', false)
 

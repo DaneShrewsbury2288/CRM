@@ -13,6 +13,10 @@ export default {
     saveTask: function(taskData) {
       return axios.post("/api/tasks", taskData);
     },
+    // Updates a task in the database
+    updateTask: function(taskData) {
+      return axios.post("api/tasks", taskData);
+    },
 
     // Gets all orders
     getOrders: function() {
@@ -25,6 +29,10 @@ export default {
     // Saves a order to the database
     saveOrder: function(orderData) {
       return axios.post("/api/orders", orderData);
+    },
+    // Updates an order in the database
+    updateOrder: function(orderData) {
+      return axios.post("api/tasks", orderData);
     },
 
     // Gets all clients
@@ -39,6 +47,10 @@ export default {
     saveClient: function(clientData) {
       return axios.post("/api/clients", clientData);
     },
+    // Updates a client in the database
+    updateClient: function(clientData) {
+      return axios.post("api/tasks", clientData);
+    },
 
     // Gets all products
     getProducts: function() {
@@ -50,8 +62,11 @@ export default {
     },
     // Saves a product to the database
     saveProduct: function(productData) {
-      console.log("here is the data " + productData);
       return axios.post("/api/products", productData);
-    }
+    },
+    // Updates a product in the database
+    updateProduct: function(productData) {
+      return axios.post("api/tasks", productData);
+    },
     
   };
