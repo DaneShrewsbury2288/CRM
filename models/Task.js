@@ -19,7 +19,8 @@ const TaskSchema = new Schema({
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
             // The ObjectIds will refer to the ids in the User model
-            ref: "User"
+            ref: "User",
+            required: true
         }
     ],
     // when this task was set to assigned
@@ -41,6 +42,10 @@ const TaskSchema = new Schema({
             String,
             default: "to-do"
         }
+    },
+    description: {
+        type: String,
+        required: true
     }
 });
 

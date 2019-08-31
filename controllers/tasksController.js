@@ -6,14 +6,18 @@ module.exports = {
     Task
       .find(req.query)
       .sort({ date: -1 })
+      // populate associated user
+      .populate("user", "_id firstName lastName")
       .then(dbModel => {
         res.status(200).json({
           tasks: dbModel.map(model => {
             return {
               _id: model._id,
+              user: model.user,
               assignDate: model.assignDate,
               assignedStatus: model.assignedStatus,
-              completionStatus: model.completionStatus
+              completionStatus: model.completionStatus,
+              description: model.description
             };
           })
         })
