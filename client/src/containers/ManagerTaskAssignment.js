@@ -57,16 +57,31 @@ class ManagerTaskAssignment extends Component {
     }
     // match client and user to task id
     matchTask = (taskID, assignDate, assignedStatus, completionStatus, description, clientID, userID, notes) => {
+        // set array to store client object
+        let clientInfo = [];
+        let userInfo = [];
+        // api call for single client using id
+        API.getClient(clientID)
+            .then(res =>
+                clientInfo.push(res.data)
+            )
+            .catch(error => console.log("Get client error: " + error))
+        // api call for single user using id
+        UserAPI.getUser(userID)
+            .then(res =>
+                userInfo.push(res.data)
+            )
+            .catch(error => console.log("Get user error: " + error))
         console.log("Task id: " + taskID);
         console.log("Task was assigned on: " + assignDate.replace("T00:00:00.000Z", ""));
         console.log("Has task been assigned? " + assignedStatus);
         console.log("Task completion status: " + completionStatus);
         console.log("Task description: " + description);
-        console.log("Client id: " + clientID);
         console.log("User id: " + userID);
+        console.log(userInfo);
+        console.log("Client id: " + clientID);
+        console.log(clientInfo);
         console.log("Notes: " + notes);
-        // api call for single client using id
-        // api call for single user using id
     }
     checkState = () => {
         this.checkClients();
