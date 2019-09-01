@@ -10,6 +10,7 @@ class ManagerTaskAssignment extends Component {
         tasks: [],
         clients: [],
         users: [],
+        fulltasks: [],
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -21,84 +22,72 @@ class ManagerTaskAssignment extends Component {
         API.getTasks()
             .then(res =>
                 this.setState({ tasks: res.data.tasks })
-                )
-                .catch(error => console.log("Check task error: " + error))
-                let users = this.state.users;
-                for (let i = 0; i < users.length; i++) {
-                    this.matchUserToTask(users[i]._id, users[i].firstName, users[i].lastName);
-                }
+            )
+            .catch(error => console.log("Check tasks error: " + error))
     }
     // get users
     checkUsers = () => {
         UserAPI.getUsers()
             .then(res =>
                 this.setState({ users: res.data })
-                )
-                .catch(error => console.log("Check users error: " + error))
-    }
-    // match user id with task user id and display user name
-    matchUserToTask = (id, firstName, lastName) => {
-        let tasks = this.state.tasks;
-        for (let i = 0; i < tasks.length; i++) {
-            if (tasks[i].user[0]._id === id) {
-                console.log("Task number " + tasks[i]._id + " has been assigned to " + firstName + " " + lastName + "\n Description: " + tasks[i].description + "\n Assigned Date: " + tasks[i].assignDate.replace("T00:00:00.000Z", "") + "\n Completion Status: " + tasks[i].completionStatus)
-            }
-        }
+            )
+            .catch(error => console.log("Check users error: " + error))
     }
     // get all clients
     checkClients = () => {
         API.getClients()
-            .then(res => 
+            .then(res =>
                 this.setState({ clients: res.data.clients })
-                )
-                .catch(error => console.log("Check task error: " + error))
-                // for each task
-                let tasks = this.state.tasks;
-                for (let i = 0; i < tasks.length; i++) {
-                    this.getSingleTask(tasks[i]._id);
-                }
+            )
+            .catch(error => console.log("Check task clients: " + error))
+        // for each task
+        let tasks = this.state.tasks;
+        for (let i = 0; i < tasks.length; i++) {
+            this.getSingleTask(tasks[i]._id);
+        }
     }
     // get each single task
     getSingleTask = (id) => {
         API.getTask(id)
             .then(res =>
-                // client id
-                // get user id and pass along to function
-                this.matchClientToTask(res.data.clients[0], res.data._id)
-                )
-                .catch(error => console.log("Check task error: " + error))
+                // pass client id, user id and all notes
+                this.matchTask(res.data._id, res.data.assignDate, res.data.assignedStatus, res.data.completionStatus, res.data.description, res.data.clients[0], res.data.user[0], res.data.notes[0])
+            )
+            .catch(error => console.log("Check task error: " + error))
     }
     // match client and user to task id
-    matchClientToTask = (clientID, taskID) => {
+    matchTask = (taskID, assignDate, assignedStatus, completionStatus, description, clientID, userID, notes) => {
+        console.log("Task id: " + taskID);
+        console.log("Task was assigned on: " + assignDate.replace("T00:00:00.000Z", ""));
+        console.log("Has task been assigned? " + assignedStatus);
+        console.log("Task completion status: " + completionStatus);
+        console.log("Task description: " + description);
+        console.log("Client id: " + clientID);
+        console.log("User id: " + userID);
+        console.log("Notes: " + notes);
         // api call for single client using id
         // api call for single user using id
-        let clients = this.state.clients;
-        for (let i = 0; i < clients.length; i++) {
-            if (clients[i]._id === clientID) {
-                console.log("Task number " + taskID + " is for client " + clients[i].name);
-            }
-        }
     }
     checkState = () => {
         this.checkClients();
         this.checkUsers();
         this.checkTasks();
     }
-        // assigned status
-        // completion status
-        // assigned date
-        // last contacted date
-        // get individual ids
-        // get user associated with each task
-            // get each individual ids
-            // get clients associated with each task
+    // assigned status
+    // completion status
+    // assigned date
+    // last contacted date
+    // get individual ids
+    // get user associated with each task
+    // get each individual ids
+    // get clients associated with each task
 
     render() {
         return (
             <div>
-            <PageTitle title="Manager Task Assignment"/>
+                <PageTitle title="Manager Task Assignment" />
                 <button onClick={this.checkState}>
-                Check tasks
+                    Check tasks
                 </button>
             </div>
         )

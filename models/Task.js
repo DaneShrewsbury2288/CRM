@@ -10,7 +10,6 @@ const TaskSchema = new Schema({
             // The ObjectIds will refer to the ids in the Clients model
             ref: "Client",
             // Each task must be associated with a client
-            required: true
         }
     ],
     // user schema reference for user id associated with this task
