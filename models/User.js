@@ -25,7 +25,7 @@ const UserSchema = new Schema({
         default: 7
     },
     // create notes and associate with client
-    notes: [
+    note: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,

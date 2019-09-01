@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
     // client schema reference for client id associated with this task
-    clients: [
+    client: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
@@ -47,7 +47,7 @@ const TaskSchema = new Schema({
         required: true
     },
     // create notes and associate with task
-    notes: [
+    note: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,

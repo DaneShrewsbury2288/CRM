@@ -36,7 +36,7 @@ const ClientSchema = new Schema({
         default: false
     },
     // create notes and associate with client
-    notes: [
+    note: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
@@ -46,7 +46,7 @@ const ClientSchema = new Schema({
     ],
     // order schema reference for orders for the client
     // can be used to show how much money has been made on the client
-    orders: [
+    order: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
@@ -54,7 +54,7 @@ const ClientSchema = new Schema({
             ref: "Order"
         }
     ],
-    users: [
+    user: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,

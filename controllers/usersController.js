@@ -14,7 +14,7 @@ module.exports = {
       .find(req.query)
       .sort({ date: -1 })
       // all notes for the user and when they were created
-      .populate("note", "_id content created_at")
+      .populate("note")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -112,7 +112,7 @@ module.exports = {
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       // associate note ID with user
       .then(function (dbNote) {
-        return db.Note.findOneAndUpdate({}, { $push: { notes: dbNote._id } }, { new: true });
+        return db.Note.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
       })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

@@ -34,8 +34,7 @@ const OrderSchema = new Schema({
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
             // The ObjectIds will refer to the ids in the User model
-            ref: "User",
-            required: true
+            ref: "User"
         }
     ],
     // if the order has been fulfilled
@@ -46,7 +45,7 @@ const OrderSchema = new Schema({
         }
     },
     // create notes and associate with order
-    notes: [
+    note: [
         {
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
