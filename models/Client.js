@@ -30,6 +30,20 @@ const ClientSchema = new Schema({
         type: Date,
         default: Date
     },
+    // if the client is large or small
+    isLargeClient: {
+        type: Boolean,
+        default: false
+    },
+    // create notes and associate with client
+    notes: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the Note model
+            ref: "Note"
+        }
+    ],
     // order schema reference for orders for the client
     // can be used to show how much money has been made on the client
     orders: [

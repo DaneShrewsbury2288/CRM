@@ -44,7 +44,16 @@ const OrderSchema = new Schema({
             Boolean,
             default: false
         }
-    }
+    },
+    // create notes and associate with order
+    notes: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the Note model
+            ref: "Note"
+        }
+    ],
 });
 
 const Order = mongoose.model("Order", OrderSchema);

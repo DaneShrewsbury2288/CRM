@@ -34,6 +34,7 @@ class ManagerTaskAssignment extends Component {
             .then(res =>
                 this.setState({ users: res.data })
                 )
+                .catch(error => console.log("Check users error: " + error))
     }
     // match user id with task user id and display user name
     matchUserToTask = (id, firstName, lastName) => {
@@ -62,11 +63,15 @@ class ManagerTaskAssignment extends Component {
         API.getTask(id)
             .then(res =>
                 // client id
+                // get user id and pass along to function
                 this.matchClientToTask(res.data.clients[0], res.data._id)
                 )
+                .catch(error => console.log("Check task error: " + error))
     }
-    // match client to task id
+    // match client and user to task id
     matchClientToTask = (clientID, taskID) => {
+        // api call for single client using id
+        // api call for single user using id
         let clients = this.state.clients;
         for (let i = 0; i < clients.length; i++) {
             if (clients[i]._id === clientID) {
@@ -74,7 +79,6 @@ class ManagerTaskAssignment extends Component {
             }
         }
     }
-    
     checkState = () => {
         this.checkClients();
         this.checkUsers();
@@ -84,7 +88,6 @@ class ManagerTaskAssignment extends Component {
         // completion status
         // assigned date
         // last contacted date
-
         // get individual ids
         // get user associated with each task
             // get each individual ids

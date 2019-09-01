@@ -46,7 +46,16 @@ const TaskSchema = new Schema({
     description: {
         type: String,
         required: true
-    }
+    },
+    // create notes and associate with task
+    notes: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the Note model
+            ref: "Note"
+        }
+    ],
 });
 
 const Task = mongoose.model("Task", TaskSchema);
