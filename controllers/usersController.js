@@ -13,6 +13,8 @@ module.exports = {
     User
       .find(req.query)
       .sort({ date: -1 })
+      // all notes for the user and when they were created
+      .populate("note", "_id content created_at")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -108,6 +110,10 @@ module.exports = {
   update: function (req, res) {
     User
       .findOneAndUpdate({ _id: req.params.id }, req.body)
+      // associate note ID with user
+      .then(function (dbNote) {
+        return db.Note.findOneAndUpdate({}, { $push: { notes: dbNote._id } }, { new: true });
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

@@ -33,6 +33,12 @@ const UserSchema = new Schema({
             ref: "Note"
         }
     ],
+    // when the user was created
+    created_at: {
+        type: Date,
+        default: Date.now,
+        required: true
+    }
 });
 
 

@@ -10,6 +10,8 @@ module.exports = {
       .populate("user", "_id firstName lastName")
       // populate associated client
       .populate("client", "_id name")
+      // all notes for the task and when they were created
+      .populate("note", "_id content created_at")
       .then(dbModel => {
         res.status(200).json({
           tasks: dbModel.map(model => {
@@ -20,7 +22,8 @@ module.exports = {
               assignDate: model.assignDate,
               assignedStatus: model.assignedStatus,
               completionStatus: model.completionStatus,
-              description: model.description
+              description: model.description,
+              note: model.note,
             };
           })
         })
@@ -53,6 +56,14 @@ module.exports = {
       // associate user ID with task
       .then(function (dbUser) {
         return db.User.findOneAndUpdate({}, { $push: { users: dbUser._id } }, { new: true });
+      })
+      // associate client ID with task
+      .then(function (dbClient) {
+        return db.Client.findOneAndUpdate({}, { $push: { clients: dbClient._id } }, { new: true });
+      })
+      // associate note ID with task
+      .then(function (dbNote) {
+        return db.Note.findOneAndUpdate({}, { $push: { notes: dbNote._id } }, { new: true });
       })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
