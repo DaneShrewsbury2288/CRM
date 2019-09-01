@@ -22,71 +22,73 @@ const icons = [
     {
         title: "News Feed",
         href: "/",
+        bitmask: 0b1,
         icon: <LayersIcon />
     },
     {
         title: "Sales Team Daily",
         href: "/salesteamdaily",
+        bitmask: 0b10,
         icon: <BarChartIcon />
     },
     {
         title: "Inventory",
         href: "/inventory",
+        bitmask: 0b100,
         icon: <DashboardIcon />
     },
     {
-        title: "Client Small",
-        href: "/clientsmall",
+        title: "Client List",
+        href: "/clientlist",
+        bitmask: 0b1000,
         icon: <ShoppingCartIcon />
-    },
-    {
-        title: "Client Large",
-        href: "/clientlarge",
-        icon: <PeopleIcon />
-    },
-    {
-        title: "Orders",
-        href: "/orders",
-        icon: <BusinessIcon />
     },
     {
         title: "Purchasing Tool",
         href: "/purchasingtool",
+        bitmask: 0b10000,
         icon: <MoneyIcon />
     },
     {
         title: "Sales Analytics",
         href: "/salesanalytics",
+        bitmask: 0b100000,
         icon: <MoneyIcon />
     },
     {
         title: "Manager Task Assignment",
         href: "/managertaskassignment",
+        bitmask: 0b1000000,
         icon: <BarChartIcon />
     },
     {
         title: "Sales Team Analytics",
         href: "/salesteamanalytics",
+        bitmask: 0b10000000,
         icon: <MoneyIcon />
     },
     {
         title: "Map of Sales",
         href: "/mapofsales",
+        bitmask: 0b100000000,
         icon: <BarChartIcon />
     },
     {
         title: "Discover",
         href: "/discover",
+        bitmask: 0b1000000000,
         icon: <PieChartIcon />
     },
     {
         title: "Add/Remove Users",
         href: "/addremoveusers",
+        bitmask: 0b10000000000,
         icon: <PersonAddIcon />
     },
     {
         title: "Permissions",
         href: "/Permissions",
+        bitmask: 0b1000000000000,
         icon: <LockIcon />
     }
 
@@ -95,9 +97,7 @@ const icons = [
 class ListMap extends Component {
 
     state = {
-        permissions: this.props.permissions,
-        load: [0],
-        icons
+        permissions: parseInt(this.props.permissions)
 
     }
 
@@ -106,37 +106,28 @@ class ListMap extends Component {
         this.props.logoutUser();
     };
 
-    componentDidMount() {
-        if (this.state.permissions) {
-            var binary = this.state.permissions.toString(2)
-            var permissions = binary.split('').reverse()
-            var permissionsArray = []
-            for (var i = 0; i < permissions.length; i++) {
-                if (parseInt(permissions[i])) {
-                    permissionsArray.push(i);
-                }
-            }
-            this.setState({ load: permissionsArray }, () => {
-            });
-        }
-    }
-
     render() {
         return (
             <div>
-                {this.state.load.map(permission => (
-                    <Link
-                        to={`${this.state.icons[permission].href}`}
-                        key={`${this.state.icons[permission].href}`}
-                    >
-                        <ListItem button>
-                            <ListItemIcon>
-                                {this.state.icons[permission].icon}
-                            </ListItemIcon>
-                            <ListItemText primary={`${this.state.icons[permission].title}`} />
-                        </ListItem>
-                    </Link>
+
+                {icons.map(permission => (
+                    this.state.permissions & permission.bitmask
+                        ?
+                        <Link
+                            to={`${permission.href}`}
+                            key={`${permission.href}`}
+                        >
+                            <ListItem button>
+                                <ListItemIcon>
+                                    {permission.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={`${permission.title}`} />
+                            </ListItem>
+                        </Link>
+                        :
+                        null
                 ))}
+
                 <button
                     style={{
                         width: "150px",
@@ -149,6 +140,7 @@ class ListMap extends Component {
                 >
                     Logout
                 </button>
+
             </div>
         )
     }
