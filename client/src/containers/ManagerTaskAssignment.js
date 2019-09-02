@@ -59,9 +59,28 @@ class ManagerTaskAssignment extends Component {
     getElapsedTime = (assignDate) => {
         const formatDate = assignDate.replace("T00:00:00.000Z", "");
         const timeDifference = moment().diff(moment(formatDate), 'days');
-        return timeDifference;
+        // convert to positive for due dates
+        if (timeDifference < 0) {
+            return timeDifference * -1;
+        } else {
+            return timeDifference;
+        }
     }
-    // get current date
+    // format task status
+    capitialStatus = (status) => {
+        return status
+            .split('-')
+            .map((dash) => dash.charAt(0).toUpperCase() + dash.substring(1))
+            .join('-')
+    }
+    // format assigned status
+    formatStatus = (status) => {
+        if (status) {
+            return "Assigned"
+        } else {
+            return "Unassigned"
+        }
+    }
 
     render() {
         return (
@@ -76,10 +95,10 @@ class ManagerTaskAssignment extends Component {
                             // user={task.user}
                             // client={task.client}
                             description={task.description}
-                            assignedStatus={task.assignedStatus}
+                            assignedStatus={this.formatStatus(task.assignedStatus)}
                             elapsedTime={this.getElapsedTime(task.assignDate)}
-                            // dueDate={task.fillthisin}
-                            completionStatus={task.completionStatus}
+                            dueDate={this.getElapsedTime(task.dueDate)}
+                            completionStatus={this.capitialStatus(task.completionStatus)}
                             // note={task.note}
                         />
                     </div>
