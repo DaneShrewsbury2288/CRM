@@ -12,6 +12,7 @@ class ManagerTaskAssignment extends Component {
         tasks: [],
         clients: [],
         users: [],
+        demoDate: "2019-07-21T00:00:00.000Z",
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -42,14 +43,24 @@ class ManagerTaskAssignment extends Component {
             )
             .catch(error => console.log("Check task clients: " + error))
     }
+    
     checkState = () => {
         console.log(this.state.tasks);
+        this.getElapsedTime(this.state.demoDate);
     }
 
     //functions to create
     // handle input change
     handleInputChange = () => {
 
+    }
+    // get elapsed time for task
+    getElapsedTime = (assignDate) => {
+        const formatDate = assignDate.replace("T00:00:00.000Z", "");
+        const currentTime = new Date().getTime();
+        const currentDate = new Date(currentTime)
+        console.log(currentDate.toString())
+        console.log("formatted original date: " + formatDate);
     }
     // get current date
 
@@ -59,7 +70,21 @@ class ManagerTaskAssignment extends Component {
                 <PageTitle title="Manager Task Assignment" />
                 {/* <InputForm /> */}
                 {/* <Card /> */}
-                <TaskTable />
+                {this.state.tasks.map(task => (
+                    <div>
+                        <TaskTable
+                            key={task._id}
+                            // user={task.user}
+                            // client={task.client}
+                            description={task.description}
+                            assignedStatus={task.assignedStatus}
+                            // elapsedTime={task.fillthisin}
+                            // dueDate={task.fillthisin}
+                            completionStatus={task.completionStatus}
+                            // note={task.note}
+                        />
+                    </div>
+                ))}
                 <button onClick={this.checkState}>
                     Check tasks
                 </button>

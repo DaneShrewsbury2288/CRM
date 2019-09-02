@@ -3,46 +3,68 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
 function TaskTable(props) {
     return (
         <div>
-            {/* <Card>
-                <CardContent> */}
-            <Grid container spacing={3} wrap="nowrap">
-                <Grid item xs>
-                    <Paper className="paper" wrap="nowrap">Task</Paper>
-                </Grid>
-                <Grid item xs>
-                    <Paper className="paper" wrap="nowrap">Employee Name</Paper>
-                </Grid>
-                <Grid item xs>
-                    <Paper className="paper" wrap="nowrap">Client Name</Paper>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} wrap="nowrap">
-                <Grid item xs={12}>
-                    <Paper className="paper" wrap="nowrap">Description</Paper>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} wrap="nowrap">
-                <Grid item xs={6}>
-                    <Paper className="paper" wrap="nowarp">Time since task was assigned ___</Paper>
-                </Grid>
-                <Grid item xs={6}>
-                    <Paper className="paper" wrap="nowarp">Due is ___ days</Paper>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} wrap="nowrap">
-                <Grid item xs>
-                    <Paper className="paper">
-                    There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. 
+            <Card>
+                <CardContent>
+                    <Grid container spacing={3} wrap="nowrap">
+                        <Grid item lg>
+                            <Paper className="paper-header">Task</Paper>
+                        </Grid>
+                        <Grid item lg>
+                            <Paper className="paper-headerer">{props.user}</Paper>
+                        </Grid>
+                        <Grid item lg>
+                            <Paper className="paper-headerper">{props.client}</Paper>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3} wrap="nowrap">
+                        <Grid item lg={1}>
+                            <Paper className="paper-header">Description</Paper>
+                        </Grid>
+                        <Grid item lg={11}>
+                            <Paper className="paper">{props.description}</Paper>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3} wrap="nowrap">
+                        <Grid item lg={1}>
+                            <Paper className="paper-header">Current Status</Paper>
+                        </Grid>
+                        <Grid item lg={2}>
+                            <Paper className="paper">{props.assignedStatus}</Paper>
+                        </Grid>
+                        <Grid item lg={3}>
+                            <Paper className="paper">Time since task was assigned {props.elapsedTime}</Paper>
+                        </Grid>
+                        <Grid item lg={3}>
+                            <Paper className="paper">Due is {props.dueDate} days</Paper>
+                        </Grid>
+                        <Grid item lg={3}>
+                            <Paper className="paper">{props.completionStatus}</Paper>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3} wrap="nowrap">
+                        <Grid item lg={1}>
+                            <Paper className="paper-header">
+                                Note
                     </Paper>
-                </Grid>
-            </Grid>
-
-            {/* </CardContent>
-            </Card> */}
+                        </Grid>
+                        <Grid item lg={10}>
+                            <Paper className="paper">
+                                {props.note}
+                    </Paper>
+                        </Grid>
+                        <Grid item lg={1}>
+                            <Button variant="contained" color="secondary" className="button">
+                                Delete
+                    </Button>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
 
         </div>
     )
