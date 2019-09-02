@@ -6,6 +6,7 @@ import PageTitle from "../components/PageTitle";
 import TaskTable from "../components/Task";
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
+import moment from "moment";
 
 class ManagerTaskAssignment extends Component {
     state = {
@@ -57,10 +58,8 @@ class ManagerTaskAssignment extends Component {
     // get elapsed time for task
     getElapsedTime = (assignDate) => {
         const formatDate = assignDate.replace("T00:00:00.000Z", "");
-        const currentTime = new Date().getTime();
-        const currentDate = new Date(currentTime)
-        console.log(currentDate.toString())
-        console.log("formatted original date: " + formatDate);
+        const timeDifference = moment().diff(moment(formatDate), 'days');
+        return timeDifference;
     }
     // get current date
 
@@ -78,7 +77,7 @@ class ManagerTaskAssignment extends Component {
                             // client={task.client}
                             description={task.description}
                             assignedStatus={task.assignedStatus}
-                            // elapsedTime={task.fillthisin}
+                            elapsedTime={this.getElapsedTime(task.assignDate)}
                             // dueDate={task.fillthisin}
                             completionStatus={task.completionStatus}
                             // note={task.note}

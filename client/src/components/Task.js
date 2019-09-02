@@ -37,10 +37,10 @@ function TaskTable(props) {
                             <Paper className="paper">{props.assignedStatus}</Paper>
                         </Grid>
                         <Grid item lg={3}>
-                            <Paper className="paper">Time since task was assigned {props.elapsedTime}</Paper>
+                            <Paper className="paper">Time since task was assigned {props.elapsedTime} days ago</Paper>
                         </Grid>
                         <Grid item lg={3}>
-                            <Paper className="paper">Due is {props.dueDate} days</Paper>
+                            <Paper className="paper">Due in {props.dueDate} days</Paper>
                         </Grid>
                         <Grid item lg={3}>
                             <Paper className="paper">{props.completionStatus}</Paper>
