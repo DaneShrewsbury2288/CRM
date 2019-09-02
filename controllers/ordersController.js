@@ -6,12 +6,22 @@ module.exports = {
     Order
       .find(req.query)
       .sort({ date: -1 })
-      // populate products
-      .populate("product", "_id productName quantity price")
-      // populate associated user
-      .populate("user", "_id firstName lastName")
-      // populate associated client
-      .populate("client", "_id name")
+      // populate all users, clients and notes associated with tasks
+      .populate({
+        path: 'user client note product',
+        populate: {
+          path: 'user'
+        },
+        populate: {
+          path: 'client'
+        },
+        populate: {
+          path: 'note'
+        },
+        populate: {
+          path: 'product'
+        }
+      })
       .then(dbModel => {
         res.status(200).json({
           orders: dbModel.map(model => {
@@ -19,7 +29,9 @@ module.exports = {
               _id: model._id,
               product: model.product,
               user: model.user,
-              client: model.client
+              cart: model.cart,
+              client: model.client,
+              note: model.note
             };
           })
         })
@@ -29,6 +41,21 @@ module.exports = {
   findById: function (req, res) {
     Order
       .findById(req.params.id)
+      .populate({
+        path: 'user clients notes product',
+        populate: {
+          path: 'user'
+        },
+        populate: {
+          path: 'client'
+        },
+        populate: {
+          path: 'note'
+        },
+        populate: {
+          path: 'product'
+        }
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -37,15 +64,15 @@ module.exports = {
       .create(req.query)
       // associate client ID with order
       .then(function (dbClient) {
-        return db.Client.findOneAndUpdate({}, { $push: { clients: dbClient._id } }, { new: true });
+        return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
       })
       // update product quantity
       .then(function (dbProduct) {
-        return db.Product.findOneAndUpdate({}, { $push: { products: dbProduct._id } }, { new: true });
+        return db.Product.findOneAndUpdate({}, { $push: { product: dbProduct._id } }, { new: true });
       })
       // associate user ID with order
       .then(function (dbUser) {
-        return db.User.findOneAndUpdate({}, { $push: { users: dbUser._id } }, { new: true });
+        return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
       })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

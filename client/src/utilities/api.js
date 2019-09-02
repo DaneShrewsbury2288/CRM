@@ -5,6 +5,10 @@ export default {
     getTasks: function() {
       return axios.get("/api/tasks");
     },
+    // Get one task
+    getTask: function(id) {
+      return axios.get("/api/tasks/" + id);
+    },
     // Deletes the task with the given id
     deleteTask: function(id) {
       return axios.delete("/api/tasks/" + id);
@@ -21,6 +25,10 @@ export default {
     // Gets all orders
     getOrders: function() {
       return axios.get("/api/orders");
+    },
+    // Get one order
+    getOrder: function(id) {
+      return axios.get("/api/orders/" +id);
     },
     // Deletes the order with the given id
     deleteOrder: function(id) {
@@ -39,6 +47,10 @@ export default {
     getClients: function() {
       return axios.get("/api/clients");
     },
+    // get one client
+    getClient: function(id) {
+      return axios.get("/api/clients/" + id)
+    },
     // Deletes the client with the given id
     deleteClient: function(id) {
       return axios.delete("/api/clients/" + id);
@@ -55,6 +67,10 @@ export default {
     // Gets all products
     getProducts: function() {
       return axios.get("/api/products");
+    },
+    // Get one product
+    getProduct: function(id) {
+      return axios.get("/api/products/" + id);
     },
     // Deletes the product with the given id
     deleteProduct: function(id) {
