@@ -22,6 +22,23 @@ const OrderSchema = new Schema({
             required: true
         }
     ],
+    // would need to take the product name and price from products to use
+    cart: [{
+        item: {
+            productName: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            },
+            price: {
+                type: Number,
+                required: true
+            }
+        }
+    }],
     // when the order happened
     created_at: {
         type: Date,
@@ -34,8 +51,7 @@ const OrderSchema = new Schema({
             // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
             // The ObjectIds will refer to the ids in the User model
-            ref: "User",
-            required: true
+            ref: "User"
         }
     ],
     // if the order has been fulfilled
@@ -44,7 +60,16 @@ const OrderSchema = new Schema({
             Boolean,
             default: false
         }
-    }
+    },
+    // create notes and associate with order
+    note: [
+        {
+            // Store ObjectIds in the array
+            type: Schema.Types.ObjectId,
+            // The ObjectIds will refer to the ids in the Note model
+            ref: "Note"
+        }
+    ],
 });
 
 const Order = mongoose.model("Order", OrderSchema);

@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -23,25 +23,31 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard(clientName, salesPerson, clientDescription, link) {
+export default function SimpleCard(clientID, assignedDate, assignedStatus, completionStatus) {
   const classes = useStyles();
 
   return (
     <Card className={classes.card} id="task-card">
       <CardContent>
         <Typography variant="h5" component="h2">
-          {clientName}
+          {clientID}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        {/* <Typography className={classes.pos} color="textSecondary">
           {salesPerson}
+        </Typography> */}
+        <Typography variant="body2" component="p">
+          {assignedDate}
         </Typography>
         <Typography variant="body2" component="p">
-          {clientDescription}
+          {assignedStatus}
+        </Typography>
+        <Typography variant="body2" component="p">
+          {completionStatus}
         </Typography>
       </CardContent>
-      <CardActions>
+      {/* <CardActions>
         <Button size="small">{link}</Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
