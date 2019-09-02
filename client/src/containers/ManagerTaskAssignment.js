@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
-// import Card from '../components/Card';
-// import InputForm from '../components/InputForm';
+import Button from "../components/Button";
+import InputForm from '../components/InputForm';
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
 
@@ -44,10 +44,30 @@ class ManagerTaskAssignment extends Component {
         console.log(this.state.tasks);
     }
 
+    //functions to create
+    // handle input change
+    handleInputChange = () => {
+
+    }
+    // get current date
+
     render() {
         return (
             <div>
                 <PageTitle title="Manager Task Assignment" />
+                <InputForm 
+                    handleInputChange={this.handleInputChange}
+                    userName={"User name"}
+                    userID={12345}
+                    clientName={"Client name"}
+                    clientID={54321}
+                    description={"Here is a very descriptive description describing the task"}
+                    button={<Button>
+                        buttonClass={}
+                        buttonAction={}
+                        buttonName={"Submit"}
+                    </Button>}
+                />
                 <button onClick={this.checkState}>
                     Check tasks
                 </button>

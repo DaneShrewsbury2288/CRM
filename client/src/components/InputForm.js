@@ -1,123 +1,80 @@
 import React from 'react';
-// import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-// import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  DatePicker
+} from "material-ui-pickers";
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  dense: {
-    marginTop: theme.spacing(2),
-  },
-  menu: {
-    width: 200,
-  },
-}));
-
-export default function OutlinedTextFields(client, agent, clientEmail, clientPhone, description, potentialValue, industry) {
-  const classes = useStyles();
-  // const [values, setValues] = React.useState({
-  //   name: 'Cat in the Hat',
-  //   age: '',
-  //   multiline: 'Controlled'
-  // });
-
-  // const handleChange = name => event => {
-  //   setValues({ ...values, [name]: event.target.value });
-  // };
-
+function inputForm(handleInputChange, userName, userID,clientName, clientID, description, button) {
   return (
-    <form className={classes.container} noValidate autoComplete="off">
-      <TextField
-        required
-        id="outlined-required"
-        label="Client Name"
-        placeholder="Client Name"
-        className={classes.textField}
-        value={client}
-        margin="normal"
-        variant="outlined"
-      />
-      <TextField
-        required
-        id="outlined-required"
-        label="Sales Agent"
-        placeholder="Assigned Agent Name"
-        className={classes.textField}
-        value={agent}
-        margin="normal"
-        variant="outlined"
-      />
-      <TextField
-        required
-        id="outlined-email-input"
-        label="Email"
-        className={classes.textField}
-        value={clientEmail}
-        type="email"
-        name="email"
-        autoComplete="email"
-        margin="normal"
-        variant="outlined"
-      />
-      <TextField
-        required
-        id="outlined-number"
-        label="Phone Number"
-        value={clientPhone}
-        type="number"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        margin="normal"
-        variant="outlined"
-      />
-      <TextField
-        required
-        id="outlined-multiline-static"
-        label="Description"
-        multiline
-        rows="4"
-        defaultValue={description}
-        className={classes.textField}
-        value={description}
-        margin="normal"
-        variant="outlined"
-      />
-      <TextField
-        required
-        id="outlined-number"
-        label="Potential Value"
-        value={potentialValue}
-        type="number"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        margin="normal"
-        variant="outlined"
-      />
-      <TextField
-        id="outlined-full-width"
-        label="Industry"
-        style={{ margin: 8 }}
-        placeholder="What kind of business is this?"
-        value={industry}
-        fullWidth
-        margin="normal"
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-    </form>
-  );
+    <div className="taskInputForm">
+      <div className="taskHead">New Task</div>
+      <form className="container" noValidate autoComplete="off">
+        <FormControl className="formControl">
+          {/* Employee selection */}
+          <InputLabel htmlFor="user-selection">{userName}</InputLabel>
+          <Select
+            value={userID}
+            onChange={handleInputChange}
+            // Attributes applied to the input element
+            inputProps={{
+              name: 'user',
+              id: 'user-selection',
+            }}
+          >
+            {/* Map menu items based on client total? */}
+            <MenuItem value={userName}>User One</MenuItem>
+            <MenuItem value={userName}>User Two</MenuItem>
+            <MenuItem value={userName}>User Three</MenuItem>
+            <MenuItem value={userName}>User Four</MenuItem>
+            <MenuItem value={userName}>User Five</MenuItem>
+            <MenuItem value={userName}>User Six</MenuItem>
+          </Select>
+          {/* Client name/selection */}
+          <InputLabel htmlFor="client-selection">{clientName}</InputLabel>
+          <Select
+            value={clientID}
+            onChange={handleInputChange}
+            // Attributes applied to the input element
+            inputProps={{
+              name: 'client',
+              id: 'client-selection',
+            }}
+          >
+            {/* Map menu items based on client total? */}
+            <MenuItem value={clientName}>Client One</MenuItem>
+            <MenuItem value={clientName}>Client Two</MenuItem>
+            <MenuItem value={clientName}>Client Three</MenuItem>
+            <MenuItem value={clientName}>Client Four</MenuItem>
+            <MenuItem value={clientName}>Client Five</MenuItem>
+            <MenuItem value={clientName}>Client Six</MenuItem>
+          </Select>
+          {/* Task description */}
+          <TextField
+            id="filled-name"
+            label="Description"
+            value={description}
+            name="description"
+            onChange={handleInputChange}
+            margin="normal"
+            
+          />
+          {/* Due date selection */}
+          {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <div className="pickers">
+              <DatePicker value={props.selectedDate} onChange={props.handleDateChange} />
+            </div>
+          </MuiPickersUtilsProvider> */}
+          {button}
+        </FormControl>
+      </form>
+    </div>
+  )
 }
+
+export default inputForm;
