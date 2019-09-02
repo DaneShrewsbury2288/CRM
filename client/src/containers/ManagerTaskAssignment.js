@@ -13,7 +13,6 @@ class ManagerTaskAssignment extends Component {
         tasks: [],
         clients: [],
         users: [],
-        demoDate: "2019-07-21T00:00:00.000Z",
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -46,8 +45,8 @@ class ManagerTaskAssignment extends Component {
     }
     
     checkState = () => {
-        console.log(this.state.tasks);
-        this.getElapsedTime(this.state.demoDate);
+        const tasks = this.state.tasks;
+        console.log(tasks[4]);
     }
 
     //functions to create

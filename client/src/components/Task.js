@@ -47,17 +47,17 @@ function TaskTable(props) {
                         </Grid>
                     </Grid>
                     <Grid container spacing={3} wrap="nowrap">
-                        <Grid item lg={1}>
+                        <Grid item lg={2}>
                             <Paper className="paper-header">
                                 Note
                     </Paper>
                         </Grid>
-                        <Grid item lg={10}>
+                        <Grid item lg={8}>
                             <Paper className="paper">
                                 {props.note}
                     </Paper>
                         </Grid>
-                        <Grid item lg={1}>
+                        <Grid item lg={2}>
                             <Button variant="contained" color="secondary" className="button">
                                 Delete
                     </Button>
