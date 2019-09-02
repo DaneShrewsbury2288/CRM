@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
-import Button from "../components/Button";
-import InputForm from '../components/InputForm';
+// import Button from "../components/Button";
+// import InputForm from '../components/InputForm';
+// import Card from "../components/Card";
+import TaskTable from "../components/Task";
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
 
@@ -55,19 +57,9 @@ class ManagerTaskAssignment extends Component {
         return (
             <div>
                 <PageTitle title="Manager Task Assignment" />
-                <InputForm 
-                    handleInputChange={this.handleInputChange}
-                    userName={"User name"}
-                    userID={12345}
-                    clientName={"Client name"}
-                    clientID={54321}
-                    description={"Here is a very descriptive description describing the task"}
-                    button={<Button>
-                        buttonClass={}
-                        buttonAction={}
-                        buttonName={"Submit"}
-                    </Button>}
-                />
+                {/* <InputForm /> */}
+                {/* <Card /> */}
+                <TaskTable />
                 <button onClick={this.checkState}>
                     Check tasks
                 </button>

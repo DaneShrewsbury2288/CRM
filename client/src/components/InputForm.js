@@ -4,23 +4,23 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  DatePicker
-} from "material-ui-pickers";
+// import DateFnsUtils from "@date-io/date-fns";
+// import {
+//   MuiPickersUtilsProvider,
+//   DatePicker
+// } from "material-ui-pickers";
 
-function inputForm(handleInputChange, userName, userID,clientName, clientID, description, button) {
+function inputForm(props, button) {
   return (
     <div className="taskInputForm">
       <div className="taskHead">New Task</div>
       <form className="container" noValidate autoComplete="off">
         <FormControl className="formControl">
           {/* Employee selection */}
-          <InputLabel htmlFor="user-selection">{userName}</InputLabel>
+          <InputLabel htmlFor="user-selection">Employee Name</InputLabel>
           <Select
-            value={userID}
-            onChange={handleInputChange}
+            value="employee"
+            onChange={console.log("value changed")}
             // Attributes applied to the input element
             inputProps={{
               name: 'user',
@@ -28,18 +28,18 @@ function inputForm(handleInputChange, userName, userID,clientName, clientID, des
             }}
           >
             {/* Map menu items based on client total? */}
-            <MenuItem value={userName}>User One</MenuItem>
-            <MenuItem value={userName}>User Two</MenuItem>
-            <MenuItem value={userName}>User Three</MenuItem>
-            <MenuItem value={userName}>User Four</MenuItem>
-            <MenuItem value={userName}>User Five</MenuItem>
-            <MenuItem value={userName}>User Six</MenuItem>
+            <MenuItem value="user-one">User One</MenuItem>
+            <MenuItem value="user-two">User Two</MenuItem>
+            <MenuItem value="user-three">User Three</MenuItem>
+            <MenuItem value="user-four">User Four</MenuItem>
+            <MenuItem value="user-five">User Five</MenuItem>
+            <MenuItem value="user-six">User Six</MenuItem>
           </Select>
           {/* Client name/selection */}
-          <InputLabel htmlFor="client-selection">{clientName}</InputLabel>
+          <InputLabel htmlFor="client-selection">Client Name</InputLabel>
           <Select
-            value={clientID}
-            onChange={handleInputChange}
+            value="client"
+            onChange={console.log("value changed")}
             // Attributes applied to the input element
             inputProps={{
               name: 'client',
@@ -47,20 +47,20 @@ function inputForm(handleInputChange, userName, userID,clientName, clientID, des
             }}
           >
             {/* Map menu items based on client total? */}
-            <MenuItem value={clientName}>Client One</MenuItem>
-            <MenuItem value={clientName}>Client Two</MenuItem>
-            <MenuItem value={clientName}>Client Three</MenuItem>
-            <MenuItem value={clientName}>Client Four</MenuItem>
-            <MenuItem value={clientName}>Client Five</MenuItem>
-            <MenuItem value={clientName}>Client Six</MenuItem>
+            <MenuItem value="client-one">Client One</MenuItem>
+            <MenuItem value="client-two">Client Two</MenuItem>
+            <MenuItem value="client-three">Client Three</MenuItem>
+            <MenuItem value="client-four">Client Four</MenuItem>
+            <MenuItem value="client-five">Client Five</MenuItem>
+            <MenuItem value="client-six">Client Six</MenuItem>
           </Select>
           {/* Task description */}
           <TextField
             id="filled-name"
             label="Description"
-            value={description}
+            value="description"
             name="description"
-            onChange={handleInputChange}
+            onChange={console.log("value changed")}
             margin="normal"
             
           />
@@ -70,7 +70,7 @@ function inputForm(handleInputChange, userName, userID,clientName, clientID, des
               <DatePicker value={props.selectedDate} onChange={props.handleDateChange} />
             </div>
           </MuiPickersUtilsProvider> */}
-          {button}
+          {/* {button} */}
         </FormControl>
       </form>
     </div>
