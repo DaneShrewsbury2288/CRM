@@ -29,6 +29,7 @@ module.exports = {
               _id: model._id,
               product: model.product,
               user: model.user,
+              cart: model.cart,
               client: model.client,
               note: model.note
             };

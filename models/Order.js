@@ -22,6 +22,23 @@ const OrderSchema = new Schema({
             required: true
         }
     ],
+    // would need to take the product name and price from products to use
+    cart: [{
+        item: {
+            productName: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            },
+            price: {
+                type: Number,
+                required: true
+            }
+        }
+    }],
     // when the order happened
     created_at: {
         type: Date,
