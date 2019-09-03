@@ -4,33 +4,42 @@ import CardContent from '@material-ui/core/CardContent';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 
 function TaskTable(props) {
     return (
         <div>
             <Card>
                 <CardContent>
-                    <Grid container spacing={3} wrap="nowrap">
+                    <Grid container spacing={3}>
                         <Grid item lg>
-                            <Paper className="paper-header">Task</Paper>
+                            <Paper className="paper-header">Task {props.taskNumber}</Paper>
+                        </Grid>
+                        <Grid>
+                            <Grid item lg>
+                                <ListItemAvatar>
+                                    <Avatar alt={props.user} src={props.userImage} />
+                                </ListItemAvatar>
+                            </Grid>
                         </Grid>
                         <Grid item lg>
-                            <Paper className="paper-headerer">{props.user}</Paper>
+                            <Paper className="paper-header">{props.user}</Paper>
                         </Grid>
                         <Grid item lg>
-                            <Paper className="paper-headerper">{props.client}</Paper>
+                            <Paper className="paper-headerr">{props.client}</Paper>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={3} wrap="nowrap">
-                        <Grid item lg={1}>
+                    <Grid container spacing={3}>
+                        <Grid item lg={3}>
                             <Paper className="paper-header">Description</Paper>
                         </Grid>
-                        <Grid item lg={11}>
+                        <Grid item lg={9}>
                             <Paper className="paper">{props.description}</Paper>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={3} wrap="nowrap">
-                        <Grid item lg={1}>
+                    <Grid container spacing={3}>
+                        <Grid item lg={2}>
                             <Paper className="paper-header">Current Status</Paper>
                         </Grid>
                         <Grid item lg={2}>
@@ -46,7 +55,7 @@ function TaskTable(props) {
                             <Paper className="paper">{props.completionStatus}</Paper>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={3} wrap="nowrap">
+                    <Grid container spacing={3}>
                         <Grid item lg={2}>
                             <Paper className="paper-header">
                                 Note
@@ -55,7 +64,7 @@ function TaskTable(props) {
                         <Grid item lg={8}>
                             <Paper className="paper">
                                 {props.note}
-                    </Paper>
+                            </Paper>
                         </Grid>
                         <Grid item lg={2}>
                             <Button variant="contained" color="secondary" className="button">

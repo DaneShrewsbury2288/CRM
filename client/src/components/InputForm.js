@@ -1,80 +1,124 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-// import DateFnsUtils from "@date-io/date-fns";
-// import {
-//   MuiPickersUtilsProvider,
-//   DatePicker
-// } from "material-ui-pickers";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
-function inputForm(props, button) {
+const users = [
+  {
+      "permissions": 16383,
+      "note": [],
+      "_id": "5d617d25affccb40d8d0195e",
+      "firstName": "Honer",
+      "lastName": "Devin",
+      "userKey": 1,
+      "userId": 1,
+      "password": "$2a$10$DQ1s904Iu0DjNgtCi1eqXuwx3NTox2kd5bbGp8Tcv5TSVoz5tq16y",
+      "__v": 0,
+      "created_at": "2019-09-03T05:11:23.734Z"
+  },
+  {
+      "permissions": 16383,
+      "note": [],
+      "_id": "5d618f75691b892e385e7757",
+      "firstName": "Clint",
+      "lastName": "Brodar",
+      "userKey": 7,
+      "userId": 7,
+      "password": "$2a$10$IYDkZub0lhLFQhxvP8CYa.b.7wTpY9.dOv6v0AcokZD44MnX6ATsC",
+      "__v": 0,
+      "created_at": "2019-09-03T05:11:23.734Z"
+  },
+  {
+      "permissions": 8192,
+      "note": [],
+      "_id": "5d618fb9691b892e385e7758",
+      "firstName": "Dane",
+      "lastName": "Shrewsbury",
+      "userKey": 8,
+      "userId": 8,
+      "password": "$2a$10$B6j8CJruBhhu1mT2s4bvZ.XMpRBJnbH4M.Fyv7A5ZLBZIjXQQhhc2",
+      "__v": 0,
+      "created_at": "2019-09-03T05:11:23.734Z"
+  },
+  {
+      "permissions": 16383,
+      "note": [],
+      "_id": "5d618fce691b892e385e7759",
+      "firstName": "Anthony",
+      "lastName": "Lam",
+      "userKey": 9,
+      "userId": 9,
+      "password": "$2a$10$f1yHjEpmpJZNQzlbpPnNVu6tPgljuLEyMt4MH8uNYRBnReJWLakJm",
+      "__v": 0,
+      "created_at": "2019-09-03T05:11:23.734Z"
+  }
+]
+
+
+function InputForm(props) {
   return (
-    <div className="taskInputForm">
-      <div className="taskHead">New Task</div>
-      <form className="container" noValidate autoComplete="off">
-        <FormControl className="formControl">
-          {/* Employee selection */}
-          <InputLabel htmlFor="user-selection">Employee Name</InputLabel>
-          <Select
-            value="employee"
-            onChange={console.log("value changed")}
-            // Attributes applied to the input element
-            inputProps={{
-              name: 'user',
-              id: 'user-selection',
-            }}
-          >
-            {/* Map menu items based on client total? */}
-            <MenuItem value="user-one">User One</MenuItem>
-            <MenuItem value="user-two">User Two</MenuItem>
-            <MenuItem value="user-three">User Three</MenuItem>
-            <MenuItem value="user-four">User Four</MenuItem>
-            <MenuItem value="user-five">User Five</MenuItem>
-            <MenuItem value="user-six">User Six</MenuItem>
-          </Select>
-          {/* Client name/selection */}
-          <InputLabel htmlFor="client-selection">Client Name</InputLabel>
-          <Select
-            value="client"
-            onChange={console.log("value changed")}
-            // Attributes applied to the input element
-            inputProps={{
-              name: 'client',
-              id: 'client-selection',
-            }}
-          >
-            {/* Map menu items based on client total? */}
-            <MenuItem value="client-one">Client One</MenuItem>
-            <MenuItem value="client-two">Client Two</MenuItem>
-            <MenuItem value="client-three">Client Three</MenuItem>
-            <MenuItem value="client-four">Client Four</MenuItem>
-            <MenuItem value="client-five">Client Five</MenuItem>
-            <MenuItem value="client-six">Client Six</MenuItem>
-          </Select>
-          {/* Task description */}
-          <TextField
-            id="filled-name"
-            label="Description"
-            value="description"
-            name="description"
-            onChange={console.log("value changed")}
-            margin="normal"
-            
-          />
-          {/* Due date selection */}
-          {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <div className="pickers">
-              <DatePicker value={props.selectedDate} onChange={props.handleDateChange} />
+    <div>
+      <Card>
+        <CardContent>
+          <form>
+            <div className="task-form">
+              <Grid container spacing={3}>
+                <Grid item lg={4}>
+                  <Paper className="paper-header">Create a task</Paper>
+                </Grid>
+                <Grid item lg={4}>
+                  <ClickAwayListener>
+                    <div>
+                      <Button onClick={props.userHandleClick}>Assign Employee</Button>
+                      {props.userOpen ? (
+                        <div>
+                          {users.map(user => (
+                            <Paper 
+                            className="paper" 
+                            onClick={console.log(user.firstName + " has been clicked")}
+                            key={user._id} 
+                            >
+                              {user.firstName + " " + user.lastName}
+                            </Paper>
+                          ))}
+                        </div>
+                      ) : null}
+                    </div>
+                  </ClickAwayListener>
+                </Grid>
+                <Grid item lg={4}>
+                  <input
+                    placeholder="Client"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={3}>
+                <Grid item lg={12}>
+                  <input
+                    placeholder="Task description"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={3}>
+                <Grid item lg={8}></Grid>
+                <Grid item lg={2}>
+                  <Paper className="paper">Due Date</Paper>
+                </Grid>
+                <Grid item lg={2}>
+                  <Button variant="contained" color="primary" className="button">
+                    Submit Task
+                  </Button>
+                </Grid>
+              </Grid>
             </div>
-          </MuiPickersUtilsProvider> */}
-          {/* {button} */}
-        </FormControl>
-      </form>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   )
 }
 
-export default inputForm;
+export default InputForm;

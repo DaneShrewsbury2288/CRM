@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 // import Button from "../components/Button";
-// import InputForm from '../components/InputForm';
-// import Card from "../components/Card";
+import InputForm from '../components/InputForm';
 import TaskTable from "../components/Task";
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import moment from "moment";
 
 class ManagerTaskAssignment extends Component {
@@ -13,6 +13,7 @@ class ManagerTaskAssignment extends Component {
         tasks: [],
         clients: [],
         users: [],
+        userOpenOption: false,
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -43,10 +44,19 @@ class ManagerTaskAssignment extends Component {
             )
             .catch(error => console.log("Check task clients: " + error))
     }
-    
+
     checkState = () => {
         const tasks = this.state.tasks;
-        console.log(tasks[4]);
+        this.fullName(tasks[4].user[0].firstName, tasks[4].user[0].lastName);
+    }
+    // create user full name
+    fullName = (first, last) => {
+        if (first && last) {
+            console.log(first + " " + last);
+            return first + " " + last;
+        } else {
+            return "No Employe Assigned"
+        }
     }
 
     //functions to create
@@ -80,28 +90,48 @@ class ManagerTaskAssignment extends Component {
             return "Unassigned"
         }
     }
+    // change user selection menu from open to closed
+    userHandleClick = () => {
+        const open = !this.state.userOpenOption;
+        this.setState({ userOpenOption: open })
+    }
+
+
 
     render() {
         return (
             <div>
                 <PageTitle title="Manager Task Assignment" />
-                {/* <InputForm /> */}
-                {/* <Card /> */}
-                {this.state.tasks.map(task => (
+                <InputForm 
+                    userOpen={this.state.userOpenOption}
+                    userHandleClick={this.userHandleClick}
+                />
+                <div className="task-space"></div>
+                {/* force page to wait for tasks to load */}
+                {this.state.tasks.length > 0 ? (
                     <div>
-                        <TaskTable
-                            key={task._id}
-                            // user={task.user}
-                            // client={task.client}
-                            description={task.description}
-                            assignedStatus={this.formatStatus(task.assignedStatus)}
-                            elapsedTime={this.getElapsedTime(task.assignDate)}
-                            dueDate={this.getElapsedTime(task.dueDate)}
-                            completionStatus={this.capitialStatus(task.completionStatus)}
-                            // note={task.note}
-                        />
+                        {this.state.tasks.map(task => (
+                            <div>
+                                <TaskTable
+                                    key={task._id}
+                                    taskNumber={task._id}
+                                    // user={this.fullName(task.user[0].firstName, task.user[0].lastName)}
+                                    userImage="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=622&q=80"
+                                    users={this.state.users}
+                                    // client={task.client}
+                                    description={task.description}
+                                    assignedStatus={this.formatStatus(task.assignedStatus)}
+                                    elapsedTime={this.getElapsedTime(task.assignDate)}
+                                    dueDate={this.getElapsedTime(task.dueDate)}
+                                    completionStatus={this.capitialStatus(task.completionStatus)}
+                                // note={task.note}
+                                />
+                            </div>
+                        ))}
                     </div>
-                ))}
+                ) :  (
+                    <LinearProgress />
+                    )}
                 <button onClick={this.checkState}>
                     Check tasks
                 </button>
