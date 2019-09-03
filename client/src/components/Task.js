@@ -31,10 +31,10 @@ function TaskTable(props) {
                         </Grid>
                     </Grid>
                     <Grid container spacing={3}>
-                        <Grid item lg={3}>
+                        <Grid item lg={2}>
                             <Paper className="paper-header">Description</Paper>
                         </Grid>
-                        <Grid item lg={9}>
+                        <Grid item lg={10}>
                             <Paper className="paper">{props.description}</Paper>
                         </Grid>
                     </Grid>

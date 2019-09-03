@@ -14,6 +14,9 @@ class ManagerTaskAssignment extends Component {
         clients: [],
         users: [],
         userOpenOption: false,
+        userDropDown: "Assign an Employee",
+        clientDropDown: "Assign a Client",
+        clientOpenOption: false,
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -46,8 +49,8 @@ class ManagerTaskAssignment extends Component {
     }
 
     checkState = () => {
-        const tasks = this.state.tasks;
-        this.fullName(tasks[4].user[0].firstName, tasks[4].user[0].lastName);
+        const clients = this.state.clients;
+        console.log(clients);
     }
     // create user full name
     fullName = (first, last) => {
@@ -89,11 +92,31 @@ class ManagerTaskAssignment extends Component {
         } else {
             return "Unassigned"
         }
-    }
+    };
     // change user selection menu from open to closed
     userHandleClick = () => {
         const open = !this.state.userOpenOption;
         this.setState({ userOpenOption: open })
+    };
+    userSelection = (id, firstName, lastName) => {
+        console.log(id);
+        console.log(firstName);
+        console.log(lastName);
+    };
+    clientHandleClick = () => {
+        const open = !this.state.clientOpenOption;
+        this.setState({ clientOpenOption: open })
+    }
+    clientSelection = (id, name) => {
+        console.log(id);
+        console.log(name);
+    }
+    // close user/client selection menus if user clicks elsewhere
+    userHandleClickAway = () => {
+        this.setState({ userOpenOption: false })
+    }
+    clientHandleClickAway = () => {
+        this.setState({ clientOpenOption: false })
     }
 
 
@@ -102,9 +125,19 @@ class ManagerTaskAssignment extends Component {
         return (
             <div>
                 <PageTitle title="Manager Task Assignment" />
-                <InputForm 
+                <InputForm
                     userOpen={this.state.userOpenOption}
                     userHandleClick={this.userHandleClick}
+                    users={this.state.users}
+                    userSelection={this.userSelection}
+                    userDropDown={this.state.userDropDown}
+                    clientOpen={this.state.clientOpenOption}
+                    clientHandleClick={this.clientHandleClick}
+                    clients={this.state.clients}
+                    clientSelection={this.clientSelection}
+                    clientDropDown={this.state.clientDropDown}
+                    userHandleClickAway={this.userHandleClickAway}
+                    clientHandleClickAway={this.clientHandleClickAway}
                 />
                 <div className="task-space"></div>
                 {/* force page to wait for tasks to load */}
@@ -129,8 +162,8 @@ class ManagerTaskAssignment extends Component {
                             </div>
                         ))}
                     </div>
-                ) :  (
-                    <LinearProgress />
+                ) : (
+                        <LinearProgress />
                     )}
                 <button onClick={this.checkState}>
                     Check tasks
