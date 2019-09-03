@@ -16,5 +16,15 @@ export default {
   // Saves a user to the database
   updateUser: function(id, userData) {
     return axios.put("/api/users/" + id, userData);
+  },
+  getMessages: function() {
+    return axios.get("/api/messages/");
+  },
+  findMessages: function (userIds) {
+    console.log(userIds)
+    return axios.get("api/messages/" + userIds)
+  },
+  createMessage: function (messageData) {
+    return axios.post("api/messages/", messageData)
   }
 };
