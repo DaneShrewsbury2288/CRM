@@ -18,44 +18,36 @@ const switches = [
         bitmask: 0b100,
     },
     {
-        label: "Client Small",
+        label: "Client List",
         bitmask: 0b1000,
     },
     {
-        label: "Client Large",
+        label: "Purchasing Tool",
         bitmask: 0b10000,
     },
     {
-        label: "Orders",
+        label: "Sales Analytics",
         bitmask: 0b100000,
     },
     {
-        label: "Purchasing Tool",
+        label: "Manager Task Assignment",
         bitmask: 0b1000000,
     },
     {
-        label: "Sales Analytics",
+        label: "Sales Team Analytics",
         bitmask: 0b10000000,
     },
     {
-        label: "Manager Task Assignment",
+        label: "Map Of Sales",
         bitmask: 0b100000000,
     },
     {
-        label: "Sales Team Analytics",
+        label: "Discover",
         bitmask: 0b1000000000,
     },
     {
-        label: "Map Of Sales",
-        bitmask: 0b10000000000,
-    },
-    {
-        label: "Discover",
-        bitmask: 0b100000000000,
-    },
-    {
         label: "Add Or Remove Users",
-        bitmask: 0b1000000000000,
+        bitmask: 0b10000000000,
     }
 ];
 

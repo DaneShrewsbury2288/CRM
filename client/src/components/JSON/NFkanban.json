@@ -40,10 +40,13 @@
             "title": "Reach $10,000 in sales",
             "description": "We're on our way to the big leagues boys",
              "label": "Q3", 
-             "draggable": true}
+             "draggable": true,
+             "canAddLanes": true
+            }
 
       ]
     }
     
   ]
 }
+
