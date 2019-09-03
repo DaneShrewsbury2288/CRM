@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 
 
 export default function ClientInformation() {
-  const [name, email, phone, zipcode, setName] = React.useState('');
+  const [name, email, phone, zipcode] = React.useState('');
   const [count, setCount] = React.useState(0);
 
   // Similar to componentDidMount and componentDidUpdate:
@@ -26,13 +26,11 @@ export default function ClientInformation() {
         <Grid item xs={12}>
           <TextField
             required
-            value=""
             id="businessName"
             name="address1"
             label="Business Name"
             fullWidth
             autoComplete="Business Name"
-            onChange={() => setName(name)}
           />
         </Grid>
         <Grid item xs={12}>

@@ -40,27 +40,16 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
-const items =[];
+const items=[];
 
 function getItems(res) {
   API.getProducts(res)
-      .then(res => 
-        rows.push(res.data[1]),
-        )
+      .then(res =>
+        res.data.map(result => (
+          rows.push(result)
+        )))
         .catch(error => console.log("Check tasks error: " + error))
-
-   API.getProducts(res)
-      .then(res => 
-        rows.push(res.data[2]),
-        )
-        .catch(error => console.log("Check tasks error: " + error)) 
-
-     API.getProducts(res)
-      .then(res => 
-        rows.push(res.data[3]),
-        )
-        .catch(error => console.log("Check tasks error: " + error))         
-}
+ }
 
 getItems();
 
