@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
-// import Button from "../components/Button";
 import InputForm from '../components/InputForm';
 import TaskTable from "../components/Task";
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Grid from '@material-ui/core/Grid';
 import moment from "moment";
 
 class ManagerTaskAssignment extends Component {
@@ -49,16 +49,69 @@ class ManagerTaskAssignment extends Component {
     }
 
     checkState = () => {
-        const clients = this.state.clients;
-        console.log(clients);
+        const tasks = this.state.tasks;
+        const user = tasks[4].user[0].lastName;
+        console.log(user);
+        // console.log(Object.keys(user));
+        // console.log(Array.isArray(user));
     }
     // create user full name
-    fullName = (first, last) => {
-        if (first && last) {
-            console.log(first + " " + last);
-            return first + " " + last;
+    fullName = (userInfo) => {
+        let str = "";
+        for (let i = 0; i < userInfo.length; i++) {
+            if (userInfo[i].firstName && userInfo[i].lastName) {
+                str += str + userInfo[i].firstName + " " + userInfo[i].lastName;
+            } else {
+                str += "";
+            }
+        }
+        if (str.length > 0) {
+            return str;
         } else {
-            return "No Employe Assigned"
+            str += "No Employee Assigned";
+            return str;
+        }
+    }
+    checkIfTaskHasClient = (client) => {
+        let str = "";
+        for (let i = 0; i < client.length; i++) {
+            if (client[i].name) {
+                str += str + client[i].name;
+            } else {
+                str += "";
+            }
+        }
+        if (str.length > 0) {
+            return str;
+        } else {
+            str += "No Client Assigned";
+            return str;
+        }
+    }
+    // add default if user does not have a profile picutre
+    checkUserImage = user => {
+        for (let i = 0; i < user.length; i++) {
+            if (user[i].image) {
+                return user[i].image;
+            } else {
+                return "https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=622&q=80";
+            }
+        }
+    }
+    checkTaskNotes = note => {
+        let str = "";
+        for (let i = 0; i < note.length; i++) {
+            if (note[i].content) {
+                str += str + note[i].content;
+            } else {
+                str += "";
+            }
+        }
+        if (str.length > 0) {
+            return str;
+        } else {
+            str += "No Notes Found";
+            return str;
         }
     }
 
@@ -120,7 +173,6 @@ class ManagerTaskAssignment extends Component {
     }
 
 
-
     render() {
         return (
             <div>
@@ -144,21 +196,22 @@ class ManagerTaskAssignment extends Component {
                 {this.state.tasks.length > 0 ? (
                     <div>
                         {this.state.tasks.map(task => (
-                            <div>
-                                <TaskTable
-                                    key={task._id}
-                                    taskNumber={task._id}
-                                    // user={this.fullName(task.user[0].firstName, task.user[0].lastName)}
-                                    userImage="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=622&q=80"
-                                    users={this.state.users}
-                                    // client={task.client}
-                                    description={task.description}
-                                    assignedStatus={this.formatStatus(task.assignedStatus)}
-                                    elapsedTime={this.getElapsedTime(task.assignDate)}
-                                    dueDate={this.getElapsedTime(task.dueDate)}
-                                    completionStatus={this.capitialStatus(task.completionStatus)}
-                                // note={task.note}
-                                />
+                            <div key={task._id}>
+                                <Grid item lg={12}>
+                                    <TaskTable
+                                        taskNumber={task._id}
+                                        user={this.fullName(task.user)}
+                                        userImage={this.checkUserImage(task.user)}
+                                        users={this.state.users}
+                                        client={this.checkIfTaskHasClient(task.client)}
+                                        description={task.description}
+                                        assignedStatus={this.formatStatus(task.assignedStatus)}
+                                        elapsedTime={this.getElapsedTime(task.assignDate)}
+                                        dueDate={this.getElapsedTime(task.dueDate)}
+                                        completionStatus={this.capitialStatus(task.completionStatus)}
+                                        note={this.checkTaskNotes(task.note)}
+                                    />
+                                </Grid>
                             </div>
                         ))}
                     </div>
@@ -172,6 +225,5 @@ class ManagerTaskAssignment extends Component {
         )
     }
 }
-
 
 export default ManagerTaskAssignment;

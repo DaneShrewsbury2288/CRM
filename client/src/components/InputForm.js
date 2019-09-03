@@ -34,7 +34,6 @@ function InputForm(props) {
                                 {user.firstName + " " + user.lastName}
                               </Button>
                             </Grid>
-
                           ))}
                         </div>
                       ) : null}

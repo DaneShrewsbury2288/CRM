@@ -59,7 +59,7 @@ function TaskTable(props) {
                         <Grid item lg={2}>
                             <Paper className="paper-header">
                                 Note
-                    </Paper>
+                            </Paper>
                         </Grid>
                         <Grid item lg={8}>
                             <Paper className="paper">
