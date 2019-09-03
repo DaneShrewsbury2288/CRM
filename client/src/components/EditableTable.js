@@ -249,7 +249,7 @@ export default function EnhancedTable() {
   const [orderBy, setOrderBy] = React.useState('price');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense] = React.useState(false);
+  const [dense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   function handleRequestSort(event, property) {
@@ -347,8 +347,6 @@ export default function EnhancedTable() {
                       </TableCell>
                       <TableCell align="right">${row.price}</TableCell>
                       <TableCell align="right">{row.quantity}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
                     </TableRow>
                   );
                 })}
