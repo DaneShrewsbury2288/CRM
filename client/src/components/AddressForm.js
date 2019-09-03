@@ -66,13 +66,6 @@ export default function ClientInformation() {
         </Grid>
       </Grid>
 
-      <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-
     </React.Fragment>
   );
 }

@@ -26,7 +26,7 @@ function createData(productName, price, quantity) {
 }
 
 const rows = [
-  createData('Cupcake', '$'+10, 5),
+  createData('Cupcake', 10, 5),
 ];
 
 //Descending Order
@@ -45,11 +45,21 @@ const items =[];
 function getItems(res) {
   API.getProducts(res)
       .then(res => 
-        // this.setState({ products: res.data}),
         rows.push(res.data[1]),
-        console.log(rows)
         )
         .catch(error => console.log("Check tasks error: " + error))
+
+   API.getProducts(res)
+      .then(res => 
+        rows.push(res.data[2]),
+        )
+        .catch(error => console.log("Check tasks error: " + error)) 
+
+     API.getProducts(res)
+      .then(res => 
+        rows.push(res.data[3]),
+        )
+        .catch(error => console.log("Check tasks error: " + error))         
 }
 
 getItems();
@@ -335,7 +345,7 @@ export default function EnhancedTable() {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.productName}
                       </TableCell>
-                      <TableCell align="right">{row.price}</TableCell>
+                      <TableCell align="right">${row.price}</TableCell>
                       <TableCell align="right">{row.quantity}</TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
                       <TableCell align="right">{row.protein}</TableCell>
