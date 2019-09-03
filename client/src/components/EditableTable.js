@@ -46,12 +46,13 @@ function getItems(res) {
   API.getProducts(res)
       .then(res => 
         // this.setState({ products: res.data}),
-        // console.log(res.data[1].productName),
         rows.push(res.data[1]),
         console.log(rows)
         )
         .catch(error => console.log("Check tasks error: " + error))
 }
+
+getItems();
 
 function checkState() {
   const products = this.state.products;
@@ -85,8 +86,6 @@ function EnhancedTableHead(props) {
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
-
-  getItems();
 
   return (
     <TableHead>
@@ -183,7 +182,7 @@ const EnhancedTableToolbar = props => {
         )}
       </div>
       <div className={classes.spacer} />
-      <div className={classes.actions}>
+      {/* <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
             <IconButton aria-label="delete">
@@ -197,7 +196,7 @@ const EnhancedTableToolbar = props => {
             </IconButton>
           </Tooltip>
         )}
-      </div>
+      </div> */}
     </Toolbar>
   );
 };
