@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import PageTitle from "./PageTitle";
 import API from "../utils/API";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
-
-
 
 
 class RemoveUsers extends Component {

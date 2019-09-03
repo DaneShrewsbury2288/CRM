@@ -21,7 +21,6 @@ export default {
     return axios.get("/api/messages/");
   },
   findMessages: function (userIds) {
-    console.log(userIds)
     return axios.get("api/messages/" + userIds)
   },
   createMessage: function (messageData) {

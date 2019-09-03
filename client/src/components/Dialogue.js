@@ -10,22 +10,18 @@ class Dialogue extends Component {
     messages: [],
     user: this.props.user,
     partner: this.props.partner,
-    content: null
+    content: ''
   };
 
   componentDidMount() {
-    console.log("user: " + this.state.user);
-    console.log("partner: " + this.state.partner);
     this.loadMessages();
   }
 
   loadMessages = () => {
     const IDString = this.state.user + "&" + this.state.partner
-    console.log(IDString)
     API.findMessages(IDString)
       .then(res =>
         this.setState({ messages: res.data }, () => {
-          console.log(this.state.messages)
         }))
       .catch(err => console.log(err))
   }
