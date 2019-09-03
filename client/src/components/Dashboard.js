@@ -15,7 +15,8 @@ import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import ListItems from './ListItems';
+import ListItems from '../components/ListItems';
+
 
 const drawerWidth = 300;
 

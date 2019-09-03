@@ -1,56 +1,110 @@
 import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
-import Card from '../components/Card';
-import InputForm from '../components/InputForm';
+// import Button from "../components/Button";
+// import InputForm from '../components/InputForm';
+// import Card from "../components/Card";
+import TaskTable from "../components/Task";
 import API from '../utilities/api';
+import UserAPI from '../utils/API';
+import moment from "moment";
 
 class ManagerTaskAssignment extends Component {
     state = {
-        clients: []
+        tasks: [],
+        clients: [],
+        users: [],
     }
-    componentDidMount() {
-        this.getClients();
+    UNSAFE_componentWillMount() {
+        this.checkUsers();
+        this.checkTasks();
+        this.checkClients();
     }
-    // get clients/tasks from db
-    getClients = () => {
+    // get tasks
+    checkTasks = () => {
         API.getTasks()
             .then(res =>
-                this.setState({ clients: res.data }, () => {
-                    console.log(this.state.clients)
-                })
+                this.setState({ tasks: res.data.tasks })
             )
-            .catch(err => console.log(err))
+            .catch(error => console.log("Check tasks error: " + error))
     }
-    // save task to db
-    addTask = () => {
-        API.saveTask()
-            // re-run get request with updated tasks
-            .then(() => this.getClients());
+    // get users
+    checkUsers = () => {
+        UserAPI.getUsers()
+            .then(res =>
+                this.setState({ users: res.data })
+            )
+            .catch(error => console.log("Check users error: " + error))
     }
+    // get all clients
+    checkClients = () => {
+        API.getClients()
+            .then(res =>
+                this.setState({ clients: res.data.clients })
+            )
+            .catch(error => console.log("Check task clients: " + error))
+    }
+    
+    checkState = () => {
+        const tasks = this.state.tasks;
+        console.log(tasks[4]);
+    }
+
+    //functions to create
+    // handle input change
+    handleInputChange = () => {
+
+    }
+    // get elapsed time for task
+    getElapsedTime = (assignDate) => {
+        const formatDate = assignDate.replace("T00:00:00.000Z", "");
+        const timeDifference = moment().diff(moment(formatDate), 'days');
+        // convert to positive for due dates
+        if (timeDifference < 0) {
+            return timeDifference * -1;
+        } else {
+            return timeDifference;
+        }
+    }
+    // format task status
+    capitialStatus = (status) => {
+        return status
+            .split('-')
+            .map((dash) => dash.charAt(0).toUpperCase() + dash.substring(1))
+            .join('-')
+    }
+    // format assigned status
+    formatStatus = (status) => {
+        if (status) {
+            return "Assigned"
+        } else {
+            return "Unassigned"
+        }
+    }
+
     render() {
         return (
             <div>
                 <PageTitle title="Manager Task Assignment" />
-                <p>Add New Client</p>
-                <InputForm />
-                <button
-                    onClick={this.addTask}
-                    className="">
-                    Add Task
-                </button>
-                {/* map all task cards */}
-                {this.state.clients.map(client => (
+                {/* <InputForm /> */}
+                {/* <Card /> */}
+                {this.state.tasks.map(task => (
                     <div>
-                        <Card
-                            key={client.id}
-                            id={client.id}
-                            salesPerson={client.teamMemberName}
-                            clientDescription={client.description}
+                        <TaskTable
+                            key={task._id}
+                            // user={task.user}
+                            // client={task.client}
+                            description={task.description}
+                            assignedStatus={this.formatStatus(task.assignedStatus)}
+                            elapsedTime={this.getElapsedTime(task.assignDate)}
+                            dueDate={this.getElapsedTime(task.dueDate)}
+                            completionStatus={this.capitialStatus(task.completionStatus)}
+                            // note={task.note}
                         />
-                        {/* place delete button for each saved task */}
-                        {/* completed button */}
                     </div>
                 ))}
+                <button onClick={this.checkState}>
+                    Check tasks
+                </button>
             </div>
         )
     }

@@ -10,6 +10,8 @@ module.exports = {
       .populate("user", "_id firstName lastName")
       // all orders for client and if they have been fulfilled
       .populate("order", "_id fulfilled created_at")
+      // all notes for the client and when they were created
+      .populate("note", "_id content created_at")
       .then(dbModel => {
         res.status(200).json({
           clients: dbModel.map(model => {
@@ -21,7 +23,8 @@ module.exports = {
               zipCode: model.zipCode,
               joinedDate: model.joinedDate,
               user: model.user,
-              order: model.order
+              order: model.order,
+              note: model.note,
             };
           })
         })
@@ -40,26 +43,31 @@ module.exports = {
       .create(req.query)
       // associate user ID with client
       .then(function (dbUser) {
-        return db.User.findOneAndUpdate({}, { $push: { users: dbUser._id } }, { new: true });
+        return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
       })
       // associate order ID with client
       .then(function (dbOrder) {
-        return db.Order.findOneAndUpdate({}, { $push: { orders: dbOrder._id } }, { new: true });
+        return db.Order.findOneAndUpdate({}, { $push: { order: dbOrder._id } }, { new: true });
       })
+      // no notes would be created when client is first created
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function (req, res) {
     Client
-      .findOneAndUpdate({ _id: req.params.id },
-        // add ability to assign user to client
-        // { $set: 
-        //   { 
-        //     users: req.params.user_id,
-        //     overwrite: true
-        //   }
-        // }
-      )
+      .findOneAndUpdate({ _id: req.params.id })
+      // associate user ID with client
+      .then(function (dbUser) {
+        return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
+      })
+      // associate task ID with client
+      .then(function (dbTask) {
+        return db.Task.findOneAndUpdate({}, { $push: { task: dbTask._id } }, { new: true });
+      })
+      // associate note ID with client
+      .then(function (dbNote) {
+        return db.Note.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

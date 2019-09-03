@@ -23,24 +23,31 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard(clientName, salesPerson, clientDescription, link) {
+export default function SimpleCard() {
   const classes = useStyles();
 
   return (
-    <Card className={classes.card} id="task-card">
+    <Card className={classes.card}>
       <CardContent>
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
+          Word of the Day
+        </Typography>
         <Typography variant="h5" component="h2">
-          {clientName}
+          be
+          nev
+          lent
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          {salesPerson}
+          adjective
         </Typography>
         <Typography variant="body2" component="p">
-          {clientDescription}
+          well meaning and kindly.
+          <br />
+          {'"a benevolent smile"'}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">{link}</Button>
+        <Button size="small">Learn More</Button>
       </CardActions>
     </Card>
   );

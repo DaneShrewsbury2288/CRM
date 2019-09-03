@@ -6,10 +6,19 @@ module.exports = {
     Task
       .find(req.query)
       .sort({ date: -1 })
-      // populate associated client
-      .populate("client", "_id name")
-      // populate associated user
-      .populate("user", "_id firstName lastName")
+      // populate all users, clients and notes associated with tasks
+      .populate({
+        path: 'user client note',
+        populate: {
+          path: 'user'
+        },
+        populate: {
+          path: 'client'
+        },
+        populate: {
+          path: 'note'
+        }
+      })
       .then(dbModel => {
         res.status(200).json({
           tasks: dbModel.map(model => {
@@ -18,8 +27,12 @@ module.exports = {
               user: model.user,
               client: model.client,
               assignDate: model.assignDate,
+              dueDate: model.dueDate,
+              completedDate: model.completedDate,
               assignedStatus: model.assignedStatus,
-              completionStatus: model.completionStatus
+              completionStatus: model.completionStatus,
+              description: model.description,
+              note: model.note,
             };
           })
         })
@@ -29,6 +42,18 @@ module.exports = {
   findById: function (req, res) {
     Task
       .findById(req.params.id)
+      .populate({
+        path: 'user client note',
+        populate: {
+          path: 'user'
+        },
+        populate: {
+          path: 'client'
+        },
+        populate: {
+          path: 'note'
+        }
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -37,11 +62,11 @@ module.exports = {
       .create(req.query)
       // associate client ID with task
       .then(function (dbClient) {
-        return db.Client.findOneAndUpdate({}, { $push: { clients: dbClient._id } }, { new: true });
+        return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
       })
       // associate user ID with task
       .then(function (dbUser) {
-        return db.User.findOneAndUpdate({}, { $push: { users: dbUser._id } }, { new: true });
+        return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
       })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
@@ -49,6 +74,18 @@ module.exports = {
   update: function (req, res) {
     Task
       .findOneAndUpdate({ _id: req.params.id }, req.query)
+      // associate user ID with task
+      .then(function (dbUser) {
+        return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
+      })
+      // associate client ID with task
+      .then(function (dbClient) {
+        return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
+      })
+      // associate note ID with task
+      .then(function (dbNote) {
+        return db.Note.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

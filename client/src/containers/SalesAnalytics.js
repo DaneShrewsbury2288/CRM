@@ -169,21 +169,6 @@ class SalesAnalytics extends Component {
                             <ProductProfit />
                         </Paper>
                     </Grid>
-
-
-                    {/* Lifetime Sales of Customer*/}
-                    {/* Pull ID and aggregate all sales data for ID */}
-                    <Grid item xs={12}>
-                        <Paper className={classes.paper}>
-                        </Paper>
-                    </Grid>
-
-                    {/* Recent Orders */}
-                    <Grid item xs={12}>
-                        <Paper className={classes.paper}>
-
-                        </Paper>
-                    </Grid>
                 </Grid>
             </div>
 

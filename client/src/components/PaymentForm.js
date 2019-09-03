@@ -1,6 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import EditableTable from '../components/EditableTable';
+// import MaterialTable from '../components/MaterialTable';
 
 
 export default function PaymentForm() {
@@ -10,7 +12,7 @@ export default function PaymentForm() {
         Product Selection
       </Typography>
       <Grid container spacing={3}>
-        {/* TABLE WITH ABILITY TO INPUT IDS, HOW MANY PURCHASED, PRICE */}
+        <EditableTable />
       </Grid>
     </React.Fragment>
   );
