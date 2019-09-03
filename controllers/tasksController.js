@@ -27,6 +27,8 @@ module.exports = {
               user: model.user,
               client: model.client,
               assignDate: model.assignDate,
+              dueDate: model.dueDate,
+              completedDate: model.completedDate,
               assignedStatus: model.assignedStatus,
               completionStatus: model.completionStatus,
               description: model.description,

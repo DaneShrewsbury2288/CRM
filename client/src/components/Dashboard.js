@@ -17,6 +17,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ListItems from '../components/ListItems';
 
+
 const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({

@@ -25,8 +25,13 @@ const TaskSchema = new Schema({
     // when this task was set to assigned
     // dates can be passed in as "2018-12-09"
     assignDate: {
-        type: Date,
-        default: Date.now
+        type: Date
+    },
+    dueDate: {
+        type: Date
+    },
+    completedDate: {
+        type: Date
     },
     // if the task has been assigned or not
     assignedStatus: {
