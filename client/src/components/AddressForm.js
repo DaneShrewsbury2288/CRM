@@ -9,7 +9,6 @@ import TextField from '@material-ui/core/TextField';
 export default function ClientInformation() {
   const [name, email, phone, zipcode] = React.useState('');
   const [count] = React.useState(0);
-  
 
   // Similar to componentDidMount and componentDidUpdate:
   React.useEffect(() => {
@@ -64,7 +63,6 @@ export default function ClientInformation() {
           />
         </Grid>
       </Grid>
-
     </React.Fragment>
   );
 }

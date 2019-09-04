@@ -15,7 +15,8 @@ import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import ListItems from '../components/ListItems';
+import ListItems from './ListItems';
+
 
 const drawerWidth = 300;
 
@@ -86,6 +87,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    marginLeft: 10,
   },
   paper: {
     padding: theme.spacing(2),

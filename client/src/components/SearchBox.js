@@ -10,7 +10,8 @@ import SearchIcon from '@material-ui/icons/Search';
 const useStyles = makeStyles({
   root: {
     padding: '2px 4px',
-    display: 'flex',    alignItems: 'center',
+    display: 'flex',    
+    alignItems: 'center',
     width: 400,
     marginTop: 35,
   },
@@ -27,17 +28,19 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SearchBox() {
+export default function SearchBox(props) {
+
   const classes = useStyles();
 
   return (
     <Paper className={classes.root}>
       <InputBase
         className={classes.input}
-        placeholder=""
-        inputProps={{ 'aria-label': 'search google maps' }}
+        value={props.search}
+        onChange={props.handleInputChange} 
+        placeholder="Enter Name of Client"
       />
-      <IconButton className={classes.iconButton} aria-label="search">
+      <IconButton className={classes.iconButton} aria-label="search" onClick={props.handleFormSubmit}>
         <SearchIcon />
       </IconButton>
       <Divider className={classes.divider} orientation="vertical" />

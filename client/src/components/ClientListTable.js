@@ -14,7 +14,8 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import ClientAddButton from "../components/ClientAddButton";
+import ClientAddButton from "./ClientAddButton";
+import ClientAddComment from "./ClientAddComment";
 
 
 const useStyles1 = makeStyles(theme => ({
@@ -83,20 +84,20 @@ TablePaginationActions.propTypes = {
     rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, clientId, email, phone, zipCode, JoinedDate, orders) {
-    return { name, clientId, email, phone, zipCode, JoinedDate, orders };
+function createData(name, clientId, email, phone, zipCode, joinedDate, lastCommunication, orders, comments) {
+    return { name, clientId, email, phone, zipCode, joinedDate, lastCommunication, orders, comments };
 }
 
 const rows = [
-    createData('Joe Smith', 2, 'joe@email.com', 1111111111, 11111, '01/20/2000'),
-    createData('Sarah Sanders', 1, 'sara@email.com', 2222222222, 22222, '01/20/2000'),
-    createData('Thor Thunder', 3, 'thor@email.com', 3333333333, 33333, '01/20/2000'),
-    createData('Bob Smith', 2, 'joe@email.com', 1111111111, 11111, '01/20/2000'),
-    createData('Samantha Sanders', 1, 'sara@email.com', 2222222222, 22222, '01/20/2000'),
-    createData('Loki Thunder', 3, 'thor@email.com', 3333333333, 33333, '01/20/2000'),
-    createData('Fred Smith', 2, 'joe@email.com', 1111111111, 11111, '01/20/2000'),
-    createData('Christina Sanders', 1, 'sara@email.com', 2222222222, 22222, '01/20/2000'),
-    createData('Hulk Thunder', 3, 'thor@email.com', 3333333333, 33333, '01/20/2000'),
+    createData('Joe Smith', 2, 'joe@email.com', 1111111111, 11111, '01/20/2000', '07/22/2019'),
+    createData('Sarah Sanders', 1, 'sara@email.com', 2222222222, 22222, '01/20/2000', '07/22/2019'),
+    createData('Thor Thunder', 3, 'thor@email.com', 3333333333, 33333, '01/20/2000', '07/22/2019'),
+    createData('Bob Smith', 2, 'joe@email.com', 1111111111, 11111, '01/20/2000', '07/22/2019'),
+    createData('Samantha Sanders', 1, 'sara@email.com', 2222222222, 22222, '01/20/2000', '07/22/2019'),
+    createData('Loki Thunder', 3, 'thor@email.com', 3333333333, 33333, '01/20/2000', '07/22/2019'),
+    createData('Fred Smith', 2, 'joe@email.com', 1111111111, 11111, '01/20/2000', '07/22/2019'),
+    createData('Christina Sanders', 1, 'sara@email.com', 2222222222, 22222, '01/20/2000', '07/22/2019'),
+    createData('Hulk Thunder', 3, 'thor@email.com', 3333333333, 33333, '01/20/2000', '07/22/2019'),
 ].sort((a, b) => (a.name < b.name ? -1 : 1));
 
 const useStyles2 = makeStyles(theme => ({
@@ -105,7 +106,7 @@ const useStyles2 = makeStyles(theme => ({
         marginTop: theme.spacing(3),
     },
     table: {
-        minWidth: 1000,
+        minWidth: 1400,
         minHeight: 500,
     },
     tableWrapper: {
@@ -129,7 +130,7 @@ let formatPhoneNumber = (str) => {
 };
 
 
-export default function CustomPaginationActionsTable() {
+export default function CustomPaginationActionsTable(props) {
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -157,21 +158,28 @@ export default function CustomPaginationActionsTable() {
                             <TableCell align="right">Phone Number&nbsp;(xxx-xxx-xxxx)</TableCell>
                             <TableCell align="right">Zip Code&nbsp;(xxxxx)</TableCell>
                             <TableCell align="right">Date Joined&nbsp;(MM/DD/YYYY)</TableCell>
+                            <TableCell align="right">Sales Associate&nbsp;</TableCell>
                             <TableCell align="right">Orders&nbsp;</TableCell>
+                            <TableCell align="right">Comments&nbsp;</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                            <TableRow key={row.name}>
+                        {props.clients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(client => (
+                            <TableRow key={client._id}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {client.name}
                                 </TableCell>
-                                <TableCell align="right">{row.clientId}</TableCell>
-                                <TableCell align="right">{row.email}</TableCell>
-                                <TableCell align="right">{formatPhoneNumber(row.phone)}</TableCell>
-                                <TableCell align="right">{row.zipCode}</TableCell>
-                                <TableCell align="right">{row.JoinedDate}</TableCell>
-                                <TableCell align="right">{<ClientAddButton/>}</TableCell>
+                                <TableCell align="right">{client._id}</TableCell>
+                                <TableCell align="right">{client.email}</TableCell>
+                                <TableCell align="right">{formatPhoneNumber(client.phone)}</TableCell>
+                                <TableCell align="right">{client.zipCode}</TableCell>
+                                <TableCell align="right">{client.joinedDate}</TableCell>
+                                {/* {props.clients.user.map(client => (
+                                    <TableCell align="right">{client.user.firstName}</TableCell>
+                                ))} */}
+                                <TableCell align="right">{client.joinedDate}</TableCell>
+                                <TableCell align="right">{<ClientAddButton />}</TableCell>
+                                <TableCell align="right">{<ClientAddComment />}</TableCell>
                             </TableRow>
                         ))}
 
