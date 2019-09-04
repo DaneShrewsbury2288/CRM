@@ -4,7 +4,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Input from '@material-ui/core/Input';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 
 function InputForm(props) {
   return (
@@ -18,71 +22,64 @@ function InputForm(props) {
                   <Paper className="paper-header">Create a task</Paper>
                 </Grid>
                 <Grid item lg={4}>
-                  <ClickAwayListener onClickAway={props.userHandleClickAway}>
-                    <div>
-                      <Button onClick={props.userHandleClick}>{props.userDropDown}</Button>
-                      {props.userOpen ? (
-                        <div>
-                          {props.users.map(user => (
-                            <Grid item lg={12}>
-                              <Button
-                                key={user._id}
-                                className="user-selection"
-                                value={user._id}
-                                onClick={props.userSelection(user._id, user.firstName, user.lastName)}
-                              >
-                                {user.firstName + " " + user.lastName}
-                              </Button>
-                            </Grid>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  </ClickAwayListener>
+                  <FormControl>
+                    <InputLabel htmlFor="age-native-helper">Assign Employee</InputLabel>
+                    <Select
+                      value={props.userSelection}
+                      onChange={props.handleInputChange}
+                      name="userSelection"
+                    >
+                      {props.users.map(user => (
+                        <MenuItem key={user._id} value={user._id}>{user.firstName}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid item lg={4}>
-                  <ClickAwayListener onClickAway={props.clientHandleClickAway}>
-                    <div>
-                      <Button onClick={props.clientHandleClick}>{props.clientDropDown}</Button>
-                      {props.clientOpen ? (
-                        <div>
-                          {props.clients.map(client => (
-                            <Grid item lg={12}>
-                              <Button
-                                key={client._id}
-                                className="client-selection"
-                                value={client._id}
-                                onClick={props.userSelection(client._id, client.name)}
-                              >
-                                {client.name}
-                              </Button>
-                            </Grid>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  </ClickAwayListener>
+                  <FormControl>
+                    <InputLabel htmlFor="age-native-helper">Assign Client</InputLabel>
+                    <Select
+                      value={props.clientSelection}
+                      onChange={props.handleInputChange}
+                      name="clientSelection"
+                    >
+                      {props.clients.map(client => (
+                        <MenuItem key={client._id} value={client._id}>{client.name}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
                 <Grid item lg={12}>
-                  <input
+                  <Input
+                    value={props.description}
+                    name="inputDescription"
                     placeholder="Task description"
+                    onChange={props.handleInputChange}
                   />
                 </Grid>
               </Grid>
               <Grid container spacing={3}>
-                <Grid item lg={8}></Grid>
-                <Grid item lg={2}>
+                <Grid item lg={4}>
                   <Paper className="paper">Due Date</Paper>
                 </Grid>
+                <Grid item lg={6}>
+                  <Input
+                    value={props.dueDate}
+                    name="dueDate"
+                    placeholder="01-01-2011"
+                    onChange={props.handleInputChange}
+                  />
+                </Grid>
                 <Grid item lg={2}>
-                  <Button variant="contained" color="primary" className="button">
+                  <Button onClick={props.handleFormSubmit} variant="contained" color="primary" className="button">
                     Submit Task
                   </Button>
                 </Grid>
               </Grid>
             </div>
+            {/* <button onClick={props.handleFormSubmit}>Submit</button> */}
           </form>
         </CardContent>
       </Card>

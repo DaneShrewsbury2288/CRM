@@ -17,6 +17,13 @@ class ManagerTaskAssignment extends Component {
         userDropDown: "Assign an Employee",
         clientDropDown: "Assign a Client",
         clientOpenOption: false,
+        selectedDate: moment().format(),
+        currentDate: moment().format('MM DD YYYY'),
+        inputDescription: "",
+        dueDate: "",
+        userSelection: [],
+        clientSelection: [],
+        taskAssigned: false,
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -45,15 +52,20 @@ class ManagerTaskAssignment extends Component {
             .then(res =>
                 this.setState({ clients: res.data.clients })
             )
-            .catch(error => console.log("Check task clients: " + error))
+            .catch(error => console.log("Check clients error: " + error))
+    }
+    // submit
+    saveTask = (data) => {
+        API.saveTask(data)
+            .then(res =>
+                this.setState({ tasks: res.data })
+            )
+            .catch(error => console.log("Save task error: " + error))
     }
 
     checkState = () => {
-        const tasks = this.state.tasks;
-        const user = tasks[4].user[0].lastName;
-        console.log(user);
-        // console.log(Object.keys(user));
-        // console.log(Array.isArray(user));
+        const date = this.state.selectedDate;
+        console.log(date);
     }
     // create user full name
     fullName = (userInfo) => {
@@ -94,7 +106,7 @@ class ManagerTaskAssignment extends Component {
             if (user[i].image) {
                 return user[i].image;
             } else {
-                return "https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=622&q=80";
+                return "https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80";
             }
         }
     }
@@ -102,7 +114,7 @@ class ManagerTaskAssignment extends Component {
         let str = "";
         for (let i = 0; i < note.length; i++) {
             if (note[i].content) {
-                str += str + note[i].content;
+                str += note[i].content;
             } else {
                 str += "";
             }
@@ -114,12 +126,62 @@ class ManagerTaskAssignment extends Component {
             return str;
         }
     }
-
-    //functions to create
     // handle input change
-    handleInputChange = () => {
-
+    handleInputChange = (event) => {
+        // Getting the value and name of the input which triggered the change
+        let value = event.target.value;
+        const name = event.target.name;
+        // Updating the input's state
+        this.setState({
+            [name]: value
+        });
     }
+    handleFormSubmit = event => {
+        // Preventing the default behavior of the form submit (which is to refresh the page)
+        event.preventDefault();
+        // if all required fields have been submitted
+        if (this.state.inputDescription && this.state.dueDate) {
+            const desc = this.state.inputDescription;
+            const date = this.state.dueDate;
+            const user = this.state.userSelection;
+            const client = this.state.clientSelection;
+            const currentDate = this.state.currentDate;
+            const assigned = this.state.taskAssigned;
+            // check if date is in correct format
+            if (date.length === 10) {
+                
+            } else {
+                alert("Please input a valid date");
+            };
+            if (user) {
+                this.setState({ assigned: true })
+            }
+            // organize the data for the db
+            const newTask = {
+                client: client,
+                user: user,
+                assignDate: currentDate,
+                dueDate: date,
+                completedDate: "",
+                assignedStatus: assigned,
+                completionStatus: "to-do",
+                description: desc,
+                note: [],
+            };
+            console.log(newTask);
+            // save task to db
+            this.saveTask(newTask);
+            // clear form by resetting the state
+            this.setState({
+                inputDescription: "",
+                dueDate: "",
+                userSelection: [],
+                clientSelection: []
+            });
+        } else {
+            alert("Please complete all required fields");
+        }
+    };
     // get elapsed time for task
     getElapsedTime = (assignDate) => {
         const formatDate = assignDate.replace("T00:00:00.000Z", "");
@@ -151,18 +213,9 @@ class ManagerTaskAssignment extends Component {
         const open = !this.state.userOpenOption;
         this.setState({ userOpenOption: open })
     };
-    userSelection = (id, firstName, lastName) => {
-        console.log(id);
-        console.log(firstName);
-        console.log(lastName);
-    };
     clientHandleClick = () => {
         const open = !this.state.clientOpenOption;
         this.setState({ clientOpenOption: open })
-    }
-    clientSelection = (id, name) => {
-        console.log(id);
-        console.log(name);
     }
     // close user/client selection menus if user clicks elsewhere
     userHandleClickAway = () => {
@@ -181,15 +234,20 @@ class ManagerTaskAssignment extends Component {
                     userOpen={this.state.userOpenOption}
                     userHandleClick={this.userHandleClick}
                     users={this.state.users}
-                    userSelection={this.userSelection}
                     userDropDown={this.state.userDropDown}
                     clientOpen={this.state.clientOpenOption}
                     clientHandleClick={this.clientHandleClick}
                     clients={this.state.clients}
-                    clientSelection={this.clientSelection}
                     clientDropDown={this.state.clientDropDown}
                     userHandleClickAway={this.userHandleClickAway}
                     clientHandleClickAway={this.clientHandleClickAway}
+                    currentDate={this.state.currentDate}
+                    description={this.state.inputDescription}
+                    dueDate={this.state.dueDate}
+                    userSelection={this.state.userSelection}
+                    clientSelection={this.state.clientSelection}
+                    handleInputChange={this.handleInputChange}
+                    handleFormSubmit={this.handleFormSubmit}
                 />
                 <div className="task-space"></div>
                 {/* force page to wait for tasks to load */}

@@ -68,50 +68,50 @@ class SalesTeamAnalytics extends Component {
     }
     // convert start date
     startDate = (date) => {
-        const dateOne = date.slice(0, 10).toString();
+        const dateOne = date.slice(0, 10);
         const splitDate = dateOne.split('-');
-        // switch (splitDate[2]) {
-        //     case "01":
-        //         return "January " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "02":
-        //         return "February " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "03":
-        //         return "March " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "04":
-        //         return "April " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "05":
-        //         return "May " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "06":
-        //         return "June " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "07":
-        //         return "July " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "08":
-        //         return "August " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "09":
-        //         return "September " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "10":
-        //         return "October " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "11":
-        //         return "November " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //     case "12":
-        //         return "December " + splitDate[1] + ", " + splitDate[0];
-        //         break;
-        //         default: 
-        //         return null;
-        // }
-        console.log(splitDate[2]);
-        
+        const month = splitDate[1].toString()
+        switch (month) {
+            case "01":
+                return "Jan. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "02":
+                return "Feb. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "03":
+                return "Mar. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "04":
+                return "Apr. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "05":
+                return "May " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "06":
+                return "Jun. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "07":
+                return "Jul. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "08":
+                return "Aug. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "09":
+                return "Sep. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "10":
+                return "Oct. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "11":
+                return "Nov. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            case "12":
+                return "Dec. " + splitDate[2] + ", " + splitDate[0];
+                break;
+            default:
+                return null;
+        }
+
     }
 
     // agent comparison
@@ -133,29 +133,29 @@ class SalesTeamAnalytics extends Component {
                         }}
                         inputProps={{ 'aria-label': 'search' }}
                     />
-                    </div>
-                    <Grid container spacing={4}>
-                        <Grid item lg={12}>
-                            <h1 className="team-analytics-cards">Sales Team</h1>
-                        </Grid>
-
-                        {this.state.users.map(user => (
-                            <div>
-                                <Grid item lg={12}>
-                                    <Card
-                                        key={user._id}
-                                        fullName={this.fullName(user.firstName, user.lastName)}
-                                        // startDate=
-                                    />
-                                </Grid>
-                            </div>
-                        ))}
+                </div>
+                <Grid container spacing={4}>
+                    <Grid item lg={12}>
+                        <h1 className="team-analytics-cards">Sales Team</h1>
                     </Grid>
 
-                </div>
+                    {this.state.users.map(user => (
+                        <div>
+                            <Grid item lg={12}>
+                                <Card
+                                    key={user._id}
+                                    fullName={this.fullName(user.firstName, user.lastName)}
+                                    startDate={this.startDate(user.created_at)}
+                                />
+                            </Grid>
+                        </div>
+                    ))}
+                </Grid>
 
-                )
-            }
-        };
-        
+            </div>
+
+        )
+    }
+};
+
 export default SalesTeamAnalytics;

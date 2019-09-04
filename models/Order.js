@@ -10,29 +10,15 @@ const OrderSchema = new Schema({
         ref: "Client",
         required: true
     }],
-    // id of product
     product: [{
-        // Store ObjectIds in the array
-        type: Schema.Types.ObjectId,
-        // The ObjectIds will refer to the ids in the Product model
-        ref: "Product",
-        required: true
-    }],
-    // would need to take the product name and price from products to use
-    cart: [{
-        item: {
-            productName: {
-                type: String,
-                required: true
-            },
-            quantity: {
-                type: Number,
-                required: true
-            },
-            price: {
-                type: Number,
-                required: true
-            }
+        product: {
+            type: Schema.Types.ObjectId,
+            ref: "Product",
+            required: true
+        },
+        quantity: {
+            type: Number,
+            required: true
         }
     }],
     // when the order happened

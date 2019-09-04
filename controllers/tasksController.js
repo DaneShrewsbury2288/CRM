@@ -59,7 +59,7 @@ module.exports = {
   },
   create: function (req, res) {
     Task
-      .create(req.query)
+      .create(req.body)
       // associate client ID with task
       .then(function (dbClient) {
         return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });

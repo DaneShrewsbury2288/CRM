@@ -21,7 +21,7 @@ function profileCard(props) {
           </Grid>
           <Grid item lg={4}>
             <Typography className="pos" color="textSecondary">
-              Employed since Mar. 03, 2017
+              Employed since {props.startDate}
         </Typography>
           </Grid>
         </Grid>
