@@ -70,8 +70,8 @@ class ManagerTaskAssignment extends Component {
                 )
     }
     checkState = () => {
-        const date = this.state.selectedDate;
-        console.log(date);
+        const tasks = this.state.tasks;
+        console.log(tasks);
     }
     // create user full name
     fullName = (userInfo) => {
