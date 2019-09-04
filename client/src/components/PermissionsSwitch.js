@@ -68,8 +68,8 @@ class PermissionsSwitch extends Component {
         API.updateUser(this.props.user, {
             permissions: this.state.perms
         })
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
     }
 
     handleChange = (name, bitmask) => event => {
@@ -86,18 +86,32 @@ class PermissionsSwitch extends Component {
             <div>
                 <List>
                     {switches.map(perm => (
-                    <ListItem key={`${perm.bitmask}`}>
-                        {perm.label} <Switch
-                            checked={this.isChecked("perms", perm.bitmask)}
-                            onClick={this.handleChange("perms", perm.bitmask)} />
-                    </ListItem>
+                        <ListItem key={`${perm.bitmask}`}>
+                            {perm.label} <Switch
+                                checked={this.isChecked("perms", perm.bitmask)}
+                                onClick={this.handleChange("perms", perm.bitmask)} />
+                        </ListItem>
                     ))}
                 </List>
-                <button onClick={this.update}>Update</button>
+                <button
+                    onClick={this.update}
+                    style={{
+                        width: "150px",
+                        borderRadius: "3px",
+                        letterSpacing: "1.5px",
+                        marginTop: "1rem"
+                    }}
+                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                >
+                    Update
+                </button>
             </div>
         )
     }
 };
+
+
+
 
 
 export default PermissionsSwitch;

@@ -110,10 +110,6 @@ module.exports = {
   update: function (req, res) {
     User
       .findOneAndUpdate({ _id: req.params.id }, req.body)
-      // associate note ID with user
-      .then(function (dbNote) {
-        return db.Note.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
-      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

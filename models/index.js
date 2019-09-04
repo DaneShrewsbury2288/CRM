@@ -6,5 +6,6 @@ module.exports = {
     Task: require("./Task"),
     Client: require("./Client"),
     Order: require("./Order"),
-    Note: require("./Note")
+    Note: require("./Note"),
+    Message: require("./Message")
   };
