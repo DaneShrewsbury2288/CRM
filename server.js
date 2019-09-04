@@ -5,10 +5,9 @@ const routes = require("./routes");
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
-const PORT2 = process.env.PORT2 || 3002;
 const passport = require("passport");
 const path = require('path')
-const io = require('socket.io')();
+
 
 // Define middleware here
 app.use(
@@ -47,16 +46,15 @@ mongoose.set('useFindAndModify', false)
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
+// Start the API server
+let server = app.listen(PORT, function () {
+    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+});
+
+const io = require('socket.io')(server);
 
 io.on('connection', (client) => {
     client.on('new message', (messageData) => {
         io.emit('message', messageData)
     })
-});
-
-io.listen(PORT2);
-
-// Start the API server
-app.listen(PORT, function () {
-    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
