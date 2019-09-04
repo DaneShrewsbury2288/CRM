@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import NewsFeed from "../containers/NewsFeed";
 import Inventory from "../containers/Inventory";
-import ClientList from "../containers/ClientList";
+import ClientList from "../containers/ClientSmall";
 import PurchasingTool from "../containers/PurchasingTool";
 import SalesAnalytics from "../containers/SalesAnalytics";
 import ManagerTaskAssignment from "../containers/ManagerTaskAssignment";
