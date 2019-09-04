@@ -10,11 +10,11 @@ export default function ClientInformation() {
   const [name, email, phone, zipcode] = React.useState('');
   const [count] = React.useState(0);
 
-  // Similar to componentDidMount and componentDidUpdate:
-  React.useEffect(() => {
-    // Update the document title using the browser API
-    document.title = `You clicked ${count} times`;
-  });
+  // // Similar to componentDidMount and componentDidUpdate:
+  // React.useEffect(() => {
+  //   // Update the document title using the browser API
+  //   document.title = `You clicked ${count} times`;
+  // });
 
 
   return (

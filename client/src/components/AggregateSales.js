@@ -29,8 +29,7 @@ API.getProducts(res)
 getProductInfo();
 
 const rows = [
-    createData(0, '098765', 'Black Raven Trickster', '100', '$4', 4*100),  ];
-  
+];  
 
 const useStyles = makeStyles(theme => ({
   seeMore: {
@@ -66,14 +65,14 @@ export default function ProductProfit() {
               <TableCell>{row._id}</TableCell>
               <TableCell>{row.productName}</TableCell>
               <TableCell>{row.quantity}</TableCell>
-              <TableCell>{row.price}</TableCell>
+              <TableCell>${row.price}</TableCell>
               <TableCell align="right">{'$'+Math.floor((row.total))}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        <Link color="primary" href=" ">
+        <Link color="primary" href="/inventory">
           View all products
         </Link>
       </div>
