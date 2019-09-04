@@ -7,7 +7,7 @@ module.exports = {
     Product
       .find({})
       // find my the product name, but exclude the id
-      .select('productName -_id')
+      .select('productName')
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))
   },
