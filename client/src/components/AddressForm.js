@@ -7,7 +7,8 @@ import TextField from '@material-ui/core/TextField';
 
 
 export default function ClientInformation() {
-  const [name, email, phone, zipcode, setName] = React.useState('');
+  // email, phone, zipcode,
+  const [name, setName] = React.useState('');
   const [count, setCount] = React.useState(0);
 
   // Similar to componentDidMount and componentDidUpdate:
@@ -67,11 +68,11 @@ export default function ClientInformation() {
       </Grid>
 
       <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
+        <p>You clicked {count} times</p>
+        <button onClick={() => setCount(count + 1)}>
+          Click me
       </button>
-    </div>
+      </div>
 
     </React.Fragment>
   );
