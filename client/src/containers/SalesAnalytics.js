@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import PageTitle from "../components/PageTitle";
 import { withStyles } from '@material-ui/core/styles';
 import Chart from "../components/Chart";
@@ -94,6 +94,8 @@ const styles = theme => ({
     },
 });
 
+
+
 // function CenteredTabs() {
 //     const classes = styles();
 //     const [value, setValue] = React.useState(0);
@@ -104,9 +106,11 @@ const styles = theme => ({
 // };
 
 class SalesAnalytics extends Component {
+    
     render() {
         const { classes } = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+        
         return (
             <div>
                 <PageTitle title="Sales Analytics" />
