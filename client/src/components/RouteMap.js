@@ -13,6 +13,7 @@ import AddRemoveUsers from "../containers/AddRemoveUsers";
 import Permissions from "../containers/Permissions";
 import SalesTeamDaily from "../containers/SalesTeamDaily";
 import NoMatch from "../containers/NoMatch";
+import Messenger from "./Messenger";
 import PrivateRoute from "./PrivateRoute";
 import { Switch } from "react-router-dom";
 
@@ -82,7 +83,7 @@ const routes = [
 class RouteMap extends Component {
 
     state = {
-        permissions: parseInt(this.props.permissions)
+        permissions: parseInt(this.props.user.permissions),
     }
 
     render() {
@@ -99,6 +100,7 @@ class RouteMap extends Component {
                         :
                         null
                 ))}
+                <PrivateRoute exact path="/messenger" key="/messenger" component={Messenger}/>
                 <PrivateRoute component={NoMatch} />
             </Switch>
         )
