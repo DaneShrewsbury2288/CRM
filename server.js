@@ -50,9 +50,7 @@ require("./config/passport")(passport);
 
 io.on('connection', (client) => {
     client.on('new message', (messageData) => {
-        console.log('message has been sent');
-        console.log(messageData);
-        client.emit('message', messageData)
+        io.emit('message', messageData)
     })
 });
 

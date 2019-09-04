@@ -23,7 +23,6 @@ class Dialogue extends Component {
   }
 
   loadMessages = () => {
-    console.log("messages being loaded: ")
     const IDString = this.state.user + "&" + this.state.partner
     API.findMessages(IDString)
       .then(res =>
