@@ -146,6 +146,8 @@ export default function CustomPaginationActionsTable(props) {
         setPage(0);
     }
 
+    console.log(props)
+
     return (
         <Paper className={classes.root}>
             <div className={classes.tableWrapper}>
@@ -174,12 +176,10 @@ export default function CustomPaginationActionsTable(props) {
                                 <TableCell align="right">{formatPhoneNumber(client.phone)}</TableCell>
                                 <TableCell align="right">{client.zipCode}</TableCell>
                                 <TableCell align="right">{client.joinedDate}</TableCell>
-                                {/* {props.clients.user.map(client => (
-                                    <TableCell align="right">{client.user.firstName}</TableCell>
-                                ))} */}
                                 <TableCell align="right">{client.joinedDate}</TableCell>
                                 <TableCell align="right">{<ClientAddButton />}</TableCell>
-                                <TableCell align="right">{<ClientAddComment />}</TableCell>
+                                <TableCell align="right">{<ClientAddComment />}
+                                </TableCell>
                             </TableRow>
                         ))}
 

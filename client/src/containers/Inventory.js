@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Link from '@material-ui/core/Link';
 import PageTitle from "../components/PageTitle";
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -9,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import AddButton from "../components/AddButton";
 import API from "../utilities/api";
+import { LinearProgress } from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -38,7 +40,7 @@ class Inventory extends Component {
         products: [],
     }
 
-    
+
     componentDidMount() {
         API.getProducts()
             .then(res => this.setState({ products: res.data }))
@@ -49,50 +51,61 @@ class Inventory extends Component {
 
         const { classes } = this.props;
 
-        return (
-            <div>
+        if (this.state.products.length > 0) {
+            return (
                 <div>
-                    <PageTitle title="Inventory" />
-                </div>
-                <Paper className={classes.root}>
-                    <Table className={classes.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Product Name</TableCell>
-                                <TableCell align="right">Product ID</TableCell>
-                                <TableCell align="right">Quantity&nbsp;</TableCell>
-                                <TableCell align="right">Cost&nbsp;($)</TableCell>
-                                <TableCell align="right">Price&nbsp;($)</TableCell>
-                                <TableCell align="right">Total Cost&nbsp;($)</TableCell>
-                                <TableCell align="right">Total Price&nbsp;($)</TableCell>
-                                <TableCell align="right">Order More&nbsp;</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.state.products.map(product => (
-                                <TableRow key={product.productName}>
-                                    <TableCell component="th" scope="row">
-                                        {product.productName}
-                                    </TableCell>
-                                    <TableCell align="right">{product._id}</TableCell>
-                                    <TableCell align="right">{numberWithCommas(product.quantity)}</TableCell>
-                                    <TableCell align="right">{product.cost}</TableCell>
-                                    <TableCell align="right">{product.price}</TableCell>
-                                    <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.cost))}</TableCell>
-                                    <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.price))}</TableCell>
-                                    <TableCell align="right">
-                                        {<AddButton />}
-                                    </TableCell>
+                    <div>
+                        <PageTitle title="Inventory" />
+                    </div>
+                    <Paper className={classes.root}>
+                        <Table className={classes.table}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Product Name</TableCell>
+                                    <TableCell align="right">Product ID</TableCell>
+                                    <TableCell align="right">Quantity&nbsp;</TableCell>
+                                    <TableCell align="right">Cost&nbsp;($)</TableCell>
+                                    <TableCell align="right">Price&nbsp;($)</TableCell>
+                                    <TableCell align="right">Total Cost&nbsp;($)</TableCell>
+                                    <TableCell align="right">Total Price&nbsp;($)</TableCell>
+                                    <TableCell align="right">Order More&nbsp;</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </Paper>
-
-            </div>
-
-        )
-    };
+                            </TableHead>
+                            <TableBody>
+                                {this.state.products.map(product => (
+                                    <TableRow key={product.productName}>
+                                        <TableCell component="th" scope="row">
+                                            {product.productName}
+                                        </TableCell>
+                                        <TableCell align="right">{product._id}</TableCell>
+                                        <TableCell align="right">{numberWithCommas(product.quantity)}</TableCell>
+                                        <TableCell align="right">{product.cost}</TableCell>
+                                        <TableCell align="right">{product.price}</TableCell>
+                                        <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.cost))}</TableCell>
+                                        <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.price))}</TableCell>
+                                        <TableCell align="right">
+                                            <Link href="/PurchasingTool">
+                                            {<AddButton />}
+                                            </Link>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </Paper>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <div>
+                        <PageTitle title="Inventory" />
+                    </div>
+                    <LinearProgress />
+                </div>
+            )
+        };
+    }
 }
 
 export default withStyles(styles)(Inventory);

@@ -7,9 +7,9 @@ class ListItems extends Component {
   render() {
     const { user } = this.props.auth;
     return (
-        <ListMap permissions={user.permissions} />
+      <ListMap permissions={user.permissions} />
     );
-}
+  }
 }
 
 ListItems.propTypes = {
