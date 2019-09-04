@@ -10,22 +10,24 @@ const OrderSchema = new Schema({
         ref: "Client",
         required: true
     }],
-    product: [{
+    lineItems: [{
         product: {
             type: Schema.Types.ObjectId,
-            ref: "Product",
-            required: true
+            ref: "Product"
         },
         quantity: {
-            type: Number,
-            required: true
+            type: Number
         }
     }],
-    // when the order happened
+    // when the order was created
     created_at: {
         type: Date,
-        default: Date.now,
-        required: true
+        default: Date.now
+    },
+    // when the user completed order
+    checked_out: {
+        type: Date,
+        default: Date.now
     },
     // employee id associated with the order
     user: [{
@@ -41,13 +43,18 @@ const OrderSchema = new Schema({
             default: false
         }
     },
+    // when order is fulfilled
+    completedDate: {
+        type: Date,
+        default: Date.now
+    },
     // create notes and associate with order
     note: [{
         // Store ObjectIds in the array
         type: Schema.Types.ObjectId,
         // The ObjectIds will refer to the ids in the Note model
         ref: "Note"
-    }],
+    }]
 });
 
 const Order = mongoose.model("Order", OrderSchema);
