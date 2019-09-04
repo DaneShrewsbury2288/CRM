@@ -59,7 +59,6 @@ module.exports = {
       })
   },
   login: function (req, res) {
-    console.log(req.body)
     const { errors, isValid } = validateLoginInput(req.body);
     // Check validation
     if (!isValid) {
@@ -109,13 +108,8 @@ module.exports = {
     });
   },
   update: function (req, res) {
-    console.log(req.body)
     User
       .findOneAndUpdate({ _id: req.params.id }, req.body)
-      // associate note ID with user
-      .then(function (dbNote) {
-        return db.Note.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
-      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
