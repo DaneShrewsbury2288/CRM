@@ -3,6 +3,14 @@ const Product = db.Product;
 
 // Defining methods for the productsController
 module.exports = {
+  findByProductName: function (req, res) {
+    Product
+      .find({})
+      // find my the product name, but exclude the id
+      .select('productName')
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err))
+  },
   findAll: function(req, res) {
     Product
       .find(req.query)

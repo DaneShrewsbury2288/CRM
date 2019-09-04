@@ -62,10 +62,16 @@ class ManagerTaskAssignment extends Component {
             )
             .catch(error => console.log("Save task error: " + error))
     }
-
+    // delete task
+    deleteTask = (id) => {
+        API.deleteTask(id)
+            .then(res => 
+                this.setState({ tasks: res.data })
+                )
+    }
     checkState = () => {
-        const date = this.state.selectedDate;
-        console.log(date);
+        const tasks = this.state.tasks;
+        console.log(tasks);
     }
     // create user full name
     fullName = (userInfo) => {
