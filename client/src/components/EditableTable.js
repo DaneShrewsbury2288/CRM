@@ -13,12 +13,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
+// import IconButton from '@material-ui/core/IconButton';
+// import Tooltip from '@material-ui/core/Tooltip';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import FilterListIcon from '@material-ui/icons/FilterList';
 import API from '../utilities/api';
 
 function createData(productName, price, quantity) {
@@ -40,7 +40,7 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
-const items=[];
+// const items=[];
 
 function getItems(res) {
   API.getProducts(res)
@@ -52,11 +52,6 @@ function getItems(res) {
  }
 
 getItems();
-
-function checkState() {
-  const products = this.state.products;
-  console.log(products);
-}
 
 //StableSort Algo
 function stableSort(array, cmp) {
@@ -239,13 +234,14 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense] = React.useState(true);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
     setOrderBy(property);
   }
+
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
@@ -290,6 +286,7 @@ export default function EnhancedTable() {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   console.log(selected);
+
 
   return (
     <div className={classes.root}>
