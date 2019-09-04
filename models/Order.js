@@ -15,11 +15,17 @@ const OrderSchema = new Schema({
     // id of product
     product: [
         {
-            // Store ObjectIds in the array
-            type: Schema.Types.ObjectId,
-            // The ObjectIds will refer to the ids in the Product model
-            ref: "Product",
-            required: true
+            product: {
+                // Store ObjectIds in the array
+                type: Schema.Types.ObjectId,
+                // The ObjectIds will refer to the ids in the Product model
+                ref: "Product",
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
         }
     ],
     // would need to take the product name and price from products to use

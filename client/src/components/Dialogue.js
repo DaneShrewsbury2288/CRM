@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import Sender from "./Sender"
 import Receiver from "./Receiver"
 import API from "../utils/API";
+import openSocket from 'socket.io-client';
 
+const socket = openSocket('http://localhost:3002',  {transports: ['websocket']});
 
 class Dialogue extends Component {
 
@@ -15,9 +17,13 @@ class Dialogue extends Component {
 
   componentDidMount() {
     this.loadMessages();
+    socket.on('message', data => (
+      this.loadMessages()
+    ));
   }
 
   loadMessages = () => {
+    console.log("messages being loaded: ")
     const IDString = this.state.user + "&" + this.state.partner
     API.findMessages(IDString)
       .then(res =>
@@ -29,7 +35,7 @@ class Dialogue extends Component {
   sendMessage = message => {
     API.createMessage(message)
       .then(res =>
-        this.loadMessages()
+        socket.emit('new message', message)
       )
       .catch(err => console.log(err))
   }
@@ -57,9 +63,9 @@ class Dialogue extends Component {
         {
           this.state.messages.map(message => (
             this.state.user === message.sender ?
-              <Sender content={`${message.content}`} key={`${message.content}`} />
+              <Sender content={`${message.content}`} key={`${message._id}`} />
               :
-              <Receiver content={`${message.content}`} key={`${message.content}`} />
+              <Receiver content={`${message.content}`} key={`${message._id}`} />
           ))
         }
         <form noValidate onSubmit={this.onSubmit}>
