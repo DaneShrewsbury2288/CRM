@@ -17,7 +17,7 @@ class AddRemoveUsers extends Component {
     }
 
     back = () => {
-        this.setState({ action: null});
+        this.setState({ action: null });
     }
 
     render() {
@@ -37,13 +37,38 @@ class AddRemoveUsers extends Component {
                         </div>
                     :
                     <div>
-                        <button onClick={this.handleAdd}>Add User</button>
-                        <button onClick={this.handleRemove}>Remove User</button>
+                        <button
+                            onClick={this.handleAdd}
+                            style={{
+                                width: "200px",
+                                borderRadius: "3px",
+                                letterSpacing: "1.5px",
+                                margin: "1rem"
+                            }}
+                            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                        >
+                            Add User
+                        </button>
+                        <button
+                            onClick={this.handleRemove}
+                            style={{
+                                width: "200px",
+                                borderRadius: "3px",
+                                letterSpacing: "1.5px",
+                                margin: "1rem"
+                            }}
+                            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                        >
+                            Remove User
+                        </button>
                     </div>
                 }
             </div>
         );
     }
 }
+
+
+
 
 export default AddRemoveUsers;

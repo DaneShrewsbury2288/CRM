@@ -1,8 +1,12 @@
 import React from 'react';
 
+const style = {
+  color: 'blue'
+}
+
 function Sender(props) {
     return (
-        <div >
+        <div style={style}>
         {props.content}
       </div>
     )

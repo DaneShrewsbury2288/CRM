@@ -1,8 +1,12 @@
 import React from 'react';
 
+const style = {
+  color: 'red'
+}
+
 function Receiver(props) {
     return (
-        <div >
+        <div style={style}>
         {props.content}
       </div>
     )
