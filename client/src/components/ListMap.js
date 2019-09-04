@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
 import { Link } from "react-router-dom";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
-import BusinessIcon from '@material-ui/icons/Business';
 import PieChartIcon from '@material-ui/icons/PieChart';
 import MoneyIcon from '@material-ui/icons/AttachMoney';
 import LockIcon from '@material-ui/icons/Lock';

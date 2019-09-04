@@ -8,7 +8,7 @@ class Routes extends Component {
     render() {
         const { user } = this.props.auth;
         return (
-            <RouteMap permissions={user.permissions} />
+            <RouteMap user={user} />
         );
     }
 }

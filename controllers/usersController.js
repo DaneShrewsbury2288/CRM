@@ -59,6 +59,7 @@ module.exports = {
       })
   },
   login: function (req, res) {
+    console.log(req.body)
     const { errors, isValid } = validateLoginInput(req.body);
     // Check validation
     if (!isValid) {
@@ -108,6 +109,7 @@ module.exports = {
     });
   },
   update: function (req, res) {
+    console.log(req.body)
     User
       .findOneAndUpdate({ _id: req.params.id }, req.body)
       // associate note ID with user

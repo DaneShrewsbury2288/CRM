@@ -7,8 +7,8 @@ import TextField from '@material-ui/core/TextField';
 
 
 export default function ClientInformation() {
-  const [name, email, phone, zipcode, setName] = React.useState('');
-  const [count, setCount] = React.useState(0);
+  const [name, email, phone, zipcode] = React.useState('');
+  const [count] = React.useState(0);
 
   // Similar to componentDidMount and componentDidUpdate:
   React.useEffect(() => {
@@ -26,19 +26,17 @@ export default function ClientInformation() {
         <Grid item xs={12}>
           <TextField
             required
-            value=""
             id="businessName"
             name="address1"
             label="Business Name"
             fullWidth
             autoComplete="Business Name"
-            onChange={() => setName(name)}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             id="emailaddress"
-            name="email"
+            email="email"
             label="Email"
             fullWidth
             autoComplete="email-address-line"
@@ -48,7 +46,7 @@ export default function ClientInformation() {
           <TextField
             required
             id="phonenumber"
-            name="phone"
+            phone="phone"
             label="Phone"
             fullWidth
             autoComplete="phone-number"
@@ -58,21 +56,13 @@ export default function ClientInformation() {
           <TextField
             required
             id="zip"
-            name="zip"
+            zipcode="zip"
             label="Zip / Postal code"
             fullWidth
             autoComplete="billing-postal-code"
           />
         </Grid>
       </Grid>
-
-      <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-
     </React.Fragment>
   );
 }
