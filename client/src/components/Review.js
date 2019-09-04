@@ -5,7 +5,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
-import selected from '../components/EditableTable';
+import EnhancedTable from '../components/EditableTable';
+import * as Table from '../components/EditableTable';
+
 
 const products = [
   { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
@@ -14,8 +16,14 @@ const products = [
   { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
 ];
 
+function seeObject(){
+  console.log(Table.selectedBrews);
+}
+
 
 const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+
+//This is where the clients info should be pushed
 const payments = [
   { name: 'Card type', detail: 'Visa' },
   { name: 'Card holder', detail: 'Mr John Smith' },
@@ -39,6 +47,9 @@ export default function Review() {
   const classes = useStyles();
 
   // console.log(selected);
+  // console.log(rows);
+
+  seeObject();
 
   return (
     <React.Fragment>

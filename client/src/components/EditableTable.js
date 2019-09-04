@@ -21,12 +21,18 @@ import Checkbox from '@material-ui/core/Checkbox';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import API from '../utilities/api';
 
+
+export const selectedBrews = {
+    arrayOne: [],
+ };
+
+ console.log(selectedBrews);
+
 function createData(productName, price, quantity) {
   return { productName, price, quantity };
 }
 
 const rows = [
-  createData('Cupcake', 10, 5),
 ];
 
 //Descending Order
@@ -252,12 +258,12 @@ export default function EnhancedTable() {
     setSelected([]);
   }
 
-  function handleClick(event, name) {
-    const selectedIndex = selected.indexOf(name);
+  function handleClick(event, name, price) {
+    const selectedIndex = selected.indexOf(name, price);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, name, price);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -270,6 +276,7 @@ export default function EnhancedTable() {
     }
 
     setSelected(newSelected);
+    pushBrewsToSelected(newSelected);
   }
 
   function handleChangePage(event, newPage) {
@@ -285,7 +292,15 @@ export default function EnhancedTable() {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  console.log(selected);
+  // console.log(selected);
+
+  function pushBrewsToSelected(selected){
+    const userSelection = [];
+    userSelection.push(selected);
+    selectedBrews.arrayOne.push(selected);
+    return selectedBrews;
+  }
+ console.log(selectedBrews);
 
 
   return (
