@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import AddButton from "../components/AddButton";
+import API from "../utilities/api";
 
 
 const styles = theme => ({
@@ -24,7 +25,7 @@ const styles = theme => ({
 
 
 function totalRow(Quantity, Price) {
-    return Quantity * Price;
+    return (Quantity * Price).toFixed(2);
 }
 
 function numberWithCommas(x) {
@@ -32,21 +33,17 @@ function numberWithCommas(x) {
 }
 
 
-function createData(name, ProductID, Quantity, Cost, Price) {
-    return { name, ProductID, Quantity, Cost, Price };
-}
-
-const rows = [
-    createData('IPA', 1, 1000, 30, 40),
-    createData('Amber Ale', 2, 600, 30, 50),
-    createData('Porter', 3, 300, 30, 60),
-    createData('Stout', 4, 400, 30, 40),
-    createData('Hefeweizen', 5, 400, 30, 40),
-    createData('Blonde Ale', 6, 400, 40, 50),
-];
-
-
 class Inventory extends Component {
+    state = {
+        products: [],
+    }
+
+    
+    componentDidMount() {
+        API.getProducts()
+            .then(res => this.setState({ products: res.data }))
+            .catch(err => console.log(err))
+    }
 
     render() {
 
@@ -55,8 +52,7 @@ class Inventory extends Component {
         return (
             <div>
                 <div>
-                <PageTitle title="Inventory" />
-
+                    <PageTitle title="Inventory" />
                 </div>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
@@ -73,26 +69,28 @@ class Inventory extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map(row => (
-                                <TableRow key={row.name}>
+                            {this.state.products.map(product => (
+                                <TableRow key={product.productName}>
                                     <TableCell component="th" scope="row">
-                                        {row.name}
+                                        {product.productName}
                                     </TableCell>
-                                    <TableCell align="right">{row.ProductID}</TableCell>
-                                    <TableCell align="right">{row.Quantity}</TableCell>
-                                    <TableCell align="right">{row.Cost}</TableCell>
-                                    <TableCell align="right">{row.Price}</TableCell>
-                                    <TableCell align="right">{numberWithCommas(totalRow(row.Quantity, row.Cost))}</TableCell>
-                                    <TableCell align="right">{numberWithCommas(totalRow(row.Quantity, row.Price))}</TableCell>
+                                    <TableCell align="right">{product._id}</TableCell>
+                                    <TableCell align="right">{numberWithCommas(product.quantity)}</TableCell>
+                                    <TableCell align="right">{product.cost}</TableCell>
+                                    <TableCell align="right">{product.price}</TableCell>
+                                    <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.cost))}</TableCell>
+                                    <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.price))}</TableCell>
                                     <TableCell align="right">
-                                        {<AddButton/>}
+                                        {<AddButton />}
                                     </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </Paper>
+
             </div>
+
         )
     };
 }

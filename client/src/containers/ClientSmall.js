@@ -1,37 +1,82 @@
 import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
-import TablePagination from "../components/TablePagination";
+import ClientListTable from "../components/ClientListTable";
 import SearchBox from "../components/SearchBox";
 import Grid from '@material-ui/core/Grid';
+import API from "../utilities/api";
+import { LinearProgress } from '@material-ui/core';
 
 
+class ClientList extends Component {
+    state = {
+        clients: [],
+        search: "",
+        error: "",
+    }
 
-class ClientSmall extends Component {
+    handleInputChange = event => {
+        this.setState({ search: event.target.value })
+    }
+
+    componentDidMount() {
+        API.getClients()
+            .then(res => this.setState({ clients: res.data.clients }))
+            .catch(err => console.log(err))
+    }
+
+
+    handleFormSubmit = event => {
+        event.preventDefault();
+        let temporaryArray=this.state.clients;
+        const result = temporaryArray.filter(client => client.name === this.state.search);
+
+        this.setState({ clients: result })
+        console.log(result)
+
+        }
+
 
     render() {
 
-        return (
-            <div>
-                <Grid container spacing={3}>
-                    <Grid item xs={3}>
-                        <PageTitle title="Client Small" />
+        if (this.state.clients.length > 0) {
+            return (
+                <div>
+                    <Grid container spacing={3}>
+                        <Grid item xs={3}>
+                            <PageTitle title="Client List" />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <SearchBox
+                                handleFormSubmit={this.handleFormSubmit}
+                                handleInputChange={this.handleInputChange}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={3}>
-                        <SearchBox>
-
-                        </SearchBox>
+                    <ClientListTable
+                        clients={this.state.clients}
+                    />
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <Grid container spacing={3}>
+                        <Grid item xs={3}>
+                            <PageTitle title="Client List" />
+                        </Grid>
+                        <Grid item xs={3}>
+                            <SearchBox
+                                handleFormSubmit={this.handleFormSubmit}
+                                handleInputChange={this.handleInputChange}
+                            />
+                        </Grid>
                     </Grid>
-                </Grid>
-
-                <TablePagination>
-
-                </TablePagination>
-
-            </div>
-
-        )
-    };
+                    <LinearProgress />
+                </div>
+            )
+        };
+    }
 }
 
 
-export default (ClientSmall);
+export default (ClientList);

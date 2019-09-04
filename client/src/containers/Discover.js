@@ -7,6 +7,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import DiscoverMap from "../components/DiscoverMap";
 
 // API key: 916274a8a0085768c492fb912cba1c5b
 
@@ -58,6 +59,7 @@ class Discover extends Component {
                         </Paper>
                     </Grid>
                 </Grid>
+                <DiscoverMap/>
             </div>
 
         )
