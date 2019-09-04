@@ -46,15 +46,17 @@ mongoose.set('useFindAndModify', false)
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-// Start the API server
-let server = app.listen(PORT, function () {
-    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-});
 
+const server = require('http').Server(app)
 const io = require('socket.io')(server);
 
 io.on('connection', (client) => {
     client.on('new message', (messageData) => {
         io.emit('message', messageData)
     })
+});
+
+// Start the API server
+server.listen(PORT, function () {
+    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });

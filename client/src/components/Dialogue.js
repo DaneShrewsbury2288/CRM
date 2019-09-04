@@ -4,7 +4,7 @@ import Receiver from "./Receiver"
 import API from "../utils/API";
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://shielded-retreat-69523.herokuapp.com:80',  {transports: ['websocket']});
+const socket = openSocket('');
 
 class Dialogue extends Component {
 
