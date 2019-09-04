@@ -9,19 +9,27 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
+import API from '../utilities/api';
 
 // Generate Order Data
-function createData(id, productid, brewname, cost, price, margin) {
-  return { id, productid, brewname, cost, price, margin };
+function createData(id, _id, productName, quantity, price, total) {
+  return { id, _id, productName, quantity, price, total };
 }
 
 
+function getProductInfo(res){
+API.getProducts(res)
+      .then(res =>
+        res.data.map(result => (
+          rows.push(result)
+          // console.log(rows)
+        )))
+        .catch(error => console.log("Check tasks error: " + error))
+}
+
+getProductInfo();
+
 const rows = [
-    createData(0, '098765', 'Black Raven Trickster', '$1', '$4', (4.00/1)),
-    createData(1, '567809', 'Mac and Jacks', '$2', '$4.5', 4.5/2),
-    createData(2, '478392', 'Great Notion: Blueberry Muffins', '$3', '$6', 6/3),
-    createData(3, '493028', 'IPA 4', '$4', '$8', 8/4),
-    createData(4, '312678', 'IPA 5', '$5', '$10', 10/5),
   ];
   
 
@@ -49,17 +57,17 @@ export default function ProductProfit() {
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.id}>
-              <TableCell>{row.productid}</TableCell>
-              <TableCell>{row.brewname}</TableCell>
-              <TableCell>{row.cost}</TableCell>
-              <TableCell>{row.price}</TableCell>
+              <TableCell>{row._id}</TableCell>
+              <TableCell>{row.productName}</TableCell>
+              <TableCell>{row.quantity}</TableCell>
+              <TableCell>${row.price}</TableCell>
               <TableCell align="right">{Math.floor((row.margin)*100)+ '%'}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        <Link color="primary" href=" ">
+        <Link color="primary" href="/inventory">
           View all products
         </Link>
       </div>
