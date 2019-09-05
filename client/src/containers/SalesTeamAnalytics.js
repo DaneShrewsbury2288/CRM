@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 import Grid from '@material-ui/core/Grid';
 import API from '../utilities/api';
+import TeamAnalytics from '../utilities/teamAnalytics';
 import UserAPI from '../utils/API';
 import Card from "../components/Card";
 import InputBase from '@material-ui/core/InputBase';
@@ -15,8 +16,10 @@ class SalesTeamAnalytics extends Component {
         clients: [],
         tasks: [],
         orders: [],
+        products: [],
         dataLoaded: true,
         userNumberOfSales: 0,
+        productPrice: 0,
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -46,7 +49,15 @@ class SalesTeamAnalytics extends Component {
             .then(res =>
                 this.setState({ clients: res.data.clients })
             )
-            .catch(error => console.log("Check task clients: " + error));
+            .catch(error => console.log("Check clients error: " + error));
+    }
+    // get all products
+    checkProducts = () => {
+        API.getProducts()
+            .then(res =>
+                this.setState({ products: res.data })
+            )
+            .catch(error => console.log("Check products error: " + error));
     }
     // get all orders
     checkOrders = () => {
@@ -54,18 +65,21 @@ class SalesTeamAnalytics extends Component {
     }
     checkState = () => {
         const userID = this.state.users[0]._id;
-        console.log(userID);
+        // console.log(userID);
         // const clients = this.state.clients;
         // console.log(clients.length);
         // const tasks = this.state.tasks;
         // console.log(tasks.length);
         // const orders = this.state.orders;
         // console.log(orders);
-        this.numberOfSales(userID);
+        this.userRevenue(userID);
+        // this.getProductPrice("5d6574318debf3d6cb3e549d");
     }
     checkTotal = () => {
         const total = this.state.userNumberOfSales;
         console.log(total);
+        const price = this.state.productPrice;
+        console.log(price);
     }
     // create user full name
     fullName = (first, last) => {
@@ -123,26 +137,54 @@ class SalesTeamAnalytics extends Component {
     }
     // calculate number of sales for each user
     numberOfSales = (userID) => {
-        let total = this.state.userNumberOfSales;
         const orders = this.state.orders;
-        orders.forEach((order) => {
+        let counter = [];
+        orders.forEach(order => {
             if (order.user[0]._id === userID) {
-                this.setState({ userNumberOfSales: total + 1 })
-                console.log(order.user[0]._id + " : " + userID)
+                counter.push(userID);
             }
-
-        })
-        // this.numberOfSales = this.numberOfSales.bind(this);
-        // for (let i = 0; i < orders.length; i++) {
-        //     if (orders[i].user[0]._id === userID) {
-        //         // how many times it matches
-        //         let x = 0;
-        //         x += 1;
-        //         console.log(orders[i].user[0]._id + " : " + userID);
-        //         console.log("user matched to order");
-
-        //     }
+        });
+        this.setState({ userNumberOfSales: counter.length });
+    }
+    // calculate total revenue generate for each user
+    userRevenue = (userID) => {
+        const orders = this.state.orders;
+        let itemsInOrders = [];
+        let prices = [];
+        let quantities = [];
+        // let productTotals = [];
+        orders.forEach(order => {
+            if (order.user[0]._id === userID) {
+                itemsInOrders.push(order.lineItems);
+            }
+        });
+        itemsInOrders.forEach(item => {
+            for (let i = 0; i < item.length; i++) {
+                API.getProduct(item[i]._id)
+                    .then(res =>
+                        prices.push(res.data.price)
+                        // console.log(res.data.price)
+                    )
+                    .catch(error => console.log(error));
+                quantities.push(item[i].quantity);
+            }
+        });
+        // for (let i = 0; i < prices.length; i++) {
+        //     console.log('hi');
+        //     // console.log(quantities[u]);
+        //     // console.log(prices[u]);
+        //     // productTotals.push(prices[u] * quantities[u]);
         // }
+        console.log(prices);
+        console.log(quantities);
+        // console.log(productTotals);
+    }
+    getProductPrice = (id) => {
+        API.getProduct(id)
+            .then(res =>
+                this.setState({ productPrice: res.data.price })
+            )
+            .catch(error => console.log(error));
     }
 
     render() {

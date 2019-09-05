@@ -155,7 +155,7 @@ class ManagerTaskAssignment extends Component {
             const assigned = this.state.taskAssigned;
             // check if date is in correct format
             if (date.length === 10) {
-
+                
             } else {
                 alert("Please input a valid date");
             };

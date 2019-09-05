@@ -17,22 +17,12 @@
                 {
                     "_id": "5d6574318debf3d6cb3e549d",
                     "productName": "Black Raven Trickster",
-                    "quantity": 10
+                    "quantity": 17
                 },
                 {
                     "_id": "5d657d75d2a2ace0a8b4c42b",
                     "productName": "Hops Potato",
-                    "quantity": 10
-                },
-                {
-                    "_id": "5d6574318debf3d6cb3e549d",
-                    "productName": "Black Raven Trickster",
-                    "quantity": 10
-                },
-                {
-                    "_id": "5d6574318debf3d6cb3e549d",
-                    "productName": "Black Raven Trickster",
-                    "quantity": 10
+                    "quantity": 6
                 }
             ],
             "client": [
@@ -526,12 +516,12 @@
                 {
                     "_id": "5d657ebdd2a2ace0a8b4c42f",
                     "productName": "Extra Foam - Limited Edition",
-                    "quantity": 50
+                    "quantity": 37
                 },
                 {
                     "_id": "5d657eecd2a2ace0a8b4c430",
                     "productName": "The Kraken",
-                    "quantity": 300
+                    "quantity": 274
                 }
             ],
             "client": [
