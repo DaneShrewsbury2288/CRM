@@ -258,12 +258,12 @@ export default function EnhancedTable() {
     setSelected([]);
   }
 
-  function handleClick(event, name, price) {
-    const selectedIndex = selected.indexOf(name, price);
+  function handleClick(event, name, price, _id) {
+    const selectedIndex = selected.indexOf(name, price, _id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name, price);
+      newSelected = newSelected.concat(selected, name, price, _id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -332,7 +332,7 @@ export default function EnhancedTable() {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.productName)}
+                      onClick={event => handleClick(event, row.productName, row.price, row._id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}

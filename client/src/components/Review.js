@@ -16,10 +16,10 @@ const products = [
   { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
 ];
 
-function seeObject(){
-  console.log(Table.selectedBrews);
-}
 
+function seeObject(){
+  console.log(Table.selectedBrews.arrayOne.slice(-1));
+}
 
 const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 
@@ -43,6 +43,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const selectedProducts = Table.selectedBrews.arrayOne[0];
+
+console.log(selectedProducts);
+
 export default function Review() {
   const classes = useStyles();
 
@@ -57,10 +61,15 @@ export default function Review() {
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map(product => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+        {selectedProducts.map(product => (
+          <ListItem 
+          className={classes.listItem} 
+          key={product.name}>
+            <ListItemText 
+            primary={product.name} 
+            secondary={product.desc} />
+            <Typography 
+            variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
@@ -78,7 +87,7 @@ export default function Review() {
           <Typography gutterBottom>John Smith</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
+        {/* <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Product Selection
           </Typography>
@@ -94,7 +103,7 @@ export default function Review() {
               </React.Fragment>
             ))}
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </React.Fragment>
   );
