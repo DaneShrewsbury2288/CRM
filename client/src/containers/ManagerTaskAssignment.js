@@ -258,29 +258,30 @@ class ManagerTaskAssignment extends Component {
                 />
                 <div className="task-space"></div>
                 {/* force page to wait for tasks to load */}
-                {this.state.tasks.length > 0 ? (
-                    <div>
-                        {this.state.tasks.map(task => (
-                            <div key={task._id}>
-                                <Grid item lg={12}>
-                                    <TaskTable
-                                        taskNumber={task._id}
-                                        user={this.fullName(task.user)}
-                                        userImage={this.checkUserImage(task.user)}
-                                        users={this.state.users}
-                                        client={this.checkIfTaskHasClient(task.client)}
-                                        description={task.description}
-                                        assignedStatus={this.formatStatus(task.assignedStatus)}
-                                        elapsedTime={this.getElapsedTime(task.assignDate)}
-                                        dueDate={this.getElapsedTime(task.dueDate)}
-                                        completionStatus={this.capitialStatus(task.completionStatus)}
-                                        note={this.checkTaskNotes(task.note)}
-                                    />
-                                </Grid>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
+                {this.state.tasks.length > 0 ?
+                    (
+                        <div>
+                            {this.state.tasks.map(task => (
+                                <div key={task._id}>
+                                    <Grid item lg={12}>
+                                        <TaskTable
+                                            taskNumber={task._id}
+                                            user={this.fullName(task.user)}
+                                            userImage={this.checkUserImage(task.user)}
+                                            users={this.state.users}
+                                            client={this.checkIfTaskHasClient(task.client)}
+                                            description={task.description}
+                                            assignedStatus={this.formatStatus(task.assignedStatus)}
+                                            elapsedTime={this.getElapsedTime(task.assignDate)}
+                                            dueDate={this.getElapsedTime(task.dueDate)}
+                                            completionStatus={this.capitialStatus(task.completionStatus)}
+                                            note={this.checkTaskNotes(task.note)}
+                                        />
+                                    </Grid>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
                         <Grid container>
                             <Grid item lg={5}></Grid>
                             <Grid item lg={2}>
@@ -294,9 +295,8 @@ class ManagerTaskAssignment extends Component {
                             </Grid>
                             <Grid item lg={5}></Grid>
                         </Grid>
-
-
-                    )}
+                    )
+                }
                 <button onClick={this.checkState}>
                     Check tasks
                 </button>
