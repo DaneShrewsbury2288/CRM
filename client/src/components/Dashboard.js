@@ -15,6 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Messenger from './Messenger';
 import ListItems from './ListItems';
 
 
@@ -22,7 +23,10 @@ const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    display: 'flex'
+  },
+  messengerTab: {
+
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -87,7 +91,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    marginLeft: 10,
+    marginLeft: 10
   },
   paper: {
     padding: theme.spacing(2),
@@ -102,6 +106,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard(props) {
   const classes = useStyles();
+  console.log(classes)
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -113,8 +118,8 @@ export default function Dashboard(props) {
 
   return (
     <div className={classes.root}>
-
       <CssBaseline />
+      <Messenger className={classes.messengerTab} />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton

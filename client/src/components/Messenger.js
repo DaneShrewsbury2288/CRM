@@ -12,7 +12,8 @@ class Messenger extends Component {
 
   state = {
     users: [],
-    partner: null
+    partner: null,
+    display: 'block'
   };
 
   componentDidMount() {
@@ -20,7 +21,7 @@ class Messenger extends Component {
   }
 
   handleSetPartner = event => {
-    this.setState({ partner: event.target.id, user: this.props.auth._id}, () => {
+    this.setState({ partner: event.target.id, user: this.props.auth._id }, () => {
     });
   };
 
@@ -32,31 +33,65 @@ class Messenger extends Component {
   }
 
   back = () => {
-    this.setState({partner: null})
+    this.setState({ partner: null })
+  }
+
+  hideMessenger = () => {
+    if (this.state.display === 'block') {
+      this.setState({ display: 'none' }, () => {
+        console.log(this.state.display)
+      })
+    }
+    else if (this.state.display === 'none') {
+      this.setState({ display: 'block' }, () => {
+        console.log(this.state.display)
+      })
+    }
   }
 
   render() {
     const { user } = this.props.auth;
+    const styles = {
+      body: {
+        backgroundColor: 'white',
+        // height: '500px',
+        // width: '300px',
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        zIndex: 10
+      },
+      title: {
+        backgroundColor: 'blue',
+        color: 'white'
+      },
+      content: {
+        display: this.state.display
+      }
+    }
+
     return (
-      <div>
-        <PageTitle title="Messenger" />
-        {this.state.partner
-          ?
-          <div>
-            <h4 onClick={this.back}>Back</h4>
-          <Dialogue user={user._id} partner={this.state.partner} />
-          </div>
-          :
-          <List>
-            {this.state.users.map(user => (
-              <ListItem key={user._id}>
-                <h4 id={user._id} onClick={this.handleSetPartner}>
-                  {user.firstName} {user.lastName}
-                </h4>
-              </ListItem>
-            ))}
-          </List>
-        }
+      <div style={styles.body}>
+        <h4 onClick={this.hideMessenger} style={styles.title}>Messenger</h4>
+        <div style={styles.content}>
+          {this.state.partner
+            ?
+            <div>
+              <h4 onClick={this.back}>Back</h4>
+              <Dialogue user={user._id} partner={this.state.partner} />
+            </div>
+            :
+            <List>
+              {this.state.users.map(user => (
+                <ListItem key={user._id}>
+                  <h4 id={user._id} onClick={this.handleSetPartner}>
+                    {user.firstName} {user.lastName}
+                  </h4>
+                </ListItem>
+              ))}
+            </List>
+          }
+        </div>
       </div>
     )
   }
@@ -64,11 +99,11 @@ class Messenger extends Component {
 
 
 Messenger.propTypes = {
-    auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-    auth: state.auth
+  auth: state.auth
 });
 export default connect(
-    mapStateToProps
+  mapStateToProps
 )(Messenger);
