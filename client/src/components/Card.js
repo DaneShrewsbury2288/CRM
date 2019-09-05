@@ -28,39 +28,32 @@ function profileCard(props) {
         <Grid container spacing={5}>
           <Grid item lg={6}>
             <Typography variant="body2" component="p">
-              Total Sales: $1234
+              Revenue Generated: {props.totalSales}
           </Typography>
           </Grid>
           <Grid item lg={6}>
             <Typography variant="body2" component="p">
-              Average Sale: $12
+              Number of Sales: {props.numSales}
           </Typography>
           </Grid>
         </Grid>
         <Grid container spacing={5}>
           <Grid item lg={4}>
             <Typography variant="body2" component="p">
-              Sale Conversion Rate: 33%
+            Average Sale: {props.averageSale}
           </Typography>
           </Grid>
           <Grid item lg={4}>
             <Typography variant="body2" component="p">
-              Sales in last 30 days: $123
+              Sales in last 30 days: {props.lastMonthSales}
           </Typography>
           </Grid>
           <Grid item lg={4}>
             <Typography variant="body2" component="p">
-              Most sold product: Hops-Potato
+              Most sold product: {props.popularProduct}
           </Typography>
           </Grid>
         </Grid>
-
-
-
-
-        <Typography variant="body2" component="p">
-
-        </Typography>
       </CardContent>
     </Card>
   );

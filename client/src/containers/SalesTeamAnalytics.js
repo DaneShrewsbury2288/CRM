@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 import Grid from '@material-ui/core/Grid';
 import API from '../utilities/api';
-import TeamAnalytics from '../utilities/teamAnalytics';
+// import TeamAnalytics from '../utilities/teamAnalytics';
 import UserAPI from '../utils/API';
 import Card from "../components/Card";
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import orderData from "../components/JSON/MockOrders";
 import PacmanLoader from 'react-spinners/PacmanLoader';
+import Modal from '../components/TeamModal';
+import Search from '../components/TeamSearch';
 
 class SalesTeamAnalytics extends Component {
     state = {
@@ -18,8 +20,10 @@ class SalesTeamAnalytics extends Component {
         orders: [],
         products: [],
         dataLoaded: true,
-        userNumberOfSales: 0,
         productPrice: 0,
+        open: false,
+        search: "",
+        searchedUser: [],
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -64,22 +68,7 @@ class SalesTeamAnalytics extends Component {
         this.setState({ orders: orderData.orders });
     }
     checkState = () => {
-        const userID = this.state.users[0]._id;
-        // console.log(userID);
-        // const clients = this.state.clients;
-        // console.log(clients.length);
-        // const tasks = this.state.tasks;
-        // console.log(tasks.length);
-        // const orders = this.state.orders;
-        // console.log(orders);
-        this.userRevenue(userID);
-        // this.getProductPrice("5d6574318debf3d6cb3e549d");
-    }
-    checkTotal = () => {
-        const total = this.state.userNumberOfSales;
-        console.log(total);
-        const price = this.state.productPrice;
-        console.log(price);
+        this.userMostSoldProduct();
     }
     // create user full name
     fullName = (first, last) => {
@@ -144,7 +133,8 @@ class SalesTeamAnalytics extends Component {
                 counter.push(userID);
             }
         });
-        this.setState({ userNumberOfSales: counter.length });
+        return counter.length
+        // this.setState({ userNumberOfSales: counter.length });
     }
     // calculate total revenue generate for each user
     userRevenue = (userID) => {
@@ -186,28 +176,72 @@ class SalesTeamAnalytics extends Component {
             )
             .catch(error => console.log(error));
     }
+    userMostSoldProduct = () => {
+        const orders = this.state.orders;
+        const users = this.state.users;
+        orders.forEach(order => {
+            console.log(order)
+        })
+        // match order user id to user id
+        // get all lineItems
+        // combine duplicates
+        // add up product quantities for each item
+    }
+
+    // handle input change
+    handleInputChange = (event) => {
+        this.setState({
+            search: event.target.value
+        });
+    }
+    searchAndModal = event => {
+        this.handleFormSubmit(event);
+        this.modalOpen();
+    }
+    handleFormSubmit = event => {
+        event.preventDefault();
+        let users = this.state.users;
+        const result = users.filter(user =>
+            (user.firstName + " " + user.lastName).toUpperCase() === this.state.search.toUpperCase()
+        );
+        this.setState({ searchedUser: result });
+    };
+    modalOpen = () => {
+        this.setState({ open: true });
+    }
+    modalClose = () => {
+        this.setState({ open: false });
+    }
+
 
     render() {
         return (
             <div>
-                <button onClick={this.checkState}>Check State</button>
-                <button onClick={this.checkTotal}>Check Total</button>
+                <button onClick={this.checkState}>Console log values</button>
+                <button onClick={this.modalOpen}>Open Modal</button>
                 <PageTitle title="Sales Team Analytics" />
-                <div className="user-search">
-                    <div className="search-icon">
-                        <SearchIcon
-                        // on click search for employee and display modal of employee information
-                        // datamuse populated with employee names?
+                <Grid container>
+                    <Grid item lg={4}></Grid>
+                    <Grid item lg={4}>
+                        <Search
+                            handleInputChange={this.handleInputChange}
+                            handleFormSubmit={this.searchAndModal}
                         />
-                    </div>
-                    <InputBase
-                        placeholder="Find employee"
-                        classes={{
-                            root: "inputRoot",
-                            input: "inputInput",
-                        }}
-                        inputProps={{ 'aria-label': 'search' }}
-                    />
+                    </Grid>
+                    <Grid item lg={4}></Grid>
+                </Grid>
+                <div>
+                    {this.state.searchedUser.map(user => (
+                        <Modal
+                            key={user._id}
+                            open={this.state.open}
+                            onClose={this.modalClose}
+                            fullName={this.fullName(user.firstName, user.lastName)}
+                            startDate={this.startDate(user.created_at)}
+                            numSales={this.numberOfSales(user._id)}
+                        />
+                    ))}
+
                 </div>
                 <Grid container spacing={4}>
                     <Grid item lg={12}>
@@ -225,6 +259,8 @@ class SalesTeamAnalytics extends Component {
                                             <Card
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
+                                                // totalSales={this.userRevenue(user._id)}
+                                                numSales={this.numberOfSales(user._id)}
                                             />
                                         </Grid>
                                     </div>
