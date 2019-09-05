@@ -4,7 +4,7 @@ import InputForm from '../components/InputForm';
 import TaskTable from "../components/Task";
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import GridLoader from 'react-spinners/GridLoader';
 import Grid from '@material-ui/core/Grid';
 import moment from "moment";
 
@@ -65,13 +65,13 @@ class ManagerTaskAssignment extends Component {
     // delete task
     deleteTask = (id) => {
         API.deleteTask(id)
-            .then(res => 
+            .then(res =>
                 this.setState({ tasks: res.data })
-                )
+            )
+
     }
     checkState = () => {
-        const tasks = this.state.tasks;
-        console.log(tasks);
+
     }
     // create user full name
     fullName = (userInfo) => {
@@ -155,7 +155,7 @@ class ManagerTaskAssignment extends Component {
             const assigned = this.state.taskAssigned;
             // check if date is in correct format
             if (date.length === 10) {
-                
+
             } else {
                 alert("Please input a valid date");
             };
@@ -174,7 +174,6 @@ class ManagerTaskAssignment extends Component {
                 description: desc,
                 note: [],
             };
-            console.log(newTask);
             // save task to db
             this.saveTask(newTask);
             // clear form by resetting the state
@@ -184,6 +183,8 @@ class ManagerTaskAssignment extends Component {
                 userSelection: [],
                 clientSelection: []
             });
+            this.checkTasks();
+            this.setState(this.state);
         } else {
             alert("Please complete all required fields");
         }
@@ -280,7 +281,21 @@ class ManagerTaskAssignment extends Component {
                         ))}
                     </div>
                 ) : (
-                        <LinearProgress />
+                        <Grid container>
+                            <Grid item lg={5}></Grid>
+                            <Grid item lg={2}>
+                                <GridLoader
+                                    className={"grid-loader"}
+                                    sizeUnit={"px"}
+                                    size={15}
+                                    color={'#9E0031'}
+                                    loading={true}
+                                />
+                            </Grid>
+                            <Grid item lg={5}></Grid>
+                        </Grid>
+
+
                     )}
                 <button onClick={this.checkState}>
                     Check tasks

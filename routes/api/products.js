@@ -15,7 +15,7 @@ router
 
 // matches with "api/products/name"
 router
-.route("/productByName/:name")
+.route("/productByName/:namexw")
 .get(productsController.findByProductName);
 
 module.exports = router;

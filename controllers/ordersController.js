@@ -7,21 +7,21 @@ module.exports = {
       .find(req.query)
       .sort({ date: -1 })
       // populate all users, clients and notes associated with order
-      // .populate({
-      //   path: 'user client note product',
-      //   populate: {
-      //     path: 'user'
-      //   },
-      //   populate: {
-      //     path: 'client'
-      //   },
-      //   populate: {
-      //     path: 'note'
-      //   },
-      //   populate: {
-      //     path: 'product'
-      //   }
-      // })
+      .populate({
+        path: 'user client note product',
+        populate: {
+          path: 'user'
+        },
+        populate: {
+          path: 'client'
+        },
+        populate: {
+          path: 'note'
+        },
+        populate: {
+          path: 'product'
+        }
+      })
       .then(dbModel => {
         res.status(200).json({
           orders: dbModel.map(model => {
@@ -60,7 +60,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
-    console.log(req.body);
+    console.log(typeof(req.body));
     Order
       .create(req.body)
       // .then(function (dbProduct) {
@@ -74,6 +74,17 @@ module.exports = {
       //       new: true
       //     })
       // })
+      .then(function (dbClient) {
+        return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
+      })
+      // update product quantity
+      .then(function (dbProduct) {
+        return db.Product.findOneAndUpdate({}, { $push: { product: dbProduct._id } }, { new: true });
+      })
+      // associate user ID with order
+      .then(function (dbUser) {
+        return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
+      })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
