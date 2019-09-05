@@ -4,6 +4,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
 import Modal from '@material-ui/core/Modal';
+// import OrdersTable from "./OrdersTable";
 
 
 const useStyles = makeStyles(theme => ({
@@ -40,7 +41,7 @@ const useStyles2 = makeStyles(theme => ({
   },
 }));
 
-export default function ClientAddButton() {
+export default function ClientAddButton(props) {
 
   const classes = useStyles();
 
@@ -57,6 +58,8 @@ export default function ClientAddButton() {
     setOpen(false);
   };
 
+  console.log("this is ClientOrderButton props: " + JSON.stringify(props))
+
   return (
     <div>
       <Tooltip title="Order Information" aria-label="Order Information" onClick={handleOpen}>
@@ -72,9 +75,9 @@ export default function ClientAddButton() {
       >
         <div style={modalStyle} className={classes2.paper}>
           <h2 id="simple-modal-title">Table of Orders</h2>
-
         </div>
       </Modal>
+     
     </div>
   );
 }

@@ -5,7 +5,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 const useStyles = makeStyles({
   root: {
@@ -42,6 +42,9 @@ export default function SearchBox(props) {
       />
       <IconButton className={classes.iconButton} aria-label="search" onClick={props.handleFormSubmit}>
         <SearchIcon />
+      </IconButton>
+      <IconButton className={classes.iconButton} aria-label="search" onClick={props.handleRefreshSubmit}>
+        <RefreshIcon />
       </IconButton>
       <Divider className={classes.divider} orientation="vertical" />
     </Paper>

@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3001;
 const passport = require("passport");
 const path = require('path')
 
+
 // Define middleware here
 app.use(
     bodyParser.urlencoded({
@@ -45,7 +46,17 @@ mongoose.set('useFindAndModify', false)
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
+
+const server = require('http').Server(app)
+const io = require('socket.io')(server);
+
+io.on('connection', (client) => {
+    client.on('new message', (messageData) => {
+        io.emit('message', messageData)
+    })
+});
+
 // Start the API server
-app.listen(PORT, function () {
+server.listen(PORT, function () {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });

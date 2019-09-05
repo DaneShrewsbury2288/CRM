@@ -72,6 +72,10 @@ export default {
     getProduct: function(id) {
       return axios.get("/api/products/" + id);
     },
+    // Get one product by name
+    getProductByName: function(name) {
+      return axios.get("api/products/productByName/" + name);
+    },
     // Deletes the product with the given id
     deleteProduct: function(id) {
       return axios.delete("/api/products/" + id);
