@@ -5,35 +5,34 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
-import EnhancedTable from '../components/EditableTable';
 import TextField from '@material-ui/core/TextField';
 import * as Table from '../components/EditableTable';
 
 
 
-const products = [
-  { name: Table.selectedBrews.arrayOne.slice(-1),
-    desc: 'A nice thing',
-    price: '$9.99' 
-    },
-  { name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45' 
-    },
-  { name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51' 
-    },
-  { name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11' 
-    },
-];
+// const products = [
+//   { name: Table.selectedBrews.arrayOne.slice(-1),
+//     desc: 'A nice thing',
+//     price: '$9.99' 
+//     },
+//   { name: 'Product 2',
+//     desc: 'Another thing',
+//     price: '$3.45' 
+//     },
+//   { name: 'Product 3',
+//     desc: 'Something else',
+//     price: '$6.51' 
+//     },
+//   { name: 'Product 4',
+//     desc: 'Best thing of all',
+//     price: '$14.11' 
+//     },
+// ];
 
-function pushIntoProducts(){
-  products.push()
+// function pushIntoProducts(){
+//   products.push()
 
-}
+// }
 
 
 function seeObject(x){
@@ -69,7 +68,7 @@ const selectedProducts = Table.selectedBrews.arrayOne[0];
 console.log(selectedProducts);
 
 export default function Review() {
-  const [quantityValue] = React.useState([]);
+  // const [quantityValue] = React.useState([]);
   const classes = useStyles();
 
   const x = Table.selectedBrews.arrayOne.slice(-1);
