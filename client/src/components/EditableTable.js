@@ -28,9 +28,9 @@ export const selectedBrews = {
 
  console.log(selectedBrews);
 
-function createData(productName, price, quantity) {
-  return { productName, price, quantity };
-}
+// function createData(productName, price, quantity) {
+//   return { productName, price, quantity };
+// }
 
 const rows = [
 ];
@@ -46,13 +46,15 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
-// const items=[];
+const items=[];
+
 
 function getItems(res) {
   API.getProducts(res)
       .then(res =>
         res.data.map(result => (
-          rows.push(result)
+          rows.push(result),
+          items.push(result)
         )))
         .catch(error => console.log("Check tasks error: " + error))
  }
@@ -173,7 +175,7 @@ const EnhancedTableToolbar = props => {
       <div className={classes.title}>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subtitle1">
-            {numSelected} selected
+            {/* {numSelected} selected */}
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
@@ -301,6 +303,7 @@ export default function EnhancedTable() {
     return selectedBrews;
   }
  console.log(selectedBrews);
+ console.log(items);
 
 
   return (

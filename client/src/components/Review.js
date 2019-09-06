@@ -9,27 +9,47 @@ import EnhancedTable from '../components/EditableTable';
 import * as Table from '../components/EditableTable';
 
 
+
 const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
+  { name: Table.selectedBrews.arrayOne.slice(-1),
+    desc: 'A nice thing',
+    price: '$9.99' 
+    },
+  { name: 'Product 2',
+    desc: 'Another thing',
+    price: '$3.45' 
+    },
+  { name: 'Product 3',
+    desc: 'Something else',
+    price: '$6.51' 
+    },
+  { name: 'Product 4',
+    desc: 'Best thing of all',
+    price: '$14.11' 
+    },
 ];
 
+function pushIntoProducts(){
+  products.push()
 
-function seeObject(){
+}
+
+
+function seeObject(x){
   console.log(Table.selectedBrews.arrayOne.slice(-1));
+  const why = Table.selectedBrews.arrayOne.slice(-1);
+  console.log(why[0][0]);
 }
 
 const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 
 //This is where the clients info should be pushed
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+// const payments = [
+//   { name: 'Card type', detail: 'Visa' },
+//   { name: 'Card holder', detail: 'Mr John Smith' },
+//   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
+//   { name: 'Expiry date', detail: '04/2024' },
+// ];
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -50,6 +70,8 @@ console.log(selectedProducts);
 export default function Review() {
   const classes = useStyles();
 
+  const x = Table.selectedBrews.arrayOne.slice(-1);
+  console.log(x);
   // console.log(selected);
   // console.log(rows);
 
@@ -60,8 +82,8 @@ export default function Review() {
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
-      <List disablePadding>
-        {selectedProducts.map(product => (
+      <List>
+        {products.map(product => (
           <ListItem 
           className={classes.listItem} 
           key={product.name}>
@@ -82,7 +104,7 @@ export default function Review() {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
+            Client Information
           </Typography>
           <Typography gutterBottom>John Smith</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>

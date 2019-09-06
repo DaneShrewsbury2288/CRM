@@ -7,8 +7,8 @@ import TextField from '@material-ui/core/TextField';
 
 
 export default function ClientInformation() {
-  const [name, email, phone, zipcode] = React.useState('');
-  const [count] = React.useState(0);
+  // const [name, email, phone, zipcode] = React.useState('');
+  // const [count] = React.useState(0);
 
   // // Similar to componentDidMount and componentDidUpdate:
   // React.useEffect(() => {
