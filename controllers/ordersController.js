@@ -5,7 +5,7 @@ module.exports = {
   findAll: function (req, res) {
     Order
       .find(req.query)
-      .sort({ date: -1 })
+      .sort({ created_at: -1 })
       // populate all users, clients and notes associated with order
       .populate({
         path: 'user client note product',
@@ -84,12 +84,28 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   getOrderTotal: function (req, res) {
-    // const userID = req.params.userid;
+    const userID = req.params.userid;
     const firstDate = req.params.firstdate;
     const secondDate = req.params.seconddate;
+    console.log(userID);
     console.log(firstDate);
     console.log(secondDate);
-    Order.find({ "created_at": { "$gte": firstDate, "$lt": secondDate } })
+    Order
+      .find({ "created_at": { "$gte": firstDate, "$lt": secondDate } })
+      .populate({
+        path: 'user clients product',
+        populate: {
+          path: 'user'
+        },
+        populate: {
+          path: 'client'
+        },
+        populate: {
+          path: 'product'
+        }
+      })
+      .sort({ 'lineItems.quantity': -1 })
+      // .aggregate([{ $match: { 'user': userID } }])
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }
