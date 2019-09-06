@@ -46,7 +46,7 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
-const items=[];
+export const items=[];
 
 
 function getItems(res) {
