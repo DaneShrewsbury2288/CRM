@@ -5,8 +5,6 @@ import API from '../utilities/api';
 // import TeamAnalytics from '../utilities/teamAnalytics';
 import UserAPI from '../utils/API';
 import Card from "../components/Card";
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
 import orderData from "../components/JSON/MockOrders";
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Modal from '../components/TeamModal';
@@ -75,7 +73,7 @@ class SalesTeamAnalytics extends Component {
         if (first && last) {
             return first + " " + last;
         } else {
-            return ""
+            return "";
         }
     }
     // convert start date
@@ -133,8 +131,7 @@ class SalesTeamAnalytics extends Component {
                 counter.push(userID);
             }
         });
-        return counter.length
-        // this.setState({ userNumberOfSales: counter.length });
+        return counter.length;
     }
     // calculate total revenue generate for each user
     userRevenue = (userID) => {
@@ -142,7 +139,7 @@ class SalesTeamAnalytics extends Component {
         let itemsInOrders = [];
         let prices = [];
         let quantities = [];
-        // let productTotals = [];
+        let productTotals = [];
         orders.forEach(order => {
             if (order.user[0]._id === userID) {
                 itemsInOrders.push(order.lineItems);
@@ -152,22 +149,20 @@ class SalesTeamAnalytics extends Component {
             for (let i = 0; i < item.length; i++) {
                 API.getProduct(item[i]._id)
                     .then(res =>
-                        prices.push(res.data.price)
-                        // console.log(res.data.price)
+                        // prices.push(res.data.price)
+                        console.log(res.data.price)
                     )
                     .catch(error => console.log(error));
                 quantities.push(item[i].quantity);
             }
         });
-        // for (let i = 0; i < prices.length; i++) {
-        //     console.log('hi');
-        //     // console.log(quantities[u]);
-        //     // console.log(prices[u]);
-        //     // productTotals.push(prices[u] * quantities[u]);
-        // }
-        console.log(prices);
-        console.log(quantities);
-        // console.log(productTotals);
+        for (let i = 0; i < prices.length; i++) {
+            // productTotals.push(prices[u] * quantities[u]);
+        }
+        let totalRevenue = 0;
+        for (let i = 0; i < productTotals.length; i++) {
+            totalRevenue += productTotals[i];
+        }
     }
     getProductPrice = (id) => {
         API.getProduct(id)
@@ -176,18 +171,30 @@ class SalesTeamAnalytics extends Component {
             )
             .catch(error => console.log(error));
     }
-    userMostSoldProduct = () => {
+    userMostSoldProduct = (userID) => {
         const orders = this.state.orders;
-        const users = this.state.users;
+        let itemsInOrders = [];
         orders.forEach(order => {
-            console.log(order)
+            if (order.user[0]._id === userID) {
+                itemsInOrders.push(order.lineItems);
+            }
         })
+        console.log(itemsInOrders)
         // match order user id to user id
         // get all lineItems
         // combine duplicates
         // add up product quantities for each item
     }
-
+    // add default if user does not have a profile picutre
+    checkUserImage = user => {
+        for (let i = 0; i < user.length; i++) {
+            if (user[i].image) {
+                return user[i].image;
+            } else {
+                return "https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80";
+            }
+        }
+    }
     // handle input change
     handleInputChange = (event) => {
         this.setState({
@@ -236,9 +243,14 @@ class SalesTeamAnalytics extends Component {
                             key={user._id}
                             open={this.state.open}
                             onClose={this.modalClose}
+                            userImage={this.checkUserImage(user)}
                             fullName={this.fullName(user.firstName, user.lastName)}
                             startDate={this.startDate(user.created_at)}
+                            // totalSales={this.userRevenue(user._id)}
                             numSales={this.numberOfSales(user._id)}
+                        // averageSale={this.averageSale(user._id)}
+                        // lastMonthSales={this.lastMonthSales(user._id)}
+                        // popularProduct={this.userMostSoldProduct(user._id)}
                         />
                     ))}
 
@@ -257,10 +269,14 @@ class SalesTeamAnalytics extends Component {
                                     <div key={user._id}>
                                         <Grid item lg={12}>
                                             <Card
+                                                userImage={this.checkUserImage(user)}
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
                                                 // totalSales={this.userRevenue(user._id)}
                                                 numSales={this.numberOfSales(user._id)}
+                                            // averageSale={this.averageSale(user._id)}
+                                            // lastMonthSales={this.lastMonthSales(user._id)}
+                                            // popularProduct={this.userMostSoldProduct(user._id)}
                                             />
                                         </Grid>
                                     </div>

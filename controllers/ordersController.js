@@ -60,20 +60,8 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
-    console.log(typeof(req.body));
     Order
       .create(req.body)
-      // .then(function (dbProduct) {
-      //   return db.Product.findOneAndUpdate(
-      //     // get product
-      //     dbProduct._id,
-      //     // update quantity to new value
-      //     // must get current amount and subtract requested amount first
-      //     dbProduct.quantity,
-      //     {
-      //       new: true
-      //     })
-      // })
       .then(function (dbClient) {
         return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
       })
@@ -102,5 +90,23 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  getOrderTotal: function (userId) {
+    Order.aggregate([
+      {
+        $match: { user: userId }
+      },
+      {
+        $group: {
+          // todo: fill in here
+          _id: '$user',  //$user is the column name in collection
+          totalAmount: { $sum: { $multiply: ["$price", "$quantity"] } },
+          count: { $sum: 1 }
+        }
+      }
+    ], function(err, result) {
+      // capture error (err)
+      // process result
+    })
   }
 };

@@ -193,12 +193,12 @@ class ManagerTaskAssignment extends Component {
     getElapsedTime = (assignDate) => {
         const formatDate = assignDate.replace("T00:00:00.000Z", "");
         const timeDifference = moment().diff(moment(formatDate), 'days');
-        // convert to positive for due dates
-        if (timeDifference < 0) {
-            return timeDifference * -1;
-        } else {
+        if (formatDate < Date.now()) {
             return timeDifference;
+        } else { 
+            return timeDifference * -1;
         }
+        
     }
     // format task status
     capitialStatus = (status) => {
@@ -268,7 +268,6 @@ class ManagerTaskAssignment extends Component {
                                             taskNumber={task._id}
                                             user={this.fullName(task.user)}
                                             userImage={this.checkUserImage(task.user)}
-                                            users={this.state.users}
                                             client={this.checkIfTaskHasClient(task.client)}
                                             description={task.description}
                                             assignedStatus={this.formatStatus(task.assignedStatus)}
