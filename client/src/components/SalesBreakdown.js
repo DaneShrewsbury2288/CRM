@@ -37,7 +37,7 @@ const renderActiveShape = (props) => {
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
-        fill={fill}
+        fill="#70c76b"
       />
       <Sector
         cx={cx}
@@ -46,7 +46,7 @@ const renderActiveShape = (props) => {
         endAngle={endAngle}
         innerRadius={outerRadius + 6}
         outerRadius={outerRadius + 10}
-        fill={fill}
+        fill="#8884d8"
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
@@ -83,7 +83,7 @@ export default class SalesBreakdown extends PureComponent {
           cy={200}
           innerRadius={80}
           outerRadius={100}
-          fill="#8884d8"
+          fill="#faac02"
           dataKey="value"
           onMouseEnter={this.onPieEnter}
         />

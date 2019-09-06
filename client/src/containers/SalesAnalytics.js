@@ -14,7 +14,6 @@ import AggregateSales from '../components/AggregateSales';
 
 
 const drawerWidth = 240;
-
 const styles = theme => ({
     root: {
         display: 'flex',
@@ -107,6 +106,7 @@ const styles = theme => ({
 
 class SalesAnalytics extends Component {
     
+
     render() {
         const { classes } = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -129,10 +129,6 @@ class SalesAnalytics extends Component {
                                 <Tab label="Daily" />
                                 <Tab label="Weekly" />
                                 <Tab label="Monthly" >
-
-                                    <Paper className={fixedHeightPaper}>
-                                        <Chart />
-                                    </Paper>
                                 </Tab>
                             </Tabs>
                         </Paper>

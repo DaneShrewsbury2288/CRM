@@ -17,7 +17,7 @@ import { logoutUser } from "../actions/authActions";
 
 const icons = [
     {
-        title: "News Feed",
+        title: "Dashboard",
         href: "/",
         bitmask: 0b1,
         icon: <LayersIcon />
