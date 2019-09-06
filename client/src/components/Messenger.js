@@ -13,7 +13,8 @@ class Messenger extends Component {
   state = {
     users: [],
     partner: null,
-    display: 'block'
+    display: 'none',
+    user: this.props.auth.user
   };
 
   componentDidMount() {
@@ -26,7 +27,7 @@ class Messenger extends Component {
   };
 
   loadUsers = () => {
-    API.getUsers()
+    API.getUsersExcept(this.state.user._id)
       .then(res => this.setState({ users: res.data }, () => {
       }))
       .catch(err => console.log(err))
