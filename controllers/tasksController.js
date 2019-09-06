@@ -40,6 +40,37 @@ module.exports = {
       })
       .catch(err => res.status(422).json(err));
   },
+  findByUser: function (req, res) {
+    let userID = req.params.id;
+    Task
+      .find(req.query)
+      // sort by due date
+      .sort({ dueDate: 'desc' })
+      // populate all users, clients and notes associated with tasks
+      .populate({
+          path: 'user',
+          match: { '_id': userID }
+      })
+      .then(dbModel => {
+        res.status(200).json({
+          tasks: dbModel.map(model => {
+            return {
+              _id: model._id,
+              user: model.user,
+              client: model.client,
+              assignDate: model.assignDate,
+              dueDate: model.dueDate,
+              completedDate: model.completedDate,
+              assignedStatus: model.assignedStatus,
+              completionStatus: model.completionStatus,
+              description: model.description,
+              note: model.note,
+            };
+          })
+        })
+      })
+      .catch(err => res.status(422).json(err));
+  },
   findById: function (req, res) {
     Task
       .findById(req.params.id)

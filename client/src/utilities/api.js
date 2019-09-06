@@ -13,6 +13,10 @@ export default {
     getTask: function(id) {
       return axios.get("/api/tasks/" + id);
     },
+    // get all tasks by one user
+    getTaskByUser: function(userID) {
+      return axios.get("api/tasks/user/" + userID)
+    },
     // Deletes the task with the given id
     deleteTask: function(id) {
       return axios.delete("/api/tasks/" + id);
