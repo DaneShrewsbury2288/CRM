@@ -87,18 +87,17 @@ export default function Review() {
       </Typography>
       <List>
         {Table.items.map(item => (
-          <ListItem 
+          <ListItem
           className={classes.listItem} 
           key={item.name}>
-            <ListItemText 
-            primary={item.productName} 
-            secondary={item.price} />
+            <ListItemText
+            primary={item.productName} />
             <Typography 
-            variant="body2">{item.price}</Typography>
+            variant="body2">${item.price}</Typography>
             <Typography>
             <TextField
             id="outlined-number"
-            label="Number"
+            label="Quantity"
             // value={values.age}
             // onChange={handleChange('age')}
             type="number"
