@@ -1,19 +1,18 @@
 import React, { Component } from "react";
+import PageTitle from "../components/PageTitle";
 import API from "../utils/API";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Dialogue from "./Dialogue";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import Dialogue from "../components/Dialogue";
 
 
-class Messenger extends Component {
+
+class MapOfSales extends Component {
 
   state = {
     users: [],
-    partner: null,
-    display: 'none',
-    user: this.props.auth.user
+    user1: null,
+    user2: null
   };
 
   componentDidMount() {
@@ -26,7 +25,7 @@ class Messenger extends Component {
   };
 
   loadUsers = () => {
-    API.getUsersExcept(this.state.user._id)
+    API.getUsers()
       .then(res => this.setState({ users: res.data }, () => {
       }))
       .catch(err => console.log(err))
@@ -50,37 +49,17 @@ class Messenger extends Component {
   }
 
   render() {
-    const { user } = this.props.auth;
-    const styles = {
-      body: {
-        backgroundColor: 'white',
-        position: 'absolute',
-        width: '300px',
-        bottom: '17px',
-        right: '17px',
-        zIndex: 10,
-        overflow: 'hidden'
-      },
-      title: {
-        backgroundColor: '#3f51b5',
-        marginTop: 0,
-        padding: 8,
-        color: 'white'
-      },
-      content: {
-        display: this.state.display
-      }
-    }
+
 
     return (
-      <div style={styles.body}>
-        <h4 onClick={this.hideMessenger} style={styles.title}>Messenger</h4>
-        <div style={styles.content}>
-          {this.state.partner
+      <div>
+          <PageTitle title="Check User Messages" />
+        <div>
+          {this.state.user2
             ?
             <div>
               <h4 onClick={this.back}>Back</h4>
-              <Dialogue user={user._id} partner={this.state.partner} />
+              <Dialogue user={this.state.user1} partner={this.state.user1} />
             </div>
             :
             <List>
@@ -100,12 +79,4 @@ class Messenger extends Component {
 };
 
 
-Messenger.propTypes = {
-  auth: PropTypes.object.isRequired
-};
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-export default connect(
-  mapStateToProps
-)(Messenger);
+export default MapOfSales;

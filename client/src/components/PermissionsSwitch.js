@@ -38,7 +38,7 @@ const switches = [
         bitmask: 0b10000000,
     },
     {
-        label: "Map Of Sales",
+        label: "Check User Messages",
         bitmask: 0b100000000,
     },
     {
