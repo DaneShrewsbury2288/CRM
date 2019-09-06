@@ -5,7 +5,8 @@ module.exports = {
   findAll: function (req, res) {
     Task
       .find(req.query)
-      .sort({ date: 'asc' })
+      // sort by due date
+      .sort({ dueDate: 'desc' })
       // populate all users, clients and notes associated with tasks
       .populate({
         path: 'user client note',
@@ -59,7 +60,7 @@ module.exports = {
   },
   create: function (req, res) {
     Task
-      .create(req.query)
+      .create(req.body)
       // associate client ID with task
       .then(function (dbClient) {
         return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });

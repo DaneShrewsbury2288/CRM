@@ -6,7 +6,7 @@ module.exports = {
   findByProductName: function (req, res) {
     Product
       .find({})
-      // find my the product name, but exclude the id
+      // find by the product name, but exclude the id
       .select('productName')
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err))

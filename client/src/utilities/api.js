@@ -5,6 +5,10 @@ export default {
     getTasks: function() {
       return axios.get("/api/tasks");
     },
+    // Get all tasks sorted by assigned date
+    getTasksByAssignedDate: function() {
+      return axios.get("api/tasks/assignedDate");
+    },
     // Get one task
     getTask: function(id) {
       return axios.get("/api/tasks/" + id);
@@ -26,9 +30,12 @@ export default {
     getOrders: function() {
       return axios.get("/api/orders");
     },
+    getOrderTotal: function(userId) {
+      return axios.get("api/orders//usertotal/" + userId)
+    },
     // Get one order
     getOrder: function(id) {
-      return axios.get("/api/orders/" +id);
+      return axios.get("/api/orders/" + id);
     },
     // Deletes the order with the given id
     deleteOrder: function(id) {
