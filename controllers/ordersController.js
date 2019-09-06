@@ -30,6 +30,9 @@ module.exports = {
               product: model.product,
               user: model.user,
               lineItems: model.lineItems,
+              created_at: model.created_at,
+              checked_out: model.checked_out,
+              completedDate: model.completedDate,
               client: model.client,
               note: model.note
             };
@@ -62,17 +65,17 @@ module.exports = {
   create: function (req, res) {
     Order
       .create(req.body)
-      .then(function (dbClient) {
-        return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
-      })
-      // update product quantity
-      .then(function (dbProduct) {
-        return db.Product.findOneAndUpdate({}, { $push: { product: dbProduct._id } }, { new: true });
-      })
-      // associate user ID with order
-      .then(function (dbUser) {
-        return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
-      })
+      // .then(function (dbClient) {
+      //   return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
+      // })
+      // // update product quantity
+      // .then(function (dbProduct) {
+      //   return db.Product.findOneAndUpdate({}, { $push: { product: dbProduct._id } }, { new: true });
+      // })
+      // // associate user ID with order
+      // .then(function (dbUser) {
+      //   return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
+      // })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -91,22 +94,33 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  getOrderTotal: function (userId) {
+  getOrderTotal: function (req, res) {
     Order.aggregate([
       {
-        $match: { user: userId }
+        // match to user id in order
+        $match: { user: req.params.userid }
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      {
+        $unwind: "$product"
       },
       {
         $group: {
-          // todo: fill in here
-          _id: '$user',  //$user is the column name in collection
+          _id: '$user',
           totalAmount: { $sum: { $multiply: ["$price", "$quantity"] } },
           count: { $sum: 1 }
         }
-      }
-    ], function(err, result) {
-      // capture error (err)
-      // process result
-    })
+      },
+      { $sort: { totalAmount: -1 } }
+    ])
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   }
 };

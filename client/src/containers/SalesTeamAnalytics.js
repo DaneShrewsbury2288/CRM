@@ -63,10 +63,20 @@ class SalesTeamAnalytics extends Component {
     }
     // get all orders
     checkOrders = () => {
-        this.setState({ orders: orderData.orders });
+        // this.setState({ orders: orderData.orders });
+        API.getOrders()
+            .then(res =>
+                this.setState({ orders: res.data.orders })
+            )
+            .catch(error => console.log("Check orders error: " + error));
     }
     checkState = () => {
         this.userMostSoldProduct();
+        let orders = this.state.orders;
+        console.log(orders[4].user[0]._id);
+        console.log(orders[4].lineItems);
+        console.log(orders[4].client[0]);
+        this.numberOfSales("5d6c52cd0ea69bf46a4bb0ee");
     }
     // create user full name
     fullName = (first, last) => {
@@ -127,9 +137,14 @@ class SalesTeamAnalytics extends Component {
         const orders = this.state.orders;
         let counter = [];
         orders.forEach(order => {
-            if (order.user[0]._id === userID) {
-                counter.push(userID);
-            }
+            console.log(order.user[0])
+            // if(!(order.user[0]._id)) {
+            //     if (order.user[0]._id === userID) {
+            //         counter.push(userID);
+            //     }
+            // } else {
+            //     return 0;
+            // }
         });
         return counter.length;
     }
@@ -141,9 +156,10 @@ class SalesTeamAnalytics extends Component {
         let quantities = [];
         let productTotals = [];
         orders.forEach(order => {
-            if (order.user[0]._id === userID) {
-                itemsInOrders.push(order.lineItems);
-            }
+            console.log(order.user[0])
+            // if (order.user[0]._id === userID) {
+            //     itemsInOrders.push(order.lineItems);
+            // }
         });
         itemsInOrders.forEach(item => {
             for (let i = 0; i < item.length; i++) {
@@ -175,9 +191,9 @@ class SalesTeamAnalytics extends Component {
         const orders = this.state.orders;
         let itemsInOrders = [];
         orders.forEach(order => {
-            if (order.user[0]._id === userID) {
-                itemsInOrders.push(order.lineItems);
-            }
+            // if (order.user[0]._id === userID) {
+            //     itemsInOrders.push(order.lineItems);
+            // }
         })
         console.log(itemsInOrders)
         // match order user id to user id
@@ -247,7 +263,7 @@ class SalesTeamAnalytics extends Component {
                             fullName={this.fullName(user.firstName, user.lastName)}
                             startDate={this.startDate(user.created_at)}
                             // totalSales={this.userRevenue(user._id)}
-                            numSales={this.numberOfSales(user._id)}
+                            // numSales={this.numberOfSales(user._id)}
                         // averageSale={this.averageSale(user._id)}
                         // lastMonthSales={this.lastMonthSales(user._id)}
                         // popularProduct={this.userMostSoldProduct(user._id)}
@@ -273,7 +289,7 @@ class SalesTeamAnalytics extends Component {
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
                                                 // totalSales={this.userRevenue(user._id)}
-                                                numSales={this.numberOfSales(user._id)}
+                                                // numSales={this.numberOfSales(user._id)}
                                             // averageSale={this.averageSale(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}
                                             // popularProduct={this.userMostSoldProduct(user._id)}
