@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component} from "react";
 import PageTitle from "../components/PageTitle";
 import { withStyles } from '@material-ui/core/styles';
 import Chart from "../components/Chart";

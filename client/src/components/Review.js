@@ -5,31 +5,51 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
-import EnhancedTable from '../components/EditableTable';
+import TextField from '@material-ui/core/TextField';
 import * as Table from '../components/EditableTable';
 
 
-const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-];
+
+// const products = [
+//   { name: Table.selectedBrews.arrayOne.slice(-1),
+//     desc: 'A nice thing',
+//     price: '$9.99' 
+//     },
+//   { name: 'Product 2',
+//     desc: 'Another thing',
+//     price: '$3.45' 
+//     },
+//   { name: 'Product 3',
+//     desc: 'Something else',
+//     price: '$6.51' 
+//     },
+//   { name: 'Product 4',
+//     desc: 'Best thing of all',
+//     price: '$14.11' 
+//     },
+// ];
+
+// function pushIntoProducts(){
+//   products.push()
+
+// }
 
 
-function seeObject(){
+function seeObject(x){
   console.log(Table.selectedBrews.arrayOne.slice(-1));
+  const why = Table.selectedBrews.arrayOne.slice(-1);
+  console.log(why[0][0]);
 }
 
 const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 
 //This is where the clients info should be pushed
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+// const payments = [
+//   { name: 'Card type', detail: 'Visa' },
+//   { name: 'Card holder', detail: 'Mr John Smith' },
+//   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
+//   { name: 'Expiry date', detail: '04/2024' },
+// ];
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -48,8 +68,12 @@ const selectedProducts = Table.selectedBrews.arrayOne[0];
 console.log(selectedProducts);
 
 export default function Review() {
+  // const [quantityValue] = React.useState([]);
   const classes = useStyles();
 
+  const x = Table.selectedBrews.arrayOne.slice(-1);
+  console.log(x);
+  console.log(Table.items);
   // console.log(selected);
   // console.log(rows);
 
@@ -60,16 +84,31 @@ export default function Review() {
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
-      <List disablePadding>
-        {selectedProducts.map(product => (
-          <ListItem 
+      <List>
+        {Table.items.map(item => (
+          <ListItem
           className={classes.listItem} 
-          key={product.name}>
-            <ListItemText 
-            primary={product.name} 
-            secondary={product.desc} />
+          key={item.name}>
+            <ListItemText
+            primary={item.productName} />
             <Typography 
-            variant="body2">{product.price}</Typography>
+            variant="body2">${item.price}</Typography>
+            <Typography>
+            <TextField
+            id="outlined-number"
+            label="Quantity"
+            // value={values.age}
+            // onChange={handleChange('age')}
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            margin="normal"
+            variant="filled"
+            width="200"
+      />
+      </Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
@@ -82,7 +121,7 @@ export default function Review() {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
+            Client Information
           </Typography>
           <Typography gutterBottom>John Smith</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>

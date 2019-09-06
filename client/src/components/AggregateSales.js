@@ -12,9 +12,9 @@ import Title from './Title';
 import API from '../utilities/api';
 
 // Generate Order Data
-function createData(id, _id, productName, quantity, price, total) {
-  return { id, _id, productName, quantity, price, total };
-}
+// function createData(id, _id, productName, quantity, price, total) {
+//   return { id, _id, productName, quantity, price, total };
+// }
 
 function getProductInfo(res){
 API.getProducts(res)
