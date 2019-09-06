@@ -65,17 +65,6 @@ module.exports = {
   create: function (req, res) {
     Order
       .create(req.body)
-      // .then(function (dbClient) {
-      //   return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
-      // })
-      // // update product quantity
-      // .then(function (dbProduct) {
-      //   return db.Product.findOneAndUpdate({}, { $push: { product: dbProduct._id } }, { new: true });
-      // })
-      // // associate user ID with order
-      // .then(function (dbUser) {
-      //   return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
-      // })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -95,31 +84,12 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   getOrderTotal: function (req, res) {
-    Order.aggregate([
-      {
-        // match to user id in order
-        $match: { user: req.params.userid }
-      },
-      {
-        $lookup: {
-          from: "products",
-          localField: "product",
-          foreignField: "_id",
-          as: "product"
-        }
-      },
-      {
-        $unwind: "$product"
-      },
-      {
-        $group: {
-          _id: '$user',
-          totalAmount: { $sum: { $multiply: ["$price", "$quantity"] } },
-          count: { $sum: 1 }
-        }
-      },
-      { $sort: { totalAmount: -1 } }
-    ])
+    // const userID = req.params.userid;
+    const firstDate = req.params.firstdate;
+    const secondDate = req.params.seconddate;
+    console.log(firstDate);
+    console.log(secondDate);
+    Order.find({ "created_at": { "$gte": firstDate, "$lt": secondDate } })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }
