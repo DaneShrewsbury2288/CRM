@@ -100,7 +100,6 @@ class RouteMap extends Component {
                         :
                         null
                 ))}
-                <PrivateRoute exact path="/messenger" key="/messenger" component={Messenger}/>
                 <PrivateRoute component={NoMatch} />
             </Switch>
         )

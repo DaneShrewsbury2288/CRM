@@ -54,15 +54,16 @@ class Messenger extends Component {
     const styles = {
       body: {
         backgroundColor: 'white',
-        // height: '500px',
-        // width: '300px',
         position: 'absolute',
+        width: '300px',
         bottom: 0,
         right: 0,
         zIndex: 10
       },
       title: {
-        backgroundColor: 'blue',
+        backgroundColor: '#3f51b5',
+        marginTop: 0,
+        padding: 8,
         color: 'white'
       },
       content: {
