@@ -7,11 +7,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
+import WidgetsIcon from '@material-ui/icons/Widgets';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import MoneyIcon from '@material-ui/icons/AttachMoney';
 import LockIcon from '@material-ui/icons/Lock';
@@ -36,7 +37,7 @@ const icons = [
         title: "Inventory",
         href: "/inventory",
         bitmask: 0b100,
-        icon: <AssignmentIcon />
+        icon: <WidgetsIcon />
     },
     {
         title: "Client List",
@@ -54,19 +55,19 @@ const icons = [
         title: "Sales Analytics",
         href: "/salesanalytics",
         bitmask: 0b100000,
-        icon: <MoneyIcon />
+        icon: <TrendingUpIcon />
     },
     {
         title: "Manager Task Assignment",
         href: "/managertaskassignment",
         bitmask: 0b1000000,
-        icon: <BarChartIcon />
+        icon: <AssignmentTurnedInIcon />
     },
     {
         title: "Sales Team Analytics",
         href: "/salesteamanalytics",
         bitmask: 0b10000000,
-        icon: <MoneyIcon />
+        icon: <BarChartIcon />
     },
     {
         title: "Check User Messages",
