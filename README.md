@@ -92,7 +92,7 @@ Download the repository
 ## Authors
 
 - Anthony Lam
-- Client Bodar
+- Clint Brodar
 - Dane Shrewsbury
 - Jonah Severn
 
