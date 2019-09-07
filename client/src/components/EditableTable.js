@@ -21,12 +21,18 @@ import Checkbox from '@material-ui/core/Checkbox';
 // import FilterListIcon from '@material-ui/icons/FilterList';
 import API from '../utilities/api';
 
-function createData(productName, price, quantity) {
-  return { productName, price, quantity };
-}
+
+export const selectedBrews = {
+    arrayOne: [],
+ };
+
+ console.log(selectedBrews);
+
+// function createData(productName, price, quantity) {
+//   return { productName, price, quantity };
+// }
 
 const rows = [
-  createData('Cupcake', 10, 5),
 ];
 
 //Descending Order
@@ -40,13 +46,15 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
-// const items=[];
+export const items=[];
+
 
 function getItems(res) {
   API.getProducts(res)
       .then(res =>
         res.data.map(result => (
-          rows.push(result)
+          rows.push(result),
+          items.push(result)
         )))
         .catch(error => console.log("Check tasks error: " + error))
  }
@@ -167,7 +175,7 @@ const EnhancedTableToolbar = props => {
       <div className={classes.title}>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subtitle1">
-            {numSelected} selected
+            {/* {numSelected} selected */}
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
@@ -252,12 +260,12 @@ export default function EnhancedTable() {
     setSelected([]);
   }
 
-  function handleClick(event, name) {
-    const selectedIndex = selected.indexOf(name);
+  function handleClick(event, name, price, _id) {
+    const selectedIndex = selected.indexOf(name, price, _id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, name, price, _id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -270,6 +278,7 @@ export default function EnhancedTable() {
     }
 
     setSelected(newSelected);
+    pushBrewsToSelected(newSelected);
   }
 
   function handleChangePage(event, newPage) {
@@ -285,7 +294,16 @@ export default function EnhancedTable() {
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  console.log(selected);
+  // console.log(selected);
+
+  function pushBrewsToSelected(selected){
+    const userSelection = [];
+    userSelection.push(selected);
+    selectedBrews.arrayOne.push(selected);
+    return selectedBrews;
+  }
+ console.log(selectedBrews);
+ console.log(items);
 
 
   return (
@@ -317,7 +335,7 @@ export default function EnhancedTable() {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.productName)}
+                      onClick={event => handleClick(event, row.productName, row.price, row._id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}

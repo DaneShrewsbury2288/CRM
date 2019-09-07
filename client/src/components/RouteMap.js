@@ -7,13 +7,12 @@ import PurchasingTool from "../containers/PurchasingTool";
 import SalesAnalytics from "../containers/SalesAnalytics";
 import ManagerTaskAssignment from "../containers/ManagerTaskAssignment";
 import SalesTeamAnalytics from "../containers/SalesTeamAnalytics";
-import MapOfSales from "../containers/MapOfSales";
+import CheckUserMessages from "../containers/CheckUserMessages";
 import Discover from "../containers/Discover";
 import AddRemoveUsers from "../containers/AddRemoveUsers";
 import Permissions from "../containers/Permissions";
 import SalesTeamDaily from "../containers/SalesTeamDaily";
 import NoMatch from "../containers/NoMatch";
-import Messenger from "./Messenger";
 import PrivateRoute from "./PrivateRoute";
 import { Switch } from "react-router-dom";
 
@@ -59,8 +58,8 @@ const routes = [
         bitmask: 0b10000000
     },
     {
-        path: "/MapOfSales",
-        component: MapOfSales,
+        path: "/CheckUserMessages",
+        component: CheckUserMessages,
         bitmask: 0b100000000
     },
     {
@@ -100,7 +99,6 @@ class RouteMap extends Component {
                         :
                         null
                 ))}
-                <PrivateRoute exact path="/messenger" key="/messenger" component={Messenger}/>
                 <PrivateRoute component={NoMatch} />
             </Switch>
         )

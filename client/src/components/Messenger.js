@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PageTitle from "../components/PageTitle";
 import API from "../utils/API";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,7 +11,9 @@ class Messenger extends Component {
 
   state = {
     users: [],
-    partner: null
+    partner: null,
+    display: true,
+    user: this.props.auth.user
   };
 
   componentDidMount() {
@@ -20,43 +21,87 @@ class Messenger extends Component {
   }
 
   handleSetPartner = event => {
-    this.setState({ partner: event.target.id, user: this.props.auth._id}, () => {
+    this.setState({ partner: event.target.id, user: this.props.auth._id }, () => {
     });
   };
 
   loadUsers = () => {
-    API.getUsers()
+    API.getUsersExcept(this.state.user._id)
       .then(res => this.setState({ users: res.data }, () => {
       }))
       .catch(err => console.log(err))
   }
 
   back = () => {
-    this.setState({partner: null})
+    this.setState({ partner: null })
+  }
+
+  hideMessenger = () => {
+    if (this.state.display === true) {
+      this.setState({ display: false }, () => {
+        console.log(this.state.display)
+      })
+    }
+    else if (this.state.display === false) {
+      this.setState({ display: true }, () => {
+        console.log(this.state.display)
+      })
+    }
   }
 
   render() {
     const { user } = this.props.auth;
+    const styles = {
+      body: {
+        backgroundColor: 'white',
+        position: 'absolute',
+        width: '300px',
+        maxHeight: '350px',
+        bottom: '17px',
+        right: '17px',
+        zIndex: 10,
+        overflowY: 'scroll'
+      },
+      title: {
+        backgroundColor: '#3f51b5',
+        width: '300px',
+        position: 'fixed',
+        marginTop: 0,
+        padding: 8,
+        color: 'white',
+        zIndex: 10
+      },
+      content: {
+        marginTop: '55px'
+      }
+    }
+
     return (
-      <div>
-        <PageTitle title="Messenger" />
-        {this.state.partner
-          ?
-          <div>
-            <h4 onClick={this.back}>Back</h4>
-          <Dialogue user={user._id} partner={this.state.partner} />
-          </div>
-          :
-          <List>
-            {this.state.users.map(user => (
-              <ListItem key={user._id}>
-                <h4 id={user._id} onClick={this.handleSetPartner}>
-                  {user.firstName} {user.lastName}
-                </h4>
-              </ListItem>
-            ))}
-          </List>
-        }
+      <div style={styles.body}>
+        <h4 onClick={this.hideMessenger} style={styles.title}>Messenger</h4>
+      {this.state.display ?
+        <div style={styles.content}>
+          {this.state.partner
+            ?
+            <div>
+              <h4 onClick={this.back}>Back</h4>
+              <Dialogue user={user._id} partner={this.state.partner} />
+            </div>
+            :
+            <List>
+              {this.state.users.map(user => (
+                <ListItem key={user._id}>
+                  <h6 id={user._id} onClick={this.handleSetPartner}>
+                    {user.firstName} {user.lastName}
+                  </h6>
+                </ListItem>
+              ))}
+            </List>
+          }
+        </div>
+        :
+        null
+      }
       </div>
     )
   }
@@ -64,11 +109,11 @@ class Messenger extends Component {
 
 
 Messenger.propTypes = {
-    auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-    auth: state.auth
+  auth: state.auth
 });
 export default connect(
-    mapStateToProps
+  mapStateToProps
 )(Messenger);

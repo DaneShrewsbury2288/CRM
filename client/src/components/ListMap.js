@@ -17,7 +17,7 @@ import { logoutUser } from "../actions/authActions";
 
 const icons = [
     {
-        title: "News Feed",
+        title: "Dashboard",
         href: "/",
         bitmask: 0b1,
         icon: <LayersIcon />
@@ -65,8 +65,8 @@ const icons = [
         icon: <MoneyIcon />
     },
     {
-        title: "Map of Sales",
-        href: "/mapofsales",
+        title: "Check User Messages",
+        href: "/checkusermessages",
         bitmask: 0b100000000,
         icon: <BarChartIcon />
     },

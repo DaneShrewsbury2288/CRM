@@ -12,7 +12,7 @@ module.exports = {
   findAll: function (req, res) {
     User
       .find(req.query)
-      .sort({ date: -1 })
+      .sort({ firstName: 1 })
       // all notes for the user and when they were created
       .populate("note")
       .then(dbModel => res.json(dbModel))
@@ -21,6 +21,14 @@ module.exports = {
   findById: function (req, res) {
     User
       .findById(req.params.id)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findAllExcept: function (req, res) {
+    console.log(req.params.id)
+    User
+      .find({ _id: { $ne: req.params.id } })
+      .sort({ firstName: 1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -109,7 +117,7 @@ module.exports = {
   },
   update: function (req, res) {
     User
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate({ _id: req.params.id }, req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

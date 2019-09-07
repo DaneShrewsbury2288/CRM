@@ -6,9 +6,9 @@ module.exports = {
     Order
       .find(req.query)
       .sort({ date: -1 })
-      // populate all users, clients and notes associated with tasks
+      // populate all users, clients and notes associated with order
       .populate({
-        path: 'user client note product',
+        path: 'user client note lineItems.product',
         populate: {
           path: 'user'
         },
@@ -19,7 +19,7 @@ module.exports = {
           path: 'note'
         },
         populate: {
-          path: 'product'
+          path: 'lineItems.product'
         }
       })
       .then(dbModel => {
@@ -27,11 +27,13 @@ module.exports = {
           orders: dbModel.map(model => {
             return {
               _id: model._id,
-              product: model.product,
-              user: model.user,
-              cart: model.cart,
               client: model.client,
-              note: model.note
+              user: model.user,
+              lineItems: model.lineItems,
+              note: model.note,
+              created_at: model.created_at,
+              checked_out: model.checked_out,
+              completedDate: model.completedDate
             };
           })
         })
@@ -60,20 +62,21 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
+    console.log(req.body)
     Order
-      .create(req.query)
+      .create(req.body)
       // associate client ID with order
-      .then(function (dbClient) {
-        return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
-      })
-      // update product quantity
-      .then(function (dbProduct) {
-        return db.Product.findOneAndUpdate({}, { $push: { product: dbProduct._id } }, { new: true });
-      })
-      // associate user ID with order
-      .then(function (dbUser) {
-        return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
-      })
+      // .then(function (dbClient) {
+      //   return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
+      // })
+      // // update product quantity
+      // .then(function (dbProduct) {
+      //   return db.Product.findOneAndUpdate({}, { $push: { product: dbProduct._id } }, { new: true });
+      // })
+      // // associate user ID with order
+      // .then(function (dbUser) {
+      //   return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
+      // })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -89,6 +92,35 @@ module.exports = {
     Order
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  getOrderTotal: function (req, res) {
+    Order.aggregate([
+      {
+        // match to user id in order
+        $match: { user: req.params.userid }
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      {
+        $unwind: "$product"
+      },
+      {
+        $group: {
+          _id: '$user',
+          totalAmount: { $sum: { $multiply: ["$price", "$quantity"] } },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { totalAmount: -1 } }
+    ])
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }

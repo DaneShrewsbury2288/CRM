@@ -12,9 +12,9 @@ import Title from './Title';
 import API from '../utilities/api';
 
 // Generate Order Data
-function createData(id, _id, productName, quantity, price, total) {
-  return { id, _id, productName, quantity, price, total };
-}
+// function createData(id, _id, productName, quantity, price, total) {
+//   return { id, _id, productName, quantity, price, total };
+// }
 
 
 function getProductInfo(res){
@@ -40,7 +40,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProductProfit() {
+
+  // getProductInfo();
+
+
   const classes = useStyles();
+  console.log(rows);
   return (
     <React.Fragment>
       <Title>Product Profitability</Title>

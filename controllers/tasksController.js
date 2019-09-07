@@ -5,7 +5,8 @@ module.exports = {
   findAll: function (req, res) {
     Task
       .find(req.query)
-      .sort({ date: -1 })
+      // sort by due date
+      .sort({ dueDate: 'desc' })
       // populate all users, clients and notes associated with tasks
       .populate({
         path: 'user client note',
