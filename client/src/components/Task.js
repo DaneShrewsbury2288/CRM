@@ -10,11 +10,11 @@ import Avatar from '@material-ui/core/Avatar';
 function TaskTable(props) {
     return (
         <div>
-            <Card>
+            <Card style= {{marginTop: '20px', marginBottom: '20px', backgroundColor: '#80d8ff'}}>
                 <CardContent>
                     <Grid container spacing={3}>
                         <Grid item lg>
-                            <Paper className="paper-header">Task {props.taskNumber}</Paper>
+                            <Paper className="paper-header">Task #{props.taskNumber}</Paper>
                         </Grid>
                         <Grid>
                             <Grid item lg>
@@ -32,7 +32,7 @@ function TaskTable(props) {
                     </Grid>
                     <Grid container spacing={3}>
                         <Grid item lg={2}>
-                            <Paper className="paper-header">Description</Paper>
+                            <Paper className="paper-header">Description:</Paper>
                         </Grid>
                         <Grid item lg={10}>
                             <Paper className="paper">{props.description}</Paper>

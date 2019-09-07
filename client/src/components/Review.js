@@ -73,7 +73,7 @@ export default function Review() {
 
   const x = Table.selectedBrews.arrayOne.slice(-1);
   console.log(x);
-  console.log(Table.items);
+  console.log(Table.rows);
   // console.log(selected);
   // console.log(rows);
 
@@ -85,7 +85,7 @@ export default function Review() {
         Order summary
       </Typography>
       <List>
-        {Table.items.map(item => (
+        {Table.rows.map(item => (
           <ListItem
           className={classes.listItem} 
           key={item.name}>

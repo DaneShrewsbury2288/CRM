@@ -23,7 +23,7 @@ function InputForm(props) {
                 </Grid>
                 <Grid item lg={4}>
                   <FormControl>
-                    <InputLabel htmlFor="age-native-helper">Assign Employee</InputLabel>
+                    <InputLabel htmlFor="age-native-helper">Employee</InputLabel>
                     <Select
                       value={props.userSelection}
                       onChange={props.handleInputChange}
@@ -37,7 +37,7 @@ function InputForm(props) {
                 </Grid>
                 <Grid item lg={4}>
                   <FormControl>
-                    <InputLabel htmlFor="age-native-helper">Assign Client</InputLabel>
+                    <InputLabel htmlFor="age-native-helper">Client</InputLabel>
                     <Select
                       value={props.clientSelection}
                       onChange={props.handleInputChange}
