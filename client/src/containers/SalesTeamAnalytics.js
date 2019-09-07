@@ -22,6 +22,7 @@ class SalesTeamAnalytics extends Component {
         open: false,
         search: "",
         searchedUser: [],
+        userRevenue: "",
     }
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -36,6 +37,24 @@ class SalesTeamAnalytics extends Component {
                 this.setState({ tasks: res.data.tasks })
             )
             .catch(error => console.log("Check tasks error: " + error))
+    }
+    // get user total revenue
+    getUserTotalRevenue = async (id) => {
+        console.log(id);
+        API.getOrderUserTotal(id)
+        .then(res => 
+            {
+                // if (res.data.length > 1) {
+                    console.log(res.data)
+                    console.log(typeof(res.data[0].totalAmount))
+                    return res.data[0].totalAmount;
+                // } else {
+                    // console.log("None");
+                // }
+                
+            }
+            )
+            .catch(error => console.log("User revenue error: " + error))
     }
     // get users
     checkUsers = () => {
@@ -63,7 +82,6 @@ class SalesTeamAnalytics extends Component {
     }
     // get all orders
     checkOrders = () => {
-        // this.setState({ orders: orderData.orders });
         API.getOrders()
             .then(res =>
                 this.setState({ orders: res.data.orders })
@@ -71,12 +89,7 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check orders error: " + error));
     }
     checkState = () => {
-        this.userMostSoldProduct();
-        let orders = this.state.orders;
-        console.log(orders[4].user[0]._id);
-        console.log(orders[4].lineItems);
-        console.log(orders[4].client[0]);
-        this.numberOfSales("5d6c52cd0ea69bf46a4bb0ee");
+        this.getUserTotalRevenue("5d618fb9691b892e385e7758");
     }
     // create user full name
     fullName = (first, last) => {
@@ -262,7 +275,7 @@ class SalesTeamAnalytics extends Component {
                             userImage={this.checkUserImage(user)}
                             fullName={this.fullName(user.firstName, user.lastName)}
                             startDate={this.startDate(user.created_at)}
-                            // totalSales={this.userRevenue(user._id)}
+                            // totalSales={this.getUserTotalRevenue(user._id)}
                             // numSales={this.numberOfSales(user._id)}
                         // averageSale={this.averageSale(user._id)}
                         // lastMonthSales={this.lastMonthSales(user._id)}
@@ -288,7 +301,7 @@ class SalesTeamAnalytics extends Component {
                                                 userImage={this.checkUserImage(user)}
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
-                                                // totalSales={this.userRevenue(user._id)}
+                                                // totalSales={this.getUserTotalRevenue(user._id)}
                                                 // numSales={this.numberOfSales(user._id)}
                                             // averageSale={this.averageSale(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}

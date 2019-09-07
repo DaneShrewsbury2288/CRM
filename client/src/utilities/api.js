@@ -13,6 +13,10 @@ export default {
     getTask: function(id) {
       return axios.get("/api/tasks/" + id);
     },
+    // get all tasks by one user
+    getTaskByUser: function(userID) {
+      return axios.get("api/tasks/user/" + userID)
+    },
     // Deletes the task with the given id
     deleteTask: function(id) {
       return axios.delete("/api/tasks/" + id);
@@ -30,8 +34,8 @@ export default {
     getOrders: function() {
       return axios.get("/api/orders");
     },
-    getOrderTotal: function(userId) {
-      return axios.get("api/orders//usertotal/" + userId)
+    getOrderUserTotal: function(userId) {
+      return axios.get("api/orders/usertotal/" + userId);
     },
     // Get one order
     getOrder: function(id) {
