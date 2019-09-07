@@ -149,7 +149,6 @@ class SalesTeamAnalytics extends Component {
                     counter.push(userID);
                 }
         });
-        console.log(counter.length);
         return counter.length;
     }
     // add default if user does not have a profile picutre
@@ -213,7 +212,7 @@ class SalesTeamAnalytics extends Component {
                             fullName={this.fullName(user.firstName, user.lastName)}
                             startDate={this.startDate(user.created_at)}
                         // totalSales={this.getUserTotalRevenue(user._id)}
-                        // numSales={this.numberOfSales(user._id)}
+                        numSales={this.numberOfSales(user._id)}
                         // averageSale={this.averageSale(user._id)}
                         // lastMonthSales={this.lastMonthSales(user._id)}
                         // popularProduct={this.userMostSoldProduct(user._id)}
@@ -239,7 +238,7 @@ class SalesTeamAnalytics extends Component {
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
                                                 // totalSales={this.getUserTotalRevenue(user._id)}
-                                            // numSales={this.numberOfSales(user._id)}
+                                            numSales={this.numberOfSales(user._id)}
                                             // averageSale={this.averageSale(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}
                                             // popularProduct={this.userMostSoldProduct(user._id)}
