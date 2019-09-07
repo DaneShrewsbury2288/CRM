@@ -86,26 +86,7 @@ module.exports = {
   },
   getOrderTotal: function (req, res) {
     const userID = req.params.userid;
-    const firstDate = req.params.firstdate;
-    const secondDate = req.params.seconddate;
-    console.log(userID);
-    console.log(firstDate);
-    console.log(secondDate);
     Order
-      // .find({ "created_at": { "$gte": firstDate, "$lt": secondDate } })
-      // .populate({
-      //   path: 'user clients product',
-      //   populate: {
-      //     path: 'user'
-      //   },
-      //   populate: {
-      //     path: 'client'
-      //   },
-      //   populate: {
-      //     path: 'product'
-      //   }
-      // })
-      // .sort({ 'lineItems.quantity': 1 })
       .aggregate([
         { $match: { 'user': mongoose.Types.ObjectId(userID) } },
         {

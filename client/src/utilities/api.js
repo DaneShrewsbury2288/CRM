@@ -34,8 +34,8 @@ export default {
     getOrders: function() {
       return axios.get("/api/orders");
     },
-    getOrderUserTotalByDate: function(userId, firstDate, secondDate) {
-      return axios.get("api/orders//usertotal/" + userId + "/" + firstDate + "/" + secondDate);
+    getOrderUserTotal: function(userId) {
+      return axios.get("api/orders/usertotal/" + userId);
     },
     // Get one order
     getOrder: function(id) {
