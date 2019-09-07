@@ -7,8 +7,8 @@ import Paper from '@material-ui/core/Paper';
 //import Order from '../components/Order';
 import clsx from 'clsx';
 import Deposits from '../components/Deposits';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import ProductProfit from '../components/ProductProfit';
 import AggregateSales from '../components/AggregateSales';
 
@@ -118,7 +118,7 @@ class SalesAnalytics extends Component {
                     {/* Chart */}
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper>
-                            <Tabs
+                            {/* <Tabs
                                 //value={CenteredTabs.value}
                                 //onChange={CenteredTabs.handleChange}
                                 indicatorColor="primary"
@@ -130,7 +130,7 @@ class SalesAnalytics extends Component {
                                 <Tab label="Weekly" />
                                 <Tab label="Monthly" >
                                 </Tab>
-                            </Tabs>
+                            </Tabs> */}
                         </Paper>
                         <Paper className={fixedHeightPaper}>
                             <Chart />
@@ -145,7 +145,7 @@ class SalesAnalytics extends Component {
                     {/* Recent Orders */}
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
-                        <Tabs
+                        {/* <Tabs
                                 //value={CenteredTabs.value}
                                 //onChange={CenteredTabs.handleChange}
                                 indicatorColor="primary"
@@ -157,7 +157,7 @@ class SalesAnalytics extends Component {
                                 <Tab label="Business" />
                                 <Tab label="Consumer" >
                                 </Tab>
-                            </Tabs>
+                            </Tabs> */}
                             <AggregateSales />
                         </Paper>
                     </Grid>
