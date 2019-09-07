@@ -41,7 +41,7 @@ function seeObject(x){
   console.log(why[0][0]);
 }
 
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+const addresses = ['costco@costco.com', '425-425-4252', '98008'];
 
 //This is where the clients info should be pushed
 // const payments = [
@@ -123,7 +123,7 @@ export default function Review() {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Client Information
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
+          <Typography gutterBottom>Costco</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
         {/* <Grid item container direction="column" xs={12} sm={6}>
