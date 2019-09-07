@@ -19,9 +19,17 @@ class MapOfSales extends Component {
     this.loadUsers();
   }
 
-  handleSetPartner = event => {
-    this.setState({ partner: event.target.id, user: this.props.auth._id }, () => {
-    });
+  handleSetUser = event => {
+    if (this.state.user1) {
+      this.setState({ user2: event.target.id}, () => {
+        console.log(this.state.user2)
+      });
+    }
+    else {
+      this.setState({user1: event.target.id}, () => {
+        console.log(this.state.user1)
+      })
+    }
   };
 
   loadUsers = () => {
@@ -32,7 +40,7 @@ class MapOfSales extends Component {
   }
 
   back = () => {
-    this.setState({ partner: null })
+    this.setState({ user1: null, user2: null })
   }
 
   hideMessenger = () => {
@@ -53,19 +61,19 @@ class MapOfSales extends Component {
 
     return (
       <div>
-          <PageTitle title="Check User Messages" />
+        <PageTitle title="Check User Messages" />
         <div>
           {this.state.user2
             ?
             <div>
               <h4 onClick={this.back}>Back</h4>
-              <Dialogue user={this.state.user1} partner={this.state.user1} />
+              <Dialogue user={this.state.user1} partner={this.state.user2} />
             </div>
             :
             <List>
               {this.state.users.map(user => (
                 <ListItem key={user._id}>
-                  <h4 id={user._id} onClick={this.handleSetPartner}>
+                  <h4 id={user._id} onClick={this.handleSetUser}>
                     {user.firstName} {user.lastName}
                   </h4>
                 </ListItem>

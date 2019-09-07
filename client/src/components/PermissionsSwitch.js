@@ -6,7 +6,7 @@ import API from "../utils/API";
 
 const switches = [
     {
-        label: "News Feed",
+        label: "Dashboard",
         bitmask: 0b1,
     },
     {
