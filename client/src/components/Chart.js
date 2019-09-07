@@ -8,15 +8,15 @@ function createData(time, amount) {
 }
 
 const data = [
-  createData('00:00', 22000),
-  createData('03:00', 23300),
-  createData('06:00', 25600),
-  createData('09:00', 29300),
-  createData('12:00', 32940),
-  createData('15:00', 33003),
-  createData('18:00', 33245),
-  createData('21:00', 34004),
-  createData('24:00', 34024),
+  createData('00:00', 0),
+  createData('08:00', 1330),
+  createData('06:00', 2463),
+  createData('09:00', 2500),
+  createData('12:00', 2650),
+  createData('15:00', 2700),
+  createData('18:00', 2700),
+  createData('21:00', 2825),
+  createData('24:00', 2850),
 ];
 
 export default function Chart() {
