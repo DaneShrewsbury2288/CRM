@@ -25,7 +25,7 @@ This project utilizes a full MERN stack in order to CRUD data and display it rea
 
 CRM Link: https://shielded-retreat-69523.herokuapp.com/
 
-![Image](public/assets/images/loginScreen.png)
+![Image](client/public/assets/images/loginScreen.png)
 
 ## Technologies
 
@@ -46,7 +46,7 @@ Project is created with:
 
 ## Containers
 
-![Image](public/assets/images/Dashboard.png)
+![Image](client/public/assets/images/Dashboard.png)
 
 - Dashboard (Home)
 - Sales Team Daily
@@ -87,7 +87,7 @@ Download the repository
 
 ## Routing-Explained
 
-![Image](public/assets/images/Routing.PNG)
+![Image](client/public/assets/images/Routing.PNG)
 
 ## Authors
 
