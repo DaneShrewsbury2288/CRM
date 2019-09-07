@@ -39,19 +39,16 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check tasks error: " + error))
     }
     // get user total revenue
-    getUserTotalRevenue = async (id) => {
+    getUserTotalRevenue = (id) => {
         console.log(id);
         API.getOrderUserTotal(id)
-        .then(res => 
-            {
-                // if (res.data.length > 1) {
-                    console.log(res.data)
-                    console.log(typeof(res.data[0].totalAmount))
-                    return res.data[0].totalAmount;
-                // } else {
-                    // console.log("None");
-                // }
-                
+            .then(res => {
+
+                let total = res.data[0].totalAmount.toFixed(2);
+                let totalString = total.toString();
+                console.log(totalString)
+                console.log(typeof totalString)
+                return res.data[0].totalAmount;
             }
             )
             .catch(error => console.log("User revenue error: " + error))
@@ -89,7 +86,7 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check orders error: " + error));
     }
     checkState = () => {
-        this.getUserTotalRevenue("5d618fb9691b892e385e7758");
+        this.getUserTotalRevenue("5d618f75691b892e385e7757");
     }
     // create user full name
     fullName = (first, last) => {
@@ -161,59 +158,6 @@ class SalesTeamAnalytics extends Component {
         });
         return counter.length;
     }
-    // calculate total revenue generate for each user
-    userRevenue = (userID) => {
-        const orders = this.state.orders;
-        let itemsInOrders = [];
-        let prices = [];
-        let quantities = [];
-        let productTotals = [];
-        orders.forEach(order => {
-            console.log(order.user[0])
-            // if (order.user[0]._id === userID) {
-            //     itemsInOrders.push(order.lineItems);
-            // }
-        });
-        itemsInOrders.forEach(item => {
-            for (let i = 0; i < item.length; i++) {
-                API.getProduct(item[i]._id)
-                    .then(res =>
-                        // prices.push(res.data.price)
-                        console.log(res.data.price)
-                    )
-                    .catch(error => console.log(error));
-                quantities.push(item[i].quantity);
-            }
-        });
-        for (let i = 0; i < prices.length; i++) {
-            // productTotals.push(prices[u] * quantities[u]);
-        }
-        let totalRevenue = 0;
-        for (let i = 0; i < productTotals.length; i++) {
-            totalRevenue += productTotals[i];
-        }
-    }
-    getProductPrice = (id) => {
-        API.getProduct(id)
-            .then(res =>
-                this.setState({ productPrice: res.data.price })
-            )
-            .catch(error => console.log(error));
-    }
-    userMostSoldProduct = (userID) => {
-        const orders = this.state.orders;
-        let itemsInOrders = [];
-        orders.forEach(order => {
-            // if (order.user[0]._id === userID) {
-            //     itemsInOrders.push(order.lineItems);
-            // }
-        })
-        console.log(itemsInOrders)
-        // match order user id to user id
-        // get all lineItems
-        // combine duplicates
-        // add up product quantities for each item
-    }
     // add default if user does not have a profile picutre
     checkUserImage = user => {
         for (let i = 0; i < user.length; i++) {
@@ -254,7 +198,6 @@ class SalesTeamAnalytics extends Component {
         return (
             <div>
                 <button onClick={this.checkState}>Console log values</button>
-                <button onClick={this.modalOpen}>Open Modal</button>
                 <PageTitle title="Sales Team Analytics" />
                 <Grid container>
                     <Grid item lg={4}></Grid>
@@ -275,8 +218,8 @@ class SalesTeamAnalytics extends Component {
                             userImage={this.checkUserImage(user)}
                             fullName={this.fullName(user.firstName, user.lastName)}
                             startDate={this.startDate(user.created_at)}
-                            // totalSales={this.getUserTotalRevenue(user._id)}
-                            // numSales={this.numberOfSales(user._id)}
+                        // totalSales={this.getUserTotalRevenue(user._id)}
+                        // numSales={this.numberOfSales(user._id)}
                         // averageSale={this.averageSale(user._id)}
                         // lastMonthSales={this.lastMonthSales(user._id)}
                         // popularProduct={this.userMostSoldProduct(user._id)}
@@ -301,8 +244,8 @@ class SalesTeamAnalytics extends Component {
                                                 userImage={this.checkUserImage(user)}
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
-                                                // totalSales={this.getUserTotalRevenue(user._id)}
-                                                // numSales={this.numberOfSales(user._id)}
+                                            // totalSales={this.getUserTotalRevenue(user._id)}
+                                            // numSales={this.numberOfSales(user._id)}
                                             // averageSale={this.averageSale(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}
                                             // popularProduct={this.userMostSoldProduct(user._id)}

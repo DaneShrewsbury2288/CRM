@@ -22,7 +22,7 @@ function TeamModal(props) {
                                 <Grid item lg={4}>
                                     <Typography className="title" color="textSecondary" gutterBottom>
                                         Sales
-                                    </Typography>
+        </Typography>
                                 </Grid>
                                 <Grid item lg={4}>
                                     <Typography variant="h5" component="h2">
@@ -43,6 +43,7 @@ function TeamModal(props) {
                                 </Grid>
                                 <Grid item lg={4}>
                                     <Typography variant="body2" component="h2">
+
                                         <ListItemAvatar>
                                             <Avatar alt={props.user} src={props.userImage} />
                                         </ListItemAvatar>
@@ -50,6 +51,7 @@ function TeamModal(props) {
                                 </Grid>
                                 <Grid item lg={4}>
                                     <Typography variant="body2" component="h2">
+
                                         Number of Sales: {props.numSales}
                                     </Typography>
                                 </Grid>
@@ -68,8 +70,19 @@ function TeamModal(props) {
                                 <Grid item lg={4}>
                                     <Typography variant="body2" component="h2">
                                         Most sold product: {props.popularProduct}
+
                                     </Typography>
                                 </Grid>
+                                {/* <Grid item lg={4}>
+            <Typography variant="body2" component="h3">
+              Sales in last 30 days: {props.lastMonthSales}
+            </Typography>
+          </Grid>
+          <Grid item lg={4}>
+            <Typography variant="body2" component="h3">
+              Most sold product: {props.popularProduct}
+            </Typography>
+          </Grid> */}
                             </Grid>
                         </CardContent>
                     </Card>
