@@ -301,7 +301,7 @@ class SalesTeamAnalytics extends Component {
                                                 userImage={this.checkUserImage(user)}
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
-                                                totalSales={this.getUserTotalRevenue(user._id)}
+                                                // totalSales={this.getUserTotalRevenue(user._id)}
                                                 // numSales={this.numberOfSales(user._id)}
                                             // averageSale={this.averageSale(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}

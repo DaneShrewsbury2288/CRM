@@ -13,7 +13,7 @@ class SalesTeamDaily extends Component {
     }
     UNSAFE_componentWillMount() {
         // replace with store user id
-        this.getTasks("5d618f75691b892e385e7757");
+        this.getTasks("5d618fb9691b892e385e7758");
     }
 
     getTasks = (userid) => {
