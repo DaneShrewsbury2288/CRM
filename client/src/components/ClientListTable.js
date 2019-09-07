@@ -14,9 +14,8 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import ClientAddButton from "./ClientAddButton";
+import ClientOrderButton from "./ClientOrderButton";
 import ClientAddComment from "./ClientAddComment";
-
 
 const useStyles1 = makeStyles(theme => ({
     root: {
@@ -100,6 +99,10 @@ const rows = [
     createData('Hulk Thunder', 3, 'thor@email.com', 3333333333, 33333, '01/20/2000', '07/22/2019'),
 ].sort((a, b) => (a.name < b.name ? -1 : 1));
 
+
+
+
+// Styles for the actual table itself
 const useStyles2 = makeStyles(theme => ({
     root: {
         width: '100%',
@@ -125,10 +128,16 @@ let formatPhoneNumber = (str) => {
     if (match) {
         return '(' + match[1] + ') ' + match[2] + '-' + match[3]
     };
-
     return null
 };
 
+// function fullName(firstName, lastName) {
+//     if (firstName %% lastName) {
+//         return firstName + " " + lastName;
+//     } else {
+//         return " ";
+//     }
+// }
 
 export default function CustomPaginationActionsTable(props) {
     const classes = useStyles2();
@@ -146,7 +155,8 @@ export default function CustomPaginationActionsTable(props) {
         setPage(0);
     }
 
-    console.log(props)
+
+
 
     return (
         <Paper className={classes.root}>
@@ -176,10 +186,11 @@ export default function CustomPaginationActionsTable(props) {
                                 <TableCell align="right">{formatPhoneNumber(client.phone)}</TableCell>
                                 <TableCell align="right">{client.zipCode}</TableCell>
                                 <TableCell align="right">{client.joinedDate}</TableCell>
-                                <TableCell align="right">{client.joinedDate}</TableCell>
-                                <TableCell align="right">{<ClientAddButton />}</TableCell>
-                                <TableCell align="right">{<ClientAddComment />}
-                                </TableCell>
+                                <TableCell align="right">{client.user.map(user => (
+                                        user.firstName + " " + user.lastName
+                                )).join(" ")}</TableCell>
+                                <TableCell align="right">{<ClientOrderButton />}</TableCell>
+                                <TableCell align="right">{<ClientAddComment />}</TableCell>
                             </TableRow>
                         ))}
 

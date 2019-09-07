@@ -38,7 +38,7 @@ export default function SearchBox(props) {
         className={classes.input}
         value={props.search}
         onChange={props.handleInputChange} 
-        placeholder="Enter Name of Client"
+        placeholder="Enter Client Name"
       />
       <IconButton className={classes.iconButton} aria-label="search" onClick={props.handleFormSubmit}>
         <SearchIcon />
