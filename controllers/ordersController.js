@@ -9,9 +9,12 @@ module.exports = {
       .sort({ created_at: -1 })
       // populate all users, clients and notes associated with order
       .populate({
-        path: 'user client note lineItems.product',
+        path: 'user client note lineItems.product product',
         populate: {
           path: 'user'
+        },
+        populate: {
+          path: 'product'
         },
         populate: {
           path: 'client'
@@ -30,6 +33,7 @@ module.exports = {
               _id: model._id,
               client: model.client,
               user: model.user,
+              product: model.product,
               lineItems: model.lineItems,
               note: model.note,
               created_at: model.created_at,
@@ -63,7 +67,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
-    console.log(req.body)
     Order
       .create(req.body)
       .then(dbModel => res.json(dbModel))

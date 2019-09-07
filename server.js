@@ -47,15 +47,7 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 
-// const server = require('http').Server(app)
-
-
-// Start the API server
-const server = app.listen(PORT, function () {
-    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-});
-
-
+const server = require('http').Server(app)
 const io = require('socket.io')(server);
 
 io.on('connection', (client) => {
@@ -63,3 +55,10 @@ io.on('connection', (client) => {
         io.emit('message', messageData)
     })
 });
+
+// Start the API server
+server.listen(PORT, function () {
+    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+});
+
+
