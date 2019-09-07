@@ -89,4 +89,20 @@ Download the repository
 
 ![Image](public/assets/images/Routing.PNG)
 
+## Authors
+
+- Anthony Lam
+- Client Bodar
+- Dane Shrewsbury
+- Jonah Severn
+
+## License
+
+- Open Source
+- Created for the University of Washington Code-Boot Camp 2019: Project #3
+
+
+
+
+
 

@@ -118,7 +118,7 @@ export default function ClientAddButton(props) {
               </TableHead>
               <TableBody>
                 {rows.map(row => (
-                  <TableRow key={row.name}>
+                  <TableRow key={row.date}>
                     <TableCell align="right">{row.name}</TableCell>
                     <TableCell align="right">{row.date}</TableCell>
                     <TableCell align="right">{row.address}</TableCell>
