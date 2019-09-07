@@ -22,12 +22,14 @@ class SalesTeamAnalytics extends Component {
         searchedUser: [],
         userRevenue: "",
     }
+
     UNSAFE_componentWillMount() {
         this.checkUsers();
         this.checkTasks();
         this.checkClients();
         this.checkOrders();
     }
+
     // get tasks
     checkTasks = () => {
         API.getTasks()
@@ -98,40 +100,28 @@ class SalesTeamAnalytics extends Component {
         switch (month) {
             case "01":
                 return "Jan. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "02":
                 return "Feb. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "03":
                 return "Mar. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "04":
                 return "Apr. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "05":
                 return "May " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "06":
                 return "Jun. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "07":
                 return "Jul. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "08":
                 return "Aug. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "09":
                 return "Sep. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "10":
                 return "Oct. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "11":
                 return "Nov. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "12":
                 return "Dec. " + splitDate[2] + ", " + splitDate[0];
-                break;
             default:
                 return null;
         }

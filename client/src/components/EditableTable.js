@@ -53,8 +53,7 @@ function getItems(res) {
   API.getProducts(res)
       .then(res =>
         res.data.map(result => (
-          rows.push(result),
-          items.push(result)
+          rows.items.push(result)
         )))
         .catch(error => console.log("Check tasks error: " + error))
  }

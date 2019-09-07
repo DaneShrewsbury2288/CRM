@@ -14,7 +14,7 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
-import MoneyIcon from '@material-ui/icons/AttachMoney';
+// import MoneyIcon from '@material-ui/icons/AttachMoney';
 import LockIcon from '@material-ui/icons/Lock';
 import PublicIcon from '@material-ui/icons/Public';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -111,7 +111,6 @@ class ListMap extends Component {
     render() {
         return (
             <div>
-
                 {icons.map(permission => (
                     this.state.permissions & permission.bitmask
                         ?
