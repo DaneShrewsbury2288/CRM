@@ -16,7 +16,7 @@ import API from '../utilities/api';
 //   return { id, _id, productName, quantity, price, total };
 // }
 
-function getProductInfo(res){
+export function getProductInfo(res){
 API.getProducts(res)
       .then(res =>
         res.data.map(result => (

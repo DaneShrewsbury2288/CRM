@@ -40,6 +40,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProductProfit() {
+
+  // getProductInfo();
+
+
   const classes = useStyles();
   console.log(rows);
   return (
