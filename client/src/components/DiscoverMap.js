@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   withGoogleMap,
   withScriptjs,
@@ -16,8 +16,6 @@ function Map() {
     />
   )
 }
-
-const API_KEY = process.env.REACT_APP_GOOGLE_KEY
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function DiscoverMap() {

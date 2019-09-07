@@ -17,6 +17,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import ClientOrderButton from "./ClientOrderButton";
 import ClientAddComment from "./ClientAddComment";
 
+
+// Styles for the icons 
 const useStyles1 = makeStyles(theme => ({
     root: {
         flexShrink: 0,
@@ -100,8 +102,6 @@ const rows = [
 ].sort((a, b) => (a.name < b.name ? -1 : 1));
 
 
-
-
 // Styles for the actual table itself
 const useStyles2 = makeStyles(theme => ({
     root: {
@@ -131,14 +131,6 @@ let formatPhoneNumber = (str) => {
     return null
 };
 
-// function fullName(firstName, lastName) {
-//     if (firstName %% lastName) {
-//         return firstName + " " + lastName;
-//     } else {
-//         return " ";
-//     }
-// }
-
 export default function CustomPaginationActionsTable(props) {
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
@@ -154,9 +146,6 @@ export default function CustomPaginationActionsTable(props) {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     }
-
-
-
 
     return (
         <Paper className={classes.root}>
