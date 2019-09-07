@@ -41,7 +41,7 @@ function seeObject(x){
   console.log(why[0][0]);
 }
 
-const addresses = ['costco@costco.com', '425-425-4252', '98008'];
+const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
 
 //This is where the clients info should be pushed
 // const payments = [
@@ -112,9 +112,9 @@ export default function Review() {
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
+          <ListItemText primary="" />
           <Typography variant="subtitle1" className={classes.total}>
-            $630.60
+            
           </Typography>
         </ListItem>
       </List>
