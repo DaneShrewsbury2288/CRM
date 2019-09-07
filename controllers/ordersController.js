@@ -1,4 +1,5 @@
 const db = require("../models");
+const mongoose = require("mongoose");
 const Order = db.Order;
 
 module.exports = {
@@ -91,21 +92,44 @@ module.exports = {
     console.log(firstDate);
     console.log(secondDate);
     Order
-      .find({ "created_at": { "$gte": firstDate, "$lt": secondDate } })
-      .populate({
-        path: 'user clients product',
-        populate: {
-          path: 'user'
+      // .find({ "created_at": { "$gte": firstDate, "$lt": secondDate } })
+      // .populate({
+      //   path: 'user clients product',
+      //   populate: {
+      //     path: 'user'
+      //   },
+      //   populate: {
+      //     path: 'client'
+      //   },
+      //   populate: {
+      //     path: 'product'
+      //   }
+      // })
+      // .sort({ 'lineItems.quantity': 1 })
+      .aggregate([
+        { $match: { 'user': mongoose.Types.ObjectId(userID) } },
+        {
+          $lookup: {
+            from: "products",
+            localField: "lineItems.product",
+            foreignField: "_id",
+            as: "product"
+          }
         },
-        populate: {
-          path: 'client'
+        {
+          $unwind: "$product",
         },
-        populate: {
-          path: 'product'
+        {
+          $unwind: "$lineItems"
+        },
+        // { find: { "created_at": { "$gte": firstDate, "$lt": secondDate } } },
+        { $group:
+          {
+            _id: '$user',
+            totalAmount: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } }
+          }
         }
-      })
-      .sort({ 'lineItems.quantity': -1 })
-      // .aggregate([{ $match: { 'user': userID } }])
+      ])
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }
