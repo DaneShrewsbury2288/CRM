@@ -89,9 +89,16 @@ module.exports = {
   },
   getOrderTotal: function (req, res) {
     const userID = req.params.userid;
+    // const dateOne = req.params.dayone;
+    // const dateTwo = req.params.daytwo;
+    // console.log(dateOne);
+    // console.log(dateTwo);
     Order
       .aggregate([
-        { $match: { 'user': mongoose.Types.ObjectId(userID) } },
+        // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
+        { $match: 
+          { 'user': mongoose.Types.ObjectId(userID) }
+         },
         {
           $lookup: {
             from: "products",
@@ -106,11 +113,12 @@ module.exports = {
         {
           $unwind: "$lineItems"
         },
-        // { find: { "created_at": { "$gte": firstDate, "$lt": secondDate } } },
         { $group:
           {
-            _id: '$user',
-            totalAmount: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } }
+            _id: mongoose.Types.ObjectId(userID),
+            totalAmount: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            totalProductsSold: { $sum: { $multiply: [1, "$lineItems.quantity"] } },
+            // totalOrders: { $sum: { $add: [5, 5]}}
           }
         }
       ])

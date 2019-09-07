@@ -37,6 +37,9 @@ export default {
     getOrderUserTotal: function(userId) {
       return axios.get("api/orders/usertotal/" + userId);
     },
+    getUserTotalOrders: function(userID) {
+      return axios.get("api/orders/totaluser/" + userID);
+    },
     // Get one order
     getOrder: function(id) {
       return axios.get("/api/orders/" + id);
