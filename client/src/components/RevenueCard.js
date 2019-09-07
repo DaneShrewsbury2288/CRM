@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   card: {
-    minWidth: 250,
+    minWidth: 125,
+    maxWidth: 150,
   },
   bullet: {
     display: 'inline-block',
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
 
 export default function RevenueCard() {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  // const bull = <span className={classes.bullet}>•</span>;
  //const revenue = something that gathers all the sales...
 
   return (

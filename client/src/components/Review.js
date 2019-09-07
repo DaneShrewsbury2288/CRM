@@ -41,7 +41,7 @@ function seeObject(x){
   console.log(why[0][0]);
 }
 
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
 
 //This is where the clients info should be pushed
 // const payments = [
@@ -112,9 +112,9 @@ export default function Review() {
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
+          <ListItemText primary="" />
           <Typography variant="subtitle1" className={classes.total}>
-            $34.06
+            
           </Typography>
         </ListItem>
       </List>
@@ -123,7 +123,7 @@ export default function Review() {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Client Information
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
+          <Typography gutterBottom>Costco</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
         {/* <Grid item container direction="column" xs={12} sm={6}>

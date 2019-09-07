@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 24, 
   },
   toolbarIcon: {
     display: 'flex',
@@ -119,7 +119,7 @@ export default function Dashboard(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <Messenger className={classes.messengerTab} />
+      <Messenger />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
