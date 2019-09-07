@@ -13,5 +13,6 @@ router
   .put(tasksController.update)
   .delete(tasksController.remove);
 
+router.route("/user/:id").get(tasksController.findByUser);
 
 module.exports = router;
