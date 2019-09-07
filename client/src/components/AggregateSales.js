@@ -66,7 +66,7 @@ export default function ProductProfit() {
               <TableCell>{row.productName}</TableCell>
               <TableCell>{row.quantity}</TableCell>
               <TableCell>${row.price}</TableCell>
-              <TableCell align="right">{'$'+Math.floor((row.total))}</TableCell>
+              <TableCell align="right">{'$'+Math.floor((row.quantity * row.price))}</TableCell>
             </TableRow>
           ))}
         </TableBody>
