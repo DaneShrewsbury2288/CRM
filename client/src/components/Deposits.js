@@ -21,7 +21,7 @@ export default function Deposits() {
   return (
     <React.Fragment>
       <Title>Sales Target</Title>
-      <Typography component="p" variant="h4">
+      <Typography component="h2" variant="h4">
         $34,024.00 <small>of</small> $50,000.00
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
