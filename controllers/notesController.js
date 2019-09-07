@@ -41,22 +41,6 @@ module.exports = {
         Note
             // defaults to with no orders or users assigned
             .create(req.query)
-            // associate user ID with Note
-            .then(function (dbUser) {
-                return db.User.findOneAndUpdate({}, { $push: { user: dbUser._id } }, { new: true });
-            })
-            // associate client ID with Note
-            .then(function (dbClient) {
-                return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
-            })
-            // associate order ID with Note
-            .then(function (dbOrder) {
-                return db.Order.findOneAndUpdate({}, { $push: { order: dbOrder._id } }, { new: true });
-            })
-            // associate task ID with Note
-            .then(function (dbTask) {
-                return db.Task.findOneAndUpdate({}, { $push: { task: dbTask._id } }, { new: true });
-            })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },

@@ -45,7 +45,8 @@ const OrderSchema = new Schema({
     },
     // when order is fulfilled
     completedDate: {
-        type: Date
+        type: Date,
+        default: Date.now
     },
     // create notes and associate with order
     note: [{

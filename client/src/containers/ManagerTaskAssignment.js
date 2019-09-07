@@ -4,7 +4,7 @@ import InputForm from '../components/InputForm';
 import TaskTable from "../components/Task";
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import GridLoader from 'react-spinners/GridLoader';
 import Grid from '@material-ui/core/Grid';
 import moment from "moment";
 
@@ -62,10 +62,16 @@ class ManagerTaskAssignment extends Component {
             )
             .catch(error => console.log("Save task error: " + error))
     }
+    // delete task
+    deleteTask = (id) => {
+        API.deleteTask(id)
+            .then(res =>
+                this.setState({ tasks: res.data })
+            )
 
+    }
     checkState = () => {
-        const date = this.state.selectedDate;
-        console.log(date);
+
     }
     // create user full name
     fullName = (userInfo) => {
@@ -168,7 +174,6 @@ class ManagerTaskAssignment extends Component {
                 description: desc,
                 note: [],
             };
-            console.log(newTask);
             // save task to db
             this.saveTask(newTask);
             // clear form by resetting the state
@@ -178,6 +183,8 @@ class ManagerTaskAssignment extends Component {
                 userSelection: [],
                 clientSelection: []
             });
+            this.checkTasks();
+            this.setState(this.state);
         } else {
             alert("Please complete all required fields");
         }
@@ -186,12 +193,12 @@ class ManagerTaskAssignment extends Component {
     getElapsedTime = (assignDate) => {
         const formatDate = assignDate.replace("T00:00:00.000Z", "");
         const timeDifference = moment().diff(moment(formatDate), 'days');
-        // convert to positive for due dates
-        if (timeDifference < 0) {
-            return timeDifference * -1;
-        } else {
+        if (formatDate < Date.now()) {
             return timeDifference;
+        } else { 
+            return timeDifference * -1;
         }
+        
     }
     // format task status
     capitialStatus = (status) => {
@@ -251,31 +258,44 @@ class ManagerTaskAssignment extends Component {
                 />
                 <div className="task-space"></div>
                 {/* force page to wait for tasks to load */}
-                {this.state.tasks.length > 0 ? (
-                    <div>
-                        {this.state.tasks.map(task => (
-                            <div key={task._id}>
-                                <Grid item lg={12}>
-                                    <TaskTable
-                                        taskNumber={task._id}
-                                        user={this.fullName(task.user)}
-                                        userImage={this.checkUserImage(task.user)}
-                                        users={this.state.users}
-                                        client={this.checkIfTaskHasClient(task.client)}
-                                        description={task.description}
-                                        assignedStatus={this.formatStatus(task.assignedStatus)}
-                                        elapsedTime={this.getElapsedTime(task.assignDate)}
-                                        dueDate={this.getElapsedTime(task.dueDate)}
-                                        completionStatus={this.capitialStatus(task.completionStatus)}
-                                        note={this.checkTaskNotes(task.note)}
-                                    />
-                                </Grid>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                        <LinearProgress />
-                    )}
+                {this.state.tasks.length > 0 ?
+                    (
+                        <div>
+                            {this.state.tasks.map(task => (
+                                <div key={task._id}>
+                                    <Grid item lg={12}>
+                                        <TaskTable
+                                            taskNumber={task._id}
+                                            user={this.fullName(task.user)}
+                                            userImage={this.checkUserImage(task.user)}
+                                            client={this.checkIfTaskHasClient(task.client)}
+                                            description={task.description}
+                                            assignedStatus={this.formatStatus(task.assignedStatus)}
+                                            elapsedTime={this.getElapsedTime(task.assignDate)}
+                                            dueDate={this.getElapsedTime(task.dueDate)}
+                                            completionStatus={this.capitialStatus(task.completionStatus)}
+                                            note={this.checkTaskNotes(task.note)}
+                                        />
+                                    </Grid>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <Grid container>
+                            <Grid item lg={5}></Grid>
+                            <Grid item lg={2}>
+                                <GridLoader
+                                    className={"grid-loader"}
+                                    sizeUnit={"px"}
+                                    size={15}
+                                    color={'#9E0031'}
+                                    loading={true}
+                                />
+                            </Grid>
+                            <Grid item lg={5}></Grid>
+                        </Grid>
+                    )
+                }
                 <button onClick={this.checkState}>
                     Check tasks
                 </button>

@@ -6,9 +6,9 @@ module.exports = {
     Order
       .find(req.query)
       .sort({ date: -1 })
-      // populate all users, clients and notes associated with tasks
+      // populate all users, clients and notes associated with order
       .populate({
-        path: 'user client note',
+        path: 'user client note lineItems.product',
         populate: {
           path: 'user'
         },
@@ -17,19 +17,23 @@ module.exports = {
         },
         populate: {
           path: 'note'
+        },
+        populate: {
+          path: 'lineItems.product'
         }
       })
       .then(dbModel => {
         res.status(200).json({
           orders: dbModel.map(model => {
             return {
-              id: model._id,
+              _id: model._id,
               client: model.client,
-              lineItems: model.lineItems,
               user: model.user,
+              lineItems: model.lineItems,
               note: model.note,
-              fulfilled: model.fulfilled,
-              created_at: model.created_at
+              created_at: model.created_at,
+              checked_out: model.checked_out,
+              completedDate: model.completedDate
             };
           })
         })
@@ -88,6 +92,35 @@ module.exports = {
     Order
       .findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  getOrderTotal: function (req, res) {
+    Order.aggregate([
+      {
+        // match to user id in order
+        $match: { user: req.params.userid }
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      {
+        $unwind: "$product"
+      },
+      {
+        $group: {
+          _id: '$user',
+          totalAmount: { $sum: { $multiply: ["$price", "$quantity"] } },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { totalAmount: -1 } }
+    ])
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   }
