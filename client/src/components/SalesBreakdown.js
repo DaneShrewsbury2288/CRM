@@ -2,13 +2,13 @@ import React, { PureComponent } from 'react';
 import { PieChart, Pie, Sector } from 'recharts';
 
 const data = [
-  { name: 'Black Raven Trickster', value: 400 },
-  { name: 'Hops Potato', value: 300 },
-  { name: 'Sizzlebird Cider', value: 300 },
-  { name: 'Sounds Puget', value: 200 },
-  { name: 'Extra Foam - Limited Edition', value: 200 },
-  { name: 'The Kraken', value: 200 },
-  { name: 'Sams Beer', value: 200 },
+  { name: 'Black Raven Trickster', value: 5000 },
+  { name: 'Hops Potato', value: 1250 },
+  { name: 'Sizzlebird Cider', value: 2340 },
+  { name: 'Sounds Puget', value: 5030 },
+  { name: 'Extra Foam - Limited Edition', value: 3030 },
+  { name: 'The Kraken', value: 1004 },
+  { name: 'Sams Beer', value: 800 },
 ];
 
 const renderActiveShape = (props) => {
@@ -50,9 +50,9 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`PV ${value}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`$ ${value}`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        {`(${(percent * 100).toFixed(2)}% of Sales)`}
       </text>
     </g>
   );
