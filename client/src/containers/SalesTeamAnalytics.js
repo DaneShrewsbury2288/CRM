@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 import Grid from '@material-ui/core/Grid';
 import API from '../utilities/api';
-// import TeamAnalytics from '../utilities/teamAnalytics';
 import UserAPI from '../utils/API';
 import Card from "../components/Card";
-import orderData from "../components/JSON/MockOrders";
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Modal from '../components/TeamModal';
 import Search from '../components/TeamSearch';
@@ -24,12 +22,14 @@ class SalesTeamAnalytics extends Component {
         searchedUser: [],
         userRevenue: "",
     }
+
     UNSAFE_componentWillMount() {
         this.checkUsers();
         this.checkTasks();
         this.checkClients();
         this.checkOrders();
     }
+
     // get tasks
     checkTasks = () => {
         API.getTasks()
@@ -40,15 +40,11 @@ class SalesTeamAnalytics extends Component {
     }
     // get user total revenue
     getUserTotalRevenue = (id) => {
-        console.log(id);
         API.getOrderUserTotal(id)
             .then(res => {
-
                 let total = res.data[0].totalAmount.toFixed(2);
                 let totalString = total.toString();
-                console.log(totalString)
-                console.log(typeof totalString)
-                return res.data[0].totalAmount;
+                return totalString;
             }
             )
             .catch(error => console.log("User revenue error: " + error))
@@ -104,40 +100,28 @@ class SalesTeamAnalytics extends Component {
         switch (month) {
             case "01":
                 return "Jan. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "02":
                 return "Feb. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "03":
                 return "Mar. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "04":
                 return "Apr. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "05":
                 return "May " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "06":
                 return "Jun. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "07":
                 return "Jul. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "08":
                 return "Aug. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "09":
                 return "Sep. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "10":
                 return "Oct. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "11":
                 return "Nov. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "12":
                 return "Dec. " + splitDate[2] + ", " + splitDate[0];
-                break;
             default:
                 return null;
         }
@@ -244,7 +228,8 @@ class SalesTeamAnalytics extends Component {
                                                 userImage={this.checkUserImage(user)}
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
-                                            // totalSales={this.getUserTotalRevenue(user._id)}
+                                                // totalSales={"3"}
+                                                totalSales={this.getUserTotalRevenue(user._id)}
                                             // numSales={this.numberOfSales(user._id)}
                                             // averageSale={this.averageSale(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}
