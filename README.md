@@ -87,7 +87,7 @@ Download the repository
 
 ## Routing-Explained
 
-![Image](client/public/assets/images/Routing.PNG)
+![Image](client/public/assets/images/Routing.png)
 
 ## Authors
 
