@@ -9,9 +9,13 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
-import PieChartIcon from '@material-ui/icons/PieChart';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import MoneyIcon from '@material-ui/icons/AttachMoney';
 import LockIcon from '@material-ui/icons/Lock';
+import PublicIcon from '@material-ui/icons/Public';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { logoutUser } from "../actions/authActions";
 
@@ -20,31 +24,31 @@ const icons = [
         title: "Dashboard",
         href: "/",
         bitmask: 0b1,
-        icon: <LayersIcon />
+        icon: <DashboardIcon />
     },
     {
         title: "Sales Team Daily",
         href: "/salesteamdaily",
         bitmask: 0b10,
-        icon: <BarChartIcon />
+        icon: <CheckBoxIcon />
     },
     {
         title: "Inventory",
         href: "/inventory",
         bitmask: 0b100,
-        icon: <DashboardIcon />
+        icon: <AssignmentIcon />
     },
     {
         title: "Client List",
         href: "/clientlist",
         bitmask: 0b1000,
-        icon: <ShoppingCartIcon />
+        icon: <ContactMailIcon />
     },
     {
         title: "Purchasing Tool",
         href: "/purchasingtool",
         bitmask: 0b10000,
-        icon: <MoneyIcon />
+        icon: <ShoppingCartIcon />
     },
     {
         title: "Sales Analytics",
@@ -68,13 +72,13 @@ const icons = [
         title: "Check User Messages",
         href: "/checkusermessages",
         bitmask: 0b100000000,
-        icon: <BarChartIcon />
+        icon: <MailOutlineIcon />
     },
     {
         title: "Discover",
         href: "/discover",
         bitmask: 0b1000000000,
-        icon: <PieChartIcon />
+        icon: <PublicIcon />
     },
     {
         title: "Add/Remove Users",
