@@ -8,7 +8,7 @@ module.exports = {
       .sort({ date: -1 })
       // populate all users, clients and notes associated with order
       .populate({
-        path: 'user client note product',
+        path: 'user client note lineItems.product',
         populate: {
           path: 'user'
         },
@@ -19,7 +19,7 @@ module.exports = {
           path: 'note'
         },
         populate: {
-          path: 'product'
+          path: 'lineItems.product'
         }
       })
       .then(dbModel => {
@@ -27,14 +27,13 @@ module.exports = {
           orders: dbModel.map(model => {
             return {
               _id: model._id,
-              product: model.product,
+              client: model.client,
               user: model.user,
               lineItems: model.lineItems,
+              note: model.note,
               created_at: model.created_at,
               checked_out: model.checked_out,
-              completedDate: model.completedDate,
-              client: model.client,
-              note: model.note
+              completedDate: model.completedDate
             };
           })
         })
@@ -63,8 +62,10 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
+    console.log(req.body)
     Order
       .create(req.body)
+      // associate client ID with order
       // .then(function (dbClient) {
       //   return db.Client.findOneAndUpdate({}, { $push: { client: dbClient._id } }, { new: true });
       // })

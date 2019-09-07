@@ -65,8 +65,8 @@ const icons = [
         icon: <MoneyIcon />
     },
     {
-        title: "Map of Sales",
-        href: "/mapofsales",
+        title: "Check User Messages",
+        href: "/checkusermessages",
         bitmask: 0b100000000,
         icon: <BarChartIcon />
     },
