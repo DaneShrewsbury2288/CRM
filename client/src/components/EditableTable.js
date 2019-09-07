@@ -32,7 +32,7 @@ export const selectedBrews = {
 //   return { productName, price, quantity };
 // }
 
-const rows = [
+export const rows = [
 ];
 
 //Descending Order
@@ -46,14 +46,14 @@ function desc(a, b, orderBy) {
   return 0;
 }
 
-export const items=[];
+//  const items=[];
 
 
 function getItems(res) {
   API.getProducts(res)
       .then(res =>
         res.data.map(result => (
-          rows.items.push(result)
+          rows.push(result)
         )))
         .catch(error => console.log("Check tasks error: " + error))
  }
@@ -302,7 +302,7 @@ export default function EnhancedTable() {
     return selectedBrews;
   }
  console.log(selectedBrews);
- console.log(items);
+ console.log(rows);
 
 
   return (
