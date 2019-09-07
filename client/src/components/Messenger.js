@@ -38,12 +38,12 @@ class Messenger extends Component {
 
   hideMessenger = () => {
     if (this.state.display === 'block') {
-      this.setState({ display: 'none' }, () => {
+      this.setState({ display: 'none'}, () => {
         console.log(this.state.display)
       })
     }
     else if (this.state.display === 'none') {
-      this.setState({ display: 'block' }, () => {
+      this.setState({ display: 'block'}, () => {
         console.log(this.state.display)
       })
     }
@@ -56,10 +56,11 @@ class Messenger extends Component {
         backgroundColor: 'white',
         position: 'absolute',
         width: '300px',
+        maxHeight: '300px',
         bottom: '17px',
         right: '17px',
         zIndex: 10,
-        overflow: 'hidden'
+        overflowY: 'scroll'
       },
       title: {
         backgroundColor: '#3f51b5',
@@ -86,9 +87,9 @@ class Messenger extends Component {
             <List>
               {this.state.users.map(user => (
                 <ListItem key={user._id}>
-                  <h4 id={user._id} onClick={this.handleSetPartner}>
+                  <h6 id={user._id} onClick={this.handleSetPartner}>
                     {user.firstName} {user.lastName}
-                  </h4>
+                  </h6>
                 </ListItem>
               ))}
             </List>
