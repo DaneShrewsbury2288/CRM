@@ -8,8 +8,6 @@ import {
 } from "react-google-maps";
 require('dotenv').config();
 
-// Our apiKey is: AIzaSyDCONYMdBk6xNE26CEFLfnNv2c_nF1LKuM
-
 function Map() {
   return (
     <GoogleMap
@@ -20,7 +18,6 @@ function Map() {
 }
 
 const API_KEY = process.env.REACT_APP_GOOGLE_KEY
-console.log("API", API_KEY)
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function DiscoverMap() {
