@@ -198,7 +198,6 @@ class ManagerTaskAssignment extends Component {
         } else { 
             return timeDifference * -1;
         }
-        
     }
     // format task status
     capitialStatus = (status) => {
@@ -296,9 +295,6 @@ class ManagerTaskAssignment extends Component {
                         </Grid>
                     )
                 }
-                <button onClick={this.checkState}>
-                    Check tasks
-                </button>
             </div>
         )
     }
