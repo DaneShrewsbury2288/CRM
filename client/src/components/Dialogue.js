@@ -4,7 +4,7 @@ import Receiver from "./Receiver"
 import API from "../utils/API";
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://192.168.0.105:3000', {transports: ['websocket']});
+const socket = openSocket('http://localhost:3000', {transports: ['websocket']});
 
 class Dialogue extends Component {
 
