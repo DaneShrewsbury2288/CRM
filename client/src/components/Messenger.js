@@ -12,7 +12,7 @@ class Messenger extends Component {
   state = {
     users: [],
     partner: null,
-    display: 'none',
+    display: true,
     user: this.props.auth.user
   };
 
@@ -37,13 +37,13 @@ class Messenger extends Component {
   }
 
   hideMessenger = () => {
-    if (this.state.display === 'block') {
-      this.setState({ display: 'none'}, () => {
+    if (this.state.display === true) {
+      this.setState({ display: false }, () => {
         console.log(this.state.display)
       })
     }
-    else if (this.state.display === 'none') {
-      this.setState({ display: 'block'}, () => {
+    else if (this.state.display === false) {
+      this.setState({ display: true }, () => {
         console.log(this.state.display)
       })
     }
@@ -56,7 +56,7 @@ class Messenger extends Component {
         backgroundColor: 'white',
         position: 'absolute',
         width: '300px',
-        maxHeight: '300px',
+        maxHeight: '350px',
         bottom: '17px',
         right: '17px',
         zIndex: 10,
@@ -64,18 +64,22 @@ class Messenger extends Component {
       },
       title: {
         backgroundColor: '#3f51b5',
+        width: '300px',
+        position: 'fixed',
         marginTop: 0,
         padding: 8,
-        color: 'white'
+        color: 'white',
+        zIndex: 10
       },
       content: {
-        display: this.state.display
+        marginTop: '55px'
       }
     }
 
     return (
       <div style={styles.body}>
         <h4 onClick={this.hideMessenger} style={styles.title}>Messenger</h4>
+      {this.state.display ?
         <div style={styles.content}>
           {this.state.partner
             ?
@@ -95,6 +99,9 @@ class Messenger extends Component {
             </List>
           }
         </div>
+        :
+        null
+      }
       </div>
     )
   }
