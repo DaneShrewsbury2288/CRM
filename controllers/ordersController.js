@@ -101,6 +101,7 @@ module.exports = {
       .aggregate([
         // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
         { $match: { 'user': mongoose.Types.ObjectId(userID) } },
+        { $sort: { created_at: 1 } },
         {
           $lookup: {
             from: "products",
@@ -125,7 +126,8 @@ module.exports = {
             largestOrderTotal: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             lowestOrderTotal: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            itemsSold: { $push:  { item: "$product._id", quantity: "$lineItems.quantity" } }
+            lastSalesDate: { $last: "$created_at" },
+            itemsSold: { $push:  { itemID: "$product._id", quantity: "$lineItems.quantity" } },
             // count: { $sum: 1 }
             // orderTotal: { $mergeObjects: { $multiply: [1, "$lineItems.quantity"] } }
           },
