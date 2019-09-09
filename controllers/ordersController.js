@@ -117,6 +117,8 @@ module.exports = {
             revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             itemQuantity: { $sum: { $multiply: [1, "$lineItems.quantity"] } },
             averageOrderQuantity: { $avg: { $multiply: [1, "$lineItems.quantity"] } },
+            largestOrder: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            lowestOrder: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
           }
         }
       ])
