@@ -84,7 +84,7 @@ class SalesTeamAnalytics extends Component {
     checkState = () => {
         // this.getUserTotalRevenue("5d618f75691b892e385e7757");
         this.numberOfSales("5d618f75691b892e385e7757");
-        // console.log(this.state.userRevenue);
+        console.log(this.state.userRevenue);
     }
     // create user full name
     fullName = (first, last) => {
@@ -211,9 +211,8 @@ class SalesTeamAnalytics extends Component {
                             userImage={this.checkUserImage(user)}
                             fullName={this.fullName(user.firstName, user.lastName)}
                             startDate={this.startDate(user.created_at)}
-                        // totalSales={this.getUserTotalRevenue(user._id)}
+                        totalSales={this.getUserTotalRevenue(user._id)}
                         numSales={this.numberOfSales(user._id)}
-                        // averageSale={this.averageSale(user._id)}
                         // lastMonthSales={this.lastMonthSales(user._id)}
                         // popularProduct={this.userMostSoldProduct(user._id)}
                         />
@@ -237,9 +236,8 @@ class SalesTeamAnalytics extends Component {
                                                 userImage={this.checkUserImage(user)}
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
-                                                // totalSales={this.getUserTotalRevenue(user._id)}
+                                                totalSales={this.getUserTotalRevenue(user._id)}
                                             numSales={this.numberOfSales(user._id)}
-                                            // averageSale={this.averageSale(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}
                                             // popularProduct={this.userMostSoldProduct(user._id)}
                                             />

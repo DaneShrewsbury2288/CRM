@@ -96,9 +96,7 @@ module.exports = {
     Order
       .aggregate([
         // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
-        { $match: 
-          { 'user': mongoose.Types.ObjectId(userID) }
-         },
+        { $match: { 'user': mongoose.Types.ObjectId(userID) } },
         {
           $lookup: {
             from: "products",
@@ -113,12 +111,12 @@ module.exports = {
         {
           $unwind: "$lineItems"
         },
-        { $group:
-          {
+        {
+          $group: {
             _id: mongoose.Types.ObjectId(userID),
-            totalAmount: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            totalProductsSold: { $sum: { $multiply: [1, "$lineItems.quantity"] } },
-            // totalOrders: { $sum: { $add: [5, 5]}}
+            revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            itemQuantity: { $sum: { $multiply: [1, "$lineItems.quantity"] } },
+            averageOrderQuantity: { $avg: { $multiply: [1, "$lineItems.quantity"] } },
           }
         }
       ])
