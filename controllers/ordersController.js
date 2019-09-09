@@ -119,6 +119,8 @@ module.exports = {
             averageOrderQuantity: { $avg: { $multiply: [1, "$lineItems.quantity"] } },
             largestOrder: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             lowestOrder: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } }
+            // orderTotal: { $mergeObjects: { $multiply: [1, "$lineItems.quantity"] } }
           }
         }
       ])
