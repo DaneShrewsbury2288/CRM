@@ -115,11 +115,13 @@ module.exports = {
           $group: {
             _id: mongoose.Types.ObjectId(userID),
             revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            itemQuantity: { $sum: { $multiply: [1, "$lineItems.quantity"] } },
-            averageOrderQuantity: { $avg: { $multiply: [1, "$lineItems.quantity"] } },
+            itemQuantity: { $sum: "$lineItems.quantity" },
+            averageOrderQuantity: { $avg: "$lineItems.quantity" },
+            averageOrderTotal: { $avg: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             largestOrder: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             lowestOrder: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } }
+            standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            // count: { $sum: 1 }
             // orderTotal: { $mergeObjects: { $multiply: [1, "$lineItems.quantity"] } }
           }
         }
