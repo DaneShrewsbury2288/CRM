@@ -89,10 +89,14 @@ module.exports = {
   },
   getOrderTotal: function (req, res) {
     const userID = req.params.userid;
-    // const dateOne = req.params.dayone;
-    // const dateTwo = req.params.daytwo;
+    const dateOne = req.params.dayone;
+    const dateTwo = req.params.daytwo;
     // console.log(dateOne);
     // console.log(dateTwo);
+    const today = new Date(),
+      oneDay = (1000 * 60 * 60 * 24),
+      fifteenDays = new Date(today.valueOf() - (15 * oneDay)),
+      sevenDays = new Date(today.valueOf() - (7 * oneDay));
     Order
       .aggregate([
         // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
@@ -113,17 +117,18 @@ module.exports = {
         },
         {
           $group: {
-            _id: mongoose.Types.ObjectId(userID),
+            _id: null,
             revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             itemQuantity: { $sum: "$lineItems.quantity" },
             averageOrderQuantity: { $avg: "$lineItems.quantity" },
             averageOrderTotal: { $avg: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            largestOrder: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            lowestOrder: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            largestOrderTotal: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            lowestOrderTotal: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            itemsSold: { $push:  { item: "$product._id", quantity: "$lineItems.quantity" } }
             // count: { $sum: 1 }
             // orderTotal: { $mergeObjects: { $multiply: [1, "$lineItems.quantity"] } }
-          }
+          },
         }
       ])
       .then(dbModel => res.json(dbModel))
