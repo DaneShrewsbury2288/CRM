@@ -45,7 +45,7 @@ class SalesTeamAnalytics extends Component {
                 let total = res.data[0].totalAmount.toFixed(2);
                 let totalString = total.toString();
                 this.setState({ userRevenue: totalString });
-                console.log(totalString);
+                console.log("User revenue: " + totalString);
                 return totalString;
             }
             )
@@ -85,8 +85,8 @@ class SalesTeamAnalytics extends Component {
     }
     checkState = () => {
         // this.getUserTotalRevenue("5d618f75691b892e385e7757");
-        this.numberOfSales("5d618f75691b892e385e7757");
-        console.log(this.state.userRevenue);
+        // this.numberOfSales("5d618f75691b892e385e7757");
+        console.log("state of user revenue: " + this.state.userRevenue);
     }
     // create user full name
     fullName = (first, last) => {

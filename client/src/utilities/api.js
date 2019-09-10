@@ -34,11 +34,25 @@ export default {
     getOrders: function() {
       return axios.get("/api/orders");
     },
-    getOrderUserTotal: function(userId) {
-      return axios.get("api/orders/usertotal/" + userId);
+    // Get order analytics for one user
+    getUserOrderAnalytics: function(userID, startDate, endDate) {
+      return axios.get("api/orders/usertotal/" + userID + "/" + startDate + "/" + endDate);
     },
-    getUserTotalOrders: function(userID) {
-      return axios.get("api/orders/totaluser/" + userID);
+    // Get order analytics for one user
+    getClientOrderAnalytics: function(clientID, startDate, endDate) {
+      return axios.get("api/orders/clienttotal/" + clientID + "/" + startDate + "/" + endDate);
+    },
+    // Get analytics for all orders
+    getBusinessAnalytics: function(startDate, endDate) {
+      return axios.get("api/orders/total/" + startDate + "/" + endDate);
+    },
+    // Get all orders for one client
+    getClientOrders: function(clientID) {
+      return axios.get("api/orders/client/" + clientID);
+    },
+    // Get all orders for one user
+    getUserOrders: function(userID) {
+      return axios.get("api/orders/user" + userID);
     },
     // Get one order
     getOrder: function(id) {
