@@ -6,7 +6,7 @@ import {
   // Marker,
   // InfoWindow
 } from "react-google-maps";
-require('dotenv').config();
+// require('dotenv').config();
 
 function Map() {
   return (

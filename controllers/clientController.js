@@ -5,7 +5,7 @@ module.exports = {
   findAll: function (req, res) {
     Client
       .find(req.query)
-      .sort({ date: -1 })
+      .sort({ name: 1 })
       // user assigned to client
       .populate("user", "_id firstName lastName")
       // all orders for client and if they have been fulfilled

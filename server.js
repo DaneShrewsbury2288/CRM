@@ -60,5 +60,3 @@ io.on('connection', (client) => {
 server.listen(PORT, function () {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
-
-
