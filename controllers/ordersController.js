@@ -119,16 +119,63 @@ module.exports = {
         {
           $group: {
             _id: null,
-            revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            cost: { $sum: { $multiply: ["$product.cost", "$lineItems.quantity"] } },
-            itemQuantity: { $sum: "$lineItems.quantity" },
-            averageOrderQuantity: { $avg: "$lineItems.quantity" },
-            averageOrderTotal: { $avg: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            largestOrderTotal: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            lowestOrderTotal: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            lastSalesDate: { $last: "$created_at" },
-            itemsSold: { $push: { itemID: "$product._id", quantity: "$lineItems.quantity" } }
+            revenue: {
+              $sum: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            cost: {
+              $sum: {
+                $multiply: ["$product.cost", "$lineItems.quantity"]
+              }
+            },
+            profit: {
+              $sum: {
+                $subtract: [
+                  { $multiply: ["$product.price", "$lineItems.quantity"] },
+                  { $multiply: ["$product.cost", "$lineItems.quantity"] }
+                ]
+              }
+            },
+            itemQuantity: {
+              $sum: "$lineItems.quantity"
+            },
+            averageOrderQuantity: {
+              $avg: "$lineItems.quantity"
+            },
+            averageOrderTotal: {
+              $avg: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            largestOrderTotal: {
+              $max: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            lowestOrderTotal: {
+              $min: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            standardDeviation: {
+              $stdDevPop: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            averageCheckout: {
+              $avg: { $subtract: ["$checked_out", "$created_at"] }
+            },
+            lastSalesDate: {
+              $last: "$created_at"
+            },
+            itemsSold: {
+              $push: {
+                itemID: "$product._id",
+                quantity: "$lineItems.quantity",
+                date: "$created_at"
+              }
+            }
           },
         }
       ])
@@ -168,16 +215,156 @@ module.exports = {
         {
           $group: {
             _id: null,
-            revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            cost: { $sum: { $multiply: ["$product.cost", "$lineItems.quantity"] } },
-            itemQuantity: { $sum: "$lineItems.quantity" },
-            averageOrderQuantity: { $avg: "$lineItems.quantity" },
-            averageOrderTotal: { $avg: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            largestOrderTotal: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            lowestOrderTotal: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } },
-            lastSalesDate: { $last: "$created_at" },
-            itemsSold: { $push: { itemID: "$product._id", quantity: "$lineItems.quantity" } },
+            revenue: {
+              $sum: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            cost: {
+              $sum: {
+                $multiply: ["$product.cost", "$lineItems.quantity"]
+              }
+            },
+            profit: {
+              $sum: {
+                $subtract: [
+                  { $multiply: ["$product.price", "$lineItems.quantity"] },
+                  { $multiply: ["$product.cost", "$lineItems.quantity"] }
+                ]
+              }
+            },
+            itemQuantity: {
+              $sum: "$lineItems.quantity"
+            },
+            averageOrderQuantity: {
+              $avg: "$lineItems.quantity"
+            },
+            averageOrderTotal: {
+              $avg: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            largestOrderTotal: {
+              $max: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            lowestOrderTotal: {
+              $min: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            standardDeviation: {
+              $stdDevPop: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            averageCheckout: {
+              $avg: { $subtract: ["$checked_out", "$created_at"] }
+            },
+            lastSalesDate: {
+              $last: "$created_at"
+            },
+            itemsSold: {
+              $push: {
+                itemID: "$product._id",
+                quantity: "$lineItems.quantity",
+                date: "$created_at"
+              }
+            }
+          },
+        }
+      ])
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  getBusinessTotal: function (req, res) {
+    const dateOne = req.params.dayone;
+    const dateTwo = req.params.daytwo;
+    Order
+      .aggregate([
+        {
+          $match: {
+            $and: [
+              { created_at: { $gte: new Date(dateOne) } },
+              { created_at: { $lt: new Date(dateTwo) } }
+            ]
+          }
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "lineItems.product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        {
+          $unwind: "$product",
+        },
+        {
+          $unwind: "$lineItems"
+        },
+        {
+          $group: {
+            _id: null,
+            revenue: {
+              $sum: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            cost: {
+              $sum: {
+                $multiply: ["$product.cost", "$lineItems.quantity"]
+              }
+            },
+            profit: {
+              $sum: {
+                $subtract: [
+                  { $multiply: ["$product.price", "$lineItems.quantity"] },
+                  { $multiply: ["$product.cost", "$lineItems.quantity"] }
+                ]
+              }
+            },
+            itemQuantity: {
+              $sum: "$lineItems.quantity"
+            },
+            averageOrderQuantity: {
+              $avg: "$lineItems.quantity"
+            },
+            averageOrderTotal: {
+              $avg: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            largestOrderTotal: {
+              $max: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            lowestOrderTotal: {
+              $min: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            standardDeviation: {
+              $stdDevPop: {
+                $multiply: ["$product.price", "$lineItems.quantity"]
+              }
+            },
+            averageCheckout: {
+              $avg: { $subtract: ["$checked_out", "$created_at"] }
+            },
+            lastSalesDate: {
+              $last: "$created_at"
+            },
+            itemsSold: {
+              $push: {
+                itemID: "$product._id",
+                quantity: "$lineItems.quantity",
+                date: "$created_at"
+              }
+            }
           },
         }
       ])
