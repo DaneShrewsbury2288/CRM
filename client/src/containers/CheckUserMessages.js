@@ -3,7 +3,7 @@ import PageTitle from "../components/PageTitle";
 import API from "../utils/API";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Dialogue from "../components/Dialogue";
+import CheckMessages from "../components/CheckMessages";
 
 
 
@@ -67,7 +67,7 @@ class MapOfSales extends Component {
             ?
             <div>
               <h4 onClick={this.back}>Back</h4>
-              <Dialogue user={this.state.user1} partner={this.state.user2} />
+              <CheckMessages user={this.state.user1} partner={this.state.user2} />
             </div>
             :
             <List>

@@ -90,7 +90,7 @@ const icons = [
     {
         title: "Permissions",
         href: "/Permissions",
-        bitmask: 0b1000000000000,
+        bitmask: 0b100000000000,
         icon: <LockIcon />
     }
 
