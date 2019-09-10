@@ -34,7 +34,10 @@ const OrderSchema = new Schema({
         // Store ObjectIds in the array
         type: Schema.Types.ObjectId,
         // The ObjectIds will refer to the ids in the User model
-        ref: "User"
+        ref: "User",
+        required: true,
+        // set default user for online payments
+        default: "5d71bac0a08ace50fc21ad71"
     }],
     // if the order has been fulfilled
     fulfilled: {
