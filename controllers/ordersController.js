@@ -87,20 +87,62 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  getOrderTotal: function (req, res) {
+  getUserOrderTotal: function (req, res) {
     const userID = req.params.userid;
     const dateOne = req.params.dayone;
     const dateTwo = req.params.daytwo;
     // console.log(dateOne);
     // console.log(dateTwo);
-    const today = new Date(),
-      oneDay = (1000 * 60 * 60 * 24),
-      fifteenDays = new Date(today.valueOf() - (15 * oneDay)),
-      sevenDays = new Date(today.valueOf() - (7 * oneDay));
     Order
       .aggregate([
         // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
         { $match: { 'user': mongoose.Types.ObjectId(userID) } },
+        { $sort: { created_at: 1 } },
+        {
+          $lookup: {
+            from: "products",
+            localField: "lineItems.product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        {
+          $unwind: "$product",
+        },
+        {
+          $unwind: "$lineItems"
+        },
+        {
+          $group: {
+            _id: null,
+            revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            itemQuantity: { $sum: "$lineItems.quantity" },
+            averageOrderQuantity: { $avg: "$lineItems.quantity" },
+            averageOrderTotal: { $avg: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            largestOrderTotal: { $max: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            lowestOrderTotal: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            lastSalesDate: { $last: "$created_at" },
+            itemsSold: { $push:  { itemID: "$product._id", quantity: "$lineItems.quantity" } },
+            // count: { $sum: 1 }
+            // orderTotal: { $mergeObjects: { $multiply: [1, "$lineItems.quantity"] } }
+          },
+        }
+      ])
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  getClientOrderTotal: function (req, res) {
+    const clientID = req.params.clientid;
+    const dateOne = req.params.dayone;
+    const dateTwo = req.params.daytwo;
+    console.log(clientID);
+    // console.log(dateOne);
+    // console.log(dateTwo);
+    Order
+      .aggregate([
+        // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
+        { $match: { 'client': mongoose.Types.ObjectId(clientID) } },
         { $sort: { created_at: 1 } },
         {
           $lookup: {

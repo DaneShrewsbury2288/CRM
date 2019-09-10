@@ -14,6 +14,9 @@ router
   .delete(ordersController.remove);
 
 // Matches with "/api/orders/usertotal/:userid/"
-router.route("/usertotal/:userid/").get(ordersController.getOrderTotal);
+router.route("/usertotal/:userid/").get(ordersController.getUserOrderTotal);
+
+// Matches with "/api/orders/clienttotal/:clientid"
+router.route("/clienttotal/:clientid").get(ordersController.getClientOrderTotal);
 
 module.exports = router;
