@@ -91,13 +91,17 @@ module.exports = {
     const userID = req.params.userid;
     const dateOne = req.params.dayone;
     const dateTwo = req.params.daytwo;
-    // console.log(dateOne);
-    // console.log(dateTwo);
     Order
       .aggregate([
-        // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
-        { $match: { 'user': mongoose.Types.ObjectId(userID) } },
-        { $sort: { created_at: 1 } },
+        {
+          $match: {
+            $and: [
+              { 'user': mongoose.Types.ObjectId(userID) },
+              { created_at: { $gte: new Date(dateOne) } },
+              { created_at: { $lt: new Date(dateTwo) } }
+            ]
+          }
+        },
         {
           $lookup: {
             from: "products",
@@ -116,6 +120,7 @@ module.exports = {
           $group: {
             _id: null,
             revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            cost: { $sum: { $multiply: ["$product.cost", "$lineItems.quantity"] } },
             itemQuantity: { $sum: "$lineItems.quantity" },
             averageOrderQuantity: { $avg: "$lineItems.quantity" },
             averageOrderTotal: { $avg: { $multiply: ["$product.price", "$lineItems.quantity"] } },
@@ -123,9 +128,7 @@ module.exports = {
             lowestOrderTotal: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             lastSalesDate: { $last: "$created_at" },
-            itemsSold: { $push:  { itemID: "$product._id", quantity: "$lineItems.quantity" } },
-            // count: { $sum: 1 }
-            // orderTotal: { $mergeObjects: { $multiply: [1, "$lineItems.quantity"] } }
+            itemsSold: { $push: { itemID: "$product._id", quantity: "$lineItems.quantity" } }
           },
         }
       ])
@@ -138,8 +141,15 @@ module.exports = {
     const dateTwo = req.params.daytwo;
     Order
       .aggregate([
-        // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
-        { $match: { 'client': mongoose.Types.ObjectId(clientID) } },
+        {
+          $match: {
+            $and: [
+              { 'client': mongoose.Types.ObjectId(clientID) },
+              { created_at: { $gte: new Date(dateOne) } },
+              { created_at: { $lt: new Date(dateTwo) } }
+            ]
+          }
+        },
         { $sort: { created_at: 1 } },
         {
           $lookup: {
@@ -159,6 +169,7 @@ module.exports = {
           $group: {
             _id: null,
             revenue: { $sum: { $multiply: ["$product.price", "$lineItems.quantity"] } },
+            cost: { $sum: { $multiply: ["$product.cost", "$lineItems.quantity"] } },
             itemQuantity: { $sum: "$lineItems.quantity" },
             averageOrderQuantity: { $avg: "$lineItems.quantity" },
             averageOrderTotal: { $avg: { $multiply: ["$product.price", "$lineItems.quantity"] } },
@@ -166,9 +177,7 @@ module.exports = {
             lowestOrderTotal: { $min: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             standardDeviation: { $stdDevPop: { $multiply: ["$product.price", "$lineItems.quantity"] } },
             lastSalesDate: { $last: "$created_at" },
-            itemsSold: { $push:  { itemID: "$product._id", quantity: "$lineItems.quantity" } },
-            // count: { $sum: 1 }
-            // orderTotal: { $mergeObjects: { $multiply: [1, "$lineItems.quantity"] } }
+            itemsSold: { $push: { itemID: "$product._id", quantity: "$lineItems.quantity" } },
           },
         }
       ])
