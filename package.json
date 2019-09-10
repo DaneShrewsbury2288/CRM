@@ -12,7 +12,7 @@
     "start:prod": "node server.js",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
-    "install": "cd client && npm install",
+    "install": "cd client && npm install && npm run build && cd ..",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
@@ -21,6 +21,7 @@
   "devDependencies": {
     "concurrently": "^4.1.2",
     "dotenv": "^8.1.0",
+    "eslint": "^6.3.0",
     "nodemon": "^1.19.1"
   },
   "dependencies": {
@@ -30,7 +31,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "date-fns": "^2.0.0-beta.5",
-    "eslint": "^6.3.0",
     "express": "^4.17.1",
     "google-maps-react": "^2.0.2",
     "http-proxy-middleware": "^0.19.1",

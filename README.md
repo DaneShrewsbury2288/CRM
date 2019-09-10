@@ -25,7 +25,7 @@ This project utilizes a full MERN stack in order to CRUD data and display it rea
 
 CRM Link: https://shielded-retreat-69523.herokuapp.com/
 
-![Image](public/assets/images/loginScreen.png)
+![Image](client/public/assets/images/loginScreen.png)
 
 ## Technologies
 
@@ -33,6 +33,8 @@ Project is created with:
 
 - [React](https://reactjs.org/)
 - [React-Router](https://reacttraining.com/react-router/)
+- [React-Redux](https://react-redux.js.org/)
+- [Passport.js](http://www.passportjs.org/)
 - [Material-UI](https://material-ui.com/)
 - [JavaScript](https://www.javascript.com/)
 - [Bootstrap](https://getbootstrap.com/)
@@ -40,13 +42,12 @@ Project is created with:
 - [Express.js](https://expressjs.com/)
 - [MongoDb](https://www.mongodb.com/)
 - [Mongoose](https://mongoosejs.com/)
-- [moment.js](https://momentjs.com/)
 - [Socket.io](https://socket.io/)
-- [bcrypt.js](https://www.npmjs.com/package/bcrypt)
+- [Bcrypt.js](https://www.npmjs.com/package/bcrypt)
 
 ## Containers
 
-![Image](public/assets/images/Dashboard.png)
+![Image](client/public/assets/images/Dashboard.png)
 
 - Dashboard (Home)
 - Sales Team Daily
@@ -87,12 +88,12 @@ Download the repository
 
 ## Routing-Explained
 
-![Image](public/assets/images/Routing.PNG)
+![Image](client/public/assets/images/Routing.png)
 
 ## Authors
 
 - Anthony Lam
-- Client Bodar
+- Clint Brodar
 - Dane Shrewsbury
 - Jonah Severn
 
