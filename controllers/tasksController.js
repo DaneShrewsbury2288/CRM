@@ -1,4 +1,5 @@
 const db = require("../models");
+const mongoose = require("mongoose");
 const Task = db.Task;
 
 module.exports = {
@@ -42,33 +43,29 @@ module.exports = {
   },
   findByUser: function (req, res) {
     let userID = req.params.id;
-    Task
-      .find(req.query)
-      // sort by due date
-      .sort({ dueDate: 'desc' })
-      // populate all users, clients and notes associated with tasks
-      .populate({
-          path: 'user',
-          match: { '_id': userID }
-      })
-      .then(dbModel => {
-        res.status(200).json({
-          tasks: dbModel.map(model => {
-            return {
-              _id: model._id,
-              user: model.user,
-              client: model.client,
-              assignDate: model.assignDate,
-              dueDate: model.dueDate,
-              completedDate: model.completedDate,
-              assignedStatus: model.assignedStatus,
-              completionStatus: model.completionStatus,
-              description: model.description,
-              note: model.note,
-            };
-          })
-        })
-      })
+      Task
+      .aggregate([
+        { $match: { 'user': mongoose.Types.ObjectId(userID) } },
+        { $sort: { created_at: 1 } },
+        {
+          $lookup: {
+            from: "clients",
+            localField: "client",
+            foreignField: "_id",
+            as: "client"
+          }
+        },
+        {
+          $unwind: "$client"
+        },
+        {
+          $group: {
+            _id: null,
+            
+          }
+        }
+      ])
+      .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function (req, res) {
@@ -127,5 +124,38 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  getTaskByUser: function (req, res) {
+    const userID = req.params.userid;
+    console.log(userID);
+    Task
+      .aggregate([
+        { $match: { 'user': mongoose.Types.ObjectId(userID) } },
+        { $sort: { created_at: 1 } },
+        {
+          $lookup: {
+            from: "clients",
+            localField: "client",
+            foreignField: "_id",
+            as: "client"
+          }
+        },
+        {
+          $unwind: "$client"
+        },
+        {
+          $group: {
+            _id: null,
+            // average time difference between dueDate and completedDate
+            // average time difference between assignedDate and completedDate
+            // average time difference between  assignDate and dueDate
+            // amount of tasks "to-do"
+            // amount of tasks "in-progress"
+            // amount of tasks "completed"
+            // total number of tasks
+
+          }
+        }
+      ])
   }
 };

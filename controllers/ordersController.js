@@ -136,9 +136,6 @@ module.exports = {
     const clientID = req.params.clientid;
     const dateOne = req.params.dayone;
     const dateTwo = req.params.daytwo;
-    console.log(clientID);
-    // console.log(dateOne);
-    // console.log(dateTwo);
     Order
       .aggregate([
         // 'created_at': { "$gte": dateOne, "$lt": dateTwo}
