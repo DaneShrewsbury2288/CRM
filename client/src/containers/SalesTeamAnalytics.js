@@ -43,7 +43,7 @@ class SalesTeamAnalytics extends Component {
                 let total = res.data[0].totalAmount.toFixed(2);
                 let totalString = total.toString();
                 this.setState({ userRevenue: totalString });
-                console.log(totalString);
+                console.log("User revenue: " + totalString);
                 return totalString;
             }
             )
@@ -83,8 +83,8 @@ class SalesTeamAnalytics extends Component {
     }
     checkState = () => {
         // this.getUserTotalRevenue("5d618f75691b892e385e7757");
-        this.numberOfSales("5d618f75691b892e385e7757");
-        console.log(this.state.userRevenue);
+        // this.numberOfSales("5d618f75691b892e385e7757");
+        console.log("state of user revenue: " + this.state.userRevenue);
     }
     // create user full name
     fullName = (first, last) => {
@@ -102,40 +102,28 @@ class SalesTeamAnalytics extends Component {
         switch (month) {
             case "01":
                 return "Jan. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "02":
                 return "Feb. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "03":
                 return "Mar. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "04":
                 return "Apr. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "05":
                 return "May " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "06":
                 return "Jun. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "07":
                 return "Jul. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "08":
                 return "Aug. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "09":
                 return "Sep. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "10":
                 return "Oct. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "11":
                 return "Nov. " + splitDate[2] + ", " + splitDate[0];
-                break;
             case "12":
                 return "Dec. " + splitDate[2] + ", " + splitDate[0];
-                break;
             default:
                 return null;
         }

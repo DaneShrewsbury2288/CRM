@@ -370,5 +370,53 @@ module.exports = {
       ])
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  getClientOrders: function (req, res) {
+    const clientID = req.params.id;
+    Order
+      .find({ client: mongoose.Types.ObjectId(clientID) })
+      .sort({ created_at: -1 })
+      .populate({
+        path: 'user client lineItems.product product',
+        populate: {
+          path: 'client',
+          match: { _id: mongoose.Types.ObjectId(clientID) }
+        },
+        populate: {
+          path: 'user'
+        },
+        populate: {
+          path: 'product'
+        },
+        populate: {
+          path: 'lineItems.product'
+        }
+      })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  getUserOrders: function (req, res) {
+    const userID = req.params.id;
+    Order
+      .find({ user: mongoose.Types.ObjectId(userID) })
+      .sort({ created_at: -1 })
+      .populate({
+        path: 'user client lineItems.product product',
+        populate: {
+          path: 'user',
+          match: { _id: mongoose.Types.ObjectId(userID) }
+        },
+        populate: {
+          path: 'product'
+        },
+        populate: {
+          path: 'client'
+        },
+        populate: {
+          path: 'lineItems.product'
+        }
+      })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
   }
 };
