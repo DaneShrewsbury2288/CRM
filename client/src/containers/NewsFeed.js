@@ -10,13 +10,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: 25,
+    padding: 15,
     margin: 50,
     width: 780
   },
   media: {
        width: 100,
-       margin: 20,
+       margin: 50,
+       
     },
 }));
 
@@ -29,7 +30,7 @@ export default function NewsFeed() {
             <Paper className={classes.root}>
             <h5>Revenue Y-T-D</h5>
             <ProductChart className={classes.media} />
-            <Grid><RevenueCard className={classes.media} /></Grid>
+            <Grid><RevenueCard className={classes.media} /><div>hello</div>hello dawg</Grid>
             {/* <RevenueCard className={classes.media} /> */}
             </Paper>
         </Grid>
