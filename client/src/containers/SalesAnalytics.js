@@ -150,8 +150,8 @@ class SalesAnalytics extends Component {
         tenMonthDifference: moment().subtract(10, 'months').format("MMM YYYY"),
         elevenMonthDifference: moment().subtract(11, 'months').format("MMM YYYY"),
         twelveMonthDifference: moment().subtract(12, 'months').format("MMM YYYY"),
-        
-        timeFrame: "daily",
+
+        timeFrame: "yearly",
         timeIncrements: [],
         chartData: [],
     }
