@@ -90,9 +90,6 @@ class SalesTeamAnalytics extends Component {
         }
     }
 
-    state = {
-
-    }
 
     getAnalytics = (start, end) => {
         API.getBusinessAnalytics(start, end)

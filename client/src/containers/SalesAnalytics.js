@@ -7,8 +7,8 @@ import Paper from '@material-ui/core/Paper';
 //import Order from '../components/Order';
 import clsx from 'clsx';
 import Deposits from '../components/Deposits';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 import ProductProfit from '../components/ProductProfit';
 import AggregateSales from '../components/AggregateSales';
 import API from '../utilities/api';
@@ -128,6 +128,7 @@ class SalesAnalytics extends Component {
                             <Tabs
                                 value={this.state.timeFrame}
                                 onChange={this.handleTabChange}
+
                                 indicatorColor="primary"
                                 textColor="primary"
                                 scrollButtons="auto"
@@ -169,7 +170,7 @@ class SalesAnalytics extends Component {
                                 <Tab label="Business" />
                                 <Tab label="Consumer" >
                                 </Tab>
-                            </Tabs>
+                            </Tabs> */}
                             <AggregateSales />
                         </Paper>
                     </Grid>

@@ -33,6 +33,18 @@ const styles = theme => ({
 });
 
 class Discover extends Component {
+    state = {
+        search: "",
+    }
+
+    handleInputChange = event => {
+        this.setState({ search: event.target.value })
+    }
+
+    handleFormSubmit = event => {
+        event.preventDefault();
+        console.log("Zipcode Submitted")
+    }
 
     render() {
 
@@ -49,17 +61,19 @@ class Discover extends Component {
                         <Paper className={classes.root}>
                             <InputBase
                                 className={classes.input}
+                                value={this.props.search}
+                                onChange={this.props.handleInputChange}
                                 placeholder=" Enter Zip Code "
                                 inputProps={{ 'aria-label': 'search google maps' }}
                             />
-                            <IconButton className={classes.iconButton} aria-label="search">
+                            <IconButton className={classes.iconButton} aria-label="search" onClick={this.props.handleFormSubmit}>
                                 <SearchIcon />
                             </IconButton>
                             <Divider className={classes.divider} orientation="vertical" />
                         </Paper>
                     </Grid>
                 </Grid>
-                <DiscoverMap/>
+                <DiscoverMap />
             </div>
 
         )
