@@ -60,16 +60,16 @@ function TeamModal(props) {
                                         Average Sale: ${props.averageSale}
                                     </Typography>
                                 </Grid>
-                                {/* <Grid item lg={4}>
-            <Typography variant="body2" component="h3">
-              Sales in last 30 days: {props.lastMonthSales}
-            </Typography>
-          </Grid>
-          <Grid item lg={4}>
-            <Typography variant="body2" component="h3">
-              Most sold product: {props.popularProduct}
-            </Typography>
-          </Grid> */}
+                                <Grid item lg={4}>
+                                    <Typography variant="body2" component="h3">
+                                        Sales in last 30 days: {props.lastMonthSales}
+                                    </Typography>
+                                </Grid>
+                                <Grid item lg={4}>
+                                    <Typography variant="body2" component="h3">
+                                        Most sold product: {props.popularProduct}
+                                    </Typography>
+                                </Grid>
                             </Grid>
                         </CardContent>
                     </Card>
