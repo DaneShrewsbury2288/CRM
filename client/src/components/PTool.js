@@ -116,6 +116,7 @@ export default function PurchasingTool() {
                       onClick={handleNext}
                       className={classes.button}
                     >
+                      {/* Function on click to check if quantity of products greater than 0, POST create order , update */}
                       {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                     </Button>
                   </div>

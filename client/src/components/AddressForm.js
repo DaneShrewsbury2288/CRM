@@ -2,27 +2,28 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-// import FormControl from '@material-ui/core/FormControl';
-// import Select from '@material-ui/core/Select';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 // import FormControlLabel from '@material-ui/core/FormControlLabel';
 // import Checkbox from '@material-ui/core/Checkbox';
 import API from '../utilities/api';
 
-const clientArray = [{}];
+const clientArray = [];
 
 function PopulateClients(){
   API.getClients()
   .then(res =>
-      clientArray.push(res.data.clients[0])
+      clientArray.push(res.data.clients[5].email)
   )
   .catch(error => console.log("Check clients error: " + error))
 }
 
 PopulateClients();
-// console.log(clientArray[1].data.clients[0]);
+// // console.log(clientArray[1].data.clients[0]);
 console.log(clientArray);
+
 
 
 
@@ -39,18 +40,18 @@ export default function ClientInformation() {
   return (
     <React.Fragment>
 PLEASE SELECT A CLIENT 
-{/* <FormControl>
+                  <FormControl>
                     <InputLabel htmlFor="age-native-helper">Client</InputLabel>
                     <Select
-                      value={props.clientSelection}
-                      onChange={props.handleInputChange}
+                      // value={props.clientSelection}
+                      // onChange={props.handleInputChange}
                       name="clientSelection"
                     >
-                      {props.clients.map(client => (
+                      {clientArray.map(client => (
                         <MenuItem key={client._id} value={client._id}>{client.name}</MenuItem>
                       ))}
                     </Select>
-                  </FormControl> */}
+                  </FormControl>
 
       <Typography variant="h6" gutterBottom>
         Client Information

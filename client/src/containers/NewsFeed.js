@@ -28,9 +28,9 @@ export default function NewsFeed() {
         <PageTitle title="Dashboard" />
         <Grid container spacing={3} direction="row">
             <Paper className={classes.root}>
-            <h5>Revenue Y-T-D</h5>
+            <h5>Revenue - Year to Date</h5>
             <ProductChart className={classes.media} />
-            <Grid><RevenueCard className={classes.media} /><div>hello</div>hello dawg</Grid>
+            <Grid><RevenueCard className={classes.media} /></Grid>
             {/* <RevenueCard className={classes.media} /> */}
             </Paper>
         </Grid>
