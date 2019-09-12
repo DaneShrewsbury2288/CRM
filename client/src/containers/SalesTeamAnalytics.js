@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
-import Card from "../components/Card";
-import PacmanLoader from 'react-spinners/PacmanLoader';
-import Modal from '../components/TeamModal';
-import Search from '../components/TeamSearch';
+// import Card from "../components/Card";
+// import PacmanLoader from 'react-spinners/PacmanLoader';
+// import Modal from '../components/TeamModal';
+// import Search from '../components/TeamSearch';
 import moment from "moment";
 import { Bar } from "react-chartjs-2";
 import 'chartjs-plugin-lineheight-annotation';
@@ -69,42 +69,49 @@ class SalesTeamAnalytics extends Component {
         tenMonthDifference: moment().subtract(10, 'months').format("MMM YYYY"),
         elevenMonthDifference: moment().subtract(11, 'months').format("MMM YYYY"),
         twelveMonthDifference: moment().subtract(12, 'months').format("MMM YYYY"),
-
-        timeFrame: "yearly",
-        timeIncrements: [],
-        chartData: [],
+        target: 0,
+        current: 0,
+        timeFrame: "past-week",
+        totalSales: [],
         data: {
-            labels: ["1", "2", "3", "4", "5"],
+            // time frames
+            labels: [],
+            // data results
             datasets: [
                 {
-                    label: "Example One",
-                    backgroundColor: "rgba(255, 0, 255, 0.75)",
-                    data: [4, 1, 2, 24, 32, 2, 12]
-                },
-                {
-                    label: "Example Two",
-                    backgroundColor: "rgba(0, 255, 0, 0.75)",
-                    data: [14, 1, 21, 13, 12, 7, 15]
+                    label: "",
+                    backgroundColor: "",
+                    data: []
                 }
             ]
         }
     }
 
-    state = {
-
-    }
-
     getAnalytics = (start, end) => {
         API.getBusinessAnalytics(start, end)
             .then(res =>
+                // console.log(res.data[0])
                 this.setState(state => {
-                    const chartData = state.chartData.concat(res.data[0]);
-                    return {
-                        chartData
-                    };
+                    // if any sales have occured in selected time period
+                    if (res.data[0] !== undefined) {
+                        let total = res.data[0].profit.toFixed(2);
+                        let totalString = total.toString();
+                        const totalSales = state.totalSales.concat(totalString);
+                        return {
+                            totalSales
+                        };
+                    } else {
+                        // set to zero if no sales
+                        const totalSales = 0;
+                        return {
+                            totalSales
+                        };
+                    }
                 })
             )
             .catch(error => console.log("Business analytics error: " + error));
+        let current = this.state.current;
+        this.setState({ current: current + 1 });
     }
 
     UNSAFE_componentWillMount() {
@@ -115,160 +122,240 @@ class SalesTeamAnalytics extends Component {
         this.setTimeFrame();
     }
 
+    getLastDayAnalytics = () => {
+        this.setState({ current: 0, target: 0 });
+        const one = moment().subtract(24, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const two = moment().subtract(21, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const three = moment().subtract(18, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const four = moment().subtract(15, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const five = moment().subtract(12, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const six = moment().subtract(9, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const seven = moment().subtract(6, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const eight = moment().subtract(3, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const today = moment().format("YYYY-MM-DD");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, five);
+        this.getAnalytics(five, six);
+        this.getAnalytics(six, seven);
+        this.getAnalytics(seven, eight);
+        this.getAnalytics(eight, today);
+        this.setState({ target: 8 });
+    }
+
+    getLastWeekAnalytics = () => {
+        this.setState({ current: 0, target: 0 });
+        const one = moment().subtract(7, 'days').format("YYYY-MM-DD");
+        const two = moment().subtract(6, 'days').format("YYYY-MM-DD");
+        const three = moment().subtract(5, 'days').format("YYYY-MM-DD");
+        const four = moment().subtract(4, 'days').format("YYYY-MM-DD");
+        const five = moment().subtract(3, 'days').format("YYYY-MM-DD");
+        const six = moment().subtract(2, 'days').format("YYYY-MM-DD");
+        const seven = moment().subtract(1, 'days').format("YYYY-MM-DD");
+        const today = moment().format("YYYY-MM-DD");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, five);
+        this.getAnalytics(five, six);
+        this.getAnalytics(six, seven);
+        this.getAnalytics(seven, today);
+        this.setState({ target: 7 });
+    }
+
+    getLastMonthAnalytics = () => {
+        this.setState({ current: 0, target: 0 });
+        const one = moment().subtract(28, 'days').format("YYYY-MM-DD");
+        const two = moment().subtract(21, 'days').format("YYYY-MM-DD");
+        const three = moment().subtract(14, 'days').format("YYYY-MM-DD");
+        const four = moment().subtract(7, 'days').format("YYYY-MM-DD");
+        const today = moment().format("YYYY-MM-DD");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, today);
+        this.setState({ target: 4 });
+    }
+
+    getLastQuarterAnalytics = () => {
+        this.setState({ current: 0, target: 0 });
+        const one = moment().subtract(84, 'days').format("YYYY-MM-DD");
+        const two = moment().subtract(70, 'days').format("YYYY-MM-DD");
+        const three = moment().subtract(56, 'days').format("YYYY-MM-DD");
+        const four = moment().subtract(42, 'days').format("YYYY-MM-DD");
+        const five = moment().subtract(28, 'days').format("YYYY-MM-DD");
+        const six = moment().subtract(14, 'days').format("YYYY-MM-DD");
+        const today = moment().format("YYYY-MM-DD");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, five);
+        this.getAnalytics(five, six);
+        this.getAnalytics(six, today);
+        this.setState({ target: 6 });
+    }
+
+    getLastYearAnalytics = () => {
+        this.setState({ current: 0, target: 0 });
+        const one = moment().subtract(12, 'months').format("YYYY-MM-DD");
+        const two = moment().subtract(11, 'months').format("YYYY-MM-DD");
+        const three = moment().subtract(10, 'months').format("YYYY-MM-DD");
+        const four = moment().subtract(9, 'months').format("YYYY-MM-DD");
+        const five = moment().subtract(8, 'months').format("YYYY-MM-DD");
+        const six = moment().subtract(7, 'months').format("YYYY-MM-DD");
+        const seven = moment().subtract(6, 'months').format("YYYY-MM-DD");
+        const eight = moment().subtract(5, 'months').format("YYYY-MM-DD");
+        const nine = moment().subtract(4, 'months').format("YYYY-MM-DD");
+        const ten = moment().subtract(3, 'months').format("YYYY-MM-DD");
+        const eleven = moment().subtract(2, 'months').format("YYYY-MM-DD");
+        const twelve = moment().subtract(1, 'months').format("YYYY-MM-DD");
+        const today = moment().format("YYYY-MM-DD");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, five);
+        this.getAnalytics(five, six);
+        this.getAnalytics(six, seven);
+        this.getAnalytics(seven, eight);
+        this.getAnalytics(eight, nine);
+        this.getAnalytics(nine, ten);
+        this.getAnalytics(ten, eleven);
+        this.getAnalytics(eleven, twelve);
+        this.getAnalytics(twelve, today);
+        this.setState({ target: 12 });
+    }
+
     setTimeFrame() {
         const timeFrame = this.state.timeFrame;
-        if (timeFrame === "hourly") {
-            this.setState({
-                timeIncrements: [
-                    this.state.twentyFourHourDifference,
-                    this.state.twentyOneHourDifference,
-                    this.state.eightteenHourDifference,
-                    this.state.fifteenHourDifference,
-                    this.state.twelveHourDifference,
-                    this.state.nineHourDifference,
-                    this.state.sixHourDifference,
-                    this.state.threeHourDifference,
-                    this.state.zeroHourDifference,
-                ],
-                chartData: [],
-            })
-            const one = moment().subtract(24, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-            const two = moment().subtract(21, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-            const three = moment().subtract(18, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-            const four = moment().subtract(15, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-            const five = moment().subtract(12, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-            const six = moment().subtract(9, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-            const seven = moment().subtract(6, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-            const eight = moment().subtract(3, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-            const today = moment().format("YYYY-MM-DD");
-            this.getAnalytics(one, two);
-            this.getAnalytics(two, three);
-            this.getAnalytics(three, four);
-            this.getAnalytics(four, five);
-            this.getAnalytics(five, six);
-            this.getAnalytics(six, seven);
-            this.getAnalytics(seven, eight);
-            this.getAnalytics(eight, today);
+        if (timeFrame === "past-hours") {
+            this.getLastDayAnalytics();
+            if (this.state.target === this.state.current) {
+                this.setState(prevState => ({
+                    data: {
+                        ...prevState.data,
+                        labels: [
+                            this.state.twentyFourHourDifference,
+                            this.state.twentyOneHourDifference,
+                            this.state.eightteenHourDifference,
+                            this.state.fifteenHourDifference,
+                            this.state.twelveHourDifference,
+                            this.state.nineHourDifference,
+                            this.state.sixHourDifference,
+                            this.state.threeHourDifference,
+                            this.state.zeroHourDifference,
+                        ],
+                        datasets: [{
+                            ...prevState.data.datasets,
+                            label: "Profit In Last 24 Hours",
+                            backgroundColor: "rgba(1,41,95)",
+                            data: [prevState.totalSales]
+                        }]
+                    }
+                }))
+            }
         }
-        if (timeFrame === "daily") {
-            this.setState({
-                timeIncrements: [
-                    this.state.sevenDayDifference,
-                    this.state.sixDayDifference,
-                    this.state.fiveDayDifference,
-                    this.state.fourDayDifference,
-                    this.state.threeDayDifference,
-                    this.state.twoDayDifference,
-                    this.state.oneDayDifference,
-                    this.state.zeroDayDifference,
-                ],
-                chartData: [],
-            })
-            const one = moment().subtract(7, 'days').format("YYYY-MM-DD");
-            const two = moment().subtract(6, 'days').format("YYYY-MM-DD");
-            const three = moment().subtract(5, 'days').format("YYYY-MM-DD");
-            const four = moment().subtract(4, 'days').format("YYYY-MM-DD");
-            const five = moment().subtract(3, 'days').format("YYYY-MM-DD");
-            const six = moment().subtract(2, 'days').format("YYYY-MM-DD");
-            const seven = moment().subtract(1, 'days').format("YYYY-MM-DD");
-            const today = moment().format("YYYY-MM-DD");
-            this.getAnalytics(one, two);
-            this.getAnalytics(two, three);
-            this.getAnalytics(three, four);
-            this.getAnalytics(four, five);
-            this.getAnalytics(five, six);
-            this.getAnalytics(six, seven);
-            this.getAnalytics(seven, today);
+        if (timeFrame === "past-week") {
+            this.getLastWeekAnalytics();
+            if (this.state.target === this.state.current) {
+                this.setState(prevState => ({
+                    data: {
+                        ...prevState.data,
+                        labels: [
+                            this.state.sevenDayDifference,
+                            this.state.sixDayDifference,
+                            this.state.fiveDayDifference,
+                            this.state.fourDayDifference,
+                            this.state.threeDayDifference,
+                            this.state.twoDayDifference,
+                            this.state.oneDayDifference,
+                            this.state.zeroDayDifference,
+                        ],
+                        datasets: [{
+                            ...prevState.data.datasets,
+                            label: "Profit In Last Week",
+                            backgroundColor: "rgba(66,102,150)",
+                            data: ["1", "3", "4", "7", "1", "5", "4", "3"]
+                        }]
+                    }
+                }))
+            }
         }
-        if (timeFrame === "weekly") {
-            this.setState({
-                timeIncrements: [
-                    this.state.weekDifference,
-                    this.state.twoWeekDifference,
-                    this.state.threeWeekDifference,
-                    this.state.fourWeekDifference,
-                ],
-                chartData: [],
-            })
-            const one = moment().subtract(28, 'days').format("YYYY-MM-DD");
-            const two = moment().subtract(21, 'days').format("YYYY-MM-DD");
-            const three = moment().subtract(14, 'days').format("YYYY-MM-DD");
-            const four = moment().subtract(7, 'days').format("YYYY-MM-DD");
-            const today = moment().format("YYYY-MM-DD");
-            this.getAnalytics(one, two);
-            this.getAnalytics(two, three);
-            this.getAnalytics(three, four);
-            this.getAnalytics(four, today);
+        if (timeFrame === "past-month") {
+            this.getLastMonthAnalytics();
+            if (this.state.target === this.state.current) {
+                this.setState(prevState => ({
+                    data: {
+                        ...prevState.data,
+                        labels: [
+                            this.state.weekDifference,
+                            this.state.twoWeekDifference,
+                            this.state.threeWeekDifference,
+                            this.state.fourWeekDifference,
+                        ],
+                        datasets: [{
+                            ...prevState.data.datasets,
+                            label: "Profit In Last Month",
+                            backgroundColor: "rgba(35,84,147)",
+                            data: [prevState.totalSales]
+                        }]
+                    }
+                }))
+            }
         }
-        if (timeFrame === "monthly") {
-            this.setState({
-                timeIncrements: [
-                    this.state.quarterTwoDifference,
-                    this.state.quarterFourDifference,
-                    this.state.quarterSixDifference,
-                    this.state.quarterEightDifference,
-                    this.state.quarterTenDifference,
-                    this.state.quarterTwelveDifference,
-                ],
-                chartData: [],
-            })
-            const one = moment().subtract(84, 'days').format("YYYY-MM-DD");
-            const two = moment().subtract(70, 'days').format("YYYY-MM-DD");
-            const three = moment().subtract(56, 'days').format("YYYY-MM-DD");
-            const four = moment().subtract(42, 'days').format("YYYY-MM-DD");
-            const five = moment().subtract(28, 'days').format("YYYY-MM-DD");
-            const six = moment().subtract(14, 'days').format("YYYY-MM-DD");
-            const today = moment().format("YYYY-MM-DD");
-            this.getAnalytics(one, two);
-            this.getAnalytics(two, three);
-            this.getAnalytics(three, four);
-            this.getAnalytics(four, five);
-            this.getAnalytics(five, six);
-            this.getAnalytics(six, today);
+        if (timeFrame === "past-quarter") {
+            this.getLastQuarterAnalytics();
+            if (this.state.target === this.state.current) {
+                this.setState(prevState => ({
+                    data: {
+                        ...prevState.data,
+                        labels: [
+                            this.state.quarterTwoDifference,
+                            this.state.quarterFourDifference,
+                            this.state.quarterSixDifference,
+                            this.state.quarterEightDifference,
+                            this.state.quarterTenDifference,
+                            this.state.quarterTwelveDifference,
+                        ],
+                        datasets: [{
+                            ...prevState.data.datasets,
+                            label: "Profit In Last Quarter",
+                            backgroundColor: "rgba(15,119,255)",
+                            data: [prevState.totalSales]
+                        }]
+                    }
+                }))
+            }
         }
-        if (timeFrame === "yearly") {
-            this.setState({
-                timeIncrements: [
-                    this.state.oneMonthDifference,
-                    this.state.twoMonthDifference,
-                    this.state.threeMonthDifference,
-                    this.state.fourMonthDifference,
-                    this.state.fiveMonthDifference,
-                    this.state.sixMonthDifference,
-                    this.state.sevenMonthDifference,
-                    this.state.eightMonthDifference,
-                    this.state.nineMonthDifference,
-                    this.state.tenMonthDifference,
-                    this.state.elevenMonthDifference,
-                    this.state.twelveMonthDifference,
-                ],
-                chartData: [],
-            })
-            const one = moment().subtract(12, 'months').format("YYYY-MM-DD");
-            const two = moment().subtract(11, 'months').format("YYYY-MM-DD");
-            const three = moment().subtract(10, 'months').format("YYYY-MM-DD");
-            const four = moment().subtract(9, 'months').format("YYYY-MM-DD");
-            const five = moment().subtract(8, 'months').format("YYYY-MM-DD");
-            const six = moment().subtract(7, 'months').format("YYYY-MM-DD");
-            const seven = moment().subtract(6, 'months').format("YYYY-MM-DD");
-            const eight = moment().subtract(5, 'months').format("YYYY-MM-DD");
-            const nine = moment().subtract(4, 'months').format("YYYY-MM-DD");
-            const ten = moment().subtract(3, 'months').format("YYYY-MM-DD");
-            const eleven = moment().subtract(2, 'months').format("YYYY-MM-DD");
-            const twelve = moment().subtract(1, 'months').format("YYYY-MM-DD");
-            const today = moment().format("YYYY-MM-DD");
-            this.getAnalytics(one, two);
-            this.getAnalytics(two, three);
-            this.getAnalytics(three, four);
-            this.getAnalytics(four, five);
-            this.getAnalytics(five, six);
-            this.getAnalytics(six, seven);
-            this.getAnalytics(seven, eight);
-            this.getAnalytics(eight, nine);
-            this.getAnalytics(nine, ten);
-            this.getAnalytics(ten, eleven);
-            this.getAnalytics(eleven, twelve);
-            this.getAnalytics(twelve, today);
+        if (timeFrame === "past-year") {
+            this.getLastYearAnalytics();
+            if (this.state.target === this.state.current) {
+                this.setState(prevState => ({
+                    data: {
+                        ...prevState.data,
+                        labels: [
+                            this.state.oneMonthDifference,
+                            this.state.twoMonthDifference,
+                            this.state.threeMonthDifference,
+                            this.state.fourMonthDifference,
+                            this.state.fiveMonthDifference,
+                            this.state.sixMonthDifference,
+                            this.state.sevenMonthDifference,
+                            this.state.eightMonthDifference,
+                            this.state.nineMonthDifference,
+                            this.state.tenMonthDifference,
+                            this.state.elevenMonthDifference,
+                            this.state.twelveMonthDifference,
+                        ],
+                        datasets: [{
+                            ...prevState.data.datasets,
+                            label: "Profit In Last Year",
+                            backgroundColor: "rgba(20,147,252)",
+                            data: [prevState.totalSales]
+                        }]
+                    }
+                }))
+            }
         }
     }
 
@@ -335,9 +422,11 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check orders error: " + error));
     }
     checkState = () => {
+        console.log(typeof (this.state.totalSales));
         // this.getUserTotalRevenue("5d618f75691b892e385e7757");
         // this.numberOfSales("5d618f75691b892e385e7757");
-        console.log("state of user revenue: " + this.state.userRevenue);
+        console.log("state of revenue: " + this.state.totalSales);
+        console.log(this.state.data.datasets[0])
     }
     // create user full name
     fullName = (first, last) => {
@@ -429,8 +518,7 @@ class SalesTeamAnalytics extends Component {
 
     setGradientColor = (canvas, color) => {
         const ctx = canvas.getContext("2d");
-        console.log(ctx);
-        // as values increase, color adjusts, keep below height value
+        // as values increase, color adjusts, kept below height value
         const gradient = ctx.createLinearGradient(0, 0, 0, 350);
         gradient.addColorStop(0, color);
         gradient.addColorStop(0.95, "rgba(133, 255, 144, 0.85");
