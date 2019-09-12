@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
-// import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
 // import Card from "../components/Card";
-// import PacmanLoader from 'react-spinners/PacmanLoader';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 // import Modal from '../components/TeamModal';
 // import Search from '../components/TeamSearch';
 import moment from "moment";
@@ -26,15 +26,15 @@ class SalesTeamAnalytics extends Component {
         searchedUser: [],
         userRevenue: [],
         // hours
-        twentyFourHourDifference: moment().subtract(24, 'hours').format("HH:mm"),
-        twentyOneHourDifference: moment().subtract(21, 'hours').format("HH:mm"),
-        eightteenHourDifference: moment().subtract(18, 'hours').format("HH:mm"),
-        fifteenHourDifference: moment().subtract(15, 'hours').format("HH:mm"),
-        twelveHourDifference: moment().subtract(12, 'hours').format("HH:mm"),
-        nineHourDifference: moment().subtract(9, 'hours').format("HH:mm"),
-        sixHourDifference: moment().subtract(6, 'hours').format("HH:mm"),
-        threeHourDifference: moment().subtract(3, 'hours').format("HH:mm"),
-        zeroHourDifference: moment().format("HH:mm"),
+        twentyFourHourDifference: moment().subtract(24, 'hours').format("ddd, hA"),
+        twentyOneHourDifference: moment().subtract(21, 'hours').format("ddd, hA"),
+        eightteenHourDifference: moment().subtract(18, 'hours').format("ddd, hA"),
+        fifteenHourDifference: moment().subtract(15, 'hours').format("ddd, hA"),
+        twelveHourDifference: moment().subtract(12, 'hours').format("ddd, hA"),
+        nineHourDifference: moment().subtract(9, 'hours').format("ddd, hA"),
+        sixHourDifference: moment().subtract(6, 'hours').format("ddd, hA"),
+        threeHourDifference: moment().subtract(3, 'hours').format("ddd, hA"),
+        zeroHourDifference: moment().format("ddd, hA"),
         // days
         sevenDayDifference: moment().subtract(7, 'days').format("MMM D"),
         sixDayDifference: moment().subtract(6, 'days').format("MMM D"),
@@ -57,30 +57,30 @@ class SalesTeamAnalytics extends Component {
         quarterTenDifference: moment().subtract(70, 'days').format("MMM D"),
         quarterTwelveDifference: moment().subtract(84, 'days').format("MMM D"),
         // months
-        oneMonthDifference: moment().subtract(1, 'months').format("MMM YYYY"),
-        twoMonthDifference: moment().subtract(2, 'months').format("MMM YYYY"),
-        threeMonthDifference: moment().subtract(3, 'months').format("MMM YYYY"),
-        fourMonthDifference: moment().subtract(4, 'months').format("MMM YYYY"),
-        fiveMonthDifference: moment().subtract(5, 'months').format("MMM YYYY"),
-        sixMonthDifference: moment().subtract(6, 'months').format("MMM YYYY"),
-        sevenMonthDifference: moment().subtract(7, 'months').format("MMM YYYY"),
-        eightMonthDifference: moment().subtract(8, 'months').format("MMM YYYY"),
-        nineMonthDifference: moment().subtract(9, 'months').format("MMM YYYY"),
-        tenMonthDifference: moment().subtract(10, 'months').format("MMM YYYY"),
-        elevenMonthDifference: moment().subtract(11, 'months').format("MMM YYYY"),
-        twelveMonthDifference: moment().subtract(12, 'months').format("MMM YYYY"),
-        target: 0,
-        current: 0,
-        timeFrame: "past-week",
+        currentMonth: moment().startOf('month').format("MMM YYYY"),
+        oneMonthDifference: moment().subtract(1, 'months').startOf('month').format("MMM YYYY"),
+        twoMonthDifference: moment().subtract(2, 'months').startOf('month').format("MMM YYYY"),
+        threeMonthDifference: moment().subtract(3, 'months').startOf('month').format("MMM YYYY"),
+        fourMonthDifference: moment().subtract(4, 'months').startOf('month').format("MMM YYYY"),
+        fiveMonthDifference: moment().subtract(5, 'months').startOf('month').format("MMM YYYY"),
+        sixMonthDifference: moment().subtract(6, 'months').startOf('month').format("MMM YYYY"),
+        sevenMonthDifference: moment().subtract(7, 'months').startOf('month').format("MMM YYYY"),
+        eightMonthDifference: moment().subtract(8, 'months').startOf('month').format("MMM YYYY"),
+        nineMonthDifference: moment().subtract(9, 'months').startOf('month').format("MMM YYYY"),
+        tenMonthDifference: moment().subtract(10, 'months').startOf('month').format("MMM YYYY"),
+        elevenMonthDifference: moment().subtract(11, 'months').startOf('month').format("MMM YYYY"),
+        twelveMonthDifference: moment().subtract(12, 'months').startOf('month').format("MMM YYYY"),
+        timeFrame: "past-quarter",
         totalSales: [],
         data: {
-            // time frames
+            // time frame values
             labels: [],
-            // data results
             datasets: [
                 {
+                    // label for time frame
                     label: "",
                     backgroundColor: "",
+                    // data results
                     data: []
                 }
             ]
@@ -90,19 +90,19 @@ class SalesTeamAnalytics extends Component {
     getAnalytics = (start, end) => {
         API.getBusinessAnalytics(start, end)
             .then(res =>
-                // console.log(res.data[0])
                 this.setState(state => {
                     // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
-                        const totalSales = state.totalSales.concat(totalString);
+                        const totalSales = state.totalSales.concat("$" + totalString);
                         return {
                             totalSales
                         };
                     } else {
                         // set to zero if no sales
-                        const totalSales = 0;
+                        const noSale = "$0.00";
+                        const totalSales = state.totalSales.concat(noSale);
                         return {
                             totalSales
                         };
@@ -110,8 +110,6 @@ class SalesTeamAnalytics extends Component {
                 })
             )
             .catch(error => console.log("Business analytics error: " + error));
-        let current = this.state.current;
-        this.setState({ current: current + 1 });
     }
 
     UNSAFE_componentWillMount() {
@@ -123,7 +121,6 @@ class SalesTeamAnalytics extends Component {
     }
 
     getLastDayAnalytics = () => {
-        this.setState({ current: 0, target: 0 });
         const one = moment().subtract(24, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const two = moment().subtract(21, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const three = moment().subtract(18, 'hours').format("YYYY-MM-DDTHH:mm:ss");
@@ -132,7 +129,7 @@ class SalesTeamAnalytics extends Component {
         const six = moment().subtract(9, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const seven = moment().subtract(6, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const eight = moment().subtract(3, 'hours').format("YYYY-MM-DDTHH:mm:ss");
-        const today = moment().format("YYYY-MM-DD");
+        const today = moment().format("YYYY-MM-DDTHH:mm:ss");
         this.getAnalytics(one, two);
         this.getAnalytics(two, three);
         this.getAnalytics(three, four);
@@ -141,11 +138,9 @@ class SalesTeamAnalytics extends Component {
         this.getAnalytics(six, seven);
         this.getAnalytics(seven, eight);
         this.getAnalytics(eight, today);
-        this.setState({ target: 8 });
     }
 
     getLastWeekAnalytics = () => {
-        this.setState({ current: 0, target: 0 });
         const one = moment().subtract(7, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(6, 'days').format("YYYY-MM-DD");
         const three = moment().subtract(5, 'days').format("YYYY-MM-DD");
@@ -153,19 +148,19 @@ class SalesTeamAnalytics extends Component {
         const five = moment().subtract(3, 'days').format("YYYY-MM-DD");
         const six = moment().subtract(2, 'days').format("YYYY-MM-DD");
         const seven = moment().subtract(1, 'days').format("YYYY-MM-DD");
-        const today = moment().format("YYYY-MM-DD");
+        const eight = moment().startOf('day').format("YYYY-MM-DD");
+        const currentTime = moment().format("YYYY-MM-DDTHH:mm:ss");
         this.getAnalytics(one, two);
         this.getAnalytics(two, three);
         this.getAnalytics(three, four);
         this.getAnalytics(four, five);
         this.getAnalytics(five, six);
         this.getAnalytics(six, seven);
-        this.getAnalytics(seven, today);
-        this.setState({ target: 7 });
+        this.getAnalytics(seven, eight);
+        this.getAnalytics(eight, currentTime);
     }
 
     getLastMonthAnalytics = () => {
-        this.setState({ current: 0, target: 0 });
         const one = moment().subtract(28, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(21, 'days').format("YYYY-MM-DD");
         const three = moment().subtract(14, 'days').format("YYYY-MM-DD");
@@ -175,11 +170,9 @@ class SalesTeamAnalytics extends Component {
         this.getAnalytics(two, three);
         this.getAnalytics(three, four);
         this.getAnalytics(four, today);
-        this.setState({ target: 4 });
     }
 
     getLastQuarterAnalytics = () => {
-        this.setState({ current: 0, target: 0 });
         const one = moment().subtract(84, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(70, 'days').format("YYYY-MM-DD");
         const three = moment().subtract(56, 'days').format("YYYY-MM-DD");
@@ -193,23 +186,22 @@ class SalesTeamAnalytics extends Component {
         this.getAnalytics(four, five);
         this.getAnalytics(five, six);
         this.getAnalytics(six, today);
-        this.setState({ target: 6 });
     }
 
     getLastYearAnalytics = () => {
-        this.setState({ current: 0, target: 0 });
-        const one = moment().subtract(12, 'months').format("YYYY-MM-DD");
-        const two = moment().subtract(11, 'months').format("YYYY-MM-DD");
-        const three = moment().subtract(10, 'months').format("YYYY-MM-DD");
-        const four = moment().subtract(9, 'months').format("YYYY-MM-DD");
-        const five = moment().subtract(8, 'months').format("YYYY-MM-DD");
-        const six = moment().subtract(7, 'months').format("YYYY-MM-DD");
-        const seven = moment().subtract(6, 'months').format("YYYY-MM-DD");
-        const eight = moment().subtract(5, 'months').format("YYYY-MM-DD");
-        const nine = moment().subtract(4, 'months').format("YYYY-MM-DD");
-        const ten = moment().subtract(3, 'months').format("YYYY-MM-DD");
-        const eleven = moment().subtract(2, 'months').format("YYYY-MM-DD");
-        const twelve = moment().subtract(1, 'months').format("YYYY-MM-DD");
+        const one = moment().subtract(12, 'months').startOf('month').format("YYYY-MM-DD");
+        const two = moment().subtract(11, 'months').startOf('month').format("YYYY-MM-DD");
+        const three = moment().subtract(10, 'months').startOf('month').format("YYYY-MM-DD");
+        const four = moment().subtract(9, 'months').startOf('month').format("YYYY-MM-DD");
+        const five = moment().subtract(8, 'months').startOf('month').format("YYYY-MM-DD");
+        const six = moment().subtract(7, 'months').startOf('month').format("YYYY-MM-DD");
+        const seven = moment().subtract(6, 'months').startOf('month').format("YYYY-MM-DD");
+        const eight = moment().subtract(5, 'months').startOf('month').format("YYYY-MM-DD");
+        const nine = moment().subtract(4, 'months').startOf('month').format("YYYY-MM-DD");
+        const ten = moment().subtract(3, 'months').startOf('month').format("YYYY-MM-DD");
+        const eleven = moment().subtract(2, 'months').startOf('month').format("YYYY-MM-DD");
+        const twelve = moment().subtract(1, 'months').startOf('month').format("YYYY-MM-DD");
+        const thisMonth = moment().startOf('month').format("YYYY-MM-DD");
         const today = moment().format("YYYY-MM-DD");
         this.getAnalytics(one, two);
         this.getAnalytics(two, three);
@@ -222,139 +214,161 @@ class SalesTeamAnalytics extends Component {
         this.getAnalytics(nine, ten);
         this.getAnalytics(ten, eleven);
         this.getAnalytics(eleven, twelve);
-        this.getAnalytics(twelve, today);
-        this.setState({ target: 12 });
+        this.getAnalytics(twelve, thisMonth);
+        this.getAnalytics(thisMonth, today);
     }
 
     setTimeFrame() {
         const timeFrame = this.state.timeFrame;
         if (timeFrame === "past-hours") {
             this.getLastDayAnalytics();
-            if (this.state.target === this.state.current) {
-                this.setState(prevState => ({
-                    data: {
-                        ...prevState.data,
-                        labels: [
-                            this.state.twentyFourHourDifference,
-                            this.state.twentyOneHourDifference,
-                            this.state.eightteenHourDifference,
-                            this.state.fifteenHourDifference,
-                            this.state.twelveHourDifference,
-                            this.state.nineHourDifference,
-                            this.state.sixHourDifference,
-                            this.state.threeHourDifference,
-                            this.state.zeroHourDifference,
-                        ],
-                        datasets: [{
-                            ...prevState.data.datasets,
-                            label: "Profit In Last 24 Hours",
-                            backgroundColor: "rgba(1,41,95)",
-                            data: [prevState.totalSales]
-                        }]
-                    }
-                }))
+            if (this.state.totalSales.length < 8) {
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.twentyFourHourDifference + " - " + this.state.twentyOneHourDifference,
+                                    this.state.twentyOneHourDifference + " - " + this.state.eightteenHourDifference,
+                                    this.state.eightteenHourDifference + " - " + this.state.fifteenHourDifference,
+                                    this.state.fifteenHourDifference + " - " + this.state.twelveHourDifference,
+                                    this.state.twelveHourDifference + " - " + this.state.nineHourDifference,
+                                    this.state.nineHourDifference + " - " + this.state.sixHourDifference,
+                                    this.state.sixHourDifference + " - " + this.state.threeHourDifference,
+                                    this.state.threeHourDifference + " - " + this.state.zeroHourDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Profit In Last 24 Hours",
+                                    backgroundColor: "rgb(1,41,95)",
+                                    data: [this.state.totalSales]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
             }
         }
         if (timeFrame === "past-week") {
             this.getLastWeekAnalytics();
-            if (this.state.target === this.state.current) {
-                this.setState(prevState => ({
-                    data: {
-                        ...prevState.data,
-                        labels: [
-                            this.state.sevenDayDifference,
-                            this.state.sixDayDifference,
-                            this.state.fiveDayDifference,
-                            this.state.fourDayDifference,
-                            this.state.threeDayDifference,
-                            this.state.twoDayDifference,
-                            this.state.oneDayDifference,
-                            this.state.zeroDayDifference,
-                        ],
-                        datasets: [{
-                            ...prevState.data.datasets,
-                            label: "Profit In Last Week",
-                            backgroundColor: "rgba(66,102,150)",
-                            data: ["1", "3", "4", "7", "1", "5", "4", "3"]
-                        }]
-                    }
-                }))
+            if (this.state.totalSales.length < 8) {
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.sevenDayDifference,
+                                    this.state.sixDayDifference,
+                                    this.state.fiveDayDifference,
+                                    this.state.fourDayDifference,
+                                    this.state.threeDayDifference,
+                                    this.state.twoDayDifference,
+                                    this.state.oneDayDifference,
+                                    this.state.zeroDayDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Profit In Last Week",
+                                    backgroundColor: "rgb(66,102,150)",
+                                    data: [this.state.totalSales]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
             }
         }
         if (timeFrame === "past-month") {
             this.getLastMonthAnalytics();
-            if (this.state.target === this.state.current) {
-                this.setState(prevState => ({
-                    data: {
-                        ...prevState.data,
-                        labels: [
-                            this.state.weekDifference,
-                            this.state.twoWeekDifference,
-                            this.state.threeWeekDifference,
-                            this.state.fourWeekDifference,
-                        ],
-                        datasets: [{
-                            ...prevState.data.datasets,
-                            label: "Profit In Last Month",
-                            backgroundColor: "rgba(35,84,147)",
-                            data: [prevState.totalSales]
-                        }]
-                    }
-                }))
+            if (this.state.totalSales.length < 4) {
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.fourWeekDifference + " - " + this.state.threeWeekDifference,
+                                    this.state.threeWeekDifference + " - " + this.state.twoWeekDifference,
+                                    this.state.twoWeekDifference + " - " + this.state.weekDifference,
+                                    this.state.weekDifference + " - " + this.state.zeroDayDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Profit In Last Month",
+                                    backgroundColor: "rgb(35,84,147)",
+                                    data: [this.state.totalSales]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
             }
         }
         if (timeFrame === "past-quarter") {
             this.getLastQuarterAnalytics();
-            if (this.state.target === this.state.current) {
-                this.setState(prevState => ({
-                    data: {
-                        ...prevState.data,
-                        labels: [
-                            this.state.quarterTwoDifference,
-                            this.state.quarterFourDifference,
-                            this.state.quarterSixDifference,
-                            this.state.quarterEightDifference,
-                            this.state.quarterTenDifference,
-                            this.state.quarterTwelveDifference,
-                        ],
-                        datasets: [{
-                            ...prevState.data.datasets,
-                            label: "Profit In Last Quarter",
-                            backgroundColor: "rgba(15,119,255)",
-                            data: [prevState.totalSales]
-                        }]
-                    }
-                }))
+            if (this.state.totalSales.length < 6) {
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.quarterTwelveDifference + " - " + this.state.quarterTenDifference,
+                                    this.state.quarterTenDifference + " - " + this.state.quarterEightDifference,
+                                    this.state.quarterEightDifference + " - " + this.state.quarterSixDifference,
+                                    this.state.quarterSixDifference + " - " + this.state.quarterFourDifference,
+                                    this.state.quarterFourDifference + " - " + this.state.quarterTwoDifference,
+                                    this.state.quarterTwoDifference + " - " + this.state.zeroDayDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Profit In Last Quarter",
+                                    backgroundColor: "rgb(15,119,255)",
+                                    data: [this.state.totalSales]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
             }
         }
         if (timeFrame === "past-year") {
             this.getLastYearAnalytics();
-            if (this.state.target === this.state.current) {
-                this.setState(prevState => ({
-                    data: {
-                        ...prevState.data,
-                        labels: [
-                            this.state.oneMonthDifference,
-                            this.state.twoMonthDifference,
-                            this.state.threeMonthDifference,
-                            this.state.fourMonthDifference,
-                            this.state.fiveMonthDifference,
-                            this.state.sixMonthDifference,
-                            this.state.sevenMonthDifference,
-                            this.state.eightMonthDifference,
-                            this.state.nineMonthDifference,
-                            this.state.tenMonthDifference,
-                            this.state.elevenMonthDifference,
-                            this.state.twelveMonthDifference,
-                        ],
-                        datasets: [{
-                            ...prevState.data.datasets,
-                            label: "Profit In Last Year",
-                            backgroundColor: "rgba(20,147,252)",
-                            data: [prevState.totalSales]
-                        }]
-                    }
-                }))
+            if (this.state.totalSales.length < 13) {
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.twelveMonthDifference + " - " + this.state.elevenMonthDifference,
+                                    this.state.elevenMonthDifference + " - " + this.state.tenMonthDifference,
+                                    this.state.tenMonthDifference + " - " + this.state.nineMonthDifference,
+                                    this.state.nineMonthDifference + " - " + this.state.eightMonthDifference,
+                                    this.state.eightMonthDifference + " - " + this.state.sevenMonthDifference,
+                                    this.state.sevenMonthDifference + " - " + this.state.sixMonthDifference,
+                                    this.state.sixMonthDifference + " - " + this.state.fiveMonthDifference,
+                                    this.state.fiveMonthDifference + " - " + this.state.fourMonthDifference,
+                                    this.state.fourMonthDifference + " - " + this.state.threeMonthDifference,
+                                    this.state.threeMonthDifference + " - " + this.state.twoMonthDifference,
+                                    this.state.twoMonthDifference + " - " + this.state.oneMonthDifference,
+                                    this.state.oneMonthDifference + " - " + this.state.currentMonth,
+                                    this.state.currentMonth + " - " + this.state.zeroDayDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Profit In Last Year",
+                                    backgroundColor: "rgb(20,147,252)",
+                                    data: [
+                                        this.state.totalSales
+                                    ]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
             }
         }
     }
@@ -422,11 +436,8 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check orders error: " + error));
     }
     checkState = () => {
-        console.log(typeof (this.state.totalSales));
-        // this.getUserTotalRevenue("5d618f75691b892e385e7757");
-        // this.numberOfSales("5d618f75691b892e385e7757");
-        console.log("state of revenue: " + this.state.totalSales);
-        console.log(this.state.data.datasets[0])
+        console.log(this.state.totalSales);
+        console.log(this.state.data.datasets[0].data);
     }
     // create user full name
     fullName = (first, last) => {
@@ -547,7 +558,8 @@ class SalesTeamAnalytics extends Component {
                 <PageTitle title="Sales Team Analytics" />
                 <div style={{ position: "relative", width: 962, height: 750 }}>
                     <h3>Chart Sample</h3>
-                    <Bar
+                    {this.state.totalSales.length > 0 ? (
+                        <Bar
                         options={{
                             responsive: true,
                             lineHeightAnnotation: {
@@ -559,6 +571,22 @@ class SalesTeamAnalytics extends Component {
                         }}
                         data={this.getChartData}
                     />
+                    ) : (
+                        <Grid container>
+                                <Grid item lg={5}></Grid>
+                                <Grid item lg={2}>
+                                    <PacmanLoader
+                                        className={"pacman-loader"}
+                                        sizeUnit={"px"}
+                                        size={25}
+                                        color={'#9E0031'}
+                                        loading={true}
+                                    />
+                                </Grid>
+                                <Grid item lg={5}></Grid>
+                            </Grid>
+                    )}
+                    
                 </div>
                 {/* <Grid container>
                     <Grid item lg={4}></Grid>
