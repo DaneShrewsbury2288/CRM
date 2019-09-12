@@ -115,6 +115,5 @@ export default {
     // Updates a product in the database
     updateProduct: function(productData) {
       return axios.post("api/tasks", productData);
-    },
-    
+    }
   };

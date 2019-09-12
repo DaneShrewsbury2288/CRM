@@ -7,6 +7,10 @@ import Card from "../components/Card";
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Modal from '../components/TeamModal';
 import Search from '../components/TeamSearch';
+import moment from "moment";
+import { Bar } from "react-chartjs-2";
+import 'chartjs-plugin-lineheight-annotation';
+
 
 class SalesTeamAnalytics extends Component {
     state = {
@@ -21,6 +25,83 @@ class SalesTeamAnalytics extends Component {
         search: "",
         searchedUser: [],
         userRevenue: [],
+        // hours
+        twentyFourHourDifference: moment().subtract(24, 'hours').format("HH:mm"),
+        twentyOneHourDifference: moment().subtract(21, 'hours').format("HH:mm"),
+        eightteenHourDifference: moment().subtract(18, 'hours').format("HH:mm"),
+        fifteenHourDifference: moment().subtract(15, 'hours').format("HH:mm"),
+        twelveHourDifference: moment().subtract(12, 'hours').format("HH:mm"),
+        nineHourDifference: moment().subtract(9, 'hours').format("HH:mm"),
+        sixHourDifference: moment().subtract(6, 'hours').format("HH:mm"),
+        threeHourDifference: moment().subtract(3, 'hours').format("HH:mm"),
+        zeroHourDifference: moment().format("HH:mm"),
+        // days
+        sevenDayDifference: moment().subtract(7, 'days').format("MMM D"),
+        sixDayDifference: moment().subtract(6, 'days').format("MMM D"),
+        fiveDayDifference: moment().subtract(5, 'days').format("MMM D"),
+        fourDayDifference: moment().subtract(4, 'days').format("MMM D"),
+        threeDayDifference: moment().subtract(3, 'days').format("MMM D"),
+        twoDayDifference: moment().subtract(2, 'days').format("MMM D"),
+        oneDayDifference: moment().subtract(1, 'days').format("MMM D"),
+        zeroDayDifference: moment().subtract(0, 'days').format("MMM D"),
+        // weeks
+        weekDifference: moment().subtract(7, 'days').format("MMM D"),
+        twoWeekDifference: moment().subtract(14, 'days').format("MMM D"),
+        threeWeekDifference: moment().subtract(21, 'days').format("MMM D"),
+        fourWeekDifference: moment().subtract(28, 'days').format("MMM D"),
+        // past quarter
+        quarterTwoDifference: moment().subtract(14, 'days').format("MMM D"),
+        quarterFourDifference: moment().subtract(28, 'days').format("MMM D"),
+        quarterSixDifference: moment().subtract(42, 'days').format("MMM D"),
+        quarterEightDifference: moment().subtract(56, 'days').format("MMM D"),
+        quarterTenDifference: moment().subtract(70, 'days').format("MMM D"),
+        quarterTwelveDifference: moment().subtract(84, 'days').format("MMM D"),
+        // months
+        oneMonthDifference: moment().subtract(1, 'months').format("MMM YYYY"),
+        twoMonthDifference: moment().subtract(2, 'months').format("MMM YYYY"),
+        threeMonthDifference: moment().subtract(3, 'months').format("MMM YYYY"),
+        fourMonthDifference: moment().subtract(4, 'months').format("MMM YYYY"),
+        fiveMonthDifference: moment().subtract(5, 'months').format("MMM YYYY"),
+        sixMonthDifference: moment().subtract(6, 'months').format("MMM YYYY"),
+        sevenMonthDifference: moment().subtract(7, 'months').format("MMM YYYY"),
+        eightMonthDifference: moment().subtract(8, 'months').format("MMM YYYY"),
+        nineMonthDifference: moment().subtract(9, 'months').format("MMM YYYY"),
+        tenMonthDifference: moment().subtract(10, 'months').format("MMM YYYY"),
+        elevenMonthDifference: moment().subtract(11, 'months').format("MMM YYYY"),
+        twelveMonthDifference: moment().subtract(12, 'months').format("MMM YYYY"),
+
+        timeFrame: "yearly",
+        timeIncrements: [],
+        chartData: [],
+        data: {
+            labels: ["1", "2", "3", "4", "5"],
+            datasets: [
+                {
+                    label: "Example One",
+                    backgroundColor: "rgba(255, 0, 255, 0.75)",
+                    data: [4, 1, 2, 24, 32, 2, 12]
+                },
+                {
+                    label: "Example Two",
+                    backgroundColor: "rgba(0, 255, 0, 0.75)",
+                    data: [14, 1, 21, 13, 12, 7, 15]
+                }
+            ]
+        }
+    }
+
+
+    getAnalytics = (start, end) => {
+        API.getBusinessAnalytics(start, end)
+            .then(res =>
+                this.setState(state => {
+                    const chartData = state.chartData.concat(res.data[0]);
+                    return {
+                        chartData
+                    };
+                })
+            )
+            .catch(error => console.log("Business analytics error: " + error));
     }
 
     UNSAFE_componentWillMount() {
@@ -28,6 +109,164 @@ class SalesTeamAnalytics extends Component {
         this.checkTasks();
         this.checkClients();
         this.checkOrders();
+        this.setTimeFrame();
+    }
+
+    setTimeFrame() {
+        const timeFrame = this.state.timeFrame;
+        if (timeFrame === "hourly") {
+            this.setState({
+                timeIncrements: [
+                    this.state.twentyFourHourDifference,
+                    this.state.twentyOneHourDifference,
+                    this.state.eightteenHourDifference,
+                    this.state.fifteenHourDifference,
+                    this.state.twelveHourDifference,
+                    this.state.nineHourDifference,
+                    this.state.sixHourDifference,
+                    this.state.threeHourDifference,
+                    this.state.zeroHourDifference,
+                ],
+                chartData: [],
+            })
+            const one = moment().subtract(24, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+            const two = moment().subtract(21, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+            const three = moment().subtract(18, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+            const four = moment().subtract(15, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+            const five = moment().subtract(12, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+            const six = moment().subtract(9, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+            const seven = moment().subtract(6, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+            const eight = moment().subtract(3, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+            const today = moment().format("YYYY-MM-DD");
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, five);
+            this.getAnalytics(five, six);
+            this.getAnalytics(six, seven);
+            this.getAnalytics(seven, eight);
+            this.getAnalytics(eight, today);
+        }
+        if (timeFrame === "daily") {
+            this.setState({
+                timeIncrements: [
+                    this.state.sevenDayDifference,
+                    this.state.sixDayDifference,
+                    this.state.fiveDayDifference,
+                    this.state.fourDayDifference,
+                    this.state.threeDayDifference,
+                    this.state.twoDayDifference,
+                    this.state.oneDayDifference,
+                    this.state.zeroDayDifference,
+                ],
+                chartData: [],
+            })
+            const one = moment().subtract(7, 'days').format("YYYY-MM-DD");
+            const two = moment().subtract(6, 'days').format("YYYY-MM-DD");
+            const three = moment().subtract(5, 'days').format("YYYY-MM-DD");
+            const four = moment().subtract(4, 'days').format("YYYY-MM-DD");
+            const five = moment().subtract(3, 'days').format("YYYY-MM-DD");
+            const six = moment().subtract(2, 'days').format("YYYY-MM-DD");
+            const seven = moment().subtract(1, 'days').format("YYYY-MM-DD");
+            const today = moment().format("YYYY-MM-DD");
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, five);
+            this.getAnalytics(five, six);
+            this.getAnalytics(six, seven);
+            this.getAnalytics(seven, today);
+        }
+        if (timeFrame === "weekly") {
+            this.setState({
+                timeIncrements: [
+                    this.state.weekDifference,
+                    this.state.twoWeekDifference,
+                    this.state.threeWeekDifference,
+                    this.state.fourWeekDifference,
+                ],
+                chartData: [],
+            })
+            const one = moment().subtract(28, 'days').format("YYYY-MM-DD");
+            const two = moment().subtract(21, 'days').format("YYYY-MM-DD");
+            const three = moment().subtract(14, 'days').format("YYYY-MM-DD");
+            const four = moment().subtract(7, 'days').format("YYYY-MM-DD");
+            const today = moment().format("YYYY-MM-DD");
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, today);
+        }
+        if (timeFrame === "monthly") {
+            this.setState({
+                timeIncrements: [
+                    this.state.quarterTwoDifference,
+                    this.state.quarterFourDifference,
+                    this.state.quarterSixDifference,
+                    this.state.quarterEightDifference,
+                    this.state.quarterTenDifference,
+                    this.state.quarterTwelveDifference,
+                ],
+                chartData: [],
+            })
+            const one = moment().subtract(84, 'days').format("YYYY-MM-DD");
+            const two = moment().subtract(70, 'days').format("YYYY-MM-DD");
+            const three = moment().subtract(56, 'days').format("YYYY-MM-DD");
+            const four = moment().subtract(42, 'days').format("YYYY-MM-DD");
+            const five = moment().subtract(28, 'days').format("YYYY-MM-DD");
+            const six = moment().subtract(14, 'days').format("YYYY-MM-DD");
+            const today = moment().format("YYYY-MM-DD");
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, five);
+            this.getAnalytics(five, six);
+            this.getAnalytics(six, today);
+        }
+        if (timeFrame === "yearly") {
+            this.setState({
+                timeIncrements: [
+                    this.state.oneMonthDifference,
+                    this.state.twoMonthDifference,
+                    this.state.threeMonthDifference,
+                    this.state.fourMonthDifference,
+                    this.state.fiveMonthDifference,
+                    this.state.sixMonthDifference,
+                    this.state.sevenMonthDifference,
+                    this.state.eightMonthDifference,
+                    this.state.nineMonthDifference,
+                    this.state.tenMonthDifference,
+                    this.state.elevenMonthDifference,
+                    this.state.twelveMonthDifference,
+                ],
+                chartData: [],
+            })
+            const one = moment().subtract(12, 'months').format("YYYY-MM-DD");
+            const two = moment().subtract(11, 'months').format("YYYY-MM-DD");
+            const three = moment().subtract(10, 'months').format("YYYY-MM-DD");
+            const four = moment().subtract(9, 'months').format("YYYY-MM-DD");
+            const five = moment().subtract(8, 'months').format("YYYY-MM-DD");
+            const six = moment().subtract(7, 'months').format("YYYY-MM-DD");
+            const seven = moment().subtract(6, 'months').format("YYYY-MM-DD");
+            const eight = moment().subtract(5, 'months').format("YYYY-MM-DD");
+            const nine = moment().subtract(4, 'months').format("YYYY-MM-DD");
+            const ten = moment().subtract(3, 'months').format("YYYY-MM-DD");
+            const eleven = moment().subtract(2, 'months').format("YYYY-MM-DD");
+            const twelve = moment().subtract(1, 'months').format("YYYY-MM-DD");
+            const today = moment().format("YYYY-MM-DD");
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, five);
+            this.getAnalytics(five, six);
+            this.getAnalytics(six, seven);
+            this.getAnalytics(seven, eight);
+            this.getAnalytics(eight, nine);
+            this.getAnalytics(nine, ten);
+            this.getAnalytics(ten, eleven);
+            this.getAnalytics(eleven, twelve);
+            this.getAnalytics(twelve, today);
+        }
     }
 
     // get tasks
@@ -39,14 +278,23 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check tasks error: " + error))
     }
     // get user total revenue
-    getUserTotalRevenue = (id) => {
-        API.getOrderUserTotal(id)
+    getUserTotalRevenue = (id, start, end) => {
+        if (!start) {
+            start = moment().subtract(12, 'months').format("YYYY-MM-DD");
+        }
+        if (!end) {
+            end = moment().format("YYYY-MM-DD");
+        }
+        API.getUserOrderAnalytics(id, start, end)
             .then(res => {
-                let total = res.data[0].totalAmount.toFixed(2);
+                let total = res.data[0].profit.toFixed(2);
                 let totalString = total.toString();
-                this.setState({ userRevenue: totalString });
-                console.log("User revenue: " + totalString);
-                return totalString;
+                this.setState(state => {
+                    const userRevenue = state.userRevenue.concat(totalString);
+                    return {
+                        userRevenue
+                    };
+                })
             }
             )
             .catch(error => console.log("User revenue error: " + error))
@@ -135,9 +383,9 @@ class SalesTeamAnalytics extends Component {
         const orders = this.state.orders;
         let counter = [];
         orders.forEach(order => {
-                if (order.user[0]._id === userID) {
-                    counter.push(userID);
-                }
+            if (order.user[0]._id === userID) {
+                counter.push(userID);
+            }
         });
         return counter.length;
     }
@@ -176,13 +424,52 @@ class SalesTeamAnalytics extends Component {
         this.setState({ open: false });
     }
 
+    setGradientColor = (canvas, color) => {
+        const ctx = canvas.getContext("2d");
+        console.log(ctx);
+        // as values increase, color adjusts, keep below height value
+        const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+        gradient.addColorStop(0, color);
+        gradient.addColorStop(0.95, "rgba(133, 255, 144, 0.85");
+        return gradient;
+    }
+
+    getChartData = canvas => {
+        const data = this.state.data;
+        if (data.datasets) {
+            let colors = ["rgba(255, 0, 255, 0.75)", "rgba(0, 255, 0, 0.75)"];
+            data.datasets.forEach((set, i) => {
+                set.backgroundColor = this.setGradientColor(canvas, colors[i]);
+                set.borderColor = "white";
+                set.borderWidth = 2;
+                // set.hoverBackgroundColor
+            })
+        }
+        return data;
+    }
+
 
     render() {
         return (
             <div>
                 <button onClick={this.checkState}>Console log values</button>
                 <PageTitle title="Sales Team Analytics" />
-                <Grid container>
+                <div style={{ position: "relative", width: 962, height: 750 }}>
+                    <h3>Chart Sample</h3>
+                    <Bar
+                        options={{
+                            responsive: true,
+                            lineHeightAnnotation: {
+                                always: false,
+                                hover: true,
+                                color: "white",
+                                // noDash: true
+                            }
+                        }}
+                        data={this.getChartData}
+                    />
+                </div>
+                {/* <Grid container>
                     <Grid item lg={4}></Grid>
                     <Grid item lg={4}>
                         <Search
@@ -201,15 +488,15 @@ class SalesTeamAnalytics extends Component {
                             userImage={this.checkUserImage(user)}
                             fullName={this.fullName(user.firstName, user.lastName)}
                             startDate={this.startDate(user.created_at)}
-                        totalSales={this.getUserTotalRevenue(user._id)}
-                        numSales={this.numberOfSales(user._id)}
+                            // totalSales={this.getUserTotalRevenue(user._id)}
+                            numSales={this.numberOfSales(user._id)}
                         // lastMonthSales={this.lastMonthSales(user._id)}
                         // popularProduct={this.userMostSoldProduct(user._id)}
                         />
                     ))}
 
-                </div>
-                <Grid container spacing={4}>
+                </div> */}
+                {/* <Grid container spacing={4}>
                     <Grid item lg={12}>
                         <h1 className="team-analytics-cards">Sales Team</h1>
                     </Grid>
@@ -226,8 +513,8 @@ class SalesTeamAnalytics extends Component {
                                                 userImage={this.checkUserImage(user)}
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
-                                                totalSales={this.getUserTotalRevenue(user._id)}
-                                            numSales={this.numberOfSales(user._id)}
+                                                // totalSales={this.getUserTotalRevenue(user._id)}
+                                                numSales={this.numberOfSales(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}
                                             // popularProduct={this.userMostSoldProduct(user._id)}
                                             />
@@ -251,7 +538,7 @@ class SalesTeamAnalytics extends Component {
                             </Grid>
                         )
                     }
-                </Grid>
+                </Grid> */}
             </div>
         )
     }
