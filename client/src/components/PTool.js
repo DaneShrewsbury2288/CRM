@@ -98,7 +98,7 @@ export default function PurchasingTool() {
                   You have created an order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  You can refer to the order created in the orders tab.
+                  You can refer to the order created in the client list and then their order history.
                 </Typography>
               </React.Fragment>
             ) : (

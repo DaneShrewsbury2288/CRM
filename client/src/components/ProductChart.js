@@ -48,7 +48,7 @@ export default class ProductChart extends PureComponent {
   render() {
     return (
       <LineChart
-        width={600}
+        width={700}
         height={300}
         data={data}
         margin={{

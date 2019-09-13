@@ -11,7 +11,6 @@ import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Login from "./containers/Login2";
 import Routes from "./components/Routes"
-
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -44,7 +43,7 @@ class App extends Component {
                         <Switch>
                             <Route path="/Login" component={Login} />
                             <Dashboard>
-                                <Routes/>
+                                <Routes />
                             </Dashboard>
                         </Switch>
                     </div>
