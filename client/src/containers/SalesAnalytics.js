@@ -11,8 +11,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import ProductProfit from '../components/ProductProfit';
 import AggregateSales from '../components/AggregateSales';
-import API from '../utilities/api';
-import moment from "moment";
+// import API from '../utilities/api';
+// import moment from "moment";
 
 
 const drawerWidth = 240;

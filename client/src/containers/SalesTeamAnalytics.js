@@ -8,7 +8,7 @@ import PacmanLoader from 'react-spinners/PacmanLoader';
 // import Modal from '../components/TeamModal';
 // import Search from '../components/TeamSearch';
 import moment from "moment";
-import { Bar } from "react-chartjs-2";
+import { Chart, Bar } from "react-chartjs-2";
 import 'chartjs-plugin-lineheight-annotation';
 
 
@@ -82,7 +82,7 @@ class SalesTeamAnalytics extends Component {
                     label: "",
                     backgroundColor: "",
                     // data results
-                    data: ["$0.00", "$113140.30", "$7228.99", "$57995.25"]
+                    data: []
                 }
             ]
         }
@@ -445,6 +445,7 @@ class SalesTeamAnalytics extends Component {
     checkState = () => {
         console.log(this.state.totalSales);
         console.log(this.state.data.datasets[0].data[0]);
+        console.log(this.state.data.datasets);
         console.log(this.state.target);
     }
     // create user full name
@@ -579,7 +580,7 @@ class SalesTeamAnalytics extends Component {
                                     // noDash: true
                                 }
                             }}
-                            data={this.getChartData}
+                            data={this.state.data}
                         />
                     ) : (
                             <Grid container>
