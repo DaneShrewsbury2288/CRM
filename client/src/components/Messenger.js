@@ -60,7 +60,8 @@ class Messenger extends Component {
         bottom: '17px',
         right: '17px',
         zIndex: 10,
-        overflowY: 'scroll'
+        overflowY: 'scroll',
+        overflow: 'auto'
       },
       title: {
         backgroundColor: '#3f51b5',
@@ -69,7 +70,9 @@ class Messenger extends Component {
         marginTop: 0,
         padding: 8,
         color: 'white',
-        zIndex: 10
+        zIndex: 10,
+        borderTopRightRadius: '.5rem',
+        borderTopLeftRadius: '.5rem'
       },
       content: {
         marginTop: '55px'
@@ -100,7 +103,7 @@ class Messenger extends Component {
           }
         </div>
         :
-        null
+        <h2> </h2>
       }
       </div>
     )

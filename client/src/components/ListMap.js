@@ -7,11 +7,16 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import WidgetsIcon from '@material-ui/icons/Widgets';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import PieChartIcon from '@material-ui/icons/PieChart';
-import MoneyIcon from '@material-ui/icons/AttachMoney';
+import MailOutlineIcon from '@material-ui/icons/MailOutline'
+// import MoneyIcon from '@material-ui/icons/AttachMoney';
 import LockIcon from '@material-ui/icons/Lock';
+import PublicIcon from '@material-ui/icons/Public';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { logoutUser } from "../actions/authActions";
 
@@ -20,61 +25,61 @@ const icons = [
         title: "Dashboard",
         href: "/",
         bitmask: 0b1,
-        icon: <LayersIcon />
+        icon: <DashboardIcon />
     },
     {
         title: "Sales Team Daily",
         href: "/salesteamdaily",
         bitmask: 0b10,
-        icon: <BarChartIcon />
+        icon: <CheckBoxIcon />
     },
     {
         title: "Inventory",
         href: "/inventory",
         bitmask: 0b100,
-        icon: <DashboardIcon />
+        icon: <WidgetsIcon />
     },
     {
         title: "Client List",
         href: "/clientlist",
         bitmask: 0b1000,
-        icon: <ShoppingCartIcon />
+        icon: <ContactMailIcon />
     },
     {
         title: "Purchasing Tool",
         href: "/purchasingtool",
         bitmask: 0b10000,
-        icon: <MoneyIcon />
+        icon: <ShoppingCartIcon />
     },
     {
         title: "Sales Analytics",
         href: "/salesanalytics",
         bitmask: 0b100000,
-        icon: <MoneyIcon />
+        icon: <TrendingUpIcon />
     },
     {
         title: "Manager Task Assignment",
         href: "/managertaskassignment",
         bitmask: 0b1000000,
-        icon: <BarChartIcon />
+        icon: <AssignmentTurnedInIcon />
     },
     {
         title: "Sales Team Analytics",
         href: "/salesteamanalytics",
         bitmask: 0b10000000,
-        icon: <MoneyIcon />
+        icon: <BarChartIcon />
     },
     {
         title: "Check User Messages",
         href: "/checkusermessages",
         bitmask: 0b100000000,
-        icon: <BarChartIcon />
+        icon: <MailOutlineIcon />
     },
     {
         title: "Discover",
         href: "/discover",
         bitmask: 0b1000000000,
-        icon: <PieChartIcon />
+        icon: <PublicIcon />
     },
     {
         title: "Add/Remove Users",
@@ -85,7 +90,7 @@ const icons = [
     {
         title: "Permissions",
         href: "/Permissions",
-        bitmask: 0b1000000000000,
+        bitmask: 0b100000000000,
         icon: <LockIcon />
     }
 
@@ -106,7 +111,6 @@ class ListMap extends Component {
     render() {
         return (
             <div>
-
                 {icons.map(permission => (
                     this.state.permissions & permission.bitmask
                         ?

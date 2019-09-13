@@ -8,7 +8,7 @@ import PacmanLoader from 'react-spinners/PacmanLoader';
 // import Modal from '../components/TeamModal';
 // import Search from '../components/TeamSearch';
 import moment from "moment";
-import { Chart, Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import 'chartjs-plugin-lineheight-annotation';
 
 

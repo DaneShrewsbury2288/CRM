@@ -37,27 +37,40 @@ function TeamModal(props) {
                             </Grid>
                             <Grid container spacing={5}>
                                 <Grid item lg={4}>
-                                    <Typography variant="body2" component="h3">
-                                        Revenue Generated: ${props.totalSales}
+                                    <Typography variant="body2" component="h2">
+                                        Revenue Generated: {props.totalSales}
                                     </Typography>
                                 </Grid>
                                 <Grid item lg={4}>
-                                    <Typography variant="body2" component="h3">
+                                    <Typography variant="body2" component="h2">
+
                                         <ListItemAvatar>
                                             <Avatar alt={props.user} src={props.userImage} />
                                         </ListItemAvatar>
                                     </Typography>
                                 </Grid>
                                 <Grid item lg={4}>
-                                    <Typography variant="body2" component="h3">
+                                    <Typography variant="body2" component="h2">
+
                                         Number of Sales: {props.numSales}
                                     </Typography>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={5}>
                                 <Grid item lg={4}>
-                                    <Typography variant="body2" component="h3">
-                                        Average Sale: ${props.averageSale}
+                                    <Typography variant="body2" component="h2">
+                                        Average Sale: {props.averageSale}
+                                    </Typography>
+                                </Grid>
+                                <Grid item lg={4}>
+                                    <Typography variant="body2" component="h2">
+                                        Sales in last 30 days: {props.lastMonthSales}
+                                    </Typography>
+                                </Grid>
+                                <Grid item lg={4}>
+                                    <Typography variant="body2" component="h2">
+                                        Most sold product: {props.popularProduct}
+
                                     </Typography>
                                 </Grid>
                                 <Grid item lg={4}>

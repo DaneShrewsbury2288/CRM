@@ -10,6 +10,7 @@ import { LinearProgress } from '@material-ui/core';
 class ClientList extends Component {
     state = {
         clients: [],
+        searchName: "",
         search: "",
         error: "",
     }
@@ -19,6 +20,7 @@ class ClientList extends Component {
     }
 
     componentDidMount() {
+        this.setState({ searchName: "Enter Name" })
         API.getClients()
             .then(res => this.setState({ clients: res.data.clients }))
             .catch(err => console.log(err))
@@ -28,7 +30,9 @@ class ClientList extends Component {
     handleFormSubmit = event => {
         event.preventDefault();
         let temporaryArray = this.state.clients;
-        const result = temporaryArray.filter(client => client.name.toUpperCase() === this.state.search.toUpperCase());
+        const result = temporaryArray.filter(client => 
+            client.name.toUpperCase() === this.state.search.toUpperCase() 
+        );
         this.setState({ clients: result })
         console.log(result)
     }
@@ -55,6 +59,7 @@ class ClientList extends Component {
                                 handleFormSubmit={this.handleFormSubmit}
                                 handleInputChange={this.handleInputChange}
                                 handleRefreshSubmit={this.handleRefreshSubmit}
+                                searchName={this.searchName}
                             />
                         </Grid>
                     </Grid>
@@ -75,6 +80,8 @@ class ClientList extends Component {
                                 handleFormSubmit={this.handleFormSubmit}
                                 handleInputChange={this.handleInputChange}
                                 handleRefreshSubmit={this.handleRefreshSubmit}
+                                searchName={this.searchName}
+
                             />
                         </Grid>
                     </Grid>

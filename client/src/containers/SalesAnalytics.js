@@ -125,6 +125,7 @@ class SalesAnalytics extends Component {
                             <Tabs
                                 // value={this.state.timeFrame}
                                 onChange={this.handleTabChange}
+
                                 indicatorColor="primary"
                                 textColor="primary"
                                 scrollButtons="auto"
@@ -166,7 +167,7 @@ class SalesAnalytics extends Component {
                                 <Tab label="Business" />
                                 <Tab label="Consumer" >
                                 </Tab>
-                            </Tabs>
+                            </Tabs> */}
                             <AggregateSales />
                         </Paper>
                     </Grid>
