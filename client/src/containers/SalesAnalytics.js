@@ -7,12 +7,12 @@ import Paper from '@material-ui/core/Paper';
 //import Order from '../components/Order';
 import clsx from 'clsx';
 import Deposits from '../components/Deposits';
-// import Tabs from '@material-ui/core/Tabs';
-// import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import ProductProfit from '../components/ProductProfit';
 import AggregateSales from '../components/AggregateSales';
-import API from '../utilities/api';
-import moment from "moment";
+// import API from '../utilities/api';
+// import moment from "moment";
 
 
 const drawerWidth = 240;
@@ -107,10 +107,7 @@ const styles = theme => ({
 class SalesAnalytics extends Component {
     
     handleTabChange = (event) => {
-        this.setState({
-            timeFrame: event.target.value
-        });
-        this.setTimeFrame();
+        console.log(event.target.value);
     }
 
     render() {
@@ -126,14 +123,14 @@ class SalesAnalytics extends Component {
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper>
                             <Tabs
-                                value={this.state.timeFrame}
+                                // value={this.state.timeFrame}
                                 onChange={this.handleTabChange}
 
                                 indicatorColor="primary"
                                 textColor="primary"
                                 scrollButtons="auto"
                                 aria-label="scrollable auto tabs example"
-                                selectedTab={this.state.timeFrame}
+                                // selectedTab={this.state.timeFrame}
                                 centered
                             >
                                 <Tab label="24 Hours" value="hourly" />
