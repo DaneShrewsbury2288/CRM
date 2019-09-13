@@ -21,13 +21,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -39,6 +35,7 @@ function getModalStyle() {
 const useStyles2 = makeStyles(theme => ({
   paper: {
     position: 'absolute',
+    textAlign: 'center',
     width: 1200,
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
@@ -49,25 +46,29 @@ const useStyles2 = makeStyles(theme => ({
 
 const useStyles3 = makeStyles(theme => ({
   root: {
-      width: '100%',
-      marginTop: theme.spacing(3),
-      overflowX: 'auto',
+    width: '100%',
+    marginTop: theme.spacing(3),
+    overflowX: 'auto',
   },
   table: {
-      minWidth: 1000,
-      minHeight: 500,
+    minWidth: 1000,
+    minHeight: 500,
   },
 }));
 
 function createData2(name, date, address, paymentMethod, amount) {
-  return { name, date, address, paymentMethod, amount};
+  return { name, date, address, paymentMethod, amount };
 }
 
-const rows = [ 
+const rows = [
   createData2('Costco', "02/20/2019", 'Costco Home', 'Credit', 1000),
   createData2('Costco', "03/20/2019", 'Costco Home', 'Credit', 1200),
   createData2('Costco', "04/20/2019", 'Costco Home', 'Credit', 1500),
 ]
+
+const titleStyle = {
+  textAlign: "center",
+};
 
 export default function ClientAddButton(props) {
 
@@ -88,6 +89,7 @@ export default function ClientAddButton(props) {
     setOpen(false);
   };
 
+
   return (
     <div>
       <Tooltip title="Order Information" aria-label="Order Information" onClick={handleOpen}>
@@ -103,9 +105,8 @@ export default function ClientAddButton(props) {
       >
         <div style={modalStyle} className={classes2.paper}>
           <h2 id="simple-modal-title">Table of Orders</h2>
-
           <Paper className={classes3.root}>
-            <Title align="center"> Costco Orders </Title>
+            <Title style={titleStyle}> Costco Orders </Title>
             <Table className={classes3.table}>
               <TableHead>
                 <TableRow>
@@ -113,7 +114,7 @@ export default function ClientAddButton(props) {
                   <TableCell align="right">Date</TableCell>
                   <TableCell align="right">Ship To</TableCell>
                   <TableCell align="right">Payment Method</TableCell>
-                  <TableCell align="right">Sale Amount</TableCell>
+                  <TableCell align="right">Sale Amount ($) </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
