@@ -445,8 +445,6 @@ class SalesTeamAnalytics extends Component {
     checkState = () => {
         console.log(this.state.totalSales);
         console.log(this.state.data.datasets[0].data[0]);
-        console.log(this.state.data.datasets);
-        console.log(this.state.target);
     }
     // create user full name
     fullName = (first, last) => {

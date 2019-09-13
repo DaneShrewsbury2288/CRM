@@ -107,10 +107,7 @@ const styles = theme => ({
 class SalesAnalytics extends Component {
     
     handleTabChange = (event) => {
-        this.setState({
-            timeFrame: event.target.value
-        });
-        this.setTimeFrame();
+        console.log(event.target.value);
     }
 
     render() {
