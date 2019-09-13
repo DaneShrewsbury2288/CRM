@@ -126,13 +126,13 @@ class SalesAnalytics extends Component {
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper>
                             <Tabs
-                                value={this.state.timeFrame}
+                                // value={this.state.timeFrame}
                                 onChange={this.handleTabChange}
                                 indicatorColor="primary"
                                 textColor="primary"
                                 scrollButtons="auto"
                                 aria-label="scrollable auto tabs example"
-                                selectedTab={this.state.timeFrame}
+                                // selectedTab={this.state.timeFrame}
                                 centered
                             >
                                 <Tab label="24 Hours" value="hourly" />

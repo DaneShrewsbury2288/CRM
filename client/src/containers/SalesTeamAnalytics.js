@@ -70,7 +70,8 @@ class SalesTeamAnalytics extends Component {
         tenMonthDifference: moment().subtract(10, 'months').startOf('month').format("MMM YYYY"),
         elevenMonthDifference: moment().subtract(11, 'months').startOf('month').format("MMM YYYY"),
         twelveMonthDifference: moment().subtract(12, 'months').startOf('month').format("MMM YYYY"),
-        timeFrame: "past-quarter",
+        target: 0,
+        timeFrame: "past-month",
         totalSales: [],
         data: {
             // time frame values
@@ -81,7 +82,7 @@ class SalesTeamAnalytics extends Component {
                     label: "",
                     backgroundColor: "",
                     // data results
-                    data: []
+                    data: ["$0.00", "$113140.30", "$7228.99", "$57995.25"]
                 }
             ]
         }
@@ -220,9 +221,11 @@ class SalesTeamAnalytics extends Component {
 
     setTimeFrame() {
         const timeFrame = this.state.timeFrame;
+        this.setState({ target: 0 });
         if (timeFrame === "past-hours") {
             this.getLastDayAnalytics();
             if (this.state.totalSales.length < 8) {
+                this.setState({ target: 7 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -253,6 +256,7 @@ class SalesTeamAnalytics extends Component {
         if (timeFrame === "past-week") {
             this.getLastWeekAnalytics();
             if (this.state.totalSales.length < 8) {
+                this.setState({ target: 7 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -283,6 +287,7 @@ class SalesTeamAnalytics extends Component {
         if (timeFrame === "past-month") {
             this.getLastMonthAnalytics();
             if (this.state.totalSales.length < 4) {
+                this.setState({ target: 3 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -309,6 +314,7 @@ class SalesTeamAnalytics extends Component {
         if (timeFrame === "past-quarter") {
             this.getLastQuarterAnalytics();
             if (this.state.totalSales.length < 6) {
+                this.setState({ target: 5 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -337,6 +343,7 @@ class SalesTeamAnalytics extends Component {
         if (timeFrame === "past-year") {
             this.getLastYearAnalytics();
             if (this.state.totalSales.length < 13) {
+                this.setState({ target: 12 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -437,7 +444,8 @@ class SalesTeamAnalytics extends Component {
     }
     checkState = () => {
         console.log(this.state.totalSales);
-        console.log(this.state.data.datasets[0].data);
+        console.log(this.state.data.datasets[0].data[0]);
+        console.log(this.state.target);
     }
     // create user full name
     fullName = (first, last) => {
@@ -537,17 +545,19 @@ class SalesTeamAnalytics extends Component {
     }
 
     getChartData = canvas => {
-        const data = this.state.data;
-        if (data.datasets) {
-            let colors = ["rgba(255, 0, 255, 0.75)", "rgba(0, 255, 0, 0.75)"];
-            data.datasets.forEach((set, i) => {
-                set.backgroundColor = this.setGradientColor(canvas, colors[i]);
-                set.borderColor = "white";
-                set.borderWidth = 2;
-                // set.hoverBackgroundColor
-            })
+        if (this.state.totalSales.length > this.state.target) {
+            const data = this.state.data;
+            if (data.datasets) {
+                let colors = ["rgba(255, 0, 255, 0.75)", "rgba(0, 255, 0, 0.75)"];
+                data.datasets.forEach((set, i) => {
+                    set.backgroundColor = this.setGradientColor(canvas, colors[i]);
+                    set.borderColor = "white";
+                    set.borderWidth = 2;
+                    // set.hoverBackgroundColor
+                })
+            }
+            return data;
         }
-        return data;
     }
 
 
@@ -558,21 +568,21 @@ class SalesTeamAnalytics extends Component {
                 <PageTitle title="Sales Team Analytics" />
                 <div style={{ position: "relative", width: 962, height: 750 }}>
                     <h3>Chart Sample</h3>
-                    {this.state.totalSales.length > 0 ? (
+                    {this.state.totalSales.length > this.state.target ? (
                         <Bar
-                        options={{
-                            responsive: true,
-                            lineHeightAnnotation: {
-                                always: false,
-                                hover: true,
-                                color: "white",
-                                // noDash: true
-                            }
-                        }}
-                        data={this.getChartData}
-                    />
+                            options={{
+                                responsive: true,
+                                lineHeightAnnotation: {
+                                    always: false,
+                                    hover: true,
+                                    color: "white",
+                                    // noDash: true
+                                }
+                            }}
+                            data={this.getChartData}
+                        />
                     ) : (
-                        <Grid container>
+                            <Grid container>
                                 <Grid item lg={5}></Grid>
                                 <Grid item lg={2}>
                                     <PacmanLoader
@@ -585,8 +595,8 @@ class SalesTeamAnalytics extends Component {
                                 </Grid>
                                 <Grid item lg={5}></Grid>
                             </Grid>
-                    )}
-                    
+                        )}
+
                 </div>
                 {/* <Grid container>
                     <Grid item lg={4}></Grid>
