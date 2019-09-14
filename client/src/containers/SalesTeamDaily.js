@@ -128,10 +128,10 @@ class SalesTeamDaily extends Component {
         return (
             <div>
                 <PageTitle title="Sales Team Daily" />
-                <button onClick={this.filterTasks}>Filter Tasks</button>
+                {/* <button onClick={this.filterTasks}>Filter Tasks</button> */}
                 <Kanban />
                 {/* force page to wait for tasks to load */}
-                {this.state.tasks.length > 0 ?
+                {/* {this.state.tasks.length > 0 ?
                     (
                         <div>
                             {this.state.tasks.map(task => (
@@ -168,7 +168,7 @@ class SalesTeamDaily extends Component {
                             <Grid item lg={5}></Grid>
                         </Grid>
                     )
-                }
+                } */}
             </div>
         )
     }

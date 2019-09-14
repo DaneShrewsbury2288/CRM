@@ -5,6 +5,10 @@ import API from '../utilities/api';
 import UserAPI from '../utils/API';
 import Button from '../components/Button';
 import BarChart from '../components/BarChart';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 // import Card from "../components/Card";
 import PacmanLoader from 'react-spinners/PacmanLoader';
 // import Modal from '../components/TeamModal';
@@ -25,6 +29,7 @@ class SalesTeamAnalytics extends Component {
         search: "",
         searchedUser: [],
         userRevenue: [],
+        analyticsSelection: [],
         // hours
         twentyFourHourDifference: moment().subtract(24, 'hours').format("ddd, hA"),
         twentyOneHourDifference: moment().subtract(21, 'hours').format("ddd, hA"),
@@ -523,6 +528,16 @@ class SalesTeamAnalytics extends Component {
             search: event.target.value
         });
     }
+    // handle input change
+    handleDropDownChange = (event) => {
+        // Getting the value and name of the input which triggered the change
+        let value = event.target.value;
+        const name = event.target.name;
+        // Updating the input's state
+        this.setState({
+            [name]: value
+        });
+    }
     searchAndModal = event => {
         this.handleFormSubmit(event);
         this.modalOpen();
@@ -596,9 +611,32 @@ class SalesTeamAnalytics extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.checkState}>Console log values</button>
+                {/* <button onClick={this.checkState}>Console log values</button> */}
                 <PageTitle title="Sales Team Analytics" />
                 <div style={{ position: "relative", width: 962, height: 750 }}>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="left"
+                        alignItems="center"
+                    >
+                        <FormControl
+                            fullWidth={true}
+                            // margin={theme.spacing(1)}
+                            // minWidth={1000}
+                        >
+                            <InputLabel htmlFor="age-native-helper">Get Analysis</InputLabel>
+                            <Select
+                                value={this.state.analyticsSelection}
+                                onChange={this.handleDropDownChange}
+                                name="analyticsSelection"
+                            >
+                                <MenuItem value={"business"}>Business</MenuItem>
+                                <MenuItem value={"client"}>Client</MenuItem>
+                                <MenuItem value={"employee"}>Employee</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
                     <Grid
                         container
                         direction="row"
