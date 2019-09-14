@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 import Kanban from "../components/Kanban";
 import API from '../utilities/api';
-import GridLoader from 'react-spinners/GridLoader';
-import Grid from '@material-ui/core/Grid';
-import TaskTable from "../components/Task";
+// import GridLoader from 'react-spinners/GridLoader';
+// import Grid from '@material-ui/core/Grid';
+// import TaskTable from "../components/Task";
 import moment from "moment";
 
 class SalesTeamDaily extends Component {

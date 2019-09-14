@@ -19,7 +19,9 @@ import moment from "moment";
 class SalesTeamAnalytics extends Component {
     state = {
         users: [],
+        userSelection: [],
         clients: [],
+        clientSelection: [],
         tasks: [],
         orders: [],
         products: [],
@@ -29,7 +31,8 @@ class SalesTeamAnalytics extends Component {
         search: "",
         searchedUser: [],
         userRevenue: [],
-        analyticsSelection: [],
+        analyticsSelection: "business",
+        clientOrUserSelection: "",
         // hours
         twentyFourHourDifference: moment().subtract(24, 'hours').format("ddd, hA"),
         twentyOneHourDifference: moment().subtract(21, 'hours').format("ddd, hA"),
@@ -118,6 +121,58 @@ class SalesTeamAnalytics extends Component {
             )
             .catch(error => console.log("Business analytics error: " + error));
     }
+    getUserAnalytics = (start, end) => {
+        const id = this.state.userSelection;
+        console.log(id)
+        console.log(start)
+        console.log(end)
+        API.getUserOrderAnalytics(id, start, end)
+            .then(res =>
+                this.setState(state => {
+                    // if any sales have occured in selected time period
+                    if (res.data[0] !== undefined) {
+                        let total = res.data[0].profit.toFixed(2);
+                        let totalString = total.toString();
+                        const totalSales = state.totalSales.concat(totalString);
+                        return {
+                            totalSales
+                        };
+                    } else {
+                        // set to zero if no sales
+                        const noSale = "0.00";
+                        const totalSales = state.totalSales.concat(noSale);
+                        return {
+                            totalSales
+                        };
+                    }
+                })
+            )
+            .catch(error => console.log("User analytics error: " + error));
+    }
+    getClientAnalytics = (id, start, end) => {
+        API.getClientOrderAnalytics(id, start, end)
+            .then(res =>
+                this.setState(state => {
+                    // if any sales have occured in selected time period
+                    if (res.data[0] !== undefined) {
+                        let total = res.data[0].profit.toFixed(2);
+                        let totalString = total.toString();
+                        const totalSales = state.totalSales.concat(totalString);
+                        return {
+                            totalSales
+                        };
+                    } else {
+                        // set to zero if no sales
+                        const noSale = "0.00";
+                        const totalSales = state.totalSales.concat(noSale);
+                        return {
+                            totalSales
+                        };
+                    }
+                })
+            )
+            .catch(error => console.log("Client analytics error: " + error));
+    }
 
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -128,6 +183,16 @@ class SalesTeamAnalytics extends Component {
     }
 
     componentDidUpdate() {
+        if (this.state.analyticsSelection === "business") {
+            console.log("business selection");
+            
+        }
+        if (this.state.analyticsSelection === "client" && this.state.clientOrUserSelection === "client") {
+            console.log("client selection");
+        }
+        if (this.state.analyticsSelection === "employee" && this.state.clientOrUserSelection === "employee") {
+            console.log("employee selection");
+        }
         console.log(this.state.timeFrame);
     }
 
@@ -142,14 +207,36 @@ class SalesTeamAnalytics extends Component {
         const seven = moment().subtract(6, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const eight = moment().subtract(3, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const today = moment().format("YYYY-MM-DDTHH:mm:ss");
-        this.getAnalytics(one, two);
-        this.getAnalytics(two, three);
-        this.getAnalytics(three, four);
-        this.getAnalytics(four, five);
-        this.getAnalytics(five, six);
-        this.getAnalytics(six, seven);
-        this.getAnalytics(seven, eight);
-        this.getAnalytics(eight, today);
+        if (this.state.analyticsSelection === "employee") {
+            this.getUserAnalytics(one, two);
+            this.getUserAnalytics(two, three);
+            this.getUserAnalytics(three, four);
+            this.getUserAnalytics(four, five);
+            this.getUserAnalytics(five, six);
+            this.getUserAnalytics(six, seven);
+            this.getUserAnalytics(seven, eight);
+            this.getUserAnalytics(eight, today);
+        }
+        if (this.state.analyticsSelection === "client") {
+            this.getClientAnalytics(one, two);
+            this.getClientAnalytics(two, three);
+            this.getClientAnalytics(three, four);
+            this.getClientAnalytics(four, five);
+            this.getClientAnalytics(five, six);
+            this.getClientAnalytics(six, seven);
+            this.getClientAnalytics(seven, eight);
+            this.getClientAnalytics(eight, today);
+        }
+        if (this.state.analyticsSelection === "business") {
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, five);
+            this.getAnalytics(five, six);
+            this.getAnalytics(six, seven);
+            this.getAnalytics(seven, eight);
+            this.getAnalytics(eight, today);
+        }
     }
 
     getLastWeekAnalytics = () => {
@@ -162,14 +249,37 @@ class SalesTeamAnalytics extends Component {
         const seven = moment().subtract(1, 'days').format("YYYY-MM-DD");
         const eight = moment().startOf('day').format("YYYY-MM-DD");
         const currentTime = moment().format("YYYY-MM-DDTHH:mm:ss");
-        this.getAnalytics(one, two);
-        this.getAnalytics(two, three);
-        this.getAnalytics(three, four);
-        this.getAnalytics(four, five);
-        this.getAnalytics(five, six);
-        this.getAnalytics(six, seven);
-        this.getAnalytics(seven, eight);
-        this.getAnalytics(eight, currentTime);
+        if (this.state.analyticsSelection === "employee") {
+            this.getUserAnalytics(one, two);
+            this.getUserAnalytics(two, three);
+            this.getUserAnalytics(three, four);
+            this.getUserAnalytics(four, five);
+            this.getUserAnalytics(five, six);
+            this.getUserAnalytics(six, seven);
+            this.getUserAnalytics(seven, eight);
+            this.getUserAnalytics(eight, currentTime);
+        }
+        if (this.state.analyticsSelection === "client") {
+            this.getClientAnalytics(one, two);
+            this.getClientAnalytics(two, three);
+            this.getClientAnalytics(three, four);
+            this.getClientAnalytics(four, five);
+            this.getClientAnalytics(five, six);
+            this.getClientAnalytics(six, seven);
+            this.getClientAnalytics(seven, eight);
+            this.getClientAnalytics(eight, currentTime);
+        }
+        if (this.state.analyticsSelection === "business") {
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, five);
+            this.getAnalytics(five, six);
+            this.getAnalytics(six, seven);
+            this.getAnalytics(seven, eight);
+            this.getAnalytics(eight, currentTime);
+        }
+
     }
 
     getLastMonthAnalytics = () => {
@@ -178,10 +288,25 @@ class SalesTeamAnalytics extends Component {
         const three = moment().subtract(14, 'days').format("YYYY-MM-DD");
         const four = moment().subtract(7, 'days').format("YYYY-MM-DD");
         const today = moment().format("YYYY-MM-DD");
-        this.getAnalytics(one, two);
-        this.getAnalytics(two, three);
-        this.getAnalytics(three, four);
-        this.getAnalytics(four, today);
+        if (this.state.analyticsSelection === "employee") {
+            this.getUserAnalytics(one, two);
+            this.getUserAnalytics(two, three);
+            this.getUserAnalytics(three, four);
+            this.getUserAnalytics(four, today);
+        }
+        if (this.state.analyticsSelection === "client") {
+            this.getClientAnalytics(one, two);
+            this.getClientAnalytics(two, three);
+            this.getClientAnalytics(three, four);
+            this.getClientAnalytics(four, today);
+        }
+        if (this.state.analyticsSelection === "business") {
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, today);
+        }
+
     }
 
     getLastQuarterAnalytics = () => {
@@ -192,12 +317,31 @@ class SalesTeamAnalytics extends Component {
         const five = moment().subtract(28, 'days').format("YYYY-MM-DD");
         const six = moment().subtract(14, 'days').format("YYYY-MM-DD");
         const today = moment().format("YYYY-MM-DD");
-        this.getAnalytics(one, two);
-        this.getAnalytics(two, three);
-        this.getAnalytics(three, four);
-        this.getAnalytics(four, five);
-        this.getAnalytics(five, six);
-        this.getAnalytics(six, today);
+        if (this.state.analyticsSelection === "employee") {
+            this.getUserAnalytics(one, two);
+            this.getUserAnalytics(two, three);
+            this.getUserAnalytics(three, four);
+            this.getUserAnalytics(four, five);
+            this.getUserAnalytics(five, six);
+            this.getUserAnalytics(six, today);
+        }
+        if (this.state.analyticsSelection === "client") {
+            this.getClientAnalytics(one, two);
+            this.getClientAnalytics(two, three);
+            this.getClientAnalytics(three, four);
+            this.getClientAnalytics(four, five);
+            this.getClientAnalytics(five, six);
+            this.getClientAnalytics(six, today);
+        }
+        if (this.state.analyticsSelection === "business") {
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, five);
+            this.getAnalytics(five, six);
+            this.getAnalytics(six, today);
+        }
+
     }
 
     getLastYearAnalytics = () => {
@@ -215,19 +359,51 @@ class SalesTeamAnalytics extends Component {
         const twelve = moment().subtract(1, 'months').startOf('month').format("YYYY-MM-DD");
         const thisMonth = moment().startOf('month').format("YYYY-MM-DD");
         const today = moment().format("YYYY-MM-DD");
-        this.getAnalytics(one, two);
-        this.getAnalytics(two, three);
-        this.getAnalytics(three, four);
-        this.getAnalytics(four, five);
-        this.getAnalytics(five, six);
-        this.getAnalytics(six, seven);
-        this.getAnalytics(seven, eight);
-        this.getAnalytics(eight, nine);
-        this.getAnalytics(nine, ten);
-        this.getAnalytics(ten, eleven);
-        this.getAnalytics(eleven, twelve);
-        this.getAnalytics(twelve, thisMonth);
-        this.getAnalytics(thisMonth, today);
+        if (this.state.analyticsSelection === "employee") {
+            this.getUserAnalytics(one, two);
+            this.getUserAnalytics(two, three);
+            this.getUserAnalytics(three, four);
+            this.getUserAnalytics(four, five);
+            this.getUserAnalytics(five, six);
+            this.getUserAnalytics(six, seven);
+            this.getUserAnalytics(seven, eight);
+            this.getUserAnalytics(eight, nine);
+            this.getUserAnalytics(nine, ten);
+            this.getUserAnalytics(ten, eleven);
+            this.getUserAnalytics(eleven, twelve);
+            this.getUserAnalytics(twelve, thisMonth);
+            this.getUserAnalytics(thisMonth, today);
+        }
+        if (this.state.analyticsSelection === "client") {
+            this.getClientAnalytics(one, two);
+            this.getClientAnalytics(two, three);
+            this.getClientAnalytics(three, four);
+            this.getClientAnalytics(four, five);
+            this.getClientAnalytics(five, six);
+            this.getClientAnalytics(six, seven);
+            this.getClientAnalytics(seven, eight);
+            this.getClientAnalytics(eight, nine);
+            this.getClientAnalytics(nine, ten);
+            this.getClientAnalytics(ten, eleven);
+            this.getClientAnalytics(eleven, twelve);
+            this.getClientAnalytics(twelve, thisMonth);
+            this.getClientAnalytics(thisMonth, today);
+        }
+        if (this.state.analyticsSelection === "business") {
+            this.getAnalytics(one, two);
+            this.getAnalytics(two, three);
+            this.getAnalytics(three, four);
+            this.getAnalytics(four, five);
+            this.getAnalytics(five, six);
+            this.getAnalytics(six, seven);
+            this.getAnalytics(seven, eight);
+            this.getAnalytics(eight, nine);
+            this.getAnalytics(nine, ten);
+            this.getAnalytics(ten, eleven);
+            this.getAnalytics(eleven, twelve);
+            this.getAnalytics(twelve, thisMonth);
+            this.getAnalytics(thisMonth, today);
+        }
     }
 
     setTimeFrame() {
@@ -458,6 +634,7 @@ class SalesTeamAnalytics extends Component {
     checkState = () => {
         console.log(this.state.totalSales);
         console.log(this.state.data.datasets[0].data[0]);
+        console.log(this.state.userSelection);
     }
     // create user full name
     fullName = (first, last) => {
@@ -522,21 +699,39 @@ class SalesTeamAnalytics extends Component {
             }
         }
     }
-    // handle input change
     handleInputChange = (event) => {
         this.setState({
             search: event.target.value
         });
     }
-    // handle input change
     handleDropDownChange = (event) => {
-        // Getting the value and name of the input which triggered the change
         let value = event.target.value;
         const name = event.target.name;
-        // Updating the input's state
+        this.setState({
+            [name]: value,
+            clientOrUserSelection: value
+        });
+    }
+    handleUserChange = (event) => {
+        let value = event.target.value;
+        const name = event.target.name;
         this.setState({
             [name]: value
         });
+        setTimeout(
+            function() {
+                this.setTimeFrame();
+            }.bind(this), 5000
+        )
+        
+    }
+    handleClientChange = (event) => {
+        let value = event.target.value;
+        const name = event.target.name;
+        this.setState({
+            [name]: value
+        });
+        this.setTimeFrame();
     }
     searchAndModal = event => {
         this.handleFormSubmit(event);
@@ -611,7 +806,7 @@ class SalesTeamAnalytics extends Component {
     render() {
         return (
             <div>
-                {/* <button onClick={this.checkState}>Console log values</button> */}
+                <button onClick={this.checkState}>Console log values</button>
                 <PageTitle title="Sales Team Analytics" />
                 <div style={{ position: "relative", width: 962, height: 750 }}>
                     <Grid
@@ -620,22 +815,62 @@ class SalesTeamAnalytics extends Component {
                         justify="left"
                         alignItems="center"
                     >
-                        <FormControl
-                            fullWidth={true}
-                            // margin={theme.spacing(1)}
-                            // minWidth={1000}
-                        >
-                            <InputLabel htmlFor="age-native-helper">Get Analysis</InputLabel>
-                            <Select
-                                value={this.state.analyticsSelection}
-                                onChange={this.handleDropDownChange}
-                                name="analyticsSelection"
+                        <Grid item lg={6}>
+                            <FormControl
+                                fullWidth={true}
                             >
-                                <MenuItem value={"business"}>Business</MenuItem>
-                                <MenuItem value={"client"}>Client</MenuItem>
-                                <MenuItem value={"employee"}>Employee</MenuItem>
-                            </Select>
-                        </FormControl>
+                                <InputLabel htmlFor="age-native-helper">Get Analysis</InputLabel>
+                                <Select
+                                    value={this.state.analyticsSelection}
+                                    onChange={this.handleDropDownChange}
+                                    name="analyticsSelection"
+                                >
+                                    <MenuItem value={"business"}>Business</MenuItem>
+                                    <MenuItem value={"client"}>Client</MenuItem>
+                                    <MenuItem value={"employee"}>Employee</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        {this.state.clientOrUserSelection === "client" ? (
+                            <Grid item lg={6}>
+                                <FormControl
+                                    fullWidth={true}
+                                >
+                                    <InputLabel htmlFor="age-native-helper">Client</InputLabel>
+                                    <Select
+                                        value={this.state.clientSelection}
+                                        onChange={this.handleClientChange}
+                                        name="clientSelection"
+                                    >
+                                        {this.state.clients.map(client => (
+                                            <MenuItem key={client._id} value={client._id}>{client.firstName} {client.lastName}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        ) : (
+                                <div />
+                            )}
+                        {this.state.clientOrUserSelection === "employee" ? (
+                            <Grid item lg={6}>
+                                <FormControl
+                                    fullWidth={true}
+                                >
+                                    <InputLabel htmlFor="age-native-helper">Employee</InputLabel>
+                                    <Select
+                                        value={this.state.userSelection}
+                                        onChange={this.handleUserChange}
+                                        name="userSelection"
+                                    >
+                                        {this.state.users.map(user => (
+                                            <MenuItem key={user._id} value={user._id}>{user.firstName} {user.lastName}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        ) : (
+                                <div />
+                            )}
                     </Grid>
                     <Grid
                         container

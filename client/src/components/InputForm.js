@@ -32,7 +32,9 @@ function InputForm(props) {
                       name="userSelection"
                     >
                       {props.users.map(user => (
-                        <MenuItem key={user._id} value={user._id}>{user.firstName}</MenuItem>
+                        <MenuItem key={user._id} value={user._id}>
+                          {user.firstName} {user.lastName}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -48,7 +50,9 @@ function InputForm(props) {
                       name="clientSelection"
                     >
                       {props.clients.map(client => (
-                        <MenuItem key={client._id} value={client._id}>{client.name}</MenuItem>
+                        <MenuItem key={client._id} value={client._id}>
+                          {client.name}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
