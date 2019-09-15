@@ -24,16 +24,21 @@ class MapOfSales extends Component {
   handleSetUsers = event => {
     let id = event.target.id.split(",")[0];
     let name = event.target.id.split(",")[1];
-    if (this.state.user2) {
+    if (id === this.state.user2) {
+      return null
+    }
+    else {
+      if (this.state.user2) {
         this.setState({ user1: id, user1Name: name }, () => {
           console.log(this.state)
         });
       }
       else {
-        this.setState({ user2: id, user2Name: name}, () => {
+        this.setState({ user2: id, user2Name: name }, () => {
           console.log(this.state)
         })
       }
+    }
   };
 
   loadUsers = () => {
@@ -44,7 +49,7 @@ class MapOfSales extends Component {
   }
 
   back = () => {
-    this.setState({ user1: null, user2: null })
+    this.setState({ user1: null, user1Name: null, user2: null, user2Name: null })
   }
 
   render() {
@@ -62,7 +67,7 @@ class MapOfSales extends Component {
     }
 
     return (
-      <div style={{width: '70%'}}>
+      <div style={{ width: '70%' }}>
         <PageTitle title="Check User Messages" />
         <div>
           {this.state.user1
@@ -77,15 +82,15 @@ class MapOfSales extends Component {
                 user._id === this.state.user2
                   ?
                   <ListItem key={user._id}>
-                    <h4 id={`${user._id},${user.firstName}`} style={styles.selected} onClick={this.handleSetUsers}>
+                    <h2 id={`${user._id},${user.firstName}`} style={styles.selected} onClick={this.handleSetUsers}>
                       {user.firstName} {user.lastName}
-                    </h4>
+                    </h2>
                   </ListItem>
                   :
                   <ListItem key={user._id}>
-                    <h4 id={`${user._id},${user.firstName}`} style={styles.user} onClick={this.handleSetUsers}>
+                    <h2 id={`${user._id},${user.firstName}`} style={styles.user} onClick={this.handleSetUsers}>
                       {user.firstName} {user.lastName}
-                    </h4>
+                    </h2>
                   </ListItem>
               ))}
             </List>

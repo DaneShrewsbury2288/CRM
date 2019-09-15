@@ -5,6 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import Dialogue from "./Dialogue";
 import PropTypes from "prop-types";
+import Background from '../images/email-pattern.png'
 import { connect } from "react-redux";
 
 
@@ -54,12 +55,13 @@ class Messenger extends Component {
     const { user } = this.props.auth;
     const styles = {
       body: {
-        backgroundColor: 'white',
+        backgroundImage: `url(${Background})`,
+        backgroundRepeat: 'repeat',
         position: 'absolute',
         width: '300px',
         maxHeight: '350px',
-        bottom: '17px',
-        right: '17px',
+        bottom: '15px',
+        right: '15px',
         zIndex: 10,
         overflowY: 'scroll',
         overflow: 'auto'
