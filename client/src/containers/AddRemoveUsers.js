@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 import AddUsers from "../components/AddUsers";
 import RemoveUsers from "../components/RemoveUsers";
+import Button from '@material-ui/core/Button';
 
 class AddRemoveUsers extends Component {
     state = {
@@ -21,6 +22,11 @@ class AddRemoveUsers extends Component {
     }
 
     render() {
+        const styles = {
+            button: {
+                margin: '.5rem'
+            }
+        }
         return (
             <div>
                 <PageTitle title="Add or Remove Users" />
@@ -37,30 +43,22 @@ class AddRemoveUsers extends Component {
                         </div>
                     :
                     <div>
-                        <button
+                        <Button
+                            variant="contained"
+                            color="primary"
                             onClick={this.handleAdd}
-                            style={{
-                                width: "200px",
-                                borderRadius: "3px",
-                                letterSpacing: "1.5px",
-                                margin: "1rem"
-                            }}
-                            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                            style={styles.button}
                         >
                             Add User
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
                             onClick={this.handleRemove}
-                            style={{
-                                width: "200px",
-                                borderRadius: "3px",
-                                letterSpacing: "1.5px",
-                                margin: "1rem"
-                            }}
-                            className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                            style={styles.button}
                         >
                             Remove User
-                        </button>
+                        </Button>
                     </div>
                 }
             </div>

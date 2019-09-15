@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Switch from '@material-ui/core/Switch';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
 import API from "../utils/API";
 import switches from '../permissions'
 
@@ -47,18 +48,14 @@ class PermissionsSwitch extends Component {
                         </ListItem>
                     ))}
                 </List>
-                <button
+                <Button
+                    variant="contained"
+                    color="primary"
                     onClick={this.update}
-                    style={{
-                        width: "150px",
-                        borderRadius: "3px",
-                        letterSpacing: "1.5px",
-                        marginTop: "1rem"
-                    }}
-                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                 >
                     Update
-                </button>
+                </Button>
+
             </div>
         )
     }

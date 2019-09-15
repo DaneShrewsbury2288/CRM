@@ -12,7 +12,7 @@ class Messenger extends Component {
   state = {
     users: [],
     partner: null,
-    display: true,
+    display: false,
     user: this.props.auth.user
   };
 

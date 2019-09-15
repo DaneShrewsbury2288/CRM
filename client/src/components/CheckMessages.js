@@ -7,8 +7,8 @@ class CheckMessages extends Component {
 
   state = {
     messages: [],
-    user: this.props.user,
-    partner: this.props.partner,
+    user1: this.props.user1,
+    user2: this.props.user2,
   };
 
   componentDidMount() {
@@ -16,7 +16,7 @@ class CheckMessages extends Component {
   }
 
   loadMessages = () => {
-    const IDString = this.state.user + "&" + this.state.partner
+    const IDString = this.state.user1 + "&" + this.state.user2
     API.findMessages(IDString)
       .then(res =>
         this.setState({ messages: res.data }, () => {
@@ -25,14 +25,30 @@ class CheckMessages extends Component {
   }
 
   render() {
+    const styles = {
+      end: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }
+    }
     return (
       <div>
         {
           this.state.messages.map(message => (
-            this.state.user === message.sender ?
-              <Sender content={`${message.content}`} key={`${message._id}`} />
+            this.state.user1 === message.sender ?
+              <div key={`${message._id}`}>
+                <div style={styles.end}>
+                  {this.props.user1Name}:
+                </div>
+                <Sender content={`${message.content}`} />
+              </div>
               :
-              <Receiver content={`${message.content}`} key={`${message._id}`} />
+              <div key={`${message._id}`}>
+                <div>
+                  {this.props.user2Name}:
+                </div>
+                <Receiver content={`${message.content}`} />
+              </div>
           ))
         }
       </div>

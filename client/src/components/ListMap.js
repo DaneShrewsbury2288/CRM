@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
 import { logoutUser } from "../actions/authActions";
 import icons from '../permissions'
 
@@ -41,7 +42,7 @@ class ListMap extends Component {
                         null
                 ))}
 
-                <button
+                {/* <button
                     style={{
                         width: "150px",
                         borderRadius: "3px",
@@ -52,7 +53,16 @@ class ListMap extends Component {
                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                 >
                     Logout
-                </button>
+                </button> */}
+
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.onLogoutClick}
+                >
+                    Logout
+                </Button>
+
 
             </div>
         )

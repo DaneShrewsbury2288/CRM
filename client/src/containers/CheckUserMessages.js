@@ -12,22 +12,26 @@ class MapOfSales extends Component {
   state = {
     users: [],
     user1: null,
-    user2: null
+    user1Name: null,
+    user2: null,
+    user2Name: null
   };
 
   componentDidMount() {
     this.loadUsers();
   }
 
-  handleSetUser = event => {
+  handleSetUsers = event => {
+    let id = event.target.id.split(",")[0];
+    let name = event.target.id.split(",")[1];
     if (this.state.user1) {
-      this.setState({ user2: event.target.id}, () => {
-        console.log(this.state.user2)
+      this.setState({ user2: id, user2Name: name}, () => {
+        console.log(this.state)
       });
     }
     else {
-      this.setState({user1: event.target.id}, () => {
-        console.log(this.state.user1)
+      this.setState({user1: id, user1Name: name}, () => {
+        console.log(this.state)
       })
     }
   };
@@ -67,13 +71,13 @@ class MapOfSales extends Component {
             ?
             <div>
               <h4 onClick={this.back}>Back</h4>
-              <CheckMessages user={this.state.user1} partner={this.state.user2} />
+              <CheckMessages user1={this.state.user1} user1Name={this.state.user1Name} user2={this.state.user2} user2Name={this.state.user2Name} />
             </div>
             :
             <List>
               {this.state.users.map(user => (
                 <ListItem key={user._id}>
-                  <h4 id={user._id} onClick={this.handleSetUser}>
+                  <h4 id={`${user._id},${user.firstName}`} onClick={this.handleSetUsers}>
                     {user.firstName} {user.lastName}
                   </h4>
                 </ListItem>

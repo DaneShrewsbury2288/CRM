@@ -2,6 +2,7 @@ import React from "react";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import WidgetsIcon from '@material-ui/icons/Widgets';
+import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
@@ -13,6 +14,7 @@ import PublicIcon from '@material-ui/icons/Public';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import NewsFeed from "./containers/NewsFeed";
 import Inventory from "./containers/Inventory";
+import InventorySupplies from './containers/InventorySupplies'
 import ClientList from "./containers/ClientList";
 import PurchasingTool from "./containers/PurchasingTool";
 import SalesAnalytics from "./containers/SalesAnalytics";
@@ -47,65 +49,72 @@ const icons = [
         icon: <WidgetsIcon />
     },
     {
+        title: "Inventory Supplies",
+        href: "/inventorysupplies",
+        bitmask: 0b1000,
+        component: InventorySupplies,
+        icon: <LocalFloristIcon />
+    },
+    {
         title: "Client List",
         href: "/clientlist",
-        bitmask: 0b1000,
+        bitmask: 0b10000,
         component: ClientList,
         icon: <ContactMailIcon />
     },
     {
         title: "Purchasing Tool",
         href: "/purchasingtool",
-        bitmask: 0b10000,
+        bitmask: 0b100000,
         component: PurchasingTool,
         icon: <ShoppingCartIcon />
     },
     {
         title: "Sales Analytics",
         href: "/salesanalytics",
-        bitmask: 0b100000,
+        bitmask: 0b1000000,
         component: SalesAnalytics,
         icon: <TrendingUpIcon />
     },
     {
         title: "Manager Task Assignment",
         href: "/managertaskassignment",
-        bitmask: 0b1000000,
+        bitmask: 0b10000000,
         component: ManagerTaskAssignment,
         icon: <AssignmentTurnedInIcon />
     },
     {
         title: "Sales Team Analytics",
         href: "/salesteamanalytics",
-        bitmask: 0b10000000,
+        bitmask: 0b100000000,
         component: SalesTeamAnalytics,
         icon: <BarChartIcon />
     },
     {
         title: "Check User Messages",
         href: "/checkusermessages",
-        bitmask: 0b100000000,
+        bitmask: 0b1000000000,
         component: CheckUserMessages,
         icon: <MailOutlineIcon />
     },
     {
         title: "Discover",
         href: "/discover",
-        bitmask: 0b1000000000,
+        bitmask: 0b10000000000,
         component: Discover,
         icon: <PublicIcon />
     },
     {
         title: "Add/Remove Users",
         href: "/addremoveusers",
-        bitmask: 0b10000000000,
+        bitmask: 0b100000000000,
         component: AddRemoveUsers,
         icon: <PersonAddIcon />
     },
     {
         title: "Permissions",
         href: "/Permissions",
-        bitmask: 0b100000000000,
+        bitmask: 0b1000000000000,
         component: Permissions,
         icon: <LockIcon />
     }
