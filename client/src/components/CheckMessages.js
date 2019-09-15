@@ -28,7 +28,15 @@ class CheckMessages extends Component {
     const styles = {
       end: {
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        marginRight: '.75rem',
+        marginTop: '.5rem'
+      },
+      start: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        marginLeft: '.75rem',
+        marginTop: '.5rem'
       }
     }
     return (
@@ -36,7 +44,7 @@ class CheckMessages extends Component {
         {
           this.state.messages.map(message => (
             this.state.user1 === message.sender ?
-              <div key={`${message._id}`}>
+              <div key={`${message._id}`} >
                 <div style={styles.end}>
                   {this.props.user1Name}:
                 </div>
@@ -44,7 +52,7 @@ class CheckMessages extends Component {
               </div>
               :
               <div key={`${message._id}`}>
-                <div>
+                <div style={styles.start}>
                   {this.props.user2Name}:
                 </div>
                 <Receiver content={`${message.content}`} />
