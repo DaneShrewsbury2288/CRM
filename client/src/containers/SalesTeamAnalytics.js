@@ -23,11 +23,7 @@ class SalesTeamAnalytics extends Component {
         userSelection: [],
         clients: [],
         clientSelection: [],
-        tasks: [],
         orders: [],
-        products: [],
-        dataLoaded: true,
-        productPrice: 0,
         open: false,
         search: "",
         searchedUser: [],
@@ -104,7 +100,7 @@ class SalesTeamAnalytics extends Component {
         averageOrderTotal: [],
         largestOrderTotal: [],
         lowestOrderTotal: [],
-        blackRavenCount: [],
+        blackRavenCount: 0,
         hopsPotatoCount: 0,
         sizzleCiderCount: 0,
         soundsPugetCount: 0,
@@ -270,7 +266,13 @@ class SalesTeamAnalytics extends Component {
     }
 
     getLastDayAnalytics = () => {
-        this.setState({ totalSales: [] });
+        this.setState({
+            totalSales: [],
+            averageOrderQuantity: [],
+            averageOrderTotal: [],
+            largestOrderTotal: [],
+            lowestOrderTotal: [],
+        });
         const one = moment().subtract(24, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const two = moment().subtract(21, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const three = moment().subtract(18, 'hours').format("YYYY-MM-DDTHH:mm:ss");
@@ -485,8 +487,28 @@ class SalesTeamAnalytics extends Component {
                 labels: [],
                 datasets: [
                     {
-                        label: "",
-                        backgroundColor: "",
+                        label: "24-hour Profit in $",
+                        backgroundColor: "rgb(1,41,95)",
+                        data: []
+                    },
+                    {
+                        label: "Average Order Quantity",
+                        backgroundColor: "rgb(66,102,150)",
+                        data: []
+                    },
+                    {
+                        label: "Average Order Total in $",
+                        backgroundColor: "rgb(35,84,147)",
+                        data: []
+                    },
+                    {
+                        label: "Largest Order in $",
+                        backgroundColor: "rgb(15,119,255)",
+                        data: []
+                    },
+                    {
+                        label: "Lowest Order in $",
+                        backgroundColor: "rgb(20,147,252)",
                         data: []
                     }
                 ]
@@ -513,12 +535,38 @@ class SalesTeamAnalytics extends Component {
                                     this.state.sixHourDifference + " - " + this.state.threeHourDifference,
                                     this.state.threeHourDifference + " - " + this.state.zeroHourDifference,
                                 ],
-                                datasets: [{
-                                    ...prevState.data.datasets,
-                                    label: "24-hour Profit in $",
-                                    backgroundColor: "rgb(1,41,95)",
-                                    data: [this.state.totalSales]
-                                }]
+                                datasets: [
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "24-hour Profit in $",
+                                        backgroundColor: "rgb(1,41,95)",
+                                        data: this.state.totalSales
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Quantity",
+                                        backgroundColor: "rgb(66,102,150)",
+                                        data: this.state.averageOrderQuantity
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Total in $",
+                                        backgroundColor: "rgb(35,84,147)",
+                                        data: this.state.averageOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Largest Order in $",
+                                        backgroundColor: "rgb(15,119,255)",
+                                        data: this.state.largestOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Lowest Order in $",
+                                        backgroundColor: "rgb(20,147,252)",
+                                        data: this.state.lowestOrderTotal
+                                    }
+                                ]
                             }
                         }))
                         this.setState({ chartIsLoaded: true });
@@ -545,12 +593,38 @@ class SalesTeamAnalytics extends Component {
                                     this.state.oneDayDifference,
                                     this.state.zeroDayDifference,
                                 ],
-                                datasets: [{
-                                    ...prevState.data.datasets,
-                                    label: "Week Profit in $",
-                                    backgroundColor: "rgb(66,102,150)",
-                                    data: [this.state.totalSales]
-                                }]
+                                datasets: [
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Week Profit in $",
+                                        backgroundColor: "rgb(1,41,95)",
+                                        data: this.state.totalSales
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Quantity",
+                                        backgroundColor: "rgb(66,102,150)",
+                                        data: this.state.averageOrderQuantity
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Total in $",
+                                        backgroundColor: "rgb(35,84,147)",
+                                        data: this.state.averageOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Largest Order in $",
+                                        backgroundColor: "rgb(15,119,255)",
+                                        data: this.state.largestOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Lowest Order in $",
+                                        backgroundColor: "rgb(20,147,252)",
+                                        data: this.state.lowestOrderTotal
+                                    }
+                                ]
                             }
                         }))
                         this.setState({ chartIsLoaded: true });
@@ -573,25 +647,40 @@ class SalesTeamAnalytics extends Component {
                                     this.state.twoWeekDifference + " - " + this.state.weekDifference,
                                     this.state.weekDifference + " - " + this.state.zeroDayDifference,
                                 ],
-                                datasets: [{
-                                    ...prevState.data.datasets,
-                                    label: "Month Profit in $",
-                                    backgroundColor: "rgb(35,84,147)",
-                                    data: [this.state.totalSales]
-                                }]
+                                datasets: [
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Month Profit in $",
+                                        backgroundColor: "rgb(1,41,95)",
+                                        data: this.state.totalSales
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Quantity",
+                                        backgroundColor: "rgb(66,102,150)",
+                                        data: this.state.averageOrderQuantity
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Total in $",
+                                        backgroundColor: "rgb(35,84,147)",
+                                        data: this.state.averageOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Largest Order in $",
+                                        backgroundColor: "rgb(15,119,255)",
+                                        data: this.state.largestOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Lowest Order in $",
+                                        backgroundColor: "rgb(20,147,252)",
+                                        data: this.state.lowestOrderTotal
+                                    }
+                                ]
                             }
                         }))
-                        // this.setState({
-                        //     chartTitle: "Month Profit in $",
-                        //     timeFrames: [
-                        //         this.state.fourWeekDifference + " - " + this.state.threeWeekDifference,
-                        //         this.state.threeWeekDifference + " - " + this.state.twoWeekDifference,
-                        //         this.state.twoWeekDifference + " - " + this.state.weekDifference,
-                        //         this.state.weekDifference + " - " + this.state.zeroDayDifference
-                        //     ],
-                        //     chartBGColor: "rgb(35,84,147)",
-                        //     chartData: this.state.totalSales
-                        // })
                         this.setState({ chartIsLoaded: true });
                     }.bind(this), 2000
                 )
@@ -614,12 +703,38 @@ class SalesTeamAnalytics extends Component {
                                     this.state.quarterFourDifference + " - " + this.state.quarterTwoDifference,
                                     this.state.quarterTwoDifference + " - " + this.state.zeroDayDifference,
                                 ],
-                                datasets: [{
-                                    ...prevState.data.datasets,
-                                    label: "Quarter Profit in $",
-                                    backgroundColor: "rgb(15,119,255)",
-                                    data: [this.state.totalSales]
-                                }]
+                                datasets: [
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Quarter Profit in $",
+                                        backgroundColor: "rgb(1,41,95)",
+                                        data: this.state.totalSales
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Quantity",
+                                        backgroundColor: "rgb(66,102,150)",
+                                        data: this.state.averageOrderQuantity
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Total in $",
+                                        backgroundColor: "rgb(35,84,147)",
+                                        data: this.state.averageOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Largest Order in $",
+                                        backgroundColor: "rgb(15,119,255)",
+                                        data: this.state.largestOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Lowest Order in $",
+                                        backgroundColor: "rgb(20,147,252)",
+                                        data: this.state.lowestOrderTotal
+                                    }
+                                ]
                             }
                         }))
                         this.setState({ chartIsLoaded: true });
@@ -651,14 +766,38 @@ class SalesTeamAnalytics extends Component {
                                     this.state.oneMonthDifference,
                                     this.state.currentMonth + " - " + this.state.zeroDayDifference,
                                 ],
-                                datasets: [{
-                                    ...prevState.data.datasets,
-                                    label: "Year profit in $",
-                                    backgroundColor: "rgb(20,147,252)",
-                                    data: [
-                                        this.state.totalSales
-                                    ]
-                                }]
+                                datasets: [
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Year Profit in $",
+                                        backgroundColor: "rgb(1,41,95)",
+                                        data: this.state.totalSales
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Quantity",
+                                        backgroundColor: "rgb(66,102,150)",
+                                        data: this.state.averageOrderQuantity
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Average Order Total in $",
+                                        backgroundColor: "rgb(35,84,147)",
+                                        data: this.state.averageOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Largest Order in $",
+                                        backgroundColor: "rgb(15,119,255)",
+                                        data: this.state.largestOrderTotal
+                                    },
+                                    {
+                                        ...prevState.data.datasets,
+                                        label: "Lowest Order in $",
+                                        backgroundColor: "rgb(20,147,252)",
+                                        data: this.state.lowestOrderTotal
+                                    }
+                                ]
                             }
                         }))
                         this.setState({ chartIsLoaded: true });
@@ -708,14 +847,6 @@ class SalesTeamAnalytics extends Component {
             )
             .catch(error => console.log("Check clients error: " + error));
     }
-    // get all products
-    checkProducts = () => {
-        API.getProducts()
-            .then(res =>
-                this.setState({ products: res.data })
-            )
-            .catch(error => console.log("Check products error: " + error));
-    }
     // get all orders
     checkOrders = () => {
         API.getOrders()
@@ -730,15 +861,17 @@ class SalesTeamAnalytics extends Component {
         console.log(this.state.averageOrderQuantity);
         console.log(this.state.largestOrderTotal);
         console.log(this.state.lowestOrderTotal);
-        console.log("blackRavenCount: " + this.state.blackRavenCount);
-        console.log("hopsPotatoCount: " + this.state.hopsPotatoCount);
-        console.log("sizzleCiderCount: " + this.state.sizzleCiderCount);
-        console.log("soundsPugetCount: " + this.state.soundsPugetCount);
-        console.log("extraFoamCount: " + this.state.extraFoamCount);
-        console.log("krakenCount: " + this.state.krakenCount);
-        console.log("samsBeerCount: " + this.state.samsBeerCount);
-        // console.log(this.state.data.datasets[0].data[0]);
-        // console.log(this.state.data);
+        // console.log("blackRavenCount: " + this.state.blackRavenCount);
+        // console.log("hopsPotatoCount: " + this.state.hopsPotatoCount);
+        // console.log("sizzleCiderCount: " + this.state.sizzleCiderCount);
+        // console.log("soundsPugetCount: " + this.state.soundsPugetCount);
+        // console.log("extraFoamCount: " + this.state.extraFoamCount);
+        // console.log("krakenCount: " + this.state.krakenCount);
+        // console.log("samsBeerCount: " + this.state.samsBeerCount);
+        // for (let i = 0; i < this.state.data.datasets.length; i++) {
+        //     console.log(this.state.data.datasets[i].data[0])
+        // }
+        console.log(this.state.data);
     }
     // create user full name
     fullName = (first, last) => {
@@ -849,7 +982,14 @@ class SalesTeamAnalytics extends Component {
 
     set24Hours = () => (event) => {
         event.preventDefault();
-        this.setState({ totalSales: [], timeFrame: "past-hours" });
+        this.setState({
+            totalSales: [],
+            averageOrderQuantity: [],
+            averageOrderTotal: [],
+            largestOrderTotal: [],
+            lowestOrderTotal: [],
+            timeFrame: "past-hours"
+        });
         if (this.state.timeFrame === "past-hours") {
             this.setTimeFrame();
         } else {
@@ -863,7 +1003,14 @@ class SalesTeamAnalytics extends Component {
     }
     setWeek = () => (event) => {
         event.preventDefault();
-        this.setState({ totalSales: [], timeFrame: "past-week" });
+        this.setState({
+            totalSales: [],
+            averageOrderQuantity: [],
+            averageOrderTotal: [],
+            largestOrderTotal: [],
+            lowestOrderTotal: [],
+            timeFrame: "past-week"
+        });
         if (this.state.timeFrame === "past-week") {
             this.setTimeFrame();
         } else {
@@ -876,7 +1023,14 @@ class SalesTeamAnalytics extends Component {
     }
     setMonth = () => (event) => {
         event.preventDefault();
-        this.setState({ totalSales: [], timeFrame: "past-month" });
+        this.setState({
+            totalSales: [],
+            averageOrderQuantity: [],
+            averageOrderTotal: [],
+            largestOrderTotal: [],
+            lowestOrderTotal: [],
+            timeFrame: "past-month"
+        });
         if (this.state.timeFrame === "past-month") {
             this.setTimeFrame();
         } else {
@@ -889,7 +1043,14 @@ class SalesTeamAnalytics extends Component {
     }
     setQuarter = () => (event) => {
         event.preventDefault();
-        this.setState({ totalSales: [], timeFrame: "past-quarter" });
+        this.setState({
+            totalSales: [],
+            averageOrderQuantity: [],
+            averageOrderTotal: [],
+            largestOrderTotal: [],
+            lowestOrderTotal: [],
+            timeFrame: "past-quarter"
+        });
         if (this.state.timeFrame === "past-quarter") {
             this.setTimeFrame();
         } else {
@@ -902,7 +1063,14 @@ class SalesTeamAnalytics extends Component {
     }
     setYear = () => (event) => {
         event.preventDefault();
-        this.setState({ totalSales: [], timeFrame: "past-year" });
+        this.setState({
+            totalSales: [],
+            averageOrderQuantity: [],
+            averageOrderTotal: [],
+            largestOrderTotal: [],
+            lowestOrderTotal: [],
+            timeFrame: "past-year"
+        });
         if (this.state.timeFrame === "past-year") {
             this.setTimeFrame();
         } else {
@@ -1028,7 +1196,7 @@ class SalesTeamAnalytics extends Component {
                         justify="center"
                         alignItems="center"
                     >
-                        {Object.keys(this.state.data).length && this.state.totalSales.length > this.state.target && this.state.chartIsLoaded ? (
+                        {this.state.totalSales.length > this.state.target && this.state.chartIsLoaded ? (
                             <BarChart
                                 data={this.state.data}
                                 title={this.state.analyticsSelection}
@@ -1084,8 +1252,7 @@ class SalesTeamAnalytics extends Component {
                 <Grid container spacing={4}>
                     {this.state.orders.length > 0 &&
                         this.state.users.length > 0 &&
-                        this.state.clients.length > 0 &&
-                        this.state.tasks.length > 0 ?
+                        this.state.clients.length > 0 ?
                         (
                             <div>
                                 {this.state.users.map(user => (
