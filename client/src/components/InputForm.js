@@ -66,6 +66,7 @@ function InputForm(props) {
                     placeholder="Task description"
                     onChange={props.handleInputChange}
                     fullWidth={true}
+                    multiline={true}
                   />
                 </Grid>
               </Grid>

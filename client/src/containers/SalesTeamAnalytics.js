@@ -4,15 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
 import Button from '../components/Button';
+import "react-chartjs-2";
 import BarChart from '../components/BarChart';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-// import Card from "../components/Card";
+import Card from "../components/Card";
 import PacmanLoader from 'react-spinners/PacmanLoader';
-// import Modal from '../components/TeamModal';
-// import Search from '../components/TeamSearch';
+import Modal from '../components/TeamModal';
+import Search from '../components/TeamSearch';
 import moment from "moment";
 
 
@@ -31,7 +32,7 @@ class SalesTeamAnalytics extends Component {
         search: "",
         searchedUser: [],
         userRevenue: [],
-        analyticsSelection: "business",
+        analyticsSelection: "Business",
         clientOrUserSelection: "",
         // hours
         twentyFourHourDifference: moment().subtract(24, 'hours').format("ddd, hA"),
@@ -80,7 +81,6 @@ class SalesTeamAnalytics extends Component {
         twelveMonthDifference: moment().subtract(12, 'months').startOf('month').format("MMM YYYY"),
         target: 20,
         timeFrame: "past-month",
-        totalSales: [],
         data: {
             // time frame values
             labels: [],
@@ -94,7 +94,23 @@ class SalesTeamAnalytics extends Component {
                 }
             ]
         },
+        chartTitle: "",
+        timeFrames: [],
+        chartBGColor: "",
+        chartData: [],
         chartIsLoaded: false,
+        totalSales: [],
+        averageOrderQuantity: [],
+        averageOrderTotal: [],
+        largestOrderTotal: [],
+        lowestOrderTotal: [],
+        blackRavenCount: [],
+        hopsPotatoCount: 0,
+        sizzleCiderCount: 0,
+        soundsPugetCount: 0,
+        extraFoamCount: 0,
+        krakenCount: 0,
+        samsBeerCount: 0,
     }
 
     getAnalytics = (start, end) => {
@@ -106,15 +122,39 @@ class SalesTeamAnalytics extends Component {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
                         const totalSales = state.totalSales.concat(totalString);
+                        let avgOrderTotal = res.data[0].averageOrderTotal.toFixed(2);
+                        let avgOrderString = avgOrderTotal.toString();
+                        const averageOrderTotal = state.averageOrderTotal.concat(avgOrderString);
+                        let avgOrderQuantity = Math.round(res.data[0].averageOrderQuantity);
+                        let avgQuantityString = avgOrderQuantity.toString();
+                        const averageOrderQuantity = state.averageOrderQuantity.concat(avgQuantityString);
+                        let largestTotal = res.data[0].largestOrderTotal.toFixed(2);
+                        let largestString = largestTotal.toString();
+                        const largestOrderTotal = state.largestOrderTotal.concat(largestString);
+                        let lowestTotal = res.data[0].lowestOrderTotal.toFixed(2);
+                        let lowestString = lowestTotal.toString();
+                        const lowestOrderTotal = state.lowestOrderTotal.concat(lowestString);
                         return {
-                            totalSales
+                            totalSales,
+                            averageOrderTotal,
+                            averageOrderQuantity,
+                            largestOrderTotal,
+                            lowestOrderTotal
                         };
                     } else {
                         // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
+                        const averageOrderTotal = state.averageOrderTotal.concat(noSale);
+                        const averageOrderQuantity = state.averageOrderQuantity.concat(noSale);
+                        const largestOrderTotal = state.largestOrderTotal.concat(noSale);
+                        const lowestOrderTotal = state.lowestOrderTotal.concat(noSale);
                         return {
-                            totalSales
+                            totalSales,
+                            averageOrderTotal,
+                            averageOrderQuantity,
+                            largestOrderTotal,
+                            lowestOrderTotal
                         };
                     }
                 })
@@ -123,9 +163,6 @@ class SalesTeamAnalytics extends Component {
     }
     getUserAnalytics = (start, end) => {
         const id = this.state.userSelection;
-        console.log(id)
-        console.log(start)
-        console.log(end)
         API.getUserOrderAnalytics(id, start, end)
             .then(res =>
                 this.setState(state => {
@@ -134,22 +171,47 @@ class SalesTeamAnalytics extends Component {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
                         const totalSales = state.totalSales.concat(totalString);
+                        let avgOrderTotal = res.data[0].averageOrderTotal.toFixed(2);
+                        let avgOrderString = avgOrderTotal.toString();
+                        const averageOrderTotal = state.averageOrderTotal.concat(avgOrderString);
+                        let avgOrderQuantity = Math.round(res.data[0].averageOrderQuantity);
+                        let avgQuantityString = avgOrderQuantity.toString();
+                        const averageOrderQuantity = state.averageOrderQuantity.concat(avgQuantityString);
+                        let largestTotal = res.data[0].largestOrderTotal.toFixed(2);
+                        let largestString = largestTotal.toString();
+                        const largestOrderTotal = state.largestOrderTotal.concat(largestString);
+                        let lowestTotal = res.data[0].lowestOrderTotal.toFixed(2);
+                        let lowestString = lowestTotal.toString();
+                        const lowestOrderTotal = state.lowestOrderTotal.concat(lowestString);
                         return {
-                            totalSales
+                            totalSales,
+                            averageOrderTotal,
+                            averageOrderQuantity,
+                            largestOrderTotal,
+                            lowestOrderTotal
                         };
                     } else {
                         // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
+                        const averageOrderTotal = state.averageOrderTotal.concat(noSale);
+                        const averageOrderQuantity = state.averageOrderQuantity.concat(noSale);
+                        const largestOrderTotal = state.largestOrderTotal.concat(noSale);
+                        const lowestOrderTotal = state.lowestOrderTotal.concat(noSale);
                         return {
-                            totalSales
+                            totalSales,
+                            averageOrderTotal,
+                            averageOrderQuantity,
+                            largestOrderTotal,
+                            lowestOrderTotal
                         };
                     }
                 })
             )
             .catch(error => console.log("User analytics error: " + error));
     }
-    getClientAnalytics = (id, start, end) => {
+    getClientAnalytics = (start, end) => {
+        const id = this.state.clientSelection;
         API.getClientOrderAnalytics(id, start, end)
             .then(res =>
                 this.setState(state => {
@@ -158,15 +220,39 @@ class SalesTeamAnalytics extends Component {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
                         const totalSales = state.totalSales.concat(totalString);
+                        let avgOrderTotal = res.data[0].averageOrderTotal.toFixed(2);
+                        let avgOrderString = avgOrderTotal.toString();
+                        const averageOrderTotal = state.averageOrderTotal.concat(avgOrderString);
+                        let avgOrderQuantity = Math.round(res.data[0].averageOrderQuantity);
+                        let avgQuantityString = avgOrderQuantity.toString();
+                        const averageOrderQuantity = state.averageOrderQuantity.concat(avgQuantityString);
+                        let largestTotal = res.data[0].largestOrderTotal.toFixed(2);
+                        let largestString = largestTotal.toString();
+                        const largestOrderTotal = state.largestOrderTotal.concat(largestString);
+                        let lowestTotal = res.data[0].lowestOrderTotal.toFixed(2);
+                        let lowestString = lowestTotal.toString();
+                        const lowestOrderTotal = state.lowestOrderTotal.concat(lowestString);
                         return {
-                            totalSales
+                            totalSales,
+                            averageOrderTotal,
+                            averageOrderQuantity,
+                            largestOrderTotal,
+                            lowestOrderTotal
                         };
                     } else {
                         // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
+                        const averageOrderTotal = state.averageOrderTotal.concat(noSale);
+                        const averageOrderQuantity = state.averageOrderQuantity.concat(noSale);
+                        const largestOrderTotal = state.largestOrderTotal.concat(noSale);
+                        const lowestOrderTotal = state.lowestOrderTotal.concat(noSale);
                         return {
-                            totalSales
+                            totalSales,
+                            averageOrderTotal,
+                            averageOrderQuantity,
+                            largestOrderTotal,
+                            lowestOrderTotal
                         };
                     }
                 })
@@ -176,24 +262,11 @@ class SalesTeamAnalytics extends Component {
 
     UNSAFE_componentWillMount() {
         this.checkUsers();
-        this.checkTasks();
         this.checkClients();
         this.checkOrders();
-        this.setTimeFrame();
     }
-
-    componentDidUpdate() {
-        if (this.state.analyticsSelection === "business") {
-            console.log("business selection");
-            
-        }
-        if (this.state.analyticsSelection === "client" && this.state.clientOrUserSelection === "client") {
-            console.log("client selection");
-        }
-        if (this.state.analyticsSelection === "employee" && this.state.clientOrUserSelection === "employee") {
-            console.log("employee selection");
-        }
-        console.log(this.state.timeFrame);
+    componentDidMount() {
+        this.setTimeFrame();
     }
 
     getLastDayAnalytics = () => {
@@ -207,7 +280,7 @@ class SalesTeamAnalytics extends Component {
         const seven = moment().subtract(6, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const eight = moment().subtract(3, 'hours').format("YYYY-MM-DDTHH:mm:ss");
         const today = moment().format("YYYY-MM-DDTHH:mm:ss");
-        if (this.state.analyticsSelection === "employee") {
+        if (this.state.analyticsSelection === "Employee") {
             this.getUserAnalytics(one, two);
             this.getUserAnalytics(two, three);
             this.getUserAnalytics(three, four);
@@ -217,7 +290,7 @@ class SalesTeamAnalytics extends Component {
             this.getUserAnalytics(seven, eight);
             this.getUserAnalytics(eight, today);
         }
-        if (this.state.analyticsSelection === "client") {
+        if (this.state.analyticsSelection === "Client") {
             this.getClientAnalytics(one, two);
             this.getClientAnalytics(two, three);
             this.getClientAnalytics(three, four);
@@ -227,7 +300,7 @@ class SalesTeamAnalytics extends Component {
             this.getClientAnalytics(seven, eight);
             this.getClientAnalytics(eight, today);
         }
-        if (this.state.analyticsSelection === "business") {
+        if (this.state.analyticsSelection === "Business") {
             this.getAnalytics(one, two);
             this.getAnalytics(two, three);
             this.getAnalytics(three, four);
@@ -249,7 +322,7 @@ class SalesTeamAnalytics extends Component {
         const seven = moment().subtract(1, 'days').format("YYYY-MM-DD");
         const eight = moment().startOf('day').format("YYYY-MM-DD");
         const currentTime = moment().format("YYYY-MM-DDTHH:mm:ss");
-        if (this.state.analyticsSelection === "employee") {
+        if (this.state.analyticsSelection === "Employee") {
             this.getUserAnalytics(one, two);
             this.getUserAnalytics(two, three);
             this.getUserAnalytics(three, four);
@@ -259,7 +332,7 @@ class SalesTeamAnalytics extends Component {
             this.getUserAnalytics(seven, eight);
             this.getUserAnalytics(eight, currentTime);
         }
-        if (this.state.analyticsSelection === "client") {
+        if (this.state.analyticsSelection === "Client") {
             this.getClientAnalytics(one, two);
             this.getClientAnalytics(two, three);
             this.getClientAnalytics(three, four);
@@ -269,7 +342,7 @@ class SalesTeamAnalytics extends Component {
             this.getClientAnalytics(seven, eight);
             this.getClientAnalytics(eight, currentTime);
         }
-        if (this.state.analyticsSelection === "business") {
+        if (this.state.analyticsSelection === "Business") {
             this.getAnalytics(one, two);
             this.getAnalytics(two, three);
             this.getAnalytics(three, four);
@@ -288,19 +361,19 @@ class SalesTeamAnalytics extends Component {
         const three = moment().subtract(14, 'days').format("YYYY-MM-DD");
         const four = moment().subtract(7, 'days').format("YYYY-MM-DD");
         const today = moment().format("YYYY-MM-DD");
-        if (this.state.analyticsSelection === "employee") {
+        if (this.state.analyticsSelection === "Employee") {
             this.getUserAnalytics(one, two);
             this.getUserAnalytics(two, three);
             this.getUserAnalytics(three, four);
             this.getUserAnalytics(four, today);
         }
-        if (this.state.analyticsSelection === "client") {
+        if (this.state.analyticsSelection === "Client") {
             this.getClientAnalytics(one, two);
             this.getClientAnalytics(two, three);
             this.getClientAnalytics(three, four);
             this.getClientAnalytics(four, today);
         }
-        if (this.state.analyticsSelection === "business") {
+        if (this.state.analyticsSelection === "Business") {
             this.getAnalytics(one, two);
             this.getAnalytics(two, three);
             this.getAnalytics(three, four);
@@ -317,7 +390,7 @@ class SalesTeamAnalytics extends Component {
         const five = moment().subtract(28, 'days').format("YYYY-MM-DD");
         const six = moment().subtract(14, 'days').format("YYYY-MM-DD");
         const today = moment().format("YYYY-MM-DD");
-        if (this.state.analyticsSelection === "employee") {
+        if (this.state.analyticsSelection === "Employee") {
             this.getUserAnalytics(one, two);
             this.getUserAnalytics(two, three);
             this.getUserAnalytics(three, four);
@@ -325,7 +398,7 @@ class SalesTeamAnalytics extends Component {
             this.getUserAnalytics(five, six);
             this.getUserAnalytics(six, today);
         }
-        if (this.state.analyticsSelection === "client") {
+        if (this.state.analyticsSelection === "Client") {
             this.getClientAnalytics(one, two);
             this.getClientAnalytics(two, three);
             this.getClientAnalytics(three, four);
@@ -333,7 +406,7 @@ class SalesTeamAnalytics extends Component {
             this.getClientAnalytics(five, six);
             this.getClientAnalytics(six, today);
         }
-        if (this.state.analyticsSelection === "business") {
+        if (this.state.analyticsSelection === "Business") {
             this.getAnalytics(one, two);
             this.getAnalytics(two, three);
             this.getAnalytics(three, four);
@@ -359,7 +432,7 @@ class SalesTeamAnalytics extends Component {
         const twelve = moment().subtract(1, 'months').startOf('month').format("YYYY-MM-DD");
         const thisMonth = moment().startOf('month').format("YYYY-MM-DD");
         const today = moment().format("YYYY-MM-DD");
-        if (this.state.analyticsSelection === "employee") {
+        if (this.state.analyticsSelection === "Employee") {
             this.getUserAnalytics(one, two);
             this.getUserAnalytics(two, three);
             this.getUserAnalytics(three, four);
@@ -374,7 +447,7 @@ class SalesTeamAnalytics extends Component {
             this.getUserAnalytics(twelve, thisMonth);
             this.getUserAnalytics(thisMonth, today);
         }
-        if (this.state.analyticsSelection === "client") {
+        if (this.state.analyticsSelection === "Client") {
             this.getClientAnalytics(one, two);
             this.getClientAnalytics(two, three);
             this.getClientAnalytics(three, four);
@@ -389,7 +462,7 @@ class SalesTeamAnalytics extends Component {
             this.getClientAnalytics(twelve, thisMonth);
             this.getClientAnalytics(thisMonth, today);
         }
-        if (this.state.analyticsSelection === "business") {
+        if (this.state.analyticsSelection === "Business") {
             this.getAnalytics(one, two);
             this.getAnalytics(two, three);
             this.getAnalytics(three, four);
@@ -407,12 +480,24 @@ class SalesTeamAnalytics extends Component {
     }
 
     setTimeFrame() {
+        this.setState({
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: "",
+                        backgroundColor: "",
+                        data: []
+                    }
+                ]
+            }
+        });
         const timeFrame = this.state.timeFrame;
-        this.setState({ target: 20 });
+        this.setState({ target: 20, chartIsLoaded: false });
         if (timeFrame === "past-hours") {
             this.getLastDayAnalytics();
             if (this.state.totalSales.length < 8) {
-                this.setState({ target: 7, chartIsLoaded: true });
+                this.setState({ target: 7 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -436,14 +521,15 @@ class SalesTeamAnalytics extends Component {
                                 }]
                             }
                         }))
-                    }.bind(this), 1000
+                        this.setState({ chartIsLoaded: true });
+                    }.bind(this), 5000
                 )
             }
         }
         else if (timeFrame === "past-week") {
             this.getLastWeekAnalytics();
             if (this.state.totalSales.length < 8) {
-                this.setState({ target: 7, chartIsLoaded: true });
+                this.setState({ target: 7 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -467,14 +553,15 @@ class SalesTeamAnalytics extends Component {
                                 }]
                             }
                         }))
-                    }.bind(this), 1000
+                        this.setState({ chartIsLoaded: true });
+                    }.bind(this), 2000
                 )
             }
         }
         else if (timeFrame === "past-month") {
             this.getLastMonthAnalytics();
             if (this.state.totalSales.length < 4) {
-                this.setState({ target: 3, chartIsLoaded: true });
+                this.setState({ target: 3 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -494,14 +581,26 @@ class SalesTeamAnalytics extends Component {
                                 }]
                             }
                         }))
-                    }.bind(this), 1000
+                        // this.setState({
+                        //     chartTitle: "Month Profit in $",
+                        //     timeFrames: [
+                        //         this.state.fourWeekDifference + " - " + this.state.threeWeekDifference,
+                        //         this.state.threeWeekDifference + " - " + this.state.twoWeekDifference,
+                        //         this.state.twoWeekDifference + " - " + this.state.weekDifference,
+                        //         this.state.weekDifference + " - " + this.state.zeroDayDifference
+                        //     ],
+                        //     chartBGColor: "rgb(35,84,147)",
+                        //     chartData: this.state.totalSales
+                        // })
+                        this.setState({ chartIsLoaded: true });
+                    }.bind(this), 2000
                 )
             }
         }
         else if (timeFrame === "past-quarter") {
             this.getLastQuarterAnalytics();
             if (this.state.totalSales.length < 6) {
-                this.setState({ target: 5, chartIsLoaded: true });
+                this.setState({ target: 5 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -523,14 +622,15 @@ class SalesTeamAnalytics extends Component {
                                 }]
                             }
                         }))
-                    }.bind(this), 1000
+                        this.setState({ chartIsLoaded: true });
+                    }.bind(this), 2000
                 )
             }
         }
         else if (timeFrame === "past-year") {
             this.getLastYearAnalytics();
             if (this.state.totalSales.length < 13) {
-                this.setState({ target: 12, chartIsLoaded: true });
+                this.setState({ target: 12 });
                 setTimeout(
                     function () {
                         this.setState(prevState => ({
@@ -561,7 +661,8 @@ class SalesTeamAnalytics extends Component {
                                 }]
                             }
                         }))
-                    }.bind(this), 1000
+                        this.setState({ chartIsLoaded: true });
+                    }.bind(this), 2000
                 )
             }
         } else {
@@ -569,14 +670,6 @@ class SalesTeamAnalytics extends Component {
         }
     }
 
-    // get tasks
-    checkTasks = () => {
-        API.getTasks()
-            .then(res =>
-                this.setState({ tasks: res.data.tasks })
-            )
-            .catch(error => console.log("Check tasks error: " + error))
-    }
     // get user total revenue
     getUserTotalRevenue = (id, start, end) => {
         if (!start) {
@@ -633,8 +726,19 @@ class SalesTeamAnalytics extends Component {
     }
     checkState = () => {
         console.log(this.state.totalSales);
-        console.log(this.state.data.datasets[0].data[0]);
-        console.log(this.state.userSelection);
+        console.log(this.state.averageOrderTotal);
+        console.log(this.state.averageOrderQuantity);
+        console.log(this.state.largestOrderTotal);
+        console.log(this.state.lowestOrderTotal);
+        console.log("blackRavenCount: " + this.state.blackRavenCount);
+        console.log("hopsPotatoCount: " + this.state.hopsPotatoCount);
+        console.log("sizzleCiderCount: " + this.state.sizzleCiderCount);
+        console.log("soundsPugetCount: " + this.state.soundsPugetCount);
+        console.log("extraFoamCount: " + this.state.extraFoamCount);
+        console.log("krakenCount: " + this.state.krakenCount);
+        console.log("samsBeerCount: " + this.state.samsBeerCount);
+        // console.log(this.state.data.datasets[0].data[0]);
+        // console.log(this.state.data);
     }
     // create user full name
     fullName = (first, last) => {
@@ -709,29 +813,20 @@ class SalesTeamAnalytics extends Component {
         const name = event.target.name;
         this.setState({
             [name]: value,
-            clientOrUserSelection: value
+            clientOrUserSelection: value,
         });
     }
-    handleUserChange = (event) => {
+    handleUserOrClientChange = (event) => {
         let value = event.target.value;
         const name = event.target.name;
         this.setState({
             [name]: value
         });
         setTimeout(
-            function() {
+            function () {
                 this.setTimeFrame();
-            }.bind(this), 5000
+            }.bind(this), 500
         )
-        
-    }
-    handleClientChange = (event) => {
-        let value = event.target.value;
-        const name = event.target.name;
-        this.setState({
-            [name]: value
-        });
-        this.setTimeFrame();
     }
     searchAndModal = event => {
         this.handleFormSubmit(event);
@@ -754,35 +849,47 @@ class SalesTeamAnalytics extends Component {
 
     set24Hours = () => (event) => {
         event.preventDefault();
-        this.setState({ timeFrame: "past-hours", totalSales: [] });
-        setTimeout(
-            function () {
-                this.setTimeFrame();
-            }.bind(this), 500
-        )
+        this.setState({ totalSales: [], timeFrame: "past-hours" });
+        if (this.state.timeFrame === "past-hours") {
+            this.setTimeFrame();
+        } else {
+            setTimeout(
+                function () {
+                    this.setTimeFrame();
+                }.bind(this), 500
+            )
+        }
 
     }
     setWeek = () => (event) => {
         event.preventDefault();
-        this.setState({ timeFrame: "past-week", totalSales: [] });
-        setTimeout(
-            function () {
-                this.setTimeFrame();
-            }.bind(this), 500
-        )
+        this.setState({ totalSales: [], timeFrame: "past-week" });
+        if (this.state.timeFrame === "past-week") {
+            this.setTimeFrame();
+        } else {
+            setTimeout(
+                function () {
+                    this.setTimeFrame();
+                }.bind(this), 500
+            )
+        }
     }
     setMonth = () => (event) => {
         event.preventDefault();
-        this.setState({ timeFrame: "past-month", totalSales: [] });
-        setTimeout(
-            function () {
-                this.setTimeFrame();
-            }.bind(this), 500
-        )
+        this.setState({ totalSales: [], timeFrame: "past-month" });
+        if (this.state.timeFrame === "past-month") {
+            this.setTimeFrame();
+        } else {
+            setTimeout(
+                function () {
+                    this.setTimeFrame();
+                }.bind(this), 500
+            )
+        }
     }
     setQuarter = () => (event) => {
         event.preventDefault();
-        this.setState({ timeFrame: "past-quarter", totalSales: [] });
+        this.setState({ totalSales: [], timeFrame: "past-quarter" });
         if (this.state.timeFrame === "past-quarter") {
             this.setTimeFrame();
         } else {
@@ -795,12 +902,16 @@ class SalesTeamAnalytics extends Component {
     }
     setYear = () => (event) => {
         event.preventDefault();
-        this.setState({ timeFrame: "past-year", totalSales: [] });
-        setTimeout(
-            function () {
-                this.setTimeFrame();
-            }.bind(this), 500
-        )
+        this.setState({ totalSales: [], timeFrame: "past-year" });
+        if (this.state.timeFrame === "past-year") {
+            this.setTimeFrame();
+        } else {
+            setTimeout(
+                function () {
+                    this.setTimeFrame();
+                }.bind(this), 500
+            )
+        }
     }
 
     render() {
@@ -812,10 +923,10 @@ class SalesTeamAnalytics extends Component {
                     <Grid
                         container
                         direction="row"
-                        justify="left"
+                        justify="flex-start"
                         alignItems="center"
                     >
-                        <Grid item lg={6}>
+                        <Grid item lg={5}>
                             <FormControl
                                 fullWidth={true}
                             >
@@ -825,25 +936,26 @@ class SalesTeamAnalytics extends Component {
                                     onChange={this.handleDropDownChange}
                                     name="analyticsSelection"
                                 >
-                                    <MenuItem value={"business"}>Business</MenuItem>
-                                    <MenuItem value={"client"}>Client</MenuItem>
-                                    <MenuItem value={"employee"}>Employee</MenuItem>
+                                    <MenuItem value={"Business"}>Business</MenuItem>
+                                    <MenuItem value={"Client"}>Client</MenuItem>
+                                    <MenuItem value={"Employee"}>Employee</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
-                        {this.state.clientOrUserSelection === "client" ? (
-                            <Grid item lg={6}>
+                        <Grid item lg={2} />
+                        {this.state.clientOrUserSelection === "Client" ? (
+                            <Grid item lg={5}>
                                 <FormControl
                                     fullWidth={true}
                                 >
                                     <InputLabel htmlFor="age-native-helper">Client</InputLabel>
                                     <Select
                                         value={this.state.clientSelection}
-                                        onChange={this.handleClientChange}
+                                        onChange={this.handleUserOrClientChange}
                                         name="clientSelection"
                                     >
                                         {this.state.clients.map(client => (
-                                            <MenuItem key={client._id} value={client._id}>{client.firstName} {client.lastName}</MenuItem>
+                                            <MenuItem key={client._id} value={client._id}>{client.name}</MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>
@@ -851,15 +963,15 @@ class SalesTeamAnalytics extends Component {
                         ) : (
                                 <div />
                             )}
-                        {this.state.clientOrUserSelection === "employee" ? (
-                            <Grid item lg={6}>
+                        {this.state.clientOrUserSelection === "Employee" ? (
+                            <Grid item lg={5}>
                                 <FormControl
                                     fullWidth={true}
                                 >
                                     <InputLabel htmlFor="age-native-helper">Employee</InputLabel>
                                     <Select
                                         value={this.state.userSelection}
-                                        onChange={this.handleUserChange}
+                                        onChange={this.handleUserOrClientChange}
                                         name="userSelection"
                                     >
                                         {this.state.users.map(user => (
@@ -877,6 +989,7 @@ class SalesTeamAnalytics extends Component {
                         direction="row"
                         justify="center"
                         alignItems="center"
+                        style={{ margin: "10px" }}
                     >
                         <Grid item xs={4} sm={2}>
                             <Button
@@ -915,9 +1028,10 @@ class SalesTeamAnalytics extends Component {
                         justify="center"
                         alignItems="center"
                     >
-                        {this.state.totalSales.length > this.state.target && this.state.chartIsLoaded ? (
+                        {Object.keys(this.state.data).length && this.state.totalSales.length > this.state.target && this.state.chartIsLoaded ? (
                             <BarChart
                                 data={this.state.data}
+                                title={this.state.analyticsSelection}
                             />
                         ) : (
                                 <Grid
@@ -941,7 +1055,7 @@ class SalesTeamAnalytics extends Component {
                             )}
                     </Grid>
                 </div>
-                {/* <Grid container>
+                <Grid container>
                     <Grid item lg={4}></Grid>
                     <Grid item lg={4}>
                         <Search
@@ -966,12 +1080,8 @@ class SalesTeamAnalytics extends Component {
                         // popularProduct={this.userMostSoldProduct(user._id)}
                         />
                     ))}
-
-                </div> */}
-                {/* <Grid container spacing={4}>
-                    <Grid item lg={12}>
-                        <h1 className="team-analytics-cards">Sales Team</h1>
-                    </Grid>
+                </div>
+                <Grid container spacing={4}>
                     {this.state.orders.length > 0 &&
                         this.state.users.length > 0 &&
                         this.state.clients.length > 0 &&
@@ -1010,7 +1120,7 @@ class SalesTeamAnalytics extends Component {
                             </Grid>
                         )
                     }
-                </Grid> */}
+                </Grid>
             </div>
         )
     }
