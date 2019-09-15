@@ -18,8 +18,6 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Messenger from './Messenger';
 import ListItems from './ListItems';
 import Background from '../images/dust_scratches.png'
-import Background2 from '../images/dark_wood.png'
-
 
 const drawerWidth = 300;
 
