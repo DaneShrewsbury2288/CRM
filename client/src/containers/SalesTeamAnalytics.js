@@ -3,10 +3,14 @@ import PageTitle from "../components/PageTitle";
 import Grid from '@material-ui/core/Grid';
 import API from '../utilities/api';
 import UserAPI from '../utils/API';
-import Card from "../components/Card";
+import Button from '../components/Button';
+import BarChart from '../components/BarChart';
+// import Card from "../components/Card";
 import PacmanLoader from 'react-spinners/PacmanLoader';
-import Modal from '../components/TeamModal';
-import Search from '../components/TeamSearch';
+// import Modal from '../components/TeamModal';
+// import Search from '../components/TeamSearch';
+import moment from "moment";
+
 
 class SalesTeamAnalytics extends Component {
     state = {
@@ -21,6 +25,93 @@ class SalesTeamAnalytics extends Component {
         search: "",
         searchedUser: [],
         userRevenue: [],
+        // hours
+        twentyFourHourDifference: moment().subtract(24, 'hours').format("ddd, hA"),
+        twentyOneHourDifference: moment().subtract(21, 'hours').format("ddd, hA"),
+        eightteenHourDifference: moment().subtract(18, 'hours').format("ddd, hA"),
+        fifteenHourDifference: moment().subtract(15, 'hours').format("ddd, hA"),
+        twelveHourDifference: moment().subtract(12, 'hours').format("ddd, hA"),
+        nineHourDifference: moment().subtract(9, 'hours').format("ddd, hA"),
+        sixHourDifference: moment().subtract(6, 'hours').format("ddd, hA"),
+        threeHourDifference: moment().subtract(3, 'hours').format("ddd, hA"),
+        zeroHourDifference: moment().format("ddd, hA"),
+        // days
+        sevenDayDifference: moment().subtract(7, 'days').format("MMM D"),
+        sixDayDifference: moment().subtract(6, 'days').format("MMM D"),
+        fiveDayDifference: moment().subtract(5, 'days').format("MMM D"),
+        fourDayDifference: moment().subtract(4, 'days').format("MMM D"),
+        threeDayDifference: moment().subtract(3, 'days').format("MMM D"),
+        twoDayDifference: moment().subtract(2, 'days').format("MMM D"),
+        oneDayDifference: moment().subtract(1, 'days').format("MMM D"),
+        zeroDayDifference: moment().subtract(0, 'days').format("MMM D"),
+        // weeks
+        weekDifference: moment().subtract(7, 'days').format("MMM D"),
+        twoWeekDifference: moment().subtract(14, 'days').format("MMM D"),
+        threeWeekDifference: moment().subtract(21, 'days').format("MMM D"),
+        fourWeekDifference: moment().subtract(28, 'days').format("MMM D"),
+        // past quarter
+        quarterTwoDifference: moment().subtract(14, 'days').format("MMM D"),
+        quarterFourDifference: moment().subtract(28, 'days').format("MMM D"),
+        quarterSixDifference: moment().subtract(42, 'days').format("MMM D"),
+        quarterEightDifference: moment().subtract(56, 'days').format("MMM D"),
+        quarterTenDifference: moment().subtract(70, 'days').format("MMM D"),
+        quarterTwelveDifference: moment().subtract(84, 'days').format("MMM D"),
+        // months
+        currentMonth: moment().startOf('month').format("MMM YYYY"),
+        oneMonthDifference: moment().subtract(1, 'months').startOf('month').format("MMM YYYY"),
+        twoMonthDifference: moment().subtract(2, 'months').startOf('month').format("MMM YYYY"),
+        threeMonthDifference: moment().subtract(3, 'months').startOf('month').format("MMM YYYY"),
+        fourMonthDifference: moment().subtract(4, 'months').startOf('month').format("MMM YYYY"),
+        fiveMonthDifference: moment().subtract(5, 'months').startOf('month').format("MMM YYYY"),
+        sixMonthDifference: moment().subtract(6, 'months').startOf('month').format("MMM YYYY"),
+        sevenMonthDifference: moment().subtract(7, 'months').startOf('month').format("MMM YYYY"),
+        eightMonthDifference: moment().subtract(8, 'months').startOf('month').format("MMM YYYY"),
+        nineMonthDifference: moment().subtract(9, 'months').startOf('month').format("MMM YYYY"),
+        tenMonthDifference: moment().subtract(10, 'months').startOf('month').format("MMM YYYY"),
+        elevenMonthDifference: moment().subtract(11, 'months').startOf('month').format("MMM YYYY"),
+        twelveMonthDifference: moment().subtract(12, 'months').startOf('month').format("MMM YYYY"),
+        target: 20,
+        timeFrame: "past-month",
+        totalSales: [],
+        data: {
+            // time frame values
+            labels: [],
+            datasets: [
+                {
+                    // label for time frame
+                    label: "",
+                    backgroundColor: "",
+                    // data results
+                    data: []
+                }
+            ]
+        },
+        chartIsLoaded: false,
+    }
+
+    getAnalytics = (start, end) => {
+        API.getBusinessAnalytics(start, end)
+            .then(res =>
+                this.setState(state => {
+                    // if any sales have occured in selected time period
+                    if (res.data[0] !== undefined) {
+                        let total = res.data[0].profit.toFixed(2);
+                        let totalString = total.toString();
+                        const totalSales = state.totalSales.concat(totalString);
+                        return {
+                            totalSales
+                        };
+                    } else {
+                        // set to zero if no sales
+                        const noSale = "0.00";
+                        const totalSales = state.totalSales.concat(noSale);
+                        return {
+                            totalSales
+                        };
+                    }
+                })
+            )
+            .catch(error => console.log("Business analytics error: " + error));
     }
 
     UNSAFE_componentWillMount() {
@@ -28,6 +119,273 @@ class SalesTeamAnalytics extends Component {
         this.checkTasks();
         this.checkClients();
         this.checkOrders();
+        this.setTimeFrame();
+    }
+
+    componentDidUpdate() {
+        console.log(this.state.timeFrame);
+    }
+
+    getLastDayAnalytics = () => {
+        this.setState({ totalSales: [] });
+        const one = moment().subtract(24, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const two = moment().subtract(21, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const three = moment().subtract(18, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const four = moment().subtract(15, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const five = moment().subtract(12, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const six = moment().subtract(9, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const seven = moment().subtract(6, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const eight = moment().subtract(3, 'hours').format("YYYY-MM-DDTHH:mm:ss");
+        const today = moment().format("YYYY-MM-DDTHH:mm:ss");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, five);
+        this.getAnalytics(five, six);
+        this.getAnalytics(six, seven);
+        this.getAnalytics(seven, eight);
+        this.getAnalytics(eight, today);
+    }
+
+    getLastWeekAnalytics = () => {
+        const one = moment().subtract(7, 'days').format("YYYY-MM-DD");
+        const two = moment().subtract(6, 'days').format("YYYY-MM-DD");
+        const three = moment().subtract(5, 'days').format("YYYY-MM-DD");
+        const four = moment().subtract(4, 'days').format("YYYY-MM-DD");
+        const five = moment().subtract(3, 'days').format("YYYY-MM-DD");
+        const six = moment().subtract(2, 'days').format("YYYY-MM-DD");
+        const seven = moment().subtract(1, 'days').format("YYYY-MM-DD");
+        const eight = moment().startOf('day').format("YYYY-MM-DD");
+        const currentTime = moment().format("YYYY-MM-DDTHH:mm:ss");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, five);
+        this.getAnalytics(five, six);
+        this.getAnalytics(six, seven);
+        this.getAnalytics(seven, eight);
+        this.getAnalytics(eight, currentTime);
+    }
+
+    getLastMonthAnalytics = () => {
+        const one = moment().subtract(28, 'days').format("YYYY-MM-DD");
+        const two = moment().subtract(21, 'days').format("YYYY-MM-DD");
+        const three = moment().subtract(14, 'days').format("YYYY-MM-DD");
+        const four = moment().subtract(7, 'days').format("YYYY-MM-DD");
+        const today = moment().format("YYYY-MM-DD");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, today);
+    }
+
+    getLastQuarterAnalytics = () => {
+        const one = moment().subtract(84, 'days').format("YYYY-MM-DD");
+        const two = moment().subtract(70, 'days').format("YYYY-MM-DD");
+        const three = moment().subtract(56, 'days').format("YYYY-MM-DD");
+        const four = moment().subtract(42, 'days').format("YYYY-MM-DD");
+        const five = moment().subtract(28, 'days').format("YYYY-MM-DD");
+        const six = moment().subtract(14, 'days').format("YYYY-MM-DD");
+        const today = moment().format("YYYY-MM-DD");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, five);
+        this.getAnalytics(five, six);
+        this.getAnalytics(six, today);
+    }
+
+    getLastYearAnalytics = () => {
+        const one = moment().subtract(12, 'months').startOf('month').format("YYYY-MM-DD");
+        const two = moment().subtract(11, 'months').startOf('month').format("YYYY-MM-DD");
+        const three = moment().subtract(10, 'months').startOf('month').format("YYYY-MM-DD");
+        const four = moment().subtract(9, 'months').startOf('month').format("YYYY-MM-DD");
+        const five = moment().subtract(8, 'months').startOf('month').format("YYYY-MM-DD");
+        const six = moment().subtract(7, 'months').startOf('month').format("YYYY-MM-DD");
+        const seven = moment().subtract(6, 'months').startOf('month').format("YYYY-MM-DD");
+        const eight = moment().subtract(5, 'months').startOf('month').format("YYYY-MM-DD");
+        const nine = moment().subtract(4, 'months').startOf('month').format("YYYY-MM-DD");
+        const ten = moment().subtract(3, 'months').startOf('month').format("YYYY-MM-DD");
+        const eleven = moment().subtract(2, 'months').startOf('month').format("YYYY-MM-DD");
+        const twelve = moment().subtract(1, 'months').startOf('month').format("YYYY-MM-DD");
+        const thisMonth = moment().startOf('month').format("YYYY-MM-DD");
+        const today = moment().format("YYYY-MM-DD");
+        this.getAnalytics(one, two);
+        this.getAnalytics(two, three);
+        this.getAnalytics(three, four);
+        this.getAnalytics(four, five);
+        this.getAnalytics(five, six);
+        this.getAnalytics(six, seven);
+        this.getAnalytics(seven, eight);
+        this.getAnalytics(eight, nine);
+        this.getAnalytics(nine, ten);
+        this.getAnalytics(ten, eleven);
+        this.getAnalytics(eleven, twelve);
+        this.getAnalytics(twelve, thisMonth);
+        this.getAnalytics(thisMonth, today);
+    }
+
+    setTimeFrame() {
+        const timeFrame = this.state.timeFrame;
+        this.setState({ target: 20 });
+        if (timeFrame === "past-hours") {
+            this.getLastDayAnalytics();
+            if (this.state.totalSales.length < 8) {
+                this.setState({ target: 7, chartIsLoaded: true });
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.twentyFourHourDifference + " - " + this.state.twentyOneHourDifference,
+                                    this.state.twentyOneHourDifference + " - " + this.state.eightteenHourDifference,
+                                    this.state.eightteenHourDifference + " - " + this.state.fifteenHourDifference,
+                                    this.state.fifteenHourDifference + " - " + this.state.twelveHourDifference,
+                                    this.state.twelveHourDifference + " - " + this.state.nineHourDifference,
+                                    this.state.nineHourDifference + " - " + this.state.sixHourDifference,
+                                    this.state.sixHourDifference + " - " + this.state.threeHourDifference,
+                                    this.state.threeHourDifference + " - " + this.state.zeroHourDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "24-hour Profit in $",
+                                    backgroundColor: "rgb(1,41,95)",
+                                    data: [this.state.totalSales]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
+            }
+        }
+        else if (timeFrame === "past-week") {
+            this.getLastWeekAnalytics();
+            if (this.state.totalSales.length < 8) {
+                this.setState({ target: 7, chartIsLoaded: true });
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.sevenDayDifference,
+                                    this.state.sixDayDifference,
+                                    this.state.fiveDayDifference,
+                                    this.state.fourDayDifference,
+                                    this.state.threeDayDifference,
+                                    this.state.twoDayDifference,
+                                    this.state.oneDayDifference,
+                                    this.state.zeroDayDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Week Profit in $",
+                                    backgroundColor: "rgb(66,102,150)",
+                                    data: [this.state.totalSales]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
+            }
+        }
+        else if (timeFrame === "past-month") {
+            this.getLastMonthAnalytics();
+            if (this.state.totalSales.length < 4) {
+                this.setState({ target: 3, chartIsLoaded: true });
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.fourWeekDifference + " - " + this.state.threeWeekDifference,
+                                    this.state.threeWeekDifference + " - " + this.state.twoWeekDifference,
+                                    this.state.twoWeekDifference + " - " + this.state.weekDifference,
+                                    this.state.weekDifference + " - " + this.state.zeroDayDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Month Profit in $",
+                                    backgroundColor: "rgb(35,84,147)",
+                                    data: [this.state.totalSales]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
+            }
+        }
+        else if (timeFrame === "past-quarter") {
+            this.getLastQuarterAnalytics();
+            if (this.state.totalSales.length < 6) {
+                this.setState({ target: 5, chartIsLoaded: true });
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.quarterTwelveDifference + " - " + this.state.quarterTenDifference,
+                                    this.state.quarterTenDifference + " - " + this.state.quarterEightDifference,
+                                    this.state.quarterEightDifference + " - " + this.state.quarterSixDifference,
+                                    this.state.quarterSixDifference + " - " + this.state.quarterFourDifference,
+                                    this.state.quarterFourDifference + " - " + this.state.quarterTwoDifference,
+                                    this.state.quarterTwoDifference + " - " + this.state.zeroDayDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Quarter Profit in $",
+                                    backgroundColor: "rgb(15,119,255)",
+                                    data: [this.state.totalSales]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
+            }
+        }
+        else if (timeFrame === "past-year") {
+            this.getLastYearAnalytics();
+            if (this.state.totalSales.length < 13) {
+                this.setState({ target: 12, chartIsLoaded: true });
+                setTimeout(
+                    function () {
+                        this.setState(prevState => ({
+                            data: {
+                                ...prevState.data,
+                                labels: [
+                                    this.state.twelveMonthDifference,
+                                    this.state.elevenMonthDifference,
+                                    this.state.tenMonthDifference,
+                                    this.state.nineMonthDifference,
+                                    this.state.eightMonthDifference,
+                                    this.state.sevenMonthDifference,
+                                    this.state.sixMonthDifference,
+                                    this.state.fiveMonthDifference,
+                                    this.state.fourMonthDifference,
+                                    this.state.threeMonthDifference,
+                                    this.state.twoMonthDifference,
+                                    this.state.oneMonthDifference,
+                                    this.state.currentMonth + " - " + this.state.zeroDayDifference,
+                                ],
+                                datasets: [{
+                                    ...prevState.data.datasets,
+                                    label: "Year profit in $",
+                                    backgroundColor: "rgb(20,147,252)",
+                                    data: [
+                                        this.state.totalSales
+                                    ]
+                                }]
+                            }
+                        }))
+                    }.bind(this), 1000
+                )
+            }
+        } else {
+            return;
+        }
     }
 
     // get tasks
@@ -39,14 +397,23 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check tasks error: " + error))
     }
     // get user total revenue
-    getUserTotalRevenue = (id) => {
-        API.getOrderUserTotal(id)
+    getUserTotalRevenue = (id, start, end) => {
+        if (!start) {
+            start = moment().subtract(12, 'months').format("YYYY-MM-DD");
+        }
+        if (!end) {
+            end = moment().format("YYYY-MM-DD");
+        }
+        API.getUserOrderAnalytics(id, start, end)
             .then(res => {
-                let total = res.data[0].totalAmount.toFixed(2);
+                let total = res.data[0].profit.toFixed(2);
                 let totalString = total.toString();
-                this.setState({ userRevenue: totalString });
-                console.log(totalString);
-                return totalString;
+                this.setState(state => {
+                    const userRevenue = state.userRevenue.concat(totalString);
+                    return {
+                        userRevenue
+                    };
+                })
             }
             )
             .catch(error => console.log("User revenue error: " + error))
@@ -84,9 +451,8 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check orders error: " + error));
     }
     checkState = () => {
-        // this.getUserTotalRevenue("5d618f75691b892e385e7757");
-        this.numberOfSales("5d618f75691b892e385e7757");
-        console.log(this.state.userRevenue);
+        console.log(this.state.totalSales);
+        console.log(this.state.data.datasets[0].data[0]);
     }
     // create user full name
     fullName = (first, last) => {
@@ -135,9 +501,9 @@ class SalesTeamAnalytics extends Component {
         const orders = this.state.orders;
         let counter = [];
         orders.forEach(order => {
-                if (order.user[0]._id === userID) {
-                    counter.push(userID);
-                }
+            if (order.user[0]._id === userID) {
+                counter.push(userID);
+            }
         });
         return counter.length;
     }
@@ -176,13 +542,133 @@ class SalesTeamAnalytics extends Component {
         this.setState({ open: false });
     }
 
+    set24Hours = () => (event) => {
+        event.preventDefault();
+        this.setState({ timeFrame: "past-hours", totalSales: [] });
+        setTimeout(
+            function () {
+                this.setTimeFrame();
+            }.bind(this), 500
+        )
+
+    }
+    setWeek = () => (event) => {
+        event.preventDefault();
+        this.setState({ timeFrame: "past-week", totalSales: [] });
+        setTimeout(
+            function () {
+                this.setTimeFrame();
+            }.bind(this), 500
+        )
+    }
+    setMonth = () => (event) => {
+        event.preventDefault();
+        this.setState({ timeFrame: "past-month", totalSales: [] });
+        setTimeout(
+            function () {
+                this.setTimeFrame();
+            }.bind(this), 500
+        )
+    }
+    setQuarter = () => (event) => {
+        event.preventDefault();
+        this.setState({ timeFrame: "past-quarter", totalSales: [] });
+        if (this.state.timeFrame === "past-quarter") {
+            this.setTimeFrame();
+        } else {
+            setTimeout(
+                function () {
+                    this.setTimeFrame();
+                }.bind(this), 500
+            )
+        }
+    }
+    setYear = () => (event) => {
+        event.preventDefault();
+        this.setState({ timeFrame: "past-year", totalSales: [] });
+        setTimeout(
+            function () {
+                this.setTimeFrame();
+            }.bind(this), 500
+        )
+    }
 
     render() {
         return (
             <div>
                 <button onClick={this.checkState}>Console log values</button>
                 <PageTitle title="Sales Team Analytics" />
-                <Grid container>
+                <div style={{ position: "relative", width: 962, height: 750 }}>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Grid item xs={4} sm={2}>
+                            <Button
+                                buttonAction={this.set24Hours()}
+                                buttonName="24-hours"
+                            />
+                        </Grid>
+                        <Grid item xs={4} sm={2}>
+                            <Button
+                                buttonAction={this.setWeek()}
+                                buttonName="Week"
+                            />
+                        </Grid>
+                        <Grid item xs={4} sm={2}>
+                            <Button
+                                buttonAction={this.setMonth()}
+                                buttonName="Month"
+                            />
+                        </Grid>
+                        <Grid item xs={4} sm={2}>
+                            <Button
+                                buttonAction={this.setQuarter()}
+                                buttonName="Quarter"
+                            />
+                        </Grid>
+                        <Grid item xs={4} sm={2}>
+                            <Button
+                                buttonAction={this.setYear()}
+                                buttonName="Year"
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        {this.state.totalSales.length > this.state.target && this.state.chartIsLoaded ? (
+                            <BarChart
+                                data={this.state.data}
+                            />
+                        ) : (
+                                <Grid
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                >
+                                    <Grid item lg={3}></Grid>
+                                    <Grid item lg={6}>
+                                        <PacmanLoader
+                                            className={"pacman-loader"}
+                                            sizeUnit={"px"}
+                                            size={75}
+                                            color={'#9E0031'}
+                                            loading={true}
+                                        />
+                                    </Grid>
+                                    <Grid item lg={3}></Grid>
+                                </Grid>
+                            )}
+                    </Grid>
+                </div>
+                {/* <Grid container>
                     <Grid item lg={4}></Grid>
                     <Grid item lg={4}>
                         <Search
@@ -201,15 +687,15 @@ class SalesTeamAnalytics extends Component {
                             userImage={this.checkUserImage(user)}
                             fullName={this.fullName(user.firstName, user.lastName)}
                             startDate={this.startDate(user.created_at)}
-                        totalSales={this.getUserTotalRevenue(user._id)}
-                        numSales={this.numberOfSales(user._id)}
+                            // totalSales={this.getUserTotalRevenue(user._id)}
+                            numSales={this.numberOfSales(user._id)}
                         // lastMonthSales={this.lastMonthSales(user._id)}
                         // popularProduct={this.userMostSoldProduct(user._id)}
                         />
                     ))}
 
-                </div>
-                <Grid container spacing={4}>
+                </div> */}
+                {/* <Grid container spacing={4}>
                     <Grid item lg={12}>
                         <h1 className="team-analytics-cards">Sales Team</h1>
                     </Grid>
@@ -226,8 +712,8 @@ class SalesTeamAnalytics extends Component {
                                                 userImage={this.checkUserImage(user)}
                                                 fullName={this.fullName(user.firstName, user.lastName)}
                                                 startDate={this.startDate(user.created_at)}
-                                                totalSales={this.getUserTotalRevenue(user._id)}
-                                            numSales={this.numberOfSales(user._id)}
+                                                // totalSales={this.getUserTotalRevenue(user._id)}
+                                                numSales={this.numberOfSales(user._id)}
                                             // lastMonthSales={this.lastMonthSales(user._id)}
                                             // popularProduct={this.userMostSoldProduct(user._id)}
                                             />
@@ -251,7 +737,7 @@ class SalesTeamAnalytics extends Component {
                             </Grid>
                         )
                     }
-                </Grid>
+                </Grid> */}
             </div>
         )
     }

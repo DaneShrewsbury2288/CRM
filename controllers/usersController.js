@@ -25,7 +25,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findAllExcept: function (req, res) {
-    console.log(req.params.id)
     User
       .find({ _id: { $ne: req.params.id } })
       .sort({ firstName: 1 })
