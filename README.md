@@ -52,6 +52,7 @@ Project is created with:
 - Dashboard (Home)
 - Sales Team Daily
 - Inventory
+- Inventory Supplies
 - Client List
 - Purchasing Tool
 - Sales Analytics
@@ -68,6 +69,7 @@ Project is created with:
 
 Download the repository
 
+- Copy the repo
 - In your terminal, cd to the CRM folder directory, `$npm i`
 - To run on browser: `npm start`
 - You can also use the heroku-link for a demo:
@@ -96,6 +98,7 @@ Download the repository
 - Clint Brodar
 - Dane Shrewsbury
 - Jonah Severn
+- Robert Weston
 
 ## License
 

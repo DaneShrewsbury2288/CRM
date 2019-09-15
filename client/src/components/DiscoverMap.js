@@ -6,16 +6,16 @@ import {
   // Marker,
   // InfoWindow
 } from "react-google-maps";
-// require('dotenv').config();
 
 function Map() {
   return (
     <GoogleMap
       defaultZoom={10}
-      defaultCenter={{ lat: 47.6062, lng: 122.3321 }}
+      defaultCenter={{ lat: 47.6062, lng: -122.3321 }}
     />
   )
 }
+
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function DiscoverMap() {

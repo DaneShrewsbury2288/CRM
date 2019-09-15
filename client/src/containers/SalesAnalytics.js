@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 import { withStyles } from '@material-ui/core/styles';
 import Chart from "../components/Chart";
@@ -7,10 +7,12 @@ import Paper from '@material-ui/core/Paper';
 //import Order from '../components/Order';
 import clsx from 'clsx';
 import Deposits from '../components/Deposits';
-// import Tabs from '@material-ui/core/Tabs';
-// import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import ProductProfit from '../components/ProductProfit';
 import AggregateSales from '../components/AggregateSales';
+// import API from '../utilities/api';
+// import moment from "moment";
 
 
 const drawerWidth = 240;
@@ -93,8 +95,6 @@ const styles = theme => ({
     },
 });
 
-
-
 // function CenteredTabs() {
 //     const classes = styles();
 //     const [value, setValue] = React.useState(0);
@@ -106,34 +106,44 @@ const styles = theme => ({
 
 class SalesAnalytics extends Component {
     
+    handleTabChange = (event) => {
+        console.log(event.target.value);
+    }
 
     render() {
         const { classes } = this.props;
         const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-        
+
         return (
             <div>
+                <button onClick={this.checkState}>Check State</button>
                 <PageTitle title="Sales Analytics" />
                 <Grid container spacing={3}>
                     {/* Chart */}
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper>
-                            {/* <Tabs
-                                //value={CenteredTabs.value}
-                                //onChange={CenteredTabs.handleChange}
+                            <Tabs
+                                // value={this.state.timeFrame}
+                                onChange={this.handleTabChange}
+
                                 indicatorColor="primary"
                                 textColor="primary"
-                                //onSelect={CenteredTabs.handleChange}
+                                scrollButtons="auto"
+                                aria-label="scrollable auto tabs example"
+                                // selectedTab={this.state.timeFrame}
                                 centered
                             >
-                                <Tab label="Daily" />
-                                <Tab label="Weekly" />
-                                <Tab label="Monthly" >
-                                </Tab>
-                            </Tabs> */}
+                                <Tab label="24 Hours" value="hourly" />
+                                <Tab label="Week" value="daily" />
+                                <Tab label="Month" value="weekly" />
+                                <Tab label="Quarter" value="monthly" />
+                                <Tab label="Year" value="yearly" />
+                            </Tabs>
                         </Paper>
                         <Paper className={fixedHeightPaper}>
-                            <Chart />
+                            <Chart
+
+                            />
                         </Paper>
                     </Grid>
                     {/* Recent Deposits */}
@@ -145,7 +155,7 @@ class SalesAnalytics extends Component {
                     {/* Recent Orders */}
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
-                        {/* <Tabs
+                            <Tabs
                                 //value={CenteredTabs.value}
                                 //onChange={CenteredTabs.handleChange}
                                 indicatorColor="primary"
