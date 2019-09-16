@@ -31,10 +31,8 @@ class Analytics extends Component {
         userAverage: 0,
         userPopularProduct: "",
         userLastSaleDate: "",
-        userRevenue: [],
         analyticsSelection: "Business",
         clientOrUserSelection: "",
-        // hours
         twentyFourHourDifference: moment().subtract(24, 'hours').format("ddd, hA"),
         twentyOneHourDifference: moment().subtract(21, 'hours').format("ddd, hA"),
         eightteenHourDifference: moment().subtract(18, 'hours').format("ddd, hA"),
@@ -44,7 +42,6 @@ class Analytics extends Component {
         sixHourDifference: moment().subtract(6, 'hours').format("ddd, hA"),
         threeHourDifference: moment().subtract(3, 'hours').format("ddd, hA"),
         zeroHourDifference: moment().format("ddd, hA"),
-        // days
         sevenDayDifference: moment().subtract(7, 'days').format("MMM D"),
         sixDayDifference: moment().subtract(6, 'days').format("MMM D"),
         fiveDayDifference: moment().subtract(5, 'days').format("MMM D"),
@@ -53,19 +50,16 @@ class Analytics extends Component {
         twoDayDifference: moment().subtract(2, 'days').format("MMM D"),
         oneDayDifference: moment().subtract(1, 'days').format("MMM D"),
         zeroDayDifference: moment().subtract(0, 'days').format("MMM D"),
-        // weeks
         weekDifference: moment().subtract(7, 'days').format("MMM D"),
         twoWeekDifference: moment().subtract(14, 'days').format("MMM D"),
         threeWeekDifference: moment().subtract(21, 'days').format("MMM D"),
         fourWeekDifference: moment().subtract(28, 'days').format("MMM D"),
-        // past quarter
         quarterTwoDifference: moment().subtract(14, 'days').format("MMM D"),
         quarterFourDifference: moment().subtract(28, 'days').format("MMM D"),
         quarterSixDifference: moment().subtract(42, 'days').format("MMM D"),
         quarterEightDifference: moment().subtract(56, 'days').format("MMM D"),
         quarterTenDifference: moment().subtract(70, 'days').format("MMM D"),
         quarterTwelveDifference: moment().subtract(84, 'days').format("MMM D"),
-        // months
         currentMonth: moment().startOf('month').format("MMM YYYY"),
         oneMonthDifference: moment().subtract(1, 'months').startOf('month').format("MMM YYYY"),
         twoMonthDifference: moment().subtract(2, 'months').startOf('month').format("MMM YYYY"),
@@ -126,7 +120,6 @@ class Analytics extends Component {
         API.getBusinessAnalytics(start, end)
             .then(res =>
                 this.setState(state => {
-                    // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
@@ -151,7 +144,6 @@ class Analytics extends Component {
                             lowestOrderTotal
                         };
                     } else {
-                        // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
                         const averageOrderTotal = state.averageOrderTotal.concat(noSale);
@@ -175,7 +167,6 @@ class Analytics extends Component {
         API.getUserOrderAnalytics(id, start, end)
             .then(res =>
                 this.setState(state => {
-                    // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
@@ -200,7 +191,6 @@ class Analytics extends Component {
                             lowestOrderTotal
                         };
                     } else {
-                        // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
                         const averageOrderTotal = state.averageOrderTotal.concat(noSale);
@@ -224,7 +214,6 @@ class Analytics extends Component {
         API.getClientOrderAnalytics(id, start, end)
             .then(res =>
                 this.setState(state => {
-                    // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
@@ -249,7 +238,6 @@ class Analytics extends Component {
                             lowestOrderTotal
                         };
                     } else {
-                        // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
                         const averageOrderTotal = state.averageOrderTotal.concat(noSale);
@@ -279,7 +267,6 @@ class Analytics extends Component {
         API.getBusinessAnalytics(start, end)
             .then(res =>
                 this.setState(state => {
-                    // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         for (let i = 0; i < res.data[0].itemsSold.length; i++) {
                             if (res.data[0].itemsSold[i].itemID === "5d6574318debf3d6cb3e549d") {
@@ -312,7 +299,6 @@ class Analytics extends Component {
                             }
                         }
                     } else {
-                        // set to zero if no sales
                         return;
                     }
                 })
@@ -379,7 +365,6 @@ class Analytics extends Component {
             this.getAnalytics(eight, today);
         }
     }
-
     getLastWeekAnalytics = () => {
         const one = moment().subtract(7, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(6, 'days').format("YYYY-MM-DD");
@@ -420,9 +405,7 @@ class Analytics extends Component {
             this.getAnalytics(seven, eight);
             this.getAnalytics(eight, currentTime);
         }
-
     }
-
     getLastMonthAnalytics = () => {
         const one = moment().subtract(28, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(21, 'days').format("YYYY-MM-DD");
@@ -447,9 +430,7 @@ class Analytics extends Component {
             this.getAnalytics(three, four);
             this.getAnalytics(four, today);
         }
-
     }
-
     getLastQuarterAnalytics = () => {
         const one = moment().subtract(84, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(70, 'days').format("YYYY-MM-DD");
@@ -482,9 +463,7 @@ class Analytics extends Component {
             this.getAnalytics(five, six);
             this.getAnalytics(six, today);
         }
-
     }
-
     getLastYearAnalytics = () => {
         const one = moment().subtract(12, 'months').startOf('month').format("YYYY-MM-DD");
         const two = moment().subtract(11, 'months').startOf('month').format("YYYY-MM-DD");
@@ -612,7 +591,6 @@ class Analytics extends Component {
             }.bind(this), 3000
         )
     }
-
     setTimeFrame() {
         this.setState({
             data: {
@@ -986,7 +964,6 @@ class Analytics extends Component {
             .then(res => {
                 let date = res.data[0].lastSalesDate.slice(0, 10);
                 let dateStr = date.toString();
-                console.log(dateStr);
                 this.setState({ userLastSaleDate: dateStr });
             })
     }
@@ -1057,7 +1034,6 @@ class Analytics extends Component {
                 }
             })
     }
-    // get users
     checkUsers = () => {
         UserAPI.getUsers()
             .then(res =>
@@ -1065,7 +1041,6 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Check users error: " + error));
     }
-    // get all clients
     checkClients = () => {
         API.getClients()
             .then(res =>
@@ -1073,7 +1048,6 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Check clients error: " + error));
     }
-    // get all orders
     checkOrders = () => {
         API.getOrders()
             .then(res =>
@@ -1081,7 +1055,6 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Check orders error: " + error));
     }
-    // create user full name
     fullName = (first, last) => {
         if (first && last) {
             return first + " " + last;
@@ -1089,7 +1062,6 @@ class Analytics extends Component {
             return "";
         }
     }
-    // convert start date
     startDate = (date) => {
         const dateOne = date.slice(0, 10);
         const splitDate = dateOne.split('-');
@@ -1123,7 +1095,6 @@ class Analytics extends Component {
                 return null;
         }
     }
-    // calculate number of sales for each user
     numberOfSales = (userID) => {
         const orders = this.state.orders;
         let counter = [];
@@ -1169,7 +1140,6 @@ class Analytics extends Component {
         const result = users.filter(user =>
             (user.firstName + " " + user.lastName).toUpperCase() === this.state.search.toUpperCase()
         );
-
         this.setState({ searchedUser: result });
         this.getUserTotalRevenue(result[0]._id);
         this.getUserLastMonthRevenue(result[0]._id);
@@ -1183,7 +1153,6 @@ class Analytics extends Component {
     modalClose = () => {
         this.setState({ open: false });
     }
-
     set24Hours = () => (event) => {
         event.preventDefault();
         this.setState({
@@ -1203,7 +1172,6 @@ class Analytics extends Component {
                 }.bind(this), 500
             )
         }
-
     }
     setWeek = () => (event) => {
         event.preventDefault();
@@ -1285,7 +1253,6 @@ class Analytics extends Component {
             )
         }
     }
-
     render() {
         return (
             <div>
@@ -1426,7 +1393,6 @@ class Analytics extends Component {
                                 </Grid>
                             )}
                     </Grid>
-
                 </div>
                 <div >
                     <Grid
@@ -1447,7 +1413,6 @@ class Analytics extends Component {
                             )}
                     </Grid>
                 </div>
-
                 <Grid container>
                     <Grid item lg={4}></Grid>
                     <Grid item lg={4}>
