@@ -16,7 +16,7 @@ import Modal from '../components/TeamModal';
 import Search from '../components/TeamSearch';
 import moment from "moment";
 
-class SalesTeamAnalytics extends Component {
+class Analytics extends Component {
     state = {
         users: [],
         userSelection: [],
@@ -609,7 +609,6 @@ class SalesTeamAnalytics extends Component {
                     }
                 }))
                 this.setState({ doughnutLoaded: true });
-                console.log(this.state.doughnutData);
             }.bind(this), 3000
         )
     }
@@ -1290,8 +1289,7 @@ class SalesTeamAnalytics extends Component {
     render() {
         return (
             <div>
-                {/* <button onClick={this.checkState}>Console log values</button> */}
-                <PageTitle title="Sales Team Analytics" />
+                <PageTitle title="Analytics" />
                 <div style={{ position: "relative", width: 962, height: 750 }}>
                     <Grid
                         container
@@ -1489,4 +1487,4 @@ class SalesTeamAnalytics extends Component {
     }
 };
 
-export default SalesTeamAnalytics;
+export default Analytics;
