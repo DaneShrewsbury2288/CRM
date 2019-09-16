@@ -81,7 +81,6 @@ class ClientList extends Component {
                                 handleInputChange={this.handleInputChange}
                                 handleRefreshSubmit={this.handleRefreshSubmit}
                                 searchName={this.searchName}
-
                             />
                         </Grid>
                     </Grid>

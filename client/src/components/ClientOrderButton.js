@@ -106,7 +106,7 @@ export default function ClientAddButton(props) {
         <div style={modalStyle} className={classes2.paper}>
           <h2 id="simple-modal-title">Table of Orders</h2>
           <Paper className={classes3.root}>
-            <Title style={titleStyle}> Costco Orders </Title>
+            <Title style={titleStyle}> Costco </Title>
             <Table className={classes3.table}>
               <TableHead>
                 <TableRow>

@@ -210,7 +210,7 @@ export default function CustomPaginationActionsTable(props) {
                                 <TableCell align="right">{client.zipCode}</TableCell>
                                 <TableCell align="right">{startDate(client.joinedDate)}</TableCell>
                                 <TableCell align="right">{client.user.map(user => (
-                                        user.firstName + " " + user.lastName
+                                    user.firstName + " " + user.lastName
                                 )).join(" ")}</TableCell>
                                 <TableCell align="right">{<ClientOrderButton />}</TableCell>
                                 <TableCell align="right">{<ClientAddComment />}</TableCell>
