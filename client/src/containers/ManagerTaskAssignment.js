@@ -58,7 +58,7 @@ class ManagerTaskAssignment extends Component {
     saveTask = (data) => {
         API.saveTask(data)
             .then(res =>
-                this.setState({ tasks: res.data })
+                this.setState({ tasks: res.data.tasks })
             )
             .catch(error => console.log("Save task error: " + error))
     }
@@ -66,12 +66,12 @@ class ManagerTaskAssignment extends Component {
     deleteTask = (id) => {
         API.deleteTask(id)
             .then(res =>
-                this.setState({ tasks: res.data })
+                this.setState({ tasks: res.data.tasks })
             )
 
     }
     checkState = () => {
-
+        console.log(this.state.tasks);
     }
     // create user full name
     fullName = (userInfo) => {
@@ -235,6 +235,7 @@ class ManagerTaskAssignment extends Component {
     render() {
         return (
             <div>
+            <button onClick={this.checkState}>Check state</button>
                 <PageTitle title="Manager Task Assignment" />
                 <InputForm
                     userOpen={this.state.userOpenOption}

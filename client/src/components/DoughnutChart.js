@@ -1,21 +1,14 @@
 import React from 'react';
 import { Doughnut } from "react-chartjs-2";
 import 'chartjs-plugin-lineheight-annotation';
-import PacmanLoader from 'react-spinners/PacmanLoader';
-import Grid from '@material-ui/core/Grid';
 
 function DoughnutChart(props) {
-    console.log(props)
+    // console.log(props)
     if (props.doughnutData !== undefined) {
         return (
             <Doughnut
                 options={{
                     responsive: true,
-                    lineHeightAnnotation: {
-                        always: false,
-                        hover: true,
-                        color: "white",
-                    },
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -23,10 +16,6 @@ function DoughnutChart(props) {
                             }
                         }]
                     },
-                    // title: {
-                    //     display: true,
-                    //     text: props.title + " Analytics Over " + props.time
-                    // },
                     legend: {
                         labels: {
                             fontColor: "black",
@@ -51,24 +40,7 @@ function DoughnutChart(props) {
         )
     } else {
         return (
-            <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-            >
-                <Grid item lg={3}></Grid>
-                <Grid item lg={6}>
-                    <PacmanLoader
-                        className={"pacman-loader"}
-                        sizeUnit={"px"}
-                        size={75}
-                        color={'#9E0031'}
-                        loading={true}
-                    />
-                </Grid>
-                <Grid item lg={3}></Grid>
-            </Grid>
+            <div />
         )
     }
 }
