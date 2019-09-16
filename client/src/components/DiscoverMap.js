@@ -3,16 +3,24 @@ import {
   withGoogleMap,
   withScriptjs,
   GoogleMap,
-  // Marker,
+  Marker,
   // InfoWindow
 } from "react-google-maps";
 
 function Map() {
   return (
+    // <GoogleMap
+    //   defaultZoom={10}
+    //   defaultCenter={{ lat: 47.6062, lng: -122.3321 }}
+    // />
     <GoogleMap
       defaultZoom={10}
       defaultCenter={{ lat: 47.6062, lng: -122.3321 }}
-    />
+    >
+      <Marker
+        position={{lat: 47.606564, lng: -122.338312 }}
+        />
+    </GoogleMap>
   )
 }
 
