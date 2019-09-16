@@ -1,13 +1,14 @@
 import React from 'react';
-import { Bar } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import 'chartjs-plugin-lineheight-annotation';
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Grid from '@material-ui/core/Grid';
 
-function BarChart(props) {
-    if (props.data !== undefined) {
+function DoughnutChart(props) {
+    console.log(props)
+    if (props.doughnutData !== undefined) {
         return (
-            <Bar
+            <Doughnut
                 options={{
                     responsive: true,
                     lineHeightAnnotation: {
@@ -22,10 +23,10 @@ function BarChart(props) {
                             }
                         }]
                     },
-                    title: {
-                        display: true,
-                        text: props.title + " Analytics Over " + props.time
-                    },
+                    // title: {
+                    //     display: true,
+                    //     text: props.title + " Analytics Over " + props.time
+                    // },
                     legend: {
                         labels: {
                             fontColor: "black",
@@ -45,7 +46,7 @@ function BarChart(props) {
                         }
                     }
                 }}
-                data={props.data}
+                data={props.doughnutData}
             />
         )
     } else {
@@ -71,4 +72,4 @@ function BarChart(props) {
         )
     }
 }
-export default BarChart;
+export default DoughnutChart;
