@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import "react-chartjs-2";
 import BarChart from '../components/BarChart';
 import DoughnutChart from '../components/DoughnutChart';
+import PieChart from '../components/PieChart';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -539,53 +540,82 @@ class Analytics extends Component {
                     doughnutData: {
                         ...prevState.doughnutData,
                         labels: [
-                            "Quantity Sold"
+                            "Black Raven Trickster", "Hops Potato", "Sizzlebird Cider", "Sounds Puget", "Extra Foam - Limited Edition", "The Kraken", "Sam's Beer"
                         ],
                         datasets: [
                             {
                                 ...prevState.doughnutData.datasets,
-                                label: "Black Raven Trickster",
-                                backgroundColor: "rgb(236,217,208)",
-                                data: [ravenString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Hops Potato",
-                                backgroundColor: "rgb(233,196,175)",
-                                data: [hopsString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Sizzlebird Cider",
-                                backgroundColor: "rgb(231,143,33)",
-                                data: [ciderString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Sounds Puget",
-                                backgroundColor: "rgb(249,195,129)",
-                                data: [pugetString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Extra Foam - Limited Edition",
-                                backgroundColor: "rgb(238,150,9)",
-                                data: [foamString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "The Kraken",
-                                backgroundColor: "rgb(193,23,10)",
-                                data: [krakenString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Sam's Beer",
-                                backgroundColor: "rgb(195,65,1)",
-                                data: [samsString]
+                                data: [
+                                    ravenString,
+                                    hopsString,
+                                    ciderString,
+                                    pugetString,
+                                    foamString,
+                                    krakenString,
+                                    samsString
+                                ],
+                                backgroundColor: [
+                                    "rgb(236,217,208)",
+                                    "rgb(233,196,175)",
+                                    "rgb(231,143,33)",
+                                    "rgb(249,195,129)",
+                                    "rgb(238,150,9)",
+                                    "rgb(193,23,10)",
+                                    "rgb(195,65,1)"
+                                ]
                             }
                         ]
                     }
+                    // doughnutData: {
+                    //     ...prevState.doughnutData,
+                    //     labels: [
+                    //         "Quantity Sold"
+                    //     ],
+                    //     datasets: [
+                    //         {
+                    //             ...prevState.doughnutData.datasets,
+                    //             label: "Black Raven Trickster",
+                    //             backgroundColor: "rgb(236,217,208)",
+                    //             data: [this.state.blackRavenCount]
+                    //         },
+                    //         {
+                    //             ...prevState.doughnutData.datasets,
+                    //             label: "Hops Potato",
+                    //             backgroundColor: "rgb(233,196,175)",
+                    //             data: [this.state.hopsPotatoCount]
+                    //         },
+                    //         {
+                    //             ...prevState.doughnutData.datasets,
+                    //             label: "Sizzlebird Cider",
+                    //             backgroundColor: "rgb(231,143,33)",
+                    //             data: [this.state.sizzleCiderCount]
+                    //         },
+                    //         {
+                    //             ...prevState.doughnutData.datasets,
+                    //             label: "Sounds Puget",
+                    //             backgroundColor: "rgb(249,195,129)",
+                    //             data: [this.state.soundsPugetCount]
+                    //         },
+                    //         {
+                    //             ...prevState.doughnutData.datasets,
+                    //             label: "Extra Foam - Limited Edition",
+                    //             backgroundColor: "rgb(238,150,9)",
+                    //             data: [this.state.extraFoamCount]
+                    //         },
+                    //         {
+                    //             ...prevState.doughnutData.datasets,
+                    //             label: "The Kraken",
+                    //             backgroundColor: "rgb(193,23,10)",
+                    //             data: [this.state.krakenCount]
+                    //         },
+                    //         {
+                    //             ...prevState.doughnutData.datasets,
+                    //             label: "Sam's Beer",
+                    //             backgroundColor: "rgb(195,65,1)",
+                    //             data: [this.state.samsBeerCount]
+                    //         }
+                    //     ]
+                    // }
                 }))
                 this.setState({ doughnutLoaded: true });
             }.bind(this), 3000
@@ -1402,12 +1432,31 @@ class Analytics extends Component {
                         alignItems="center"
                         style={{ margin: "10px" }}
                     >
-                        {this.state.doughnutData ? (
+                        {this.state.doughnutData && this.state.doughnutLoaded ? (
                             <Grid item lg={6}>
                                 <DoughnutChart
                                     doughnutData={this.state.doughnutData}
                                 />
                             </Grid>
+
+                        ) : (
+                                <div />
+                            )}
+                    </Grid>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        style={{ margin: "10px" }}
+                    >
+                        {this.state.doughnutData && this.state.doughnutLoaded ? (
+                            <Grid item lg={6}>
+                                <PieChart
+                                    pieData={this.state.doughnutData}
+                                />
+                            </Grid>
+
                         ) : (
                                 <div />
                             )}
@@ -1416,6 +1465,7 @@ class Analytics extends Component {
                 <Grid container>
                     <Grid item lg={4}></Grid>
                     <Grid item lg={4}>
+                    <h4>Find Employee Data</h4>
                         <Search
                             handleInputChange={this.handleInputChange}
                             handleFormSubmit={this.searchAndModal}
