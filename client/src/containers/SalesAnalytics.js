@@ -11,8 +11,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import ProductProfit from '../components/ProductProfit';
 import AggregateSales from '../components/AggregateSales';
-import API from '../utilities/api';
-import moment from "moment";
+// import API from '../utilities/api';
+// import moment from "moment";
 
 
 const drawerWidth = 240;
@@ -107,10 +107,7 @@ const styles = theme => ({
 class SalesAnalytics extends Component {
     
     handleTabChange = (event) => {
-        this.setState({
-            timeFrame: event.target.value
-        });
-        this.setTimeFrame();
+        console.log(event.target.value);
     }
 
     render() {
@@ -126,14 +123,14 @@ class SalesAnalytics extends Component {
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper>
                             <Tabs
-                                value={this.state.timeFrame}
+                                // value={this.state.timeFrame}
                                 onChange={this.handleTabChange}
 
                                 indicatorColor="primary"
                                 textColor="primary"
                                 scrollButtons="auto"
                                 aria-label="scrollable auto tabs example"
-                                selectedTab={this.state.timeFrame}
+                                // selectedTab={this.state.timeFrame}
                                 centered
                             >
                                 <Tab label="24 Hours" value="hourly" />
@@ -190,34 +187,3 @@ class SalesAnalytics extends Component {
 };
 
 export default withStyles(styles)(SalesAnalytics);
-
-    // profit per product
-    // cost of product
-    // Product.findByID({
-    //     cost
-    // }) => { _id: objectID, Product.cost: cost }
-    // price product is sold for
-    // Product.findByID({
-    //     price
-    // }) => { _id: objectID, Product.price: price }
-    // length of time not sold
-    // cost of holding product / total # of products
-    // cost of shipping - shipstation connection?
-    // trends
-    // total sales in time period
-    // date range
-    // exclude time less than first date and more than last date
-    // Sales.find({
-    //     created_at: {
-    //         $gte: ISODate("2010-04-29T00:00:00.000Z"),
-    //         $lt: ISODate("2010-05-01T00:00:00.000Z")
-    //     }
-    // })
-    // => { "_id" : objectID), "purchases.name" : "product name", "purchase.quantity" : "amount purchased within time period" }
-    // save each product to a variable and add to total for each purchase quantity
-    // product id
-    // product profit
-    // product quantity
-    // individual product sales in time period
-    // areas with most sales
-    // zip code heat map (https://www.tableau.com/about/blog/2018/11/density-mark-type-brings-new-kind-heatmap-tableau-98488)

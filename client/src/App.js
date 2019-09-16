@@ -7,7 +7,6 @@ import {
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Login from "./containers/Login2";
 import Routes from "./components/Routes"

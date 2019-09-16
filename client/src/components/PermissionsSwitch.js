@@ -2,54 +2,9 @@ import React, { Component } from "react";
 import Switch from '@material-ui/core/Switch';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
 import API from "../utils/API";
-
-const switches = [
-    {
-        label: "Dashboard",
-        bitmask: 0b1,
-    },
-    {
-        label: "Sales Team Daily",
-        bitmask: 0b10,
-    },
-    {
-        label: "Inventory",
-        bitmask: 0b100,
-    },
-    {
-        label: "Client List",
-        bitmask: 0b1000,
-    },
-    {
-        label: "Purchasing Tool",
-        bitmask: 0b10000,
-    },
-    {
-        label: "Sales Analytics",
-        bitmask: 0b100000,
-    },
-    {
-        label: "Manager Task Assignment",
-        bitmask: 0b1000000,
-    },
-    {
-        label: "Sales Team Analytics",
-        bitmask: 0b10000000,
-    },
-    {
-        label: "Check User Messages",
-        bitmask: 0b100000000,
-    },
-    {
-        label: "Discover",
-        bitmask: 0b1000000000,
-    },
-    {
-        label: "Add Or Remove Users",
-        bitmask: 0b10000000000,
-    }
-];
+import switches from '../permissions'
 
 class PermissionsSwitch extends Component {
     state = {
@@ -87,24 +42,20 @@ class PermissionsSwitch extends Component {
                 <List>
                     {switches.map(perm => (
                         <ListItem key={`${perm.bitmask}`}>
-                            {perm.label} <Switch
+                            {perm.title} <Switch
                                 checked={this.isChecked("perms", perm.bitmask)}
                                 onClick={this.handleChange("perms", perm.bitmask)} />
                         </ListItem>
                     ))}
                 </List>
-                <button
+                <Button
+                    variant="contained"
+                    color="primary"
                     onClick={this.update}
-                    style={{
-                        width: "150px",
-                        borderRadius: "3px",
-                        letterSpacing: "1.5px",
-                        marginTop: "1rem"
-                    }}
-                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                 >
                     Update
-                </button>
+                </Button>
+
             </div>
         )
     }

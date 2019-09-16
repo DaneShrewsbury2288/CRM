@@ -21,6 +21,11 @@ const MessageSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    read:
+    {
+        type: Boolean,
+        default: false
+    }
 });
 
 // This creates our model from the above schema, using mongoose's model method

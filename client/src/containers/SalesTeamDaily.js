@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PageTitle from "../components/PageTitle";
 import Kanban from "../components/Kanban";
 import API from '../utilities/api';
-import GridLoader from 'react-spinners/GridLoader';
-import Grid from '@material-ui/core/Grid';
-import TaskTable from "../components/Task";
+// import GridLoader from 'react-spinners/GridLoader';
+// import Grid from '@material-ui/core/Grid';
+// import TaskTable from "../components/Task";
 import moment from "moment";
 
 class SalesTeamDaily extends Component {
@@ -128,10 +128,10 @@ class SalesTeamDaily extends Component {
         return (
             <div>
                 <PageTitle title="Sales Team Daily" />
-                <button onClick={this.filterTasks}>Filter Tasks</button>
+                {/* <button onClick={this.filterTasks}>Filter Tasks</button> */}
                 <Kanban />
                 {/* force page to wait for tasks to load */}
-                {this.state.tasks.length > 0 ?
+                {/* {this.state.tasks.length > 0 ?
                     (
                         <div>
                             {this.state.tasks.map(task => (
@@ -168,7 +168,7 @@ class SalesTeamDaily extends Component {
                             <Grid item lg={5}></Grid>
                         </Grid>
                     )
-                }
+                } */}
             </div>
         )
     }
