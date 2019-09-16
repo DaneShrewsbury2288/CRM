@@ -6,18 +6,17 @@ import UserAPI from '../utils/API';
 import Button from '../components/Button';
 import "react-chartjs-2";
 import BarChart from '../components/BarChart';
+import DoughnutChart from '../components/DoughnutChart';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Card from "../components/Card";
 import PacmanLoader from 'react-spinners/PacmanLoader';
 import Modal from '../components/TeamModal';
 import Search from '../components/TeamSearch';
 import moment from "moment";
 
-
-class SalesTeamAnalytics extends Component {
+class Analytics extends Component {
     state = {
         users: [],
         userSelection: [],
@@ -27,6 +26,11 @@ class SalesTeamAnalytics extends Component {
         open: false,
         search: "",
         searchedUser: [],
+        userTotalRevenue: 0,
+        userLastMonthRevenue: 0,
+        userAverage: 0,
+        userPopularProduct: "",
+        userLastSaleDate: "",
         userRevenue: [],
         analyticsSelection: "Business",
         clientOrUserSelection: "",
@@ -75,17 +79,25 @@ class SalesTeamAnalytics extends Component {
         tenMonthDifference: moment().subtract(10, 'months').startOf('month').format("MMM YYYY"),
         elevenMonthDifference: moment().subtract(11, 'months').startOf('month').format("MMM YYYY"),
         twelveMonthDifference: moment().subtract(12, 'months').startOf('month').format("MMM YYYY"),
+        time: Date.now(),
         target: 20,
-        timeFrame: "past-month",
+        timeFrame: "Past Month",
         data: {
-            // time frame values
             labels: [],
             datasets: [
                 {
-                    // label for time frame
                     label: "",
                     backgroundColor: "",
-                    // data results
+                    data: []
+                }
+            ]
+        },
+        doughnutData: {
+            labels: [],
+            datasets: [
+                {
+                    label: "",
+                    backgroundColor: "",
                     data: []
                 }
             ]
@@ -95,6 +107,7 @@ class SalesTeamAnalytics extends Component {
         chartBGColor: "",
         chartData: [],
         chartIsLoaded: false,
+        doughnutLoaded: false,
         totalSales: [],
         averageOrderQuantity: [],
         averageOrderTotal: [],
@@ -255,6 +268,58 @@ class SalesTeamAnalytics extends Component {
             )
             .catch(error => console.log("Client analytics error: " + error));
     }
+    getProductAnalytics = (start, end) => {
+        this.setState({ doughnutData: false });
+        if (!start) {
+            start = moment().subtract(12, 'months').format("YYYY-MM-DD");
+        }
+        if (!end) {
+            end = moment().format("YYYY-MM-DD");
+        }
+        API.getBusinessAnalytics(start, end)
+            .then(res =>
+                this.setState(state => {
+                    // if any sales have occured in selected time period
+                    if (res.data[0] !== undefined) {
+                        for (let i = 0; i < res.data[0].itemsSold.length; i++) {
+                            if (res.data[0].itemsSold[i].itemID === "5d6574318debf3d6cb3e549d") {
+                                let blackRavenQuantity = res.data[0].itemsSold[i].quantity;
+                                state.blackRavenCount = state.blackRavenCount + blackRavenQuantity;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657d75d2a2ace0a8b4c42b") {
+                                let hopsQuantity = res.data[0].itemsSold[i].quantity;
+                                state.hopsPotatoCount = state.hopsPotatoCount + hopsQuantity;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657dc1d2a2ace0a8b4c42d") {
+                                let sizzleCiderQuantity = res.data[0].itemsSold[i].quantity;
+                                state.sizzleCiderCount = state.sizzleCiderCount + sizzleCiderQuantity;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657e36d2a2ace0a8b4c42e") {
+                                let pugetQuantity = res.data[0].itemsSold[i].quantity;
+                                state.soundsPugetCount = state.soundsPugetCount + pugetQuantity;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657ebdd2a2ace0a8b4c42f") {
+                                let xFoamQuantity = res.data[0].itemsSold[i].quantity;
+                                state.extraFoamCount = state.extraFoamCount + xFoamQuantity;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657eecd2a2ace0a8b4c430") {
+                                let krakenQuantity = res.data[0].itemsSold[i].quantity;
+                                state.krakenCount = state.krakenCount + krakenQuantity;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d68789eaa05cb5e20b390d7") {
+                                let samsQuantity = res.data[0].itemsSold[i].quantity;
+                                state.samsBeerCount = state.samsBeerCount + samsQuantity;
+                            }
+                        }
+                    } else {
+                        // set to zero if no sales
+                        return;
+                    }
+                })
+            )
+            .catch(error => console.log("Business analytics error: " + error));
+        this.setUpDonut();
+    }
 
     UNSAFE_componentWillMount() {
         this.checkUsers();
@@ -263,6 +328,7 @@ class SalesTeamAnalytics extends Component {
     }
     componentDidMount() {
         this.setTimeFrame();
+        this.getProductAnalytics();
     }
 
     getLastDayAnalytics = () => {
@@ -480,6 +546,72 @@ class SalesTeamAnalytics extends Component {
             this.getAnalytics(thisMonth, today);
         }
     }
+    setUpDonut() {
+        setTimeout(
+            function () {
+                const ravenString = this.state.blackRavenCount.toString();
+                const hopsString = this.state.hopsPotatoCount.toString();
+                const ciderString = this.state.sizzleCiderCount.toString();
+                const pugetString = this.state.soundsPugetCount.toString();
+                const foamString = this.state.extraFoamCount.toString();
+                const krakenString = this.state.krakenCount.toString();
+                const samsString = this.state.samsBeerCount.toString();
+                this.setState(prevState => ({
+                    doughnutData: {
+                        ...prevState.doughnutData,
+                        labels: [
+                            "Quantity Sold"
+                        ],
+                        datasets: [
+                            {
+                                ...prevState.doughnutData.datasets,
+                                label: "Black Raven Trickster",
+                                backgroundColor: "rgb(236,217,208)",
+                                data: [ravenString]
+                            },
+                            {
+                                ...prevState.doughnutData.datasets,
+                                label: "Hops Potato",
+                                backgroundColor: "rgb(233,196,175)",
+                                data: [hopsString]
+                            },
+                            {
+                                ...prevState.doughnutData.datasets,
+                                label: "Sizzlebird Cider",
+                                backgroundColor: "rgb(231,143,33)",
+                                data: [ciderString]
+                            },
+                            {
+                                ...prevState.doughnutData.datasets,
+                                label: "Sounds Puget",
+                                backgroundColor: "rgb(249,195,129)",
+                                data: [pugetString]
+                            },
+                            {
+                                ...prevState.doughnutData.datasets,
+                                label: "Extra Foam - Limited Edition",
+                                backgroundColor: "rgb(238,150,9)",
+                                data: [foamString]
+                            },
+                            {
+                                ...prevState.doughnutData.datasets,
+                                label: "The Kraken",
+                                backgroundColor: "rgb(193,23,10)",
+                                data: [krakenString]
+                            },
+                            {
+                                ...prevState.doughnutData.datasets,
+                                label: "Sam's Beer",
+                                backgroundColor: "rgb(195,65,1)",
+                                data: [samsString]
+                            }
+                        ]
+                    }
+                }))
+                this.setState({ doughnutLoaded: true });
+            }.bind(this), 3000
+        )
+    }
 
     setTimeFrame() {
         this.setState({
@@ -487,28 +619,28 @@ class SalesTeamAnalytics extends Component {
                 labels: [],
                 datasets: [
                     {
-                        label: "24-hour Profit in $",
-                        backgroundColor: "rgb(1,41,95)",
+                        label: "Profit in $",
+                        backgroundColor: "rgba(1,41,95,0.75)",
                         data: []
                     },
                     {
                         label: "Average Order Quantity",
-                        backgroundColor: "rgb(66,102,150)",
+                        backgroundColor: "rgba(66,102,150,0.75)",
                         data: []
                     },
                     {
                         label: "Average Order Total in $",
-                        backgroundColor: "rgb(35,84,147)",
+                        backgroundColor: "rgba(35,84,147,0.75)",
                         data: []
                     },
                     {
                         label: "Largest Order in $",
-                        backgroundColor: "rgb(15,119,255)",
+                        backgroundColor: "rgba(15,119,255,0.75)",
                         data: []
                     },
                     {
                         label: "Lowest Order in $",
-                        backgroundColor: "rgb(20,147,252)",
+                        backgroundColor: "rgba(20,147,252,0.75)",
                         data: []
                     }
                 ]
@@ -516,7 +648,7 @@ class SalesTeamAnalytics extends Component {
         });
         const timeFrame = this.state.timeFrame;
         this.setState({ target: 20, chartIsLoaded: false });
-        if (timeFrame === "past-hours") {
+        if (timeFrame === "Past 24-hours") {
             this.getLastDayAnalytics();
             if (this.state.totalSales.length < 8) {
                 this.setState({ target: 7 });
@@ -538,32 +670,32 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "24-hour Profit in $",
-                                        backgroundColor: "rgb(1,41,95)",
+                                        label: "Profit in $",
+                                        backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Quantity",
-                                        backgroundColor: "rgb(66,102,150)",
+                                        backgroundColor: "rgba(66,102,150,0.75)",
                                         data: this.state.averageOrderQuantity
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Total in $",
-                                        backgroundColor: "rgb(35,84,147)",
+                                        backgroundColor: "rgba(35,84,147,0.75)",
                                         data: this.state.averageOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Largest Order in $",
-                                        backgroundColor: "rgb(15,119,255)",
+                                        backgroundColor: "rgba(15,119,255,0.75)",
                                         data: this.state.largestOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Lowest Order in $",
-                                        backgroundColor: "rgb(20,147,252)",
+                                        backgroundColor: "rgba(20,147,252,0.75)",
                                         data: this.state.lowestOrderTotal
                                     }
                                 ]
@@ -574,7 +706,7 @@ class SalesTeamAnalytics extends Component {
                 )
             }
         }
-        else if (timeFrame === "past-week") {
+        else if (timeFrame === "Past Week") {
             this.getLastWeekAnalytics();
             if (this.state.totalSales.length < 8) {
                 this.setState({ target: 7 });
@@ -596,32 +728,32 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "Week Profit in $",
-                                        backgroundColor: "rgb(1,41,95)",
+                                        label: "Profit in $",
+                                        backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Quantity",
-                                        backgroundColor: "rgb(66,102,150)",
+                                        backgroundColor: "rgba(66,102,150,0.75)",
                                         data: this.state.averageOrderQuantity
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Total in $",
-                                        backgroundColor: "rgb(35,84,147)",
+                                        backgroundColor: "rgba(35,84,147,0.75)",
                                         data: this.state.averageOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Largest Order in $",
-                                        backgroundColor: "rgb(15,119,255)",
+                                        backgroundColor: "rgba(15,119,255,0.75)",
                                         data: this.state.largestOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Lowest Order in $",
-                                        backgroundColor: "rgb(20,147,252)",
+                                        backgroundColor: "rgba(20,147,252,0.75)",
                                         data: this.state.lowestOrderTotal
                                     }
                                 ]
@@ -632,7 +764,7 @@ class SalesTeamAnalytics extends Component {
                 )
             }
         }
-        else if (timeFrame === "past-month") {
+        else if (timeFrame === "Past Month") {
             this.getLastMonthAnalytics();
             if (this.state.totalSales.length < 4) {
                 this.setState({ target: 3 });
@@ -650,32 +782,32 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "Month Profit in $",
-                                        backgroundColor: "rgb(1,41,95)",
+                                        label: "Profit in $",
+                                        backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Quantity",
-                                        backgroundColor: "rgb(66,102,150)",
+                                        backgroundColor: "rgba(66,102,150,0.75)",
                                         data: this.state.averageOrderQuantity
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Total in $",
-                                        backgroundColor: "rgb(35,84,147)",
+                                        backgroundColor: "rgba(35,84,147,0.75)",
                                         data: this.state.averageOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Largest Order in $",
-                                        backgroundColor: "rgb(15,119,255)",
+                                        backgroundColor: "rgba(15,119,255,0.75)",
                                         data: this.state.largestOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Lowest Order in $",
-                                        backgroundColor: "rgb(20,147,252)",
+                                        backgroundColor: "rgba(20,147,252,0.75)",
                                         data: this.state.lowestOrderTotal
                                     }
                                 ]
@@ -706,32 +838,32 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "Quarter Profit in $",
-                                        backgroundColor: "rgb(1,41,95)",
+                                        label: "Profit in $",
+                                        backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Quantity",
-                                        backgroundColor: "rgb(66,102,150)",
+                                        backgroundColor: "rgba(66,102,150,0.75)",
                                         data: this.state.averageOrderQuantity
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Total in $",
-                                        backgroundColor: "rgb(35,84,147)",
+                                        backgroundColor: "rgba(35,84,147,0.75)",
                                         data: this.state.averageOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Largest Order in $",
-                                        backgroundColor: "rgb(15,119,255)",
+                                        backgroundColor: "rgba(15,119,255,0.75)",
                                         data: this.state.largestOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Lowest Order in $",
-                                        backgroundColor: "rgb(20,147,252)",
+                                        backgroundColor: "rgba(20,147,252,0.75)",
                                         data: this.state.lowestOrderTotal
                                     }
                                 ]
@@ -742,7 +874,7 @@ class SalesTeamAnalytics extends Component {
                 )
             }
         }
-        else if (timeFrame === "past-year") {
+        else if (timeFrame === "Past Year") {
             this.getLastYearAnalytics();
             if (this.state.totalSales.length < 13) {
                 this.setState({ target: 12 });
@@ -769,32 +901,32 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "Year Profit in $",
-                                        backgroundColor: "rgb(1,41,95)",
+                                        label: "Profit in $",
+                                        backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Quantity",
-                                        backgroundColor: "rgb(66,102,150)",
+                                        backgroundColor: "rgba(66,102,150,0.75)",
                                         data: this.state.averageOrderQuantity
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Average Order Total in $",
-                                        backgroundColor: "rgb(35,84,147)",
+                                        backgroundColor: "rgba(35,84,147,0.75)",
                                         data: this.state.averageOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Largest Order in $",
-                                        backgroundColor: "rgb(15,119,255)",
+                                        backgroundColor: "rgba(15,119,255,0.75)",
                                         data: this.state.largestOrderTotal
                                     },
                                     {
                                         ...prevState.data.datasets,
                                         label: "Lowest Order in $",
-                                        backgroundColor: "rgb(20,147,252)",
+                                        backgroundColor: "rgba(20,147,252,0.75)",
                                         data: this.state.lowestOrderTotal
                                     }
                                 ]
@@ -808,11 +940,9 @@ class SalesTeamAnalytics extends Component {
             return;
         }
     }
-
-    // get user total revenue
     getUserTotalRevenue = (id, start, end) => {
         if (!start) {
-            start = moment().subtract(12, 'months').format("YYYY-MM-DD");
+            start = "1970-01-01";
         }
         if (!end) {
             end = moment().format("YYYY-MM-DD");
@@ -821,15 +951,111 @@ class SalesTeamAnalytics extends Component {
             .then(res => {
                 let total = res.data[0].profit.toFixed(2);
                 let totalString = total.toString();
-                this.setState(state => {
-                    const userRevenue = state.userRevenue.concat(totalString);
-                    return {
-                        userRevenue
-                    };
-                })
-            }
-            )
+                this.setState({ userTotalRevenue: totalString })
+            })
             .catch(error => console.log("User revenue error: " + error))
+    }
+    getUserLastMonthRevenue = (id) => {
+        let start = moment().subtract(28, 'days').format("YYYY-MM-DD");
+        let end = moment().format("YYYY-MM-DD");
+        API.getUserOrderAnalytics(id, start, end)
+            .then(res => {
+                let total = res.data[0].profit.toFixed(2);
+                let totalString = total.toString();
+                this.setState({ userLastMonthRevenue: totalString })
+            })
+            .catch(error => console.log("User revenue error: " + error))
+    }
+    getUserAverage = (id, start, end) => {
+        if (!start) {
+            start = "1970-01-01";
+        }
+        if (!end) {
+            end = moment().format("YYYY-MM-DD");
+        }
+        API.getUserOrderAnalytics(id, start, end)
+            .then(res => {
+                let average = res.data[0].averageOrderTotal.toFixed(2);
+                let avgStr = average.toString();
+                this.setState({ userAverage: avgStr })
+            })
+            .catch(error => console.log("User revenue error: " + error))
+    }
+    userLastSale = (id) => {
+        API.getUserOrderAnalytics(id, "1970-01-01", moment().format("YYYY-MM-DD"))
+            .then(res => {
+                let date = res.data[0].lastSalesDate.slice(0, 10);
+                let dateStr = date.toString();
+                console.log(dateStr);
+                this.setState({ userLastSaleDate: dateStr });
+            })
+    }
+    userMostSoldProduct = (id) => {
+        API.getUserOrderAnalytics(id, "1970-01-01", moment().format("YYYY-MM-DD"))
+            .then(res => {
+                let brTotal = 0;
+                let hpTotal = 0;
+                let scTotal = 0;
+                let spTotal = 0;
+                let xfTotal = 0;
+                let krTotal = 0;
+                let sbTotal = 0;
+                for (let i = 0; i < res.data[0].itemsSold.length; i++) {
+                    if (res.data[0].itemsSold[i].itemID === "5d6574318debf3d6cb3e549d") {
+                        let blackRavenQuantity = res.data[0].itemsSold[i].quantity;
+                        brTotal = brTotal + blackRavenQuantity;
+                    }
+                    if (res.data[0].itemsSold[i].itemID === "5d657d75d2a2ace0a8b4c42b") {
+                        let hopsQuantity = res.data[0].itemsSold[i].quantity;
+                        hpTotal = hpTotal + hopsQuantity;
+                    }
+                    if (res.data[0].itemsSold[i].itemID === "5d657dc1d2a2ace0a8b4c42d") {
+                        let sizzleCiderQuantity = res.data[0].itemsSold[i].quantity;
+                        scTotal = scTotal + sizzleCiderQuantity;
+                    }
+                    if (res.data[0].itemsSold[i].itemID === "5d657e36d2a2ace0a8b4c42e") {
+                        let pugetQuantity = res.data[0].itemsSold[i].quantity;
+                        spTotal = spTotal + pugetQuantity;
+                    }
+                    if (res.data[0].itemsSold[i].itemID === "5d657ebdd2a2ace0a8b4c42f") {
+                        let xFoamQuantity = res.data[0].itemsSold[i].quantity;
+                        xfTotal = xfTotal + xFoamQuantity;
+                    }
+                    if (res.data[0].itemsSold[i].itemID === "5d657eecd2a2ace0a8b4c430") {
+                        let krakenQuantity = res.data[0].itemsSold[i].quantity;
+                        krTotal = krTotal + krakenQuantity;
+                    }
+                    if (res.data[0].itemsSold[i].itemID === "5d68789eaa05cb5e20b390d7") {
+                        let samsQuantity = res.data[0].itemsSold[i].quantity;
+                        sbTotal = sbTotal + samsQuantity;
+                    }
+                }
+                switch (Math.max(brTotal, hpTotal, scTotal, spTotal, xfTotal, krTotal, sbTotal)) {
+                    case brTotal:
+                        this.setState({ userPopularProduct: "Black Raven Trickster" });
+                        break;
+                    case hpTotal:
+                        this.setState({ userPopularProduct: "Hops Potato" });
+                        break;
+                    case scTotal:
+                        this.setState({ userPopularProduct: "Sizzlebird Cider" });
+                        break;
+                    case spTotal:
+                        this.setState({ userPopularProduct: "Sounds Puget" });
+                        break;
+                    case xfTotal:
+                        this.setState({ userPopularProduct: "Extra Foam - Limited Edition" });
+                        break;
+                    case krTotal:
+                        this.setState({ userPopularProduct: "The Kraken" });
+                        break;
+                    case sbTotal:
+                        this.setState({ userPopularProduct: "Sam's Beer" });
+                        break;
+                    default:
+                        return;
+                }
+            })
     }
     // get users
     checkUsers = () => {
@@ -854,24 +1080,6 @@ class SalesTeamAnalytics extends Component {
                 this.setState({ orders: res.data.orders })
             )
             .catch(error => console.log("Check orders error: " + error));
-    }
-    checkState = () => {
-        console.log(this.state.totalSales);
-        console.log(this.state.averageOrderTotal);
-        console.log(this.state.averageOrderQuantity);
-        console.log(this.state.largestOrderTotal);
-        console.log(this.state.lowestOrderTotal);
-        // console.log("blackRavenCount: " + this.state.blackRavenCount);
-        // console.log("hopsPotatoCount: " + this.state.hopsPotatoCount);
-        // console.log("sizzleCiderCount: " + this.state.sizzleCiderCount);
-        // console.log("soundsPugetCount: " + this.state.soundsPugetCount);
-        // console.log("extraFoamCount: " + this.state.extraFoamCount);
-        // console.log("krakenCount: " + this.state.krakenCount);
-        // console.log("samsBeerCount: " + this.state.samsBeerCount);
-        // for (let i = 0; i < this.state.data.datasets.length; i++) {
-        //     console.log(this.state.data.datasets[i].data[0])
-        // }
-        console.log(this.state.data);
     }
     // create user full name
     fullName = (first, last) => {
@@ -926,16 +1134,6 @@ class SalesTeamAnalytics extends Component {
         });
         return counter.length;
     }
-    // add default if user does not have a profile picutre
-    checkUserImage = user => {
-        for (let i = 0; i < user.length; i++) {
-            if (user[i].image) {
-                return user[i].image;
-            } else {
-                return "https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80";
-            }
-        }
-    }
     handleInputChange = (event) => {
         this.setState({
             search: event.target.value
@@ -971,7 +1169,13 @@ class SalesTeamAnalytics extends Component {
         const result = users.filter(user =>
             (user.firstName + " " + user.lastName).toUpperCase() === this.state.search.toUpperCase()
         );
+
         this.setState({ searchedUser: result });
+        this.getUserTotalRevenue(result[0]._id);
+        this.getUserLastMonthRevenue(result[0]._id);
+        this.getUserAverage(result[0]._id);
+        this.userMostSoldProduct(result[0]._id);
+        this.userLastSale(result[0]._id);
     };
     modalOpen = () => {
         this.setState({ open: true });
@@ -988,9 +1192,9 @@ class SalesTeamAnalytics extends Component {
             averageOrderTotal: [],
             largestOrderTotal: [],
             lowestOrderTotal: [],
-            timeFrame: "past-hours"
+            timeFrame: "Past 24-hours"
         });
-        if (this.state.timeFrame === "past-hours") {
+        if (this.state.timeFrame === "Past 24-hours") {
             this.setTimeFrame();
         } else {
             setTimeout(
@@ -1009,9 +1213,9 @@ class SalesTeamAnalytics extends Component {
             averageOrderTotal: [],
             largestOrderTotal: [],
             lowestOrderTotal: [],
-            timeFrame: "past-week"
+            timeFrame: "Past Week"
         });
-        if (this.state.timeFrame === "past-week") {
+        if (this.state.timeFrame === "Past Week") {
             this.setTimeFrame();
         } else {
             setTimeout(
@@ -1029,9 +1233,9 @@ class SalesTeamAnalytics extends Component {
             averageOrderTotal: [],
             largestOrderTotal: [],
             lowestOrderTotal: [],
-            timeFrame: "past-month"
+            timeFrame: "Past Month"
         });
-        if (this.state.timeFrame === "past-month") {
+        if (this.state.timeFrame === "Past Month") {
             this.setTimeFrame();
         } else {
             setTimeout(
@@ -1069,9 +1273,9 @@ class SalesTeamAnalytics extends Component {
             averageOrderTotal: [],
             largestOrderTotal: [],
             lowestOrderTotal: [],
-            timeFrame: "past-year"
+            timeFrame: "Past Year"
         });
-        if (this.state.timeFrame === "past-year") {
+        if (this.state.timeFrame === "Past Year") {
             this.setTimeFrame();
         } else {
             setTimeout(
@@ -1085,8 +1289,7 @@ class SalesTeamAnalytics extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.checkState}>Console log values</button>
-                <PageTitle title="Sales Team Analytics" />
+                <PageTitle title="Analytics" />
                 <div style={{ position: "relative", width: 962, height: 750 }}>
                     <Grid
                         container
@@ -1200,6 +1403,7 @@ class SalesTeamAnalytics extends Component {
                             <BarChart
                                 data={this.state.data}
                                 title={this.state.analyticsSelection}
+                                time={this.state.timeFrame}
                             />
                         ) : (
                                 <Grid
@@ -1222,75 +1426,65 @@ class SalesTeamAnalytics extends Component {
                                 </Grid>
                             )}
                     </Grid>
+
                 </div>
+                <div >
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        style={{ margin: "10px" }}
+                    >
+                        {this.state.doughnutData ? (
+                            <Grid item lg={6}>
+                                <DoughnutChart
+                                    doughnutData={this.state.doughnutData}
+                                />
+                            </Grid>
+                        ) : (
+                                <div />
+                            )}
+                    </Grid>
+                </div>
+
                 <Grid container>
                     <Grid item lg={4}></Grid>
                     <Grid item lg={4}>
                         <Search
                             handleInputChange={this.handleInputChange}
                             handleFormSubmit={this.searchAndModal}
+                            style={{ margin: "10px" }}
                         />
                     </Grid>
                     <Grid item lg={4}></Grid>
                 </Grid>
-                <div>
-                    {this.state.searchedUser.map(user => (
-                        <Modal
-                            key={user._id}
-                            open={this.state.open}
-                            onClose={this.modalClose}
-                            userImage={this.checkUserImage(user)}
-                            fullName={this.fullName(user.firstName, user.lastName)}
-                            startDate={this.startDate(user.created_at)}
-                            // totalSales={this.getUserTotalRevenue(user._id)}
-                            numSales={this.numberOfSales(user._id)}
-                        // lastMonthSales={this.lastMonthSales(user._id)}
-                        // popularProduct={this.userMostSoldProduct(user._id)}
-                        />
-                    ))}
-                </div>
-                <Grid container spacing={4}>
-                    {this.state.orders.length > 0 &&
-                        this.state.users.length > 0 &&
-                        this.state.clients.length > 0 ?
-                        (
-                            <div>
-                                {this.state.users.map(user => (
-                                    <div key={user._id}>
-                                        <Grid item lg={12}>
-                                            <Card
-                                                userImage={this.checkUserImage(user)}
-                                                fullName={this.fullName(user.firstName, user.lastName)}
-                                                startDate={this.startDate(user.created_at)}
-                                                // totalSales={this.getUserTotalRevenue(user._id)}
-                                                numSales={this.numberOfSales(user._id)}
-                                            // lastMonthSales={this.lastMonthSales(user._id)}
-                                            // popularProduct={this.userMostSoldProduct(user._id)}
-                                            />
-                                        </Grid>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <Grid container>
-                                <Grid item lg={5}></Grid>
-                                <Grid item lg={2}>
-                                    <PacmanLoader
-                                        className={"pacman-loader"}
-                                        sizeUnit={"px"}
-                                        size={25}
-                                        color={'#9E0031'}
-                                        loading={true}
-                                    />
-                                </Grid>
-                                <Grid item lg={5}></Grid>
-                            </Grid>
-                        )
-                    }
-                </Grid>
+                {this.state.userTotalRevenue && this.state.userLastMonthRevenue && this.state.userAverage && this.state.userPopularProduct && this.state.userLastSaleDate ? (
+                    <div>
+                        {this.state.searchedUser.map(user => (
+                            <Modal
+                                key={user._id}
+                                open={this.state.open}
+                                onClose={this.modalClose}
+                                userImage={"https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"}
+                                fullName={this.fullName(user.firstName, user.lastName)}
+                                startDate={this.startDate(user.created_at)}
+                                numSales={this.numberOfSales(user._id)}
+                                totalSales={this.state.userTotalRevenue}
+                                lastMonthSales={this.state.userLastMonthRevenue}
+                                averageSale={this.state.userAverage}
+                                popularProduct={this.state.userPopularProduct}
+                                lastSaleDate={this.state.userLastSaleDate}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                        <div />
+                    )
+                }
             </div>
         )
     }
 };
 
-export default SalesTeamAnalytics;
+export default Analytics;
