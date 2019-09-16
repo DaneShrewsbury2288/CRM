@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const steps = ['Client Information', 'Product Selection', 'Review order'];
+const steps = ['Enter a new order'];
 
 function getStepContent(step) {
   switch (step) {

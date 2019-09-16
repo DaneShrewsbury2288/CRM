@@ -38,10 +38,9 @@ import * as Table from '../components/EditableTable';
 function seeObject(x){
   console.log(Table.selectedBrews.arrayOne.slice(-1));
   const why = Table.selectedBrews.arrayOne.slice(-1);
-  console.log(why[0][0]);
 }
 
-const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
+
 
 //This is where the clients info should be pushed
 // const payments = [
@@ -77,12 +76,14 @@ export default function Review() {
   // console.log(selected);
   // console.log(rows);
 
+  const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
+  
   seeObject();
 
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        Enter quantity of products desired to purchase
       </Typography>
       <List>
         {Table.rows.map(item => (
@@ -123,26 +124,9 @@ export default function Review() {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Client Information
           </Typography>
-          <Typography gutterBottom>Costco</Typography>
+          <Typography gutterBottom></Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
-        {/* <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Product Selection
-          </Typography>
-          <Grid container>
-            {payments.map(payment => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid> */}
       </Grid>
     </React.Fragment>
   );
