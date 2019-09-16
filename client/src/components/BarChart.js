@@ -24,30 +24,28 @@ function BarChart(props) {
                     },
                     title: {
                         display: true,
-                        text: props.title + " Analytics"
+                        text: props.title + " Analytics Over " + props.time
+                    },
+                    legend: {
+                        labels: {
+                            fontColor: "black",
+                            defaultFontFamily: "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue'"
+                        }
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                return label;
+                            }
+                        }
                     }
                 }}
-                // data={{
-                //     labels: [props.chartTitle],
-                //     datasets: [
-                //         {
-                //             label: props.timeFrames,
-                //             backgroundColor: props.chartBGColor,
-                //             data: props.chartData
-                //         }
-                //     ]
-                // }}
-            // data={{
-            //     labels: [{props.chartTitle}],
-            //     datasets: [
-            //         {
-            //             label: {props.timeFrames},
-            //             backgroundColor: {props.chartBGColor},
-            //             data: {props.data}
-            //         }
-            //     ]
-            // }}
-            data={props.data}
+                data={props.data}
             />
         )
     } else {
