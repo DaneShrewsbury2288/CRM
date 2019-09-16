@@ -22,7 +22,9 @@ function InputForm(props) {
                   <Paper className="paper-header">Create a task</Paper>
                 </Grid>
                 <Grid item lg={4}>
-                  <FormControl>
+                  <FormControl
+                    fullWidth={true}
+                  >
                     <InputLabel htmlFor="age-native-helper">Employee</InputLabel>
                     <Select
                       value={props.userSelection}
@@ -30,13 +32,17 @@ function InputForm(props) {
                       name="userSelection"
                     >
                       {props.users.map(user => (
-                        <MenuItem key={user._id} value={user._id}>{user.firstName}</MenuItem>
+                        <MenuItem key={user._id} value={user._id}>
+                          {user.firstName} {user.lastName}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
                 </Grid>
                 <Grid item lg={4}>
-                  <FormControl>
+                  <FormControl
+                    fullWidth={true}
+                  >
                     <InputLabel htmlFor="age-native-helper">Client</InputLabel>
                     <Select
                       value={props.clientSelection}
@@ -44,7 +50,9 @@ function InputForm(props) {
                       name="clientSelection"
                     >
                       {props.clients.map(client => (
-                        <MenuItem key={client._id} value={client._id}>{client.name}</MenuItem>
+                        <MenuItem key={client._id} value={client._id}>
+                          {client.name}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
@@ -57,6 +65,8 @@ function InputForm(props) {
                     name="inputDescription"
                     placeholder="Task description"
                     onChange={props.handleInputChange}
+                    fullWidth={true}
+                    multiline={true}
                   />
                 </Grid>
               </Grid>
@@ -64,14 +74,16 @@ function InputForm(props) {
                 <Grid item lg={4}>
                   <Paper className="paper">Due Date</Paper>
                 </Grid>
-                <Grid item lg={6}>
+                <Grid item lg={4}>
                   <Input
                     value={props.dueDate}
                     name="dueDate"
                     placeholder="01-01-2011"
                     onChange={props.handleInputChange}
+                    fullWidth={true}
                   />
                 </Grid>
+                <Grid item lg={2} />
                 <Grid item lg={2}>
                   <Button onClick={props.handleFormSubmit} variant="contained" color="primary" className="button">
                     Submit Task
