@@ -138,6 +138,7 @@ class Login extends Component {
                   autoFocus
                 />
                 <label htmlFor="userId">User ID</label>
+                <br/>
                 <span className="red-text">
                   {errors.userId}
                   {errors.userIdnotfound}
@@ -158,7 +159,9 @@ class Login extends Component {
                     invalid: errors.password || errors.passwordincorrect
                   })}
                   autoComplete="current-password"
-                />                                <label htmlFor="password">Password</label>
+                />                                
+                <label htmlFor="password">Password</label>
+                <br/>
                 <span className="red-text">
                   {errors.password}
                   {errors.passwordincorrect}

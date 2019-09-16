@@ -5,96 +5,9 @@ import { Link } from "react-router-dom";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import WidgetsIcon from '@material-ui/icons/Widgets';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import ContactMailIcon from '@material-ui/icons/ContactMail';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import MailOutlineIcon from '@material-ui/icons/MailOutline'
-// import MoneyIcon from '@material-ui/icons/AttachMoney';
-import LockIcon from '@material-ui/icons/Lock';
-import PublicIcon from '@material-ui/icons/Public';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import Button from '@material-ui/core/Button';
 import { logoutUser } from "../actions/authActions";
-
-const icons = [
-    {
-        title: "Dashboard",
-        href: "/",
-        bitmask: 0b1,
-        icon: <DashboardIcon />
-    },
-    {
-        title: "Sales Team Daily",
-        href: "/salesteamdaily",
-        bitmask: 0b10,
-        icon: <CheckBoxIcon />
-    },
-    {
-        title: "Inventory",
-        href: "/inventory",
-        bitmask: 0b100,
-        icon: <WidgetsIcon />
-    },
-    {
-        title: "Client List",
-        href: "/clientlist",
-        bitmask: 0b1000,
-        icon: <ContactMailIcon />
-    },
-    {
-        title: "Purchasing Tool",
-        href: "/purchasingtool",
-        bitmask: 0b10000,
-        icon: <ShoppingCartIcon />
-    },
-    {
-        title: "Sales Analytics",
-        href: "/salesanalytics",
-        bitmask: 0b100000,
-        icon: <TrendingUpIcon />
-    },
-    {
-        title: "Manager Task Assignment",
-        href: "/managertaskassignment",
-        bitmask: 0b1000000,
-        icon: <AssignmentTurnedInIcon />
-    },
-    {
-        title: "Sales Team Analytics",
-        href: "/salesteamanalytics",
-        bitmask: 0b10000000,
-        icon: <BarChartIcon />
-    },
-    {
-        title: "Check User Messages",
-        href: "/checkusermessages",
-        bitmask: 0b100000000,
-        icon: <MailOutlineIcon />
-    },
-    {
-        title: "Discover",
-        href: "/discover",
-        bitmask: 0b1000000000,
-        icon: <PublicIcon />
-    },
-    {
-        title: "Add/Remove Users",
-        href: "/addremoveusers",
-        bitmask: 0b10000000000,
-        icon: <PersonAddIcon />
-    },
-    {
-        title: "Permissions",
-        href: "/Permissions",
-        bitmask: 0b100000000000,
-        icon: <LockIcon />
-    }
-
-]
+import icons from '../permissions'
 
 class ListMap extends Component {
 
@@ -129,7 +42,7 @@ class ListMap extends Component {
                         null
                 ))}
 
-                <button
+                {/* <button
                     style={{
                         width: "150px",
                         borderRadius: "3px",
@@ -140,7 +53,16 @@ class ListMap extends Component {
                     className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                 >
                     Logout
-                </button>
+                </button> */}
+
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.onLogoutClick}
+                >
+                    Logout
+                </Button>
+
 
             </div>
         )

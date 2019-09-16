@@ -6,6 +6,7 @@ import UserAPI from '../utils/API';
 import Button from '../components/Button';
 import "react-chartjs-2";
 import BarChart from '../components/BarChart';
+import DoughnutChart from '../components/DoughnutChart';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -78,14 +79,21 @@ class SalesTeamAnalytics extends Component {
         target: 20,
         timeFrame: "Past Month",
         data: {
-            // time frame values
             labels: [],
             datasets: [
                 {
-                    // label for time frame
                     label: "",
                     backgroundColor: "",
-                    // data results
+                    data: []
+                }
+            ]
+        },
+        doughnutData: {
+            labels: [],
+            datasets: [
+                {
+                    label: "",
+                    backgroundColor: "",
                     data: []
                 }
             ]
@@ -100,13 +108,13 @@ class SalesTeamAnalytics extends Component {
         averageOrderTotal: [],
         largestOrderTotal: [],
         lowestOrderTotal: [],
-        blackRavenCount: 0,
-        hopsPotatoCount: 0,
-        sizzleCiderCount: 0,
-        soundsPugetCount: 0,
-        extraFoamCount: 0,
-        krakenCount: 0,
-        samsBeerCount: 0,
+        blackRavenCount: [],
+        hopsPotatoCount: [],
+        sizzleCiderCount: [],
+        soundsPugetCount: [],
+        extraFoamCount: [],
+        krakenCount: [],
+        samsBeerCount: [],
     }
 
     getAnalytics = (start, end) => {
@@ -254,6 +262,64 @@ class SalesTeamAnalytics extends Component {
                 })
             )
             .catch(error => console.log("Client analytics error: " + error));
+    }
+    getProductAnalytics = (start, end) => {
+        if (!start) {
+            start = moment().subtract(12, 'months').format("YYYY-MM-DD");
+        }
+        if (!end) {
+            end = moment().format("YYYY-MM-DD");
+        }
+        API.getBusinessAnalytics(start, end)
+            .then(res =>
+                this.setState(state => {
+                    // if any sales have occured in selected time period
+                    if (res.data[0] !== undefined) {
+                        for (let i = 0; i < res.data[0].itemsSold.length; i++) {
+                            if (res.data[0].itemsSold[i].itemID === "5d6574318debf3d6cb3e549d") {
+                                let blackRavenQuantity = res.data[0].itemsSold[i].quantity;
+                                const blackRavenCount = state.blackRavenCount + blackRavenQuantity;
+                                return blackRavenCount;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657d75d2a2ace0a8b4c42b") {
+                                let hopsQuantity = res.data[0].itemsSold[i].quantity;
+                                const hopsPotatoCount = state.hopsPotatoCount + hopsQuantity;
+                                return hopsPotatoCount;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657dc1d2a2ace0a8b4c42d") {
+                                let sizzleCiderQuantity = res.data[0].itemsSold[i].quantity;
+                                const sizzleCiderCount = state.sizzleCiderCount + sizzleCiderQuantity;
+                                return sizzleCiderCount;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657e36d2a2ace0a8b4c42e") {
+                                let pugetQuantity = res.data[0].itemsSold[i].quantity;
+                                const soundsPugetCount = state.soundsPugetCount + pugetQuantity;
+                                return soundsPugetCount;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657ebdd2a2ace0a8b4c42f") {
+                                let xFoamQuantity = res.data[0].itemsSold[i].quantity;
+                                const extraFoamCount = state.extraFoamCount + xFoamQuantity;
+                                return extraFoamCount;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d657eecd2a2ace0a8b4c430") {
+                                let krakenQuantity = res.data[0].itemsSold[i].quantity;
+                                const krakenCount = state.krakenCount + krakenQuantity;
+                                return krakenCount;
+                            }
+                            if (res.data[0].itemsSold[i].itemID === "5d68789eaa05cb5e20b390d7") {
+                                let samsQuantity = res.data[0].itemsSold[i].quantity;
+                                const samsBeerCount = state.samsBeerCount + samsQuantity;
+                                return samsBeerCount;
+                            }
+                        }
+                    } else {
+                        // set to zero if no sales
+                        return;
+                    }
+                })
+            )
+            .catch(error => console.log("Business analytics error: " + error));
+            this.setUpDonut();
     }
 
     UNSAFE_componentWillMount() {
@@ -480,6 +546,50 @@ class SalesTeamAnalytics extends Component {
             this.getAnalytics(thisMonth, today);
         }
     }
+    setUpDonut() {
+        this.setState({
+            doughnutData: {
+                labels: ["one", "two", "three", "four", "five", "six", "seven"],
+                datasets: [
+                    {
+                        label: "Black Raven",
+                        backgroundColor: "rgb(255,175,135)",
+                        data: this.state.blackRavenCount
+                    },
+                    // {
+                    //     label: "Hops Potato",
+                    //     backgroundColor: "rgb(255,142,114)",
+                    //     data: [this.state.hopsPotatoCount]
+                    // },
+                    // {
+                    //     label: "Sizzle Cider",
+                    //     backgroundColor: "rgb(237,106,94)",
+                    //     data: [this.state.sizzleCiderCount]
+                    // },
+                    // {
+                    //     label: "Sounds Puget",
+                    //     backgroundColor: "rgb(76,224,179)",
+                    //     data: [this.state.soundsPugetCount]
+                    // },
+                    // {
+                    //     label: "Extra Foam - Limited Edition",
+                    //     backgroundColor: "rgb(55,119,113)",
+                    //     data: [this.state.extraFoamCount]
+                    // },
+                    // {
+                    //     label: "The Kraken",
+                    //     backgroundColor: "rgb(224,224,76)",
+                    //     data: [this.state.krakenCount]
+                    // },
+                    // {
+                    //     label: "Sam's Beer",
+                    //     backgroundColor: "rgb(119,96,55)",
+                    //     data: [this.state.samsBeerCount]
+                    // }
+                ]
+            }
+        })
+    }
 
     setTimeFrame() {
         this.setState({
@@ -538,7 +648,7 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "24-hour Profit in $",
+                                        label: "Profit in $",
                                         backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
@@ -596,7 +706,7 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "Week Profit in $",
+                                        label: "Profit in $",
                                         backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
@@ -650,7 +760,7 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "Month Profit in $",
+                                        label: "Profit in $",
                                         backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
@@ -706,7 +816,7 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "Quarter Profit in $",
+                                        label: "Profit in $",
                                         backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
@@ -769,7 +879,7 @@ class SalesTeamAnalytics extends Component {
                                 datasets: [
                                     {
                                         ...prevState.data.datasets,
-                                        label: "Year Profit in $",
+                                        label: "Profit in $",
                                         backgroundColor: "rgba(1,41,95,0.75)",
                                         data: this.state.totalSales
                                     },
@@ -856,22 +966,18 @@ class SalesTeamAnalytics extends Component {
             .catch(error => console.log("Check orders error: " + error));
     }
     checkState = () => {
-        console.log(this.state.totalSales);
-        console.log(this.state.averageOrderTotal);
-        console.log(this.state.averageOrderQuantity);
-        console.log(this.state.largestOrderTotal);
-        console.log(this.state.lowestOrderTotal);
-        // console.log("blackRavenCount: " + this.state.blackRavenCount);
-        // console.log("hopsPotatoCount: " + this.state.hopsPotatoCount);
-        // console.log("sizzleCiderCount: " + this.state.sizzleCiderCount);
-        // console.log("soundsPugetCount: " + this.state.soundsPugetCount);
-        // console.log("extraFoamCount: " + this.state.extraFoamCount);
-        // console.log("krakenCount: " + this.state.krakenCount);
-        // console.log("samsBeerCount: " + this.state.samsBeerCount);
-        // for (let i = 0; i < this.state.data.datasets.length; i++) {
-        //     console.log(this.state.data.datasets[i].data[0])
-        // }
-        console.log(this.state.data);
+        // console.log(this.state.totalSales);
+        // console.log(this.state.averageOrderTotal);
+        // console.log(this.state.averageOrderQuantity);
+        // console.log(this.state.largestOrderTotal);
+        // console.log(this.state.lowestOrderTotal);
+        console.log("blackRavenCount: " + this.state.blackRavenCount);
+        console.log("hopsPotatoCount: " + this.state.hopsPotatoCount);
+        console.log("sizzleCiderCount: " + this.state.sizzleCiderCount);
+        console.log("soundsPugetCount: " + this.state.soundsPugetCount);
+        console.log("extraFoamCount: " + this.state.extraFoamCount);
+        console.log("krakenCount: " + this.state.krakenCount);
+        console.log("samsBeerCount: " + this.state.samsBeerCount);
     }
     // create user full name
     fullName = (first, last) => {
@@ -1222,6 +1328,18 @@ class SalesTeamAnalytics extends Component {
                                     <Grid item lg={3}></Grid>
                                 </Grid>
                             )}
+                    </Grid>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Grid item lg={6}>
+                            <DoughnutChart 
+                                doughnutData={this.state.doughnutData}
+                            />
+                        </Grid>
                     </Grid>
                 </div>
                 <Grid container>
