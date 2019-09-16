@@ -8,47 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import * as Table from '../components/EditableTable';
 
-
-
-// const products = [
-//   { name: Table.selectedBrews.arrayOne.slice(-1),
-//     desc: 'A nice thing',
-//     price: '$9.99' 
-//     },
-//   { name: 'Product 2',
-//     desc: 'Another thing',
-//     price: '$3.45' 
-//     },
-//   { name: 'Product 3',
-//     desc: 'Something else',
-//     price: '$6.51' 
-//     },
-//   { name: 'Product 4',
-//     desc: 'Best thing of all',
-//     price: '$14.11' 
-//     },
-// ];
-
-// function pushIntoProducts(){
-//   products.push()
-
+// function seeObject(x){
+//   console.log(Table.selectedBrews.arrayOne.slice(-1));
+//   const why = Table.selectedBrews.arrayOne.slice(-1);
 // }
-
-
-function seeObject(x){
-  console.log(Table.selectedBrews.arrayOne.slice(-1));
-  const why = Table.selectedBrews.arrayOne.slice(-1);
-}
-
-
-
-//This is where the clients info should be pushed
-// const payments = [
-//   { name: 'Card type', detail: 'Visa' },
-//   { name: 'Card holder', detail: 'Mr John Smith' },
-//   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-//   { name: 'Expiry date', detail: '04/2024' },
-// ];
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -67,8 +30,19 @@ const selectedProducts = Table.selectedBrews.arrayOne[0];
 console.log(selectedProducts);
 
 export default function Review() {
-  // const [quantityValue] = React.useState([]);
+  const [values, setValues] = React.useState([{
+    productid: '',
+    quantity: 0
+  }]);
+  // const [values, setValues] = React.useState({
+  //   name: 'Cat in the Hat',
+  //   age: '',
+  //   multiline: 'Controlled',
+  //   currency: 'EUR',
+  // });
+
   const classes = useStyles();
+
 
   const x = Table.selectedBrews.arrayOne.slice(-1);
   console.log(x);
@@ -76,46 +50,76 @@ export default function Review() {
   // console.log(selected);
   // console.log(rows);
 
+  // handle input change
+  const handleChange = name => event => {
+    setValues({ ...values, [name]: event.target.value });
+  };
+
   const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
-  
-  seeObject();
+
+  function checkState() {
+    console.log(Table.rows);
+  }
+
+  // seeObject();
 
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Enter quantity of products desired to purchase
       </Typography>
+      <button onClick={checkState}>Click me to check state</button>
       <List>
-        {Table.rows.map(item => (
           <ListItem
-          className={classes.listItem} 
-          key={item.name}>
+            className={classes.listItem}
+            key="0">
             <ListItemText
-            primary={item.productName} />
-            <Typography 
-            variant="body2">${item.price}</Typography>
+              primary="Black Raven Trickster" />
+            <Typography
+              variant="body2">$0</Typography>
             <Typography>
-            <TextField
-            id="outlined-number"
-            label="Quantity"
-            // value={values.age}
-            // onChange={handleChange('age')}
-            type="number"
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin="normal"
-            variant="filled"
-            width="200"
-      />
-      </Typography>
+              <TextField
+                id="0"
+                name="We"
+                label="Quantity Desired"
+                value={values}
+                onChange={handleChange('quantity')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </Typography>
           </ListItem>
-        ))}
+          <ListItem
+            className={classes.listItem}
+            key="0">
+            <ListItemText
+              primary="Black Raven Trickster" />
+            <Typography
+              variant="body2">$0</Typography>
+            <Typography>
+              <TextField
+                id="1"
+                name="you"
+                label="Quantity Desired"
+                value={values.quantity}
+                onChange={handleChange('quantity')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </Typography>
+          </ListItem>
         <ListItem className={classes.listItem}>
           <ListItemText primary="" />
           <Typography variant="subtitle1" className={classes.total}>
-            
+
           </Typography>
         </ListItem>
       </List>

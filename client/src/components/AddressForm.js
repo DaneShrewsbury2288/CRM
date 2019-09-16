@@ -12,18 +12,29 @@ import EnhancedTable from '../components/EditableTable';
 import Review from '../components/Review';
 
 const clientArray = [];
+const productArray = [];
 
 function PopulateClients(){
   API.getClients()
   .then(res =>
-      clientArray.push(res.data.clients[5].email)
+      clientArray.push(res.data)
   )
   .catch(error => console.log("Check clients error: " + error))
 }
 
+function PopulateProducts(){
+  API.getProducts()
+  .then(res =>
+      clientArray.push(res.data)
+  )
+  .catch(error => console.log("Check clients error: " + error))
+}
+
+PopulateProducts();
 PopulateClients();
-// // console.log(clientArray[1].data.clients[0]);
+
 console.log(clientArray);
+console.log(productArray);
 
 const useStyles = makeStyles(theme => ({
   root: {
