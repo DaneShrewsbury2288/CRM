@@ -5,7 +5,6 @@ import PacmanLoader from 'react-spinners/PacmanLoader';
 import Grid from '@material-ui/core/Grid';
 
 function BarChart(props) {
-    console.log(props)
     if (props.data !== undefined) {
         return (
             <Bar

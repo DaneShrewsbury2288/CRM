@@ -3,6 +3,7 @@ import { Pie } from "react-chartjs-2";
 import 'chartjs-plugin-lineheight-annotation';
 
 function PieChart(props) {
+    console.log(props)
     if (props.pieData !== undefined) {
         return (
             <Pie

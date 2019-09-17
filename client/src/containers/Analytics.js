@@ -97,12 +97,24 @@ class Analytics extends Component {
                 }
             ]
         },
+        pieData: {
+            labels: [],
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: []
+                }
+            ]
+        },
         chartTitle: "",
         timeFrames: [],
         chartBGColor: "",
         chartData: [],
         chartIsLoaded: false,
         doughnutLoaded: false,
+        pieLoaded: false,
+        pieLabels: [],
+        pieQuantities: [],
         totalSales: [],
         averageOrderQuantity: [],
         averageOrderTotal: [],
@@ -257,6 +269,45 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Client analytics error: " + error));
     }
+    getClientTotals = () => {
+        setTimeout(
+            function () {
+                const clients = this.state.clients;
+                clients.forEach(function (client) {
+                    API.getClientOrderAnalytics(client._id, "1970-01-01", moment().format("YYYY-MM-DD"))
+                        .then(res =>
+                            this.setState(state => {
+                                if (res.data[0] !== undefined) {
+                                    console.log("Here is the client name: " + client.name)
+                                    let clientName = client.name;
+                                    let clientProfit = res.data[0].profit;
+                                    let profitStr = clientProfit.toString();
+                                    console.log(profitStr);
+                                    console.log(state.pieLabels);
+                                    const pieLabels = state.pieLabels.concat(clientName);
+                                    console.log(state.pieQuantities);
+                                    const pieQuantities = state.pieQuantities.concat(profitStr);
+                                    return {
+                                        pieLabels,
+                                        pieQuantities
+                                    }
+                                } else {
+                                    const pieLabels = state.pieLabels;
+                                    const pieQuantities = state.pieQuantities
+                                    return {
+                                        pieLabels,
+                                        pieQuantities
+                                    }
+                                }
+
+                            })
+                        )
+                        .catch(error => console.log("Client totals error: " + error))
+                })
+                this.setUpPie();
+            }.bind(this), 5000
+        )
+    }
     getProductAnalytics = (start, end) => {
         this.setState({ doughnutData: false });
         if (!start) {
@@ -307,7 +358,6 @@ class Analytics extends Component {
             .catch(error => console.log("Business analytics error: " + error));
         this.setUpDonut();
     }
-
     UNSAFE_componentWillMount() {
         this.checkUsers();
         this.checkClients();
@@ -316,8 +366,8 @@ class Analytics extends Component {
     componentDidMount() {
         this.setTimeFrame();
         this.getProductAnalytics();
+        this.getClientTotals();
     }
-
     getLastDayAnalytics = () => {
         this.setState({
             totalSales: [],
@@ -526,7 +576,7 @@ class Analytics extends Component {
             this.getAnalytics(thisMonth, today);
         }
     }
-    setUpDonut() {
+    setUpDonut = () => {
         setTimeout(
             function () {
                 const ravenString = this.state.blackRavenCount.toString();
@@ -566,62 +616,47 @@ class Analytics extends Component {
                             }
                         ]
                     }
-                    // doughnutData: {
-                    //     ...prevState.doughnutData,
-                    //     labels: [
-                    //         "Quantity Sold"
-                    //     ],
-                    //     datasets: [
-                    //         {
-                    //             ...prevState.doughnutData.datasets,
-                    //             label: "Black Raven Trickster",
-                    //             backgroundColor: "rgb(236,217,208)",
-                    //             data: [this.state.blackRavenCount]
-                    //         },
-                    //         {
-                    //             ...prevState.doughnutData.datasets,
-                    //             label: "Hops Potato",
-                    //             backgroundColor: "rgb(233,196,175)",
-                    //             data: [this.state.hopsPotatoCount]
-                    //         },
-                    //         {
-                    //             ...prevState.doughnutData.datasets,
-                    //             label: "Sizzlebird Cider",
-                    //             backgroundColor: "rgb(231,143,33)",
-                    //             data: [this.state.sizzleCiderCount]
-                    //         },
-                    //         {
-                    //             ...prevState.doughnutData.datasets,
-                    //             label: "Sounds Puget",
-                    //             backgroundColor: "rgb(249,195,129)",
-                    //             data: [this.state.soundsPugetCount]
-                    //         },
-                    //         {
-                    //             ...prevState.doughnutData.datasets,
-                    //             label: "Extra Foam - Limited Edition",
-                    //             backgroundColor: "rgb(238,150,9)",
-                    //             data: [this.state.extraFoamCount]
-                    //         },
-                    //         {
-                    //             ...prevState.doughnutData.datasets,
-                    //             label: "The Kraken",
-                    //             backgroundColor: "rgb(193,23,10)",
-                    //             data: [this.state.krakenCount]
-                    //         },
-                    //         {
-                    //             ...prevState.doughnutData.datasets,
-                    //             label: "Sam's Beer",
-                    //             backgroundColor: "rgb(195,65,1)",
-                    //             data: [this.state.samsBeerCount]
-                    //         }
-                    //     ]
-                    // }
                 }))
                 this.setState({ doughnutLoaded: true });
             }.bind(this), 3000
         )
     }
-    setTimeFrame() {
+    randomColorGenerator = () => {
+
+    }
+    setUpPie = () => {
+        setTimeout(
+            function () {
+                this.setState(prevState => ({
+                    pieData: {
+                        ...prevState.pieData,
+                        labels: this.state.pieLabels,
+                        datasets: [
+                            {
+                                ...prevState.pieData.datasets,
+                                data: this.state.pieQuantities,
+                                // backgroundColor: [
+                                //     "rgb(236,217,208)",
+                                //     "rgb(233,196,175)",
+                                //     "rgb(231,143,33)",
+                                //     "rgb(249,195,129)",
+                                //     "rgb(238,150,9)",
+                                //     "rgb(193,23,10)",
+                                //     "rgb(195,65,1)"
+                                // ]
+                            }
+                        ]
+                    }
+                }))
+                console.log(this.state.pieData)
+                console.log(this.state.clients)
+                if (this.state.pieQuantities > 5) {
+                    this.setState({ pieLoaded: true });
+                }
+            }.bind(this), 3000
+        )
+    }
+    setTimeFrame = ()  => {
         this.setState({
             data: {
                 labels: [],
@@ -710,7 +745,7 @@ class Analytics extends Component {
                             }
                         }))
                         this.setState({ chartIsLoaded: true });
-                    }.bind(this), 5000
+                    }.bind(this), 2000
                 )
             }
         }
@@ -1415,7 +1450,7 @@ class Analytics extends Component {
                                             className={"pacman-loader"}
                                             sizeUnit={"px"}
                                             size={75}
-                                            color={'#9E0031'}
+                                            color={"rgb(63, 81, 181)"}
                                             loading={true}
                                         />
                                     </Grid>
@@ -1425,6 +1460,7 @@ class Analytics extends Component {
                     </Grid>
                 </div>
                 <div >
+
                     <Grid
                         container
                         direction="row"
@@ -1432,8 +1468,10 @@ class Analytics extends Component {
                         alignItems="center"
                         style={{ margin: "10px" }}
                     >
+
                         {this.state.doughnutData && this.state.doughnutLoaded ? (
                             <Grid item lg={6}>
+                                <h4>Products Percentage of Quantity Sold</h4>
                                 <DoughnutChart
                                     doughnutData={this.state.doughnutData}
                                 />
@@ -1450,10 +1488,11 @@ class Analytics extends Component {
                         alignItems="center"
                         style={{ margin: "10px" }}
                     >
-                        {this.state.doughnutData && this.state.doughnutLoaded ? (
+                        {this.state.pieData && this.state.pieLoaded ? (
                             <Grid item lg={6}>
+                                <h4>Clients Percentage of Sales</h4>
                                 <PieChart
-                                    pieData={this.state.doughnutData}
+                                    pieData={this.state.pieData}
                                 />
                             </Grid>
 
@@ -1465,7 +1504,7 @@ class Analytics extends Component {
                 <Grid container>
                     <Grid item lg={4}></Grid>
                     <Grid item lg={4}>
-                    <h4>Find Employee Data</h4>
+                        <h4>Find Employee Data</h4>
                         <Search
                             handleInputChange={this.handleInputChange}
                             handleFormSubmit={this.searchAndModal}
