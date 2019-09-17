@@ -10,8 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
-import API from '../utilities/api';
-import values from '../components/Review'; 
+// import API from '../utilities/api';
+// import values from '../components/Review'; 
 import { QuantityState } from '../components/Review'; 
 
 const useStyles = makeStyles(theme => ({
