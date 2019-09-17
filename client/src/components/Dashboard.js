@@ -158,16 +158,23 @@ const Dashboard = (props) => {
         if (res.data.length > 0) {
           setMessages(res.data)
         }
+        else {
+          setMessages(null)
+        }
       })
       .then(res => {
         if (messages) {
           setUnread(messages.length)
+        }
+        else if (messages === null) {
+          setUnread(0)
         }
       })
       .catch(err => console.log(err))
   }
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
+    APISearch(user._id)
   }
   function handleClose() {
     setAnchorEl(null);
@@ -178,6 +185,7 @@ const Dashboard = (props) => {
     socket.on('messages checked', user => (
       APISearch(user._id)
     ));
+  
     socket.on('message', data => (
       APISearch(user._id)
     ));
