@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../actions/authActions";
@@ -58,7 +60,10 @@ class AddUsers extends Component {
                             </div>
                             <form noValidate onSubmit={this.onSubmit}>
                                 <div className="input-field col s12">
-                                    <input
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
                                         onChange={this.onChange}
                                         value={this.state.userKey}
                                         error={errors.userKey}
@@ -72,7 +77,10 @@ class AddUsers extends Component {
                                     <span className="red-text">{errors.userKey}</span>
                                 </div>
                                 <div className="input-field col s12">
-                                    <input
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
                                         onChange={this.onChange}
                                         value={this.state.userId}
                                         error={errors.userId}
@@ -86,7 +94,10 @@ class AddUsers extends Component {
                                     <span className="red-text">{errors.userId}</span>
                                 </div>
                                 <div className="input-field col s12">
-                                    <input
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
                                         onChange={this.onChange}
                                         value={this.state.firstName}
                                         error={errors.firstName}
@@ -100,7 +111,10 @@ class AddUsers extends Component {
                                     <span className="red-text">{errors.firstName}</span>
                                 </div>
                                 <div className="input-field col s12">
-                                    <input
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
                                         onChange={this.onChange}
                                         value={this.state.lastName}
                                         error={errors.lastName}
@@ -114,7 +128,10 @@ class AddUsers extends Component {
                                     <span className="red-text">{errors.lastName}</span>
                                 </div>
                                 <div className="input-field col s12">
-                                    <input
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
                                         onChange={this.onChange}
                                         value={this.state.password}
                                         error={errors.password}
@@ -128,7 +145,10 @@ class AddUsers extends Component {
                                     <span className="red-text">{errors.password}</span>
                                 </div>
                                 <div className="input-field col s12">
-                                    <input
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
                                         onChange={this.onChange}
                                         value={this.state.password2}
                                         error={errors.password2}
@@ -142,18 +162,14 @@ class AddUsers extends Component {
                                     <span className="red-text">{errors.password2}</span>
                                 </div>
                                 <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                                    <button
-                                        style={{
-                                            width: "150px",
-                                            borderRadius: "3px",
-                                            letterSpacing: "1.5px",
-                                            marginTop: "1rem"
-                                        }}
+                                    <Button
+                                        variant="contained"
+                                        style={{ backgroundColor: '#313131', marginTop: '30px' }}
+                                        color="primary"
                                         type="submit"
-                                        className="btn btn-large waves-effect waves-light hoverable blue accent-3"
                                     >
                                         Add User
-                                </button>
+                                    </Button>
                                 </div>
                             </form>
                         </div>

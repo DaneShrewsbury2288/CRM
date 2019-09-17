@@ -3,6 +3,7 @@ import PageTitle from "../components/PageTitle";
 import API from "../utils/API";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
 import CheckMessages from "../components/CheckMessages";
 
 
@@ -73,7 +74,7 @@ class MapOfSales extends Component {
           {this.state.user1
             ?
             <div>
-              <h4 onClick={this.back}>Back</h4>
+              <Button variant="contained" color="primary" style={{backgroundColor: '#313131'}} onClick={this.back}>Back</Button>
               <CheckMessages user1={this.state.user1} user1Name={this.state.user1Name} user2={this.state.user2} user2Name={this.state.user2Name} />
             </div>
             :

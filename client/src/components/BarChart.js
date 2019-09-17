@@ -62,7 +62,7 @@ function BarChart(props) {
                         className={"pacman-loader"}
                         sizeUnit={"px"}
                         size={75}
-                        color={'#9E0031'}
+                        color={"#313131"}
                         loading={true}
                     />
                 </Grid>

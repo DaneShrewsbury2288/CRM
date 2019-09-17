@@ -34,12 +34,12 @@ class AddRemoveUsers extends Component {
                 {this.state.action ?
                     this.state.action === "add" ?
                         <div>
-                            <h4 onClick={this.back}>Back</h4>
+                            <Button variant="contained" color="primary" style={{backgroundColor: '#313131'}} onClick={this.back}>Back</Button>
                             <AddUsers />
                         </div>
                         :
                         <div>
-                            <h4 onClick={this.back}>Back</h4>
+                            <Button variant="contained" color="primary" style={{backgroundColor: '#313131'}} onClick={this.back}>Back</Button>
                             <RemoveUsers />
                         </div>
                     :

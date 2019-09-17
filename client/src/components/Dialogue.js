@@ -94,8 +94,8 @@ class Dialogue extends Component {
         paddingTop: '.5rem',
         paddingBottom: '.5rem',
         borderRadius: '.5rem',
-        backgroundColor: 'rgba(187, 222, 251, 0.9)',
-        border: '0 solid #e2e8f0'
+        backgroundColor: '#a2a2a2',
+        border: '0 solid #f1f1f1'
       }
     }
     return (
@@ -124,6 +124,7 @@ class Dialogue extends Component {
             />
             <Button
               variant="contained"
+              style={{backgroundColor: '#313131'}}
               color="primary"
               type="submit"
             >

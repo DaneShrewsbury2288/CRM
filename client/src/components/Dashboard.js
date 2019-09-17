@@ -16,6 +16,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import Messenger from './Messenger';
 import ListItems from './ListItems';
 import Background from '../images/dust_scratches.png'
@@ -147,14 +149,24 @@ const Dashboard = (props) => {
     props.logoutUser();
   };
   const { user } = props.auth;
-  const [unread, setUnread] = useState(0)
+  const [unread, setUnread] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [messages, setMessages] = useState(null)
   const APISearch = (id) => {
     API.findUnread(id)
       .then(res =>
-        setUnread(res.data.length))
-      .then(console.log(unread))
+        setMessages(res.data))
+      .then(res =>
+        setUnread(messages.length))
       .catch(err => console.log(err))
   }
+  function handleClick(event) {
+    setAnchorEl(event.currentTarget);
+  }
+  function handleClose() {
+    setAnchorEl(null);
+  }
+
   useEffect(() => {
     APISearch(user._id)
     socket.on('messages checked', user => (
@@ -182,11 +194,26 @@ const Dashboard = (props) => {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             DJAC Brewing Inc.
           </Typography>
-          <IconButton color="inherit">
+          <IconButton  aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} color="inherit">
             <Badge badgeContent={unread} color='error'>
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {messages ?
+              messages.map(message => (
+              <MenuItem onClick={handleClose}>New message from {message.sender}</MenuItem>
+              ))
+              :
+              <MenuItem onClick={handleClose}>You have no new messages</MenuItem>
+              }
+            </Menu>
           <Button
             variant="contained"
             onClick={onLogoutClick}
@@ -204,10 +231,10 @@ const Dashboard = (props) => {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-              <ListItemAvatar>
-                <Avatar alt={`${user.firstName}'s profile pic`} src={"https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"} />
-              </ListItemAvatar>
-              <h2 className={classes.name}>{user.firstName} {user.lastName}</h2>
+          <ListItemAvatar>
+            <Avatar alt={`${user.firstName}'s profile pic`} src={"https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"} />
+          </ListItemAvatar>
+          <h2 className={classes.name}>{user.firstName} {user.lastName}</h2>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>

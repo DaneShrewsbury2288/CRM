@@ -82,7 +82,9 @@ class Messenger extends Component {
         right: '15px',
         zIndex: 10,
         overflowY: 'scroll',
-        overflow: 'auto'
+        overflow: 'auto',
+        borderTopRightRadius: '.8rem',
+        borderTopLeftRadius: '.8rem'
       },
       header: {
         position: 'fixed',
@@ -106,7 +108,9 @@ class Messenger extends Component {
       },
       content: {
         marginTop: '48px',
-        minHeight: '240px'
+        minHeight: '240px',
+        borderTopRightRadius: '.8rem',
+        borderTopLeftRadius: '.8rem'
       },
       space: {
         padding: '8px'
@@ -122,7 +126,7 @@ class Messenger extends Component {
           <h1 onClick={this.hideMessenger} style={styles.title}>Messenger</h1>
           {this.state.partner ?
             <div style={styles.back}>
-              <Button variant="contained" color="primary" onClick={this.back}>Back</Button>
+              <Button variant="contained" color="primary" style={{backgroundColor: '#313131'}} onClick={this.back}>Back</Button>
             </div>
             :
             null
@@ -141,7 +145,7 @@ class Messenger extends Component {
                 {userList.map(user => (
 
                   <ListItem key={user._id}>
-                    <Badge badgeContent={user.messages} color="secondary">
+                    <Badge badgeContent={user.messages} color="error">
                       <h2 style={styles.name} id={user._id} onClick={this.handleSetPartner}>
                         {user.firstName} {user.lastName}
                       </h2>

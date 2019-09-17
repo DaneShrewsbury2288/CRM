@@ -105,7 +105,7 @@ class InventorySupplies extends Component {
                         className={"pacman-loader"}
                         sizeUnit={"px"}
                         size={75}
-                        color={"rgb(49, 49, 49)"}
+                        color={"#313131"}
                         loading={true}
                     />
                 </div>
