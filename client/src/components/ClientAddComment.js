@@ -65,7 +65,7 @@ function createData(name, comment, date) {
   ]
 
 
-export default function ClientAddComment() {
+export default function ClientAddComment(props) {
 
     const classes = useStyles();
     const classes2 = useStyles2();
@@ -99,7 +99,7 @@ export default function ClientAddComment() {
                     <h2 id="simple-modal-title">Comments</h2>
 
                     <Paper className={classes3.root}>
-                        <Title> Costco Comments </Title>
+                        <Title> {props.clientName} </Title>
                         <Table className={classes3.table}>
                             <TableHead>
                                 <TableRow>

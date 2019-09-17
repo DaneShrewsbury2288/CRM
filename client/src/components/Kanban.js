@@ -9,6 +9,7 @@ export default class App extends React.Component {
     editable
     data={data} 
     style={{backgroundColor: '#3f51b5'}}
+    style={{"height": "600px"}}
     />
   }
 }

@@ -212,8 +212,14 @@ export default function ClientListTable(props) {
                                 <TableCell align="right">{client.user.map(user => (
                                     user.firstName + " " + user.lastName
                                 )).join(" ")}</TableCell>
-                                <TableCell align="right">{<ClientOrderButton />}</TableCell>
-                                <TableCell align="right">{<ClientAddComment />}</TableCell>
+                                <TableCell align="right">{<ClientOrderButton
+                                    clientId={client._id}
+                                    clientName={client.name}
+                                />}</TableCell>
+                                <TableCell align="right">{<ClientAddComment
+                                    clientId={client._id}
+                                    clientName={client.name}
+                                />}</TableCell>
                             </TableRow>
                         ))}
 
