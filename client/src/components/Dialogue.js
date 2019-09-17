@@ -3,6 +3,7 @@ import Sender from "./Sender"
 import Receiver from "./Receiver"
 import API from "../utils/API";
 import openSocket from 'socket.io-client';
+import Button from '@material-ui/core/Button';
 
 const socket = openSocket();
 
@@ -17,6 +18,7 @@ class Dialogue extends Component {
 
   componentDidMount() {
     this.loadMessages();
+    this.setAsRead();
     socket.on('message', data => (
       this.loadMessages()
     ));
@@ -27,7 +29,17 @@ class Dialogue extends Component {
     API.findMessages(IDString)
       .then(res =>
         this.setState({ messages: res.data }, () => {
+          this.scrollToBottom();
         }))
+      .catch(err => console.log(err))
+  }
+
+  setAsRead = () => {
+    const IDString = this.state.user + "&" + this.state.partner
+    API.markAsRead(IDString)
+      .then(res =>
+        socket.emit('messages checked', this.state.user)
+      )
       .catch(err => console.log(err))
   }
 
@@ -53,12 +65,41 @@ class Dialogue extends Component {
     };
 
     this.sendMessage(newMessage);
-    this.setState({content: ''})
+    this.setState({ content: '' })
   };
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
 
   render() {
+    const styles = {
+      content: {
+        marginTop: '100px',
+        marginBottom: '48px'
+      },
+      formHolder: {
+        zIndex: 40,
+        width: '100%',
+        position: 'fixed',
+        bottom: '20px',
+        display: 'flex',
+      },
+      form: {
+        zIndex: 40,
+        marginLeft: '20px'
+      },
+      message: {
+        paddingLeft: '.75rem',
+        paddingRight: '.75rem',
+        paddingTop: '.5rem',
+        paddingBottom: '.5rem',
+        borderRadius: '.5rem',
+        backgroundColor: 'rgba(187, 222, 251, 0.9)',
+        border: '0 solid #e2e8f0'
+      }
+    }
     return (
-      <div>
+      <div style={styles.content}>
         {
           this.state.messages.map(message => (
             this.state.user === message.sender ?
@@ -67,30 +108,29 @@ class Dialogue extends Component {
               <Receiver content={`${message.content}`} key={`${message._id}`} />
           ))
         }
-        <form noValidate onSubmit={this.onSubmit}>
-          <div className="input-field col s12">
+        <div style={{ float: "left", clear: "both" }}
+          ref={(el) => { this.messagesEnd = el; }}>
+        </div>
+        <div style={styles.formHolder}>
+          <form noValidate style={styles.form} onSubmit={this.onSubmit}>
             <input
+              style={styles.message}
               onChange={this.onChange}
               value={this.state.content}
+              placeholder="message..."
               id="content"
               type="text"
+              autoComplete="off"
             />
-          </div>
-          <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-            <button
-              style={{
-                width: "150px",
-                borderRadius: "3px",
-                letterSpacing: "1.5px",
-                marginTop: "1rem"
-              }}
+            <Button
+              variant="contained"
+              color="primary"
               type="submit"
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
             >
-              Send Message
-</button>
-          </div>
-        </form>
+              Send
+            </Button>
+          </form>
+        </div>
       </div>
     )
   }

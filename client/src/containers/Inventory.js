@@ -12,7 +12,6 @@ import AddButton from "../components/AddButton";
 import API from "../utilities/api";
 import { LinearProgress } from '@material-ui/core';
 
-
 const styles = theme => ({
     root: {
         width: '100%',
@@ -32,6 +31,10 @@ function totalRow(Quantity, Price) {
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function balanceNumbers(num) {
+    return (parseFloat(Math.round(num * 100) / 100).toFixed(2));
 }
 
 
@@ -79,13 +82,13 @@ class Inventory extends Component {
                                         </TableCell>
                                         <TableCell align="right">{product._id}</TableCell>
                                         <TableCell align="right">{numberWithCommas(product.quantity)}</TableCell>
-                                        <TableCell align="right">{product.cost}</TableCell>
-                                        <TableCell align="right">{product.price}</TableCell>
+                                        <TableCell align="right">{balanceNumbers(product.cost)}</TableCell>
+                                        <TableCell align="right">{balanceNumbers(product.price)}</TableCell>
                                         <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.cost))}</TableCell>
                                         <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.price))}</TableCell>
                                         <TableCell align="right">
                                             <Link href="/PurchasingTool">
-                                            {<AddButton />}
+                                                {<AddButton color='primary' />}
                                             </Link>
                                         </TableCell>
                                     </TableRow>

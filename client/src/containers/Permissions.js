@@ -65,9 +65,9 @@ class Permissions extends Component {
           <List>
             {this.state.users.map(user => (
               <ListItem key={user._id}>
-                <h4 id={user._id} permissions={user.permissions} onClick={this.handleUser}>
+                <h2 id={user._id} permissions={user.permissions} onClick={this.handleUser}>
                   {user.firstName} {user.lastName}
-                </h4>
+                </h2>
               </ListItem>
             ))}
           </List>

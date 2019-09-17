@@ -10,11 +10,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(3, 2),
-    width: 700
+    padding: 15,
+    margin: 50,
+    width: 780
   },
   media: {
+       width: 100,
        margin: 50,
+       
     },
 }));
 
@@ -23,25 +26,14 @@ export default function NewsFeed() {
     return (
         <div>
         <PageTitle title="Dashboard" />
-        <Grid container spacing={3}>
-
-          <Grid item xs={12} md={8} lg={9}>
+        <Grid container spacing={3} direction="row">
             <Paper className={classes.root}>
-              <ProductChart/>
+            <h5>Revenue - Year to Date</h5>
+            <ProductChart className={classes.media} />
+            <Grid><RevenueCard className={classes.media} /></Grid>
+            <SalesBreakdown />
             </Paper>
-            
-          </Grid>   
-
-            
-            <RevenueCard className={classes.media} />
-          
-
         </Grid>
-
-     
-        
-        <SalesBreakdown />
-        
        </div>
     );
   }

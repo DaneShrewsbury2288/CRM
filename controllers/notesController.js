@@ -40,7 +40,7 @@ module.exports = {
     create: function (req, res) {
         Note
             // defaults to with no orders or users assigned
-            .create(req.query)
+            .create(req.body)
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },

@@ -54,6 +54,9 @@ io.on('connection', (client) => {
     client.on('new message', (messageData) => {
         io.emit('message', messageData)
     })
+    client.on('messages checked', (user) => {
+        io.emit('messages checked', user)
+    })
 });
 
 // Start the API server

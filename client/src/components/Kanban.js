@@ -8,7 +8,7 @@ export default class App extends React.Component {
     return <Board 
     editable
     data={data} 
-    style={{backgroundColor: '#3f51b5'}}
+    style={{backgroundColor: '#313131'}}
     />
   }
 }

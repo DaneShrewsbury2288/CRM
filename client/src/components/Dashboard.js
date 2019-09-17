@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,11 +15,20 @@ import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Button from '@material-ui/core/Button';
 import Messenger from './Messenger';
 import ListItems from './ListItems';
+import Background from '../images/dust_scratches.png'
+import Background2 from '../images/footer_lodyas.png'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import API from '../utils/API';
+import openSocket from 'socket.io-client';
+import { logoutUser } from "../actions/authActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-
-const drawerWidth = 300;
+const drawerWidth = 280;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,13 +38,15 @@ const useStyles = makeStyles(theme => ({
 
   },
   toolbar: {
-    paddingRight: 24, 
+    paddingRight: 24,
+    backgroundColor: '#313131'
   },
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: '0 8px',
+    backgroundColor: '#f1f1f1',
     ...theme.mixins.toolbar,
   },
   appBar: {
@@ -86,12 +97,17 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto',
+    overflowX: 'auto',
+    overflowY: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    marginLeft: 10
+    backgroundImage: `url(${Background})`,
+    backgroundRepeat: 'repeat',
+    backgroundSize: 'auto',
+    minHeight: '100%',
+    minWidth: '100%',
   },
   paper: {
     padding: theme.spacing(2),
@@ -102,20 +118,52 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
+  name: {
+    marginRight: 'auto',
+    color: '#313131'
+  },
+  drawer: {
+    backgroundImage: `url(${Background2})`,
+    backgroundRepeat: 'repeat',
+    backgroundSize: 'auto',
+    height: '100%',
+    minWidth: '100%',
+    overflow: 'hidden'
+  }
 }));
 
-export default function Dashboard(props) {
+const Dashboard = (props) => {
+  const socket = openSocket();
   const classes = useStyles();
-  console.log(classes)
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  //  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); 
-
+  const onLogoutClick = e => {
+    e.preventDefault();
+    props.logoutUser();
+  };
+  const { user } = props.auth;
+  const [unread, setUnread] = useState(0)
+  const APISearch = (id) => {
+    API.findUnread(id)
+      .then(res =>
+        setUnread(res.data.length))
+      .then(console.log(unread))
+      .catch(err => console.log(err))
+  }
+  useEffect(() => {
+    APISearch(user._id)
+    socket.on('messages checked', user => (
+      APISearch(user._id)
+    ));
+    socket.on('message', data => (
+      APISearch(user._id)
+    ));
+  })
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -135,10 +183,17 @@ export default function Dashboard(props) {
             DJAC Brewing Inc.
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={0} color="secondary">
+            <Badge badgeContent={unread} color='error'>
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <Button
+            variant="contained"
+            onClick={onLogoutClick}
+            style={{ backgroundColor: '#f1f1f1' }}
+          >
+            Logout
+                </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -149,12 +204,16 @@ export default function Dashboard(props) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
+              <ListItemAvatar>
+                <Avatar alt={`${user.firstName}'s profile pic`} src={"https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"} />
+              </ListItemAvatar>
+              <h2 className={classes.name}>{user.firstName} {user.lastName}</h2>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List className={classes.drawer}>
           <ListItems />
         </List>
       </Drawer>
@@ -169,3 +228,15 @@ export default function Dashboard(props) {
     </div>
   );
 }
+
+Dashboard.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Dashboard);
