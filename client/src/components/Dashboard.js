@@ -158,16 +158,10 @@ const Dashboard = (props) => {
         if (res.data.length > 0) {
           setMessages(res.data)
         }
-        else if (res.data.length < 1) {
-          setMessages(null)
-        }
       })
       .then(res => {
-        if (messages !== null) {
+        if (messages) {
           setUnread(messages.length)
-        }
-        else if (messages === null) {
-          setUnread(0)
         }
       })
       .catch(err => console.log(err))
