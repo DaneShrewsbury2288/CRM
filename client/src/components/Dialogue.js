@@ -29,6 +29,7 @@ class Dialogue extends Component {
       .then(res =>
         this.setState({ messages: res.data }, () => {
           this.scrollToBottom();
+          this.setAsRead();
         }))
       .catch(err => console.log(err))
   }
@@ -36,17 +37,17 @@ class Dialogue extends Component {
   setAsRead = () => {
     const IDString = this.state.user + "&" + this.state.partner
     API.markAsRead(IDString)
-      .then(res =>
+      .then(res => {
         socket.emit('messages checked', this.state.user)
-      )
+      })
       .catch(err => console.log(err))
   }
 
   sendMessage = message => {
     API.createMessage(message)
-      .then(res =>
+      .then(res =>{
         socket.emit('new message', message)
-      )
+      })
       .catch(err => console.log(err))
   }
 
@@ -65,7 +66,6 @@ class Dialogue extends Component {
 
     this.sendMessage(newMessage);
     this.setState({ content: '' })
-    this.setAsRead();
   };
   scrollToBottom = () => {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
