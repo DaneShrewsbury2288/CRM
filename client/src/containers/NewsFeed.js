@@ -15,26 +15,38 @@ const useStyles = makeStyles(theme => ({
     width: 780
   },
   media: {
-       width: 100,
-       margin: 50,
-       
-    },
+    width: 100,
+    margin: 50,
+
+  },
 }));
 
 export default function NewsFeed() {
   const classes = useStyles();
-    return (
-        <div>
-        <PageTitle title="Dashboard" />
-        <Grid container spacing={3} direction="row">
-            <Paper className={classes.root}>
-            <h5>Revenue - Year to Date</h5>
-            <ProductChart className={classes.media} />
-            <Grid><RevenueCard className={classes.media} /></Grid>
-            <SalesBreakdown />
-            </Paper>
+  return (
+    <div>
+      <PageTitle title="Dashboard" />
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        style={{ margin: "10px" }}
+      >
+        <Grid item lg={12}>
+          <ProductChart className={classes.media} />
         </Grid>
-       </div>
-    );
-  }
+        <Grid item lg={3}></Grid>
+        <Grid item lg={3}>
+          <h5>Revenue - Year to Date</h5>
+          <RevenueCard className={classes.media} />
+        </Grid>
+        <Grid item lg={3}>
+        <SalesBreakdown />
+        </Grid>
+        <Grid item lg={3}></Grid>
+      </Grid>
+    </div>
+  );
+}
 

@@ -11,7 +11,7 @@ function teamSearch(props) {
       <InputBase
         value={props.search}
         onChange={props.handleInputChange} 
-        placeholder="Jesse Pinkman"
+        placeholder=" ex. Jesse Pinkman "
       />
       <IconButton aria-label="search" onClick={props.handleFormSubmit}>
         <SearchIcon />
