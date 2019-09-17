@@ -13,6 +13,8 @@ import * as Table from '../components/EditableTable';
 //   const why = Table.selectedBrews.arrayOne.slice(-1);
 // }
 
+export const QuantityState = [{}];
+
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1, 0),
@@ -32,16 +34,19 @@ console.log(selectedProducts);
 export default function Review() {
   const [values, setValues] = React.useState([{
     productid: '',
-    quantity: 0
+    BlackRavenQuantity: 0,
+    HopsPotatoQuantity: 0,
+    SizzleBirdCiderQuantity: 0,
+    SoundsPugetQuantity: 0,
+    ExtraFoamLimitedQuantity: 0,
+    TheKrakenQuantity: 0,
+    SamsBeerQuantity: 0
+    
+
   }]);
-  // const [values, setValues] = React.useState({
-  //   name: 'Cat in the Hat',
-  //   age: '',
-  //   multiline: 'Controlled',
-  //   currency: 'EUR',
-  // });
 
   const classes = useStyles();
+
 
 
   const x = Table.selectedBrews.arrayOne.slice(-1);
@@ -53,13 +58,25 @@ export default function Review() {
   // handle input change
   const handleChange = quantity => event => {
     setValues({ ...values, [quantity]: event.target.value });
+    
   };
 
   const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
 
   function checkState() {
-    console.log(Table.rows);
+    // console.log(Table.rows);
+    console.log(values);
   }
+
+  function pushValues(){
+    QuantityState.push(values);
+  }
+
+  pushValues();
+
+  // function checkStateAll(){
+  //   console.log(BlackRavenQuantity);
+  // }
 
   // seeObject();
 
@@ -70,43 +87,21 @@ export default function Review() {
       </Typography>
       <button onClick={checkState}>Click me to check state</button>
       <List>
-          <ListItem
-            className={classes.listItem}
-            key="0">
-            <ListItemText
-              primary="Black Raven Trickster" />
-            <Typography
-              variant="body2">$5</Typography>
-            <Typography>
-              <TextField
-                id="0"
-                name="We"
-                label="Quantity Desired"
-                value={values}
-                onChange={handleChange('quantity')}
-                type="number"
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                margin="normal"
-              />
-            </Typography>
-          </ListItem>
+      {/* <button onClick={checkStateAll}>Click me to check state</button> */}
           <ListItem
             className={classes.listItem}
             key="1">
             <ListItemText
-              primary="Hops Potato" />
+              primary="Black Raven Trickster" />
             <Typography
-              variant="body2">$7.5</Typography>
+              variant="body2">- $5 -</Typography>
             <Typography>
               <TextField
                 id="1"
-                name="you"
+                name="We"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('BlackRavenQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -120,16 +115,16 @@ export default function Review() {
             className={classes.listItem}
             key="2">
             <ListItemText
-              primary="Sizzlebird Cider" />
+              primary="Hops Potato" />
             <Typography
-              variant="body2">$8</Typography>
+              variant="body2">$7.5</Typography>
             <Typography>
               <TextField
-                id="1"
+                id="2"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('HopsPotatoQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -143,16 +138,16 @@ export default function Review() {
             className={classes.listItem}
             key="3">
             <ListItemText
-              primary="Sounds Puget" />
+              primary="Sizzlebird Cider" />
             <Typography
-              variant="body2">$8.89</Typography>
+              variant="body2">$8</Typography>
             <Typography>
               <TextField
-                id="1"
+                id="3"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('SizzleBirdCiderQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -166,16 +161,16 @@ export default function Review() {
             className={classes.listItem}
             key="4">
             <ListItemText
-              primary="Extra Foam - Limited Edition" />
+              primary="Sounds Puget" />
             <Typography
-              variant="body2">$9.19</Typography>
+              variant="body2">$8.89</Typography>
             <Typography>
               <TextField
-                id="1"
+                id="4"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('SoundsPugetQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -189,16 +184,16 @@ export default function Review() {
             className={classes.listItem}
             key="5">
             <ListItemText
-              primary="The Kraken" />
+              primary="Extra Foam - Limited Edition" />
             <Typography
-              variant="body2">$9.49</Typography>
+              variant="body2">$9.19</Typography>
             <Typography>
               <TextField
-                id="1"
+                id="5"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('ExtraFoamLimitedQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -212,16 +207,39 @@ export default function Review() {
             className={classes.listItem}
             key="6">
             <ListItemText
+              primary="The Kraken" />
+            <Typography
+              variant="body2">$9.49</Typography>
+            <Typography>
+              <TextField
+                id="6"
+                name="you"
+                label="Quantity Desired"
+                value={values.quantity}
+                onChange={handleChange('TheKrakenQuantity')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </Typography>
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            key="7">
+            <ListItemText
               primary="Sam's Beer" />
             <Typography
               variant="body2">$14.99</Typography>
             <Typography>
               <TextField
-                id="1"
+                id="7"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('SamsBeerQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -238,7 +256,7 @@ export default function Review() {
           </Typography>
         </ListItem>
       </List>
-      <Grid container spacing={2}>
+      {/* <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Client Information
@@ -246,7 +264,7 @@ export default function Review() {
           <Typography gutterBottom></Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
-      </Grid>
+      </Grid> */}
     </React.Fragment>
   );
 }

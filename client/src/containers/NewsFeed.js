@@ -34,8 +34,6 @@ export default function NewsFeed() {
             <SalesBreakdown />
             </Paper>
         </Grid>
-        
-        
        </div>
     );
   }

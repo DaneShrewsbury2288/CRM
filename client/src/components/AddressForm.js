@@ -100,10 +100,10 @@ export default function ClientInformation() {
           <MenuItem value={'5d6c53a60ea69bf46a4bb0f0'}>Charles Finley</MenuItem>
           <MenuItem value={'5d6c51940ea69bf46a4bb0eb'}>CostCo</MenuItem>
           <MenuItem value={'5d6c561c0ea69bf46a4bb0f8'}>Enumclaw Expo Center</MenuItem>
-          <MenuItem value={'5d6c520b0ea69bf46a4bb0ec'}>Fred Meyer	</MenuItem>
+          <MenuItem value={'5d6c520b0ea69bf46a4bb0ec'}>Fred Meyer</MenuItem>
           <MenuItem value={'5d6c54480ea69bf46a4bb0f2'}>Gary Grayson</MenuItem>
           <MenuItem value={'5d6c525e0ea69bf46a4bb0ed'}>Joe Plumber</MenuItem>
-          <MenuItem value={'5d6c53f20ea69bf46a4bb0f1'}>Julia Matthews	</MenuItem>
+          <MenuItem value={'5d6c53f20ea69bf46a4bb0f1'}>Julia Matthews</MenuItem>
           <MenuItem value={'5d6c52cd0ea69bf46a4bb0ee'}>Kawhi Leonard</MenuItem>
           <MenuItem value={'5d6c54940ea69bf46a4bb0f3'}>Safeway - Seattle</MenuItem>
         </Select>
