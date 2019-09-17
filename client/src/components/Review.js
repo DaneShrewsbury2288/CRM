@@ -256,7 +256,7 @@ export default function Review() {
           </Typography>
         </ListItem>
       </List>
-      <Grid container spacing={2}>
+      {/* <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Client Information
@@ -264,7 +264,7 @@ export default function Review() {
           <Typography gutterBottom></Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
-      </Grid>
+      </Grid> */}
     </React.Fragment>
   );
 }
