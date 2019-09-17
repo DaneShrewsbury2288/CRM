@@ -22,22 +22,20 @@ const useStyles = makeStyles({
   },
 });
 
+
 export default function RevenueCard() {
   const classes = useStyles();
-  // const bull = <span className={classes.bullet}>•</span>;
- //const revenue = something that gathers all the sales...
-
   return (
     <Card className={classes.card}>
       <CardContent>
-      <Typography variant="h4" gutterBottom>
-      Total Revenue
+        <Typography variant="h4" gutterBottom>
+          Total Revenue
       </Typography>
         <Typography variant="h5" component="h2">
-            $27.21
+          $460.54
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-            last 24 hours
+          last 24 hours
         </Typography>
       </CardContent>
     </Card>
