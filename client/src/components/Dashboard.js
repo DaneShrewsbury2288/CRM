@@ -154,27 +154,21 @@ const Dashboard = (props) => {
   const [messages, setMessages] = useState(null)
   const APISearch = (id) => {
     API.findUnread(id)
+    console.log('checked')
       .then(res => {
         if (res.data.length > 0) {
           setMessages(res.data)
-        }
-        else {
-          setMessages(null)
         }
       })
       .then(res => {
         if (messages) {
           setUnread(messages.length)
         }
-        else if (messages === null) {
-          setUnread(0)
-        }
       })
       .catch(err => console.log(err))
   }
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
-    APISearch(user._id)
   }
   function handleClose() {
     setAnchorEl(null);
