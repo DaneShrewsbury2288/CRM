@@ -32,7 +32,14 @@ console.log(selectedProducts);
 export default function Review() {
   const [values, setValues] = React.useState([{
     productid: '',
-    quantity: 0
+    BlackRavenQuantity: 0,
+    HopsPotatoQuantity: 0,
+    SizzleBirdCiderQuantity: 0,
+    SoundsPugetQuantity: 0,
+    ExtraFoamLimitedQuantity: 0,
+    TheKrakenQuantity: 0,
+    SamsBeerQuantity: 0
+
   }]);
   // const [values, setValues] = React.useState({
   //   name: 'Cat in the Hat',
@@ -83,7 +90,7 @@ export default function Review() {
                 name="We"
                 label="Quantity Desired"
                 value={values}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('BlackRavenQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -106,7 +113,7 @@ export default function Review() {
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('HopsPotatoQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -129,7 +136,7 @@ export default function Review() {
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('SizzleBirdCiderQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -152,7 +159,7 @@ export default function Review() {
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('SoundsPugetQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -175,7 +182,7 @@ export default function Review() {
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('ExtraFoamLimitedQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -198,7 +205,7 @@ export default function Review() {
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('TheKrakenQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
@@ -221,7 +228,7 @@ export default function Review() {
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
-                onChange={handleChange('quantity')}
+                onChange={handleChange('SamsBeerQuantity')}
                 type="number"
                 className={classes.textField}
                 InputLabelProps={{
