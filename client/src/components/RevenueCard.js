@@ -34,7 +34,7 @@ export default function RevenueCard() {
       Total Revenue
       </Typography>
         <Typography variant="h5" component="h2">
-            $5,300.21
+            $27.21
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
             last 24 hours

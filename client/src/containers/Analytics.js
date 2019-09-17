@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import "react-chartjs-2";
 import BarChart from '../components/BarChart';
 import DoughnutChart from '../components/DoughnutChart';
-import PieChart from '../components/PieChart';
+// import PieChart from '../components/PieChart';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
