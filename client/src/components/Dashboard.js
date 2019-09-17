@@ -167,7 +167,6 @@ const Dashboard = (props) => {
           setUnread(messages.length)
         }
         else if (messages === null) {
-          console.log("unread: " + unread)
           setUnread(0)
         }
       })
@@ -179,16 +178,18 @@ const Dashboard = (props) => {
   function handleClose() {
     setAnchorEl(null);
   }
-  
+
   APISearch(user._id)
 
-  socket.on('refresh', user => (
+  socket.on('refresh', user => {
     APISearch(user._id)
-  ));
+    console.log('refresh')
+  });
 
-  socket.on('message', data => (
+  socket.on('message', data => {
     APISearch(user._id)
-  ));
+    console.log('message')
+  });
 
   return (
     <div className={classes.root}>

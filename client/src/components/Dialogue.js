@@ -18,7 +18,6 @@ class Dialogue extends Component {
 
   componentDidMount() {
     this.loadMessages();
-    this.setAsRead();
     socket.on('message', data => (
       this.loadMessages()
     ));
@@ -66,6 +65,7 @@ class Dialogue extends Component {
 
     this.sendMessage(newMessage);
     this.setState({ content: '' })
+    this.setAsRead();
   };
   scrollToBottom = () => {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
