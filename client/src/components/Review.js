@@ -13,6 +13,8 @@ import * as Table from '../components/EditableTable';
 //   const why = Table.selectedBrews.arrayOne.slice(-1);
 // }
 
+export const QuantityState = [{}];
+
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1, 0),
@@ -42,12 +44,6 @@ export default function Review() {
     
 
   }]);
-  // const [values, setValues] = React.useState({
-  //   name: 'Cat in the Hat',
-  //   age: '',
-  //   multiline: 'Controlled',
-  //   currency: 'EUR',
-  // });
 
   const classes = useStyles();
 
@@ -62,6 +58,7 @@ export default function Review() {
   // handle input change
   const handleChange = quantity => event => {
     setValues({ ...values, [quantity]: event.target.value });
+    
   };
 
   const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
@@ -70,7 +67,12 @@ export default function Review() {
     // console.log(Table.rows);
     console.log(values);
   }
- 
+
+  function pushValues(){
+    QuantityState.push(values);
+  }
+
+  pushValues();
 
   // function checkStateAll(){
   //   console.log(BlackRavenQuantity);

@@ -11,6 +11,8 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import API from '../utilities/api';
+import values from '../components/Review'; 
+import { QuantityState } from '../components/Review'; 
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -78,8 +80,25 @@ export default function PurchasingTool(props) {
   };
    
 
-console.log(props.user);
+  console.log(props.user);
+  
 
+  function checkState(){
+    console.log(QuantityState);
+    console.log(QuantityState[QuantityState.length - 1].BlackRavenQuantity);
+  }
+
+  // const newOrder = {
+  //   client: client,
+  //   user: user,
+    
+
+  // }
+
+  // function CreateOrder(){
+  //   API.saveOrder(newOrder);
+
+  // }
 
 
 
@@ -126,6 +145,7 @@ console.log(props.user);
                       {/* Function on click to check if quantity of products greater than 0, POST create order , update */}
                       {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                     </Button>
+                    <Button onClick={checkState}>Click me</Button>
                   </div>
                 </React.Fragment>
               )}
