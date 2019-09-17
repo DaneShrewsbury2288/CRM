@@ -2,13 +2,13 @@ import React, { PureComponent } from 'react';
 import { PieChart, Pie, Sector } from 'recharts';
 
 const data = [
-  { name: 'Black Raven Trickster', value: 5000 },
-  { name: 'Hops Potato', value: 1250 },
-  { name: 'Sizzlebird Cider', value: 2340 },
-  { name: 'Sounds Puget', value: 5030 },
-  { name: 'Extra Foam - Limited Edition', value: 3030 },
-  { name: 'The Kraken', value: 1004 },
-  { name: 'Sams Beer', value: 800 },
+  { name: 'Black Raven Trickster', value: 21072 },
+  { name: 'Hops Potato', value: 25428 },
+  { name: 'Sizzlebird Cider', value: 21547 },
+  { name: 'Sounds Puget', value: 17285 },
+  { name: 'Extra Foam - Limited Edition', value: 6569 },
+  { name: 'The Kraken', value: 6329 },
+  { name: 'Sams Beer', value: 4192 },
 ];
 
 const renderActiveShape = (props) => {

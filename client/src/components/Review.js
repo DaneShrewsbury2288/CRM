@@ -1,12 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 // import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import * as Table from '../components/EditableTable';
+import * as StartForm from '../components/AddressForm';
+import API from '../utilities/api';
+import * as Ptool from '../components/PTool';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -31,7 +35,6 @@ const useStyles = makeStyles(theme => ({
 
 const selectedProducts = Table.selectedBrews.arrayOne[0];
 
-console.log(selectedProducts);
 
 function Review(props) {
   const { user } = props.auth;
@@ -47,13 +50,37 @@ function Review(props) {
     
 
   }]);
+
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [y] = React.useState(false);
+
+  console.log(props);
+
+
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+   
+
   const classes = useStyles();
+
+  const BlackRavenID = '5d6574318debf3d6cb3e549d';
+  const HopsPotatoID = '5d657d75d2a2ace0a8b4c42b';
+  const SizzlebirdCiderID = '5d657dc1d2a2ace0a8b4c42d';
+  const SoundsPugetID = '5d657e36d2a2ace0a8b4c42e';
+  const ExtraFoamLimitedEditionID = '5d657ebdd2a2ace0a8b4c42f';
+  const TheKrakenID = '5d657eecd2a2ace0a8b4c430';
+  const SamsBeerID = '5d68789eaa05cb5e20b390d7';
 
 
 
   const x = Table.selectedBrews.arrayOne.slice(-1);
-  console.log(x);
-  console.log(Table.rows);
+  // console.log(x);
+  // console.log(Table.rows);
   // console.log(selected);
   // console.log(rows);
 
@@ -65,10 +92,12 @@ function Review(props) {
 
   // const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
 
+  //Checks States
   function checkState() {
     // console.log(Table.rows);
-    console.log(values);
-    console.log(user)
+    // console.log(values);
+    // console.log(StartForm.selectedClient);
+    // console.log(newOrder);
   }
 
   function pushValues(){
@@ -83,12 +112,71 @@ function Review(props) {
 
   // seeObject();
 
+  const newOrder = {
+    client: StartForm.selectedClient,
+    user: user._id,
+    lineItems: [
+      {
+        product: {
+                _id: BlackRavenID
+        },
+        quantity: values.BlackRavenQuantity
+      },
+      {
+        product: {
+                _id: HopsPotatoID
+        },
+        quantity: values.HopsPotatoQuantity
+      },
+      {
+        product: {
+                _id: SizzlebirdCiderID
+        },
+        quantity: values.SizzleBirdCiderQuantity
+      },
+      {
+        product: {
+                _id: SoundsPugetID
+        },
+        quantity: values.SoundsPugetQuantity
+      },
+      {
+        product: {
+                _id: ExtraFoamLimitedEditionID
+        },
+        quantity: values.ExtraFoamLimitedQuantity
+      },
+      {
+        product: {
+                _id: TheKrakenID
+        },
+        quantity: values.TheKrakenQuantity
+      },
+      {
+        product: {
+                _id: SamsBeerID
+        },
+        quantity: values.SamsBeerQuantity
+      }
+    ]
+  }
+
+  // console.log(newOrder);
+
+  // console.log(user._id);
+
+  function CreateOrder(){
+    API.saveOrder(newOrder);
+    alert("Your order has been placed! Please refer to the Clients list to look at their order history.");
+  }
+
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Enter quantity of products desired to purchase
       </Typography>
-      <button onClick={checkState}>Click me to check state</button>
+      {/* <button onClick={checkState}>Click me to check state</button> */}
       <List>
       {/* <button onClick={checkStateAll}>Click me to check state</button> */}
           <ListItem
@@ -97,10 +185,10 @@ function Review(props) {
             <ListItemText
               primary="Black Raven Trickster" />
             <Typography
-              variant="body2">- $5 -</Typography>
+              variant="body2"> $5 </Typography>
             <Typography>
               <TextField
-                id="1"
+                id="5d6574318debf3d6cb3e549d"
                 name="We"
                 label="Quantity Desired"
                 value={values.quantity}
@@ -123,7 +211,7 @@ function Review(props) {
               variant="body2">$7.5</Typography>
             <Typography>
               <TextField
-                id="2"
+                id="5d657d75d2a2ace0a8b4c42b"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
@@ -146,7 +234,7 @@ function Review(props) {
               variant="body2">$8</Typography>
             <Typography>
               <TextField
-                id="3"
+                id="5d657dc1d2a2ace0a8b4c42d"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
@@ -169,7 +257,7 @@ function Review(props) {
               variant="body2">$8.89</Typography>
             <Typography>
               <TextField
-                id="4"
+                id="5d657e36d2a2ace0a8b4c42e"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
@@ -192,7 +280,7 @@ function Review(props) {
               variant="body2">$9.19</Typography>
             <Typography>
               <TextField
-                id="5"
+                id="5d657ebdd2a2ace0a8b4c42f"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
@@ -215,7 +303,7 @@ function Review(props) {
               variant="body2">$9.49</Typography>
             <Typography>
               <TextField
-                id="6"
+                id="5d657eecd2a2ace0a8b4c430"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
@@ -238,7 +326,7 @@ function Review(props) {
               variant="body2">$14.99</Typography>
             <Typography>
               <TextField
-                id="7"
+                id="5d68789eaa05cb5e20b390d7"
                 name="you"
                 label="Quantity Desired"
                 value={values.quantity}
@@ -255,10 +343,12 @@ function Review(props) {
         <ListItem className={classes.listItem}>
           <ListItemText primary="" />
           <Typography variant="subtitle1" className={classes.total}>
-
+                <Button onClick={CreateOrder}> Click here to submit </Button>
           </Typography>
         </ListItem>
       </List>
+
+
       {/* <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>

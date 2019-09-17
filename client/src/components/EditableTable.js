@@ -26,7 +26,7 @@ export const selectedBrews = {
     arrayOne: [],
  };
 
- console.log(selectedBrews);
+//  console.log(selectedBrews);
 
 // function createData(productName, price, quantity) {
 //   return { productName, price, quantity };
@@ -301,8 +301,8 @@ export default function EnhancedTable() {
     selectedBrews.arrayOne.push(selected);
     return selectedBrews;
   }
- console.log(selectedBrews);
- console.log(rows);
+//  console.log(selectedBrews);
+//  console.log(rows);
 
 
   return (

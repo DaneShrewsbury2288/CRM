@@ -288,7 +288,7 @@ class ManagerTaskAssignment extends Component {
                                     className={"grid-loader"}
                                     sizeUnit={"px"}
                                     size={45}
-                                    color={"rgb(63, 81, 181)"}
+                                    color={"rgb(49, 49, 49)"}
                                     loading={true}
                                 />
                             </Grid>
