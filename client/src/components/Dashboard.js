@@ -154,15 +154,21 @@ const Dashboard = (props) => {
   const [messages, setMessages] = useState(null)
   const APISearch = (id) => {
     API.findUnread(id)
-    console.log('checked')
       .then(res => {
         if (res.data.length > 0) {
           setMessages(res.data)
+        }
+        else {
+          setMessages(null)
         }
       })
       .then(res => {
         if (messages) {
           setUnread(messages.length)
+        }
+        else if (messages === null) {
+          console.log("unread: " + unread)
+          setUnread(0)
         }
       })
       .catch(err => console.log(err))
@@ -174,7 +180,7 @@ const Dashboard = (props) => {
     setAnchorEl(null);
   }
 
-  socket.on('messages checked', user => (
+  socket.on('refresh', user => (
     APISearch(user._id)
   ));
 
