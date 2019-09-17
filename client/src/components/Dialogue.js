@@ -18,6 +18,7 @@ class Dialogue extends Component {
 
   componentDidMount() {
     this.loadMessages();
+    this.setAsRead();
     socket.on('message', data => (
       this.loadMessages()
     ));
@@ -31,7 +32,15 @@ class Dialogue extends Component {
           this.scrollToBottom();
         }))
       .catch(err => console.log(err))
+  }
 
+  setAsRead = () => {
+    const IDString = this.state.user + "&" + this.state.partner
+    API.markAsRead(IDString)
+      .then(res =>
+        socket.emit('messages checked', this.state.user)
+      )
+      .catch(err => console.log(err))
   }
 
   sendMessage = message => {

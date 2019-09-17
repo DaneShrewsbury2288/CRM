@@ -67,7 +67,7 @@ class MapOfSales extends Component {
     }
 
     return (
-      <div style={{ width: '70%' }}>
+      <div style={{ width: '50%' }}>
         <PageTitle title="Check User Messages" />
         <div>
           {this.state.user1

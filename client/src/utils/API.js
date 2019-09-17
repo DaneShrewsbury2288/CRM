@@ -29,5 +29,14 @@ export default {
   },
   createMessage: function (messageData) {
     return axios.post("api/messages/", messageData)
-  }
+  },
+  findUnread: function (id) {
+    return axios.get("api/messages/read/" + id)
+  },
+  findTheseUnread: function (userIds) {
+    return axios.get("api/messages/many/" + userIds)
+  },
+  markAsRead: function (userIds) {
+    return axios.put("api/messages/" + userIds)
+  },
 };

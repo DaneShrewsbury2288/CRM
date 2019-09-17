@@ -85,8 +85,8 @@ function InputForm(props) {
                 </Grid>
                 <Grid item lg={2} />
                 <Grid item lg={2}>
-                  <Button onClick={props.handleFormSubmit} variant="contained" color="primary" className="button">
-                    Submit Task
+                  <Button onClick={props.handleFormSubmit} variant="contained" style={{backgroundColor: '#313131'}} color="primary" className="button">
+                    Submit
                   </Button>
                 </Grid>
               </Grid>

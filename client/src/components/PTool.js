@@ -72,7 +72,6 @@ export default function PurchasingTool(props) {
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
-
   };
 
   const handleBack = () => {

@@ -18,7 +18,6 @@ function PurchasingTool(props) {
 };
 
 
-
 PurchasingTool.propTypes = {
     auth: PropTypes.object.isRequired
   };
