@@ -1,7 +1,5 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -51,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ClientInformation() {
-  const [clientSelection] = React.useState(clientArray);
+  // const [clientSelection] = React.useState(clientArray);
 
   const classes = useStyles();
   const [values, setValues] = React.useState({
@@ -59,8 +57,8 @@ export default function ClientInformation() {
     name: 'hai',
   });
 
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+  // const inputLabel = React.useRef(null);
+  // const [labelWidth, setLabelWidth] = React.useState(0);
   // React.useEffect(() => {
   //   setLabelWidth(inputLabel.current.offsetWidth);
   // }, []);
