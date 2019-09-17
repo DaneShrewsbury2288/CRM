@@ -31,10 +31,10 @@ export default function NewsFeed() {
             <h5>Revenue - Year to Date</h5>
             <ProductChart className={classes.media} />
             <Grid><RevenueCard className={classes.media} /></Grid>
-            {/* <RevenueCard className={classes.media} /> */}
+            <SalesBreakdown />
             </Paper>
         </Grid>
-        <SalesBreakdown />
+        
         
        </div>
     );
