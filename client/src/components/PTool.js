@@ -10,10 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
-// import API from '../utilities/api';
+import API from '../utilities/api';
 // import values from '../components/Review'; 
 import { QuantityState } from '../components/Review';
 import { selectedClient } from '../components/AddressForm';
+import * as Table from '../components/EditableTable';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -70,7 +71,7 @@ function getStepContent(step) {
 export default function PurchasingTool(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [client, quantity, user, product] = React.useState([]);
+
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -83,27 +84,88 @@ export default function PurchasingTool(props) {
 
   console.log(props.user);
   
+  const BlackRavenID = '5d6574318debf3d6cb3e549d';
+  const HopsPotatoID = '5d657d75d2a2ace0a8b4c42b';
+  const SizzlebirdCiderID = '5d657dc1d2a2ace0a8b4c42d';
+  const SoundsPugetID = '5d657e36d2a2ace0a8b4c42e';
+  const ExtraFoamLimitedEditionID = '5d657ebdd2a2ace0a8b4c42f';
+  const TheKrakenID = '5d657eecd2a2ace0a8b4c430';
+  const SamsBeerID = '5d68789eaa05cb5e20b390d7';
+
+  const BlackRavenQuantity = QuantityState[QuantityState.length - 1];
+  const HopsPotatoQuantity = QuantityState[QuantityState.length - 1].HopsPotatoQuantity;
+  const SizzlebirdCiderQuantity = QuantityState[QuantityState.length - 1].BlackRavenQuantity;
+  const SoundsPugetQuantity = QuantityState[QuantityState.length - 1].SoundsPugetQuantity;
+  const ExtraFoamLimitedEditionQuantity = QuantityState[QuantityState.length - 1].ExtraFoamLimitedEditionQuantity;
+  const TheKrakenQuantity = QuantityState[QuantityState.length - 1].TheKrakenQuantity;
+  const SamsBeerQuantity = QuantityState[QuantityState.length - 1].SamsBeerQuantity;
   
 
   function checkState(){
     console.log(QuantityState);
     console.log(QuantityState[QuantityState.length - 1].TheKrakenQuantity);
     console.log(selectedClient[selectedClient.length -1]);
+    console.log(Table.rows);
+    console.log(newOrder);
+    console.log(BlackRavenQuantity);
   }
 
   const newOrder = {
-    client: client,
-    user: user,
-    product: product,
-    quantity: quantity,
+    client: selectedClient[selectedClient.length -1],
+    user: props.user._id,
+    lineItems: [
+      {
+        product: {
+                _id: BlackRavenID
+        },
+        quantity: BlackRavenQuantity
+      },
+      {
+        product: {
+                _id: HopsPotatoID
+        },
+        quantity: HopsPotatoQuantity
+      },
+      {
+        product: {
+                _id: SizzlebirdCiderID
+        },
+        quantity: SizzlebirdCiderQuantity
+      },
+      {
+        product: {
+                _id: SoundsPugetID
+        },
+        quantity: SoundsPugetQuantity
+      },
+      {
+        product: {
+                _id: ExtraFoamLimitedEditionID
+        },
+        quantity: ExtraFoamLimitedEditionQuantity
+      },
+      {
+        product: {
+                _id: TheKrakenID
+        },
+        quantity: TheKrakenQuantity
+      },
+      {
+        product: {
+                _id: SamsBeerID
+        },
+        quantity: SamsBeerQuantity
+      }
+    ]
   }
 
   console.log(newOrder);
+  
 
-  // function CreateOrder(){
-  //   API.saveOrder(newOrder);
+  function CreateOrder(){
+    API.saveOrder(newOrder);
 
-  // }
+  }
 
 
 
