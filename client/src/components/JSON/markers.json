@@ -1,0 +1,82 @@
+[
+    {
+        "name" : "Optimism Brewing Company",
+        "Address" : "1158 Broadway, Seattle, WA 98122",
+        "lat" : "47.612820",
+        "lng" : "-122.320542",
+        "website" : "optimismbrewing.com",
+        "telephone" : "(206) 651-5429"
+    },
+    {
+        "name" : "Two Beers Brewing Co.",
+        "Address" : "4700 Ohio Ave S, Seattle, WA 98134",
+        "lat" : "47.560881",
+        "lng" : "-122.337421",
+        "website" : "twobeersbrewery.com",
+        "telephone" : "(206) 762-0490"
+    },
+    {
+        "name" : "Ghostfish Brewing Company",
+        "Address" : "2942 1st Ave S, Seattle, WA 98134",
+        "lat" : "47.576459",
+        "lng" : "-122.333735",
+        "website" : "ghostfishbrewing.com",
+        "telephone" : "(206) 397-3898"
+    },
+    {
+        "name" : "The Pike Brewing Company",
+        "Address" : "1415 1st Ave, Seattle, WA 98101",
+        "lat" : "47.608259",
+        "lng" : "-122.339719",
+        "website" : "pikebrewing.com",
+        "telephone" : "(206) 622-6044"
+    },
+    {
+        "name" : "Fremont Brewing Company",
+        "Address" : "1050 N 34th St, Seattle, WA 98103",
+        "lat" : "47.649081",
+        "lng" : "-122.344448",
+        "website" : "fremontbrewing.com",
+        "telephone" : "(206) 420-2407"
+    },
+    {
+        "name": "Georgetown Brewing Co",
+        "Address" : "5200 Denver Ave S, Seattle, WA 98108",
+        "lat": "47.555274",
+        "lng" : "-122.325893",
+        "website": "georgetownbeer.com",
+        "telephone": "(206) 766-8055"
+    },
+    {
+        "name": "Elysian Fields",
+        "Address" : "542 1st Ave S, Seattle, WA 98104",
+        "lat": "47.597086",
+        "lng" : "-122.333829",
+        "website": "elysianbrewing.com",
+        "telephone": "(206) 382-4498"
+    },
+    {
+        "name": "Cloudburst Brewing",
+        "Address" : "2116 Western Ave, Seattle, WA 98121",
+        "lat": "47.611617",
+        "lng" : "-122.345275",
+        "website": "cloudburstbrew.com",
+        "telephone": ""
+    },
+    {
+        "name": "Holy Mountain Brewing Company",
+        "Address" : "1421 Elliott Ave W, Seattle, WA 98119",
+        "lat": "47.630896",
+        "lng" : "-122.374438",
+        "website": "holymountainbrewing.com",
+        "telephone": ""
+    },
+    {
+        "name": "Outer Planet Craft Brewing",
+        "Address" : "1812 12th Ave #100, Seattle, WA 98122",
+        "lat": "47.618126",
+        "lng" : "-122.316611",
+        "website": "outerplanetbrewing.com",
+        "telephone": "(206) 763-7000"
+    }
+]

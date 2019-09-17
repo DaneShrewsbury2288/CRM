@@ -78,7 +78,7 @@ class Messenger extends Component {
         position: 'absolute',
         width: '300px',
         maxHeight: '350px',
-        bottom: '15px',
+        bottom: '12px',
         right: '15px',
         zIndex: 10,
         overflowY: 'scroll',

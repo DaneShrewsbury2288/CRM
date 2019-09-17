@@ -4,6 +4,9 @@ import PTool from "../components/PTool";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+
+
+
 function PurchasingTool(props) {
     const { user } = props.auth;
     return (
@@ -11,7 +14,6 @@ function PurchasingTool(props) {
          <PageTitle title="Purchasing Tool"/>
          <PTool user={user}/>
         </div>
-
     )
 };
 

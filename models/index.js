@@ -1,5 +1,3 @@
-// Exporting an object containing all of our models
-
 module.exports = {
     User: require("./User"),
     Product: require("./Product"),
@@ -7,5 +5,6 @@ module.exports = {
     Client: require("./Client"),
     Order: require("./Order"),
     Note: require("./Note"),
-    Message: require("./Message")
+    Message: require("./Message"),
+    Supply: require("./Supply")
   };
