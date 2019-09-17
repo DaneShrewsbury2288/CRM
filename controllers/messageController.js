@@ -25,9 +25,29 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
-    findUnread: function (req,res) {
+    findUnread: function (req, res) {
         Message
-            .find({read: false})
+            .find({
+                $and: [
+                    { read: false },
+                    { receiver: req.params.id }
+                ]
+            })
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
+    findTheseUnread: function (req, res) {
+        const users = req.params.userIds.split("&")
+        const user = users[0]
+        const partner = users[1]
+        Message
+            .find({
+                $and: [
+                    { read: false },
+                    { sender: partner },
+                    { receiver: user }
+                ]
+            })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
@@ -37,6 +57,22 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
+    setAllAsRead: function (req, res) {
+        const users = req.params.userIds.split("&")
+        const user = users[0]
+        const partner = users[1]
+        Message
+            .update({
+                $and: [
+                    { read: false },
+                    { receiver: user },
+                    { sender: partner }
+                ]
+            }, {$set:{read: true}}, {multi: true},
+            )
+            .then(dbModel => res.json(dbModel))
+            .catch(err => res.status(422).json(err));
+    }
 };
 
 

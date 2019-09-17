@@ -8,5 +8,12 @@ router.route("/")
 
 router.route("/:userIds")
   .get(messageController.findMessages)
+  .put(messageController.setAllAsRead);
+
+router.route("/read/:id")
+  .get(messageController.findUnread);
+
+router.route("/many/:userIds")
+  .get(messageController.findTheseUnread);
 
 module.exports = router;

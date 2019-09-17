@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,8 +18,11 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Messenger from './Messenger';
 import ListItems from './ListItems';
 import Background from '../images/dust_scratches.png'
+import API from '../utils/API';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-const drawerWidth = 300;
+const drawerWidth = 280;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 
   },
   toolbar: {
-    paddingRight: 24, 
+    paddingRight: 24,
   },
   toolbarIcon: {
     display: 'flex',
@@ -105,20 +108,34 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
+  avatar: {
+    marginRight: '30px'
+  }
 }));
 
-export default function Dashboard(props) {
+const Dashboard = (props) => {
   const classes = useStyles();
   console.log(classes)
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  //  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); 
-
+  const { user } = props.auth;
+  const [unread, setUnread] = useState(0)
+  const APISearch = (id) => {
+    API.findUnread(id)
+      .then(res =>
+        setUnread(res.data.length))
+      .then(console.log(unread))
+      .catch(err => console.log(err))
+  }
+  useEffect(() => {
+    APISearch(user._id)
+    console.log(unread)
+  })
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -138,7 +155,7 @@ export default function Dashboard(props) {
             DJAC Brewing Inc.
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={0} color="secondary">
+            <Badge badgeContent={unread} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -152,6 +169,7 @@ export default function Dashboard(props) {
         open={open}
       >
         <div className={classes.toolbarIcon}>
+          <h2 className={classes.avatar}>{user.firstName} {user.lastName}</h2>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
@@ -172,3 +190,13 @@ export default function Dashboard(props) {
     </div>
   );
 }
+
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps
+)(Dashboard);

@@ -64,12 +64,13 @@ function getStepContent(step) {
   }
 }
 
-export default function PurchasingTool() {
+export default function PurchasingTool(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+    console.log(props.user)
   };
 
   const handleBack = () => {

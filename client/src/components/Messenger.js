@@ -3,6 +3,7 @@ import API from "../utils/API";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
 import Dialogue from "./Dialogue";
 import PropTypes from "prop-types";
 import Background from '../images/email-pattern.png'
@@ -29,13 +30,31 @@ class Messenger extends Component {
 
   loadUsers = () => {
     API.getUsersExcept(this.state.user._id)
-      .then(res => this.setState({ users: res.data }, () => {
-      }))
+      .then(res => this.findThese(res.data.users))
       .catch(err => console.log(err))
   }
 
   back = () => {
     this.setState({ partner: null })
+  }
+
+  findThese = (input) => {
+    input.map((user, index) => (
+      API.findTheseUnread(`${this.state.user._id}&${user._id}`)
+        .then(res => {
+          var joined = this.state.users.concat(
+            {
+              _id: user._id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              messages: res.data.length
+            }
+          );
+          console.log(this.state.users)
+          this.setState({ users: joined })
+        })
+        .catch(err => console.log(err))
+    ))
   }
 
   hideMessenger = () => {
@@ -87,21 +106,24 @@ class Messenger extends Component {
         justifyContent: 'flex-start'
       },
       content: {
-        marginTop: '38px',
-        minHeight: '250px'
+        marginTop: '48px',
+        minHeight: '240px'
       },
       space: {
         padding: '8px'
+      },
+      name: {
+        marginTop: '5px'
       }
     }
-
+    const userList = this.state.users.sort((a, b) => (a.firstName > b.firstName) ? 1 : -1)
     return (
       <div style={styles.body}>
         <div style={styles.header}>
           <h1 onClick={this.hideMessenger} style={styles.title}>Messenger</h1>
           {this.state.partner ?
-          <div style={styles.back}>
-            <Button variant="contained" color="primary"onClick={this.back}>Back</Button>
+            <div style={styles.back}>
+              <Button variant="contained" color="primary" onClick={this.back}>Back</Button>
             </div>
             :
             null
@@ -117,11 +139,14 @@ class Messenger extends Component {
               </div>
               :
               <List>
-                {this.state.users.map(user => (
+                {userList.map(user => (
+
                   <ListItem key={user._id}>
-                    <h2 id={user._id} onClick={this.handleSetPartner}>
-                      {user.firstName} {user.lastName}
-                    </h2>
+                    <Badge badgeContent={user.messages} color="secondary">
+                      <h2 style={styles.name} id={user._id} onClick={this.handleSetPartner}>
+                        {user.firstName} {user.lastName}
+                      </h2>
+                    </Badge>
                   </ListItem>
                 ))}
               </List>
