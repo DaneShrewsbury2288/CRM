@@ -11,6 +11,8 @@ import * as Table from '../components/EditableTable';
 import * as StartForm from '../components/AddressForm';
 import API from '../utilities/api';
 import * as Ptool from '../components/PTool';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 // function seeObject(x){
 //   console.log(Table.selectedBrews.arrayOne.slice(-1));
@@ -34,7 +36,8 @@ const useStyles = makeStyles(theme => ({
 const selectedProducts = Table.selectedBrews.arrayOne[0];
 
 
-export default function Review(props) {
+function Review(props) {
+  const { user } = props.auth;
   const [values, setValues] = React.useState([{
     productid: '',
     BlackRavenQuantity: 0,
@@ -111,7 +114,7 @@ export default function Review(props) {
 
   const newOrder = {
     client: StartForm.selectedClient,
-    // user: props.user._id,
+    user: user._id,
     lineItems: [
       {
         product: {
@@ -159,7 +162,8 @@ export default function Review(props) {
   }
 
   // console.log(newOrder);
-  
+
+  // console.log(user._id);
 
   function CreateOrder(){
     API.saveOrder(newOrder);
@@ -357,3 +361,13 @@ export default function Review(props) {
     </React.Fragment>
   );
 }
+
+Review.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps
+)(Review);
