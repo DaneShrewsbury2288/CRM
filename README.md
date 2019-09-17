@@ -1,4 +1,4 @@
-# DJAC Brewery Solutions
+# J-CARD Brewery Solutions
 # React-Built MOCK CRM 
 
 ## Table of contents
