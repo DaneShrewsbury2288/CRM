@@ -11,6 +11,7 @@ import Review from '../components/Review';
 
 const clientArray = [];
 const productArray = [];
+export const selectedClient = [];
 
 function PopulateClients(){
   API.getClients()
@@ -53,8 +54,7 @@ export default function ClientInformation() {
 
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    client: '',
-    name: 'hai',
+    client: ''
   });
 
   // const inputLabel = React.useRef(null);
@@ -67,12 +67,21 @@ export default function ClientInformation() {
     setValues(oldValues => ({
       ...oldValues,
       [event.target.name]: event.target.value,
-    }));
+    }),
+    selectedClient.push(values)
+    );
+
   }
 
   function seeClient(){
     console.log(values.client)
   }
+
+  function pushValues(){
+    selectedClient.push(values.client)
+  }
+  
+  pushValues();
 
   return (
     <React.Fragment>

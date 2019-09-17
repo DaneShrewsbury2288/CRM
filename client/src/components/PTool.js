@@ -12,7 +12,8 @@ import PaymentForm from './PaymentForm';
 import Review from './Review';
 // import API from '../utilities/api';
 // import values from '../components/Review'; 
-import { QuantityState } from '../components/Review'; 
+import { QuantityState } from '../components/Review';
+import { selectedClient } from '../components/AddressForm';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -69,6 +70,7 @@ function getStepContent(step) {
 export default function PurchasingTool(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [client, quantity, user, product] = React.useState([]);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -81,18 +83,22 @@ export default function PurchasingTool(props) {
 
   console.log(props.user);
   
+  
 
   function checkState(){
     console.log(QuantityState);
-    console.log(QuantityState[QuantityState.length - 1].BlackRavenQuantity);
+    console.log(QuantityState[QuantityState.length - 1].TheKrakenQuantity);
+    console.log(selectedClient[selectedClient.length -1]);
   }
 
-  // const newOrder = {
-  //   client: client,
-  //   user: user,
-    
+  const newOrder = {
+    client: client,
+    user: user,
+    product: product,
+    quantity: quantity,
+  }
 
-  // }
+  console.log(newOrder);
 
   // function CreateOrder(){
   //   API.saveOrder(newOrder);
