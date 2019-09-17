@@ -163,7 +163,6 @@ const Dashboard = (props) => {
         }
       })
       .then(res => {
-        console.log("unread: " + unread)
         if (messages) {
           setUnread(messages.length)
         }
