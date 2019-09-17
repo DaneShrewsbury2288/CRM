@@ -43,6 +43,8 @@ class PermissionsSwitch extends Component {
                     {switches.map(perm => (
                         <ListItem key={`${perm.bitmask}`}>
                             {perm.title} <Switch
+                                color="default"
+                                style={{color: '#313131'}}
                                 checked={this.isChecked("perms", perm.bitmask)}
                                 onClick={this.handleChange("perms", perm.bitmask)} />
                         </ListItem>
@@ -51,6 +53,7 @@ class PermissionsSwitch extends Component {
                 <Button
                     variant="contained"
                     color="primary"
+                    style={{backgroundColor: '#313131'}}
                     onClick={this.update}
                 >
                     Update

@@ -152,7 +152,6 @@ const Dashboard = (props) => {
     API.findUnread(id)
       .then(res =>
         setUnread(res.data.length))
-      .then(console.log(unread))
       .catch(err => console.log(err))
   }
   useEffect(() => {

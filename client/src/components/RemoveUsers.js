@@ -16,10 +16,7 @@ class RemoveUsers extends Component {
     }
 
     handleUser = event => {
-        console.log(event.target)
         this.setState({ user: event.target.id }, () => {
-            console.log(this.state.user);
-            console.log(this.state.permissions);
         });
     };
 
@@ -36,7 +33,6 @@ class RemoveUsers extends Component {
     loadUsers = () => {
         API.getUsers()
             .then(res => this.setState({ users: res.data }, () => {
-                console.log(this.state.users)
             }))
             .catch(err => console.log(err))
     }
@@ -53,10 +49,10 @@ class RemoveUsers extends Component {
                 <List>
                     {this.state.users.map(user => (
                         <ListItem key={user._id}>
-                            <h4 id={user._id} permissions={user.permissions} onClick={this.handleUser}>
+                            <h2 id={user._id} permissions={user.permissions} onClick={this.handleUser}>
                                 {user.firstName} {user.lastName}
-                            </h4>
-                            <span onClick={() => this.deleteUser(user._id)} >
+                            </h2>
+                            <span style={{color: 'red'}} onClick={() => this.deleteUser(user._id)} >
                                 ✗
                             </span>
                         </ListItem>

@@ -88,7 +88,7 @@ class ClientList extends Component {
                         className={"pacman-loader"}
                         sizeUnit={"px"}
                         size={75}
-                        color={"rgb(63, 81, 181)"}
+                        color={"#313131"}
                         loading={true}
                     />
                 </div>
