@@ -235,7 +235,7 @@ class ManagerTaskAssignment extends Component {
     render() {
         return (
             <div>
-            <button onClick={this.checkState}>Check state</button>
+            {/* <button onClick={this.checkState}>Check state</button> */}
                 <PageTitle title="Manager Task Assignment" />
                 <InputForm
                     userOpen={this.state.userOpenOption}
