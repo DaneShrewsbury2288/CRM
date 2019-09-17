@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const steps = ['Client Information', 'Product Selection', 'Review order'];
+const steps = ['Enter a new order'];
 
 function getStepContent(step) {
   switch (step) {
@@ -75,6 +75,7 @@ export default function PurchasingTool() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+   
 
   return (
     <React.Fragment>

@@ -19,7 +19,7 @@ function InputForm(props) {
             <div className="task-form">
               <Grid container spacing={3}>
                 <Grid item lg={4}>
-                  <Paper className="paper-header">Create a task</Paper>
+                  <InputLabel htmlFor="age-native-helper">Create a Task</InputLabel>
                 </Grid>
                 <Grid item lg={4}>
                   <FormControl

@@ -92,12 +92,12 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
+          {/* <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ 'aria-label': 'select all desserts' }}
-          />
+          /> */}
         </TableCell>
         {headCells.map(headCell => (
           <TableCell
@@ -178,7 +178,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Nutrition
+            Product Overview
           </Typography>
         )}
       </div>
@@ -324,6 +324,7 @@ export default function EnhancedTable() {
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
+            
             <TableBody>
               {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -342,10 +343,10 @@ export default function EnhancedTable() {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox
+                        {/* <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
-                        />
+                        /> */}
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.productName}
