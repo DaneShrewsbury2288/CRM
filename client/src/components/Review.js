@@ -76,7 +76,7 @@ export default function Review() {
             <ListItemText
               primary="Black Raven Trickster" />
             <Typography
-              variant="body2">$0</Typography>
+              variant="body2">$5</Typography>
             <Typography>
               <TextField
                 id="0"
@@ -95,11 +95,126 @@ export default function Review() {
           </ListItem>
           <ListItem
             className={classes.listItem}
-            key="0">
+            key="1">
             <ListItemText
-              primary="Black Raven Trickster" />
+              primary="Hops Potato" />
             <Typography
-              variant="body2">$0</Typography>
+              variant="body2">$7.5</Typography>
+            <Typography>
+              <TextField
+                id="1"
+                name="you"
+                label="Quantity Desired"
+                value={values.quantity}
+                onChange={handleChange('quantity')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </Typography>
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            key="2">
+            <ListItemText
+              primary="Sizzlebird Cider" />
+            <Typography
+              variant="body2">$8</Typography>
+            <Typography>
+              <TextField
+                id="1"
+                name="you"
+                label="Quantity Desired"
+                value={values.quantity}
+                onChange={handleChange('quantity')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </Typography>
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            key="3">
+            <ListItemText
+              primary="Sounds Puget" />
+            <Typography
+              variant="body2">$8.89</Typography>
+            <Typography>
+              <TextField
+                id="1"
+                name="you"
+                label="Quantity Desired"
+                value={values.quantity}
+                onChange={handleChange('quantity')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </Typography>
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            key="4">
+            <ListItemText
+              primary="Extra Foam - Limited Edition" />
+            <Typography
+              variant="body2">$9.19</Typography>
+            <Typography>
+              <TextField
+                id="1"
+                name="you"
+                label="Quantity Desired"
+                value={values.quantity}
+                onChange={handleChange('quantity')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </Typography>
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            key="5">
+            <ListItemText
+              primary="The Kraken" />
+            <Typography
+              variant="body2">$9.49</Typography>
+            <Typography>
+              <TextField
+                id="1"
+                name="you"
+                label="Quantity Desired"
+                value={values.quantity}
+                onChange={handleChange('quantity')}
+                type="number"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+            </Typography>
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            key="6">
+            <ListItemText
+              primary="Sam's Beer" />
+            <Typography
+              variant="body2">$14.99</Typography>
             <Typography>
               <TextField
                 id="1"
