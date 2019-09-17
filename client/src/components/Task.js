@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
@@ -67,9 +66,6 @@ function TaskTable(props) {
                             </Paper>
                         </Grid>
                         <Grid item lg={2}>
-                            <Button variant="contained" color="secondary" className="button">
-                                Delete
-                    </Button>
                         </Grid>
                     </Grid>
                 </CardContent>

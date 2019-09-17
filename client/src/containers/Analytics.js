@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import "react-chartjs-2";
 import BarChart from '../components/BarChart';
 import DoughnutChart from '../components/DoughnutChart';
+import PieChart from '../components/PieChart';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -31,10 +32,8 @@ class Analytics extends Component {
         userAverage: 0,
         userPopularProduct: "",
         userLastSaleDate: "",
-        userRevenue: [],
         analyticsSelection: "Business",
         clientOrUserSelection: "",
-        // hours
         twentyFourHourDifference: moment().subtract(24, 'hours').format("ddd, hA"),
         twentyOneHourDifference: moment().subtract(21, 'hours').format("ddd, hA"),
         eightteenHourDifference: moment().subtract(18, 'hours').format("ddd, hA"),
@@ -44,7 +43,6 @@ class Analytics extends Component {
         sixHourDifference: moment().subtract(6, 'hours').format("ddd, hA"),
         threeHourDifference: moment().subtract(3, 'hours').format("ddd, hA"),
         zeroHourDifference: moment().format("ddd, hA"),
-        // days
         sevenDayDifference: moment().subtract(7, 'days').format("MMM D"),
         sixDayDifference: moment().subtract(6, 'days').format("MMM D"),
         fiveDayDifference: moment().subtract(5, 'days').format("MMM D"),
@@ -53,19 +51,16 @@ class Analytics extends Component {
         twoDayDifference: moment().subtract(2, 'days').format("MMM D"),
         oneDayDifference: moment().subtract(1, 'days').format("MMM D"),
         zeroDayDifference: moment().subtract(0, 'days').format("MMM D"),
-        // weeks
         weekDifference: moment().subtract(7, 'days').format("MMM D"),
         twoWeekDifference: moment().subtract(14, 'days').format("MMM D"),
         threeWeekDifference: moment().subtract(21, 'days').format("MMM D"),
         fourWeekDifference: moment().subtract(28, 'days').format("MMM D"),
-        // past quarter
         quarterTwoDifference: moment().subtract(14, 'days').format("MMM D"),
         quarterFourDifference: moment().subtract(28, 'days').format("MMM D"),
         quarterSixDifference: moment().subtract(42, 'days').format("MMM D"),
         quarterEightDifference: moment().subtract(56, 'days').format("MMM D"),
         quarterTenDifference: moment().subtract(70, 'days').format("MMM D"),
         quarterTwelveDifference: moment().subtract(84, 'days').format("MMM D"),
-        // months
         currentMonth: moment().startOf('month').format("MMM YYYY"),
         oneMonthDifference: moment().subtract(1, 'months').startOf('month').format("MMM YYYY"),
         twoMonthDifference: moment().subtract(2, 'months').startOf('month').format("MMM YYYY"),
@@ -102,12 +97,24 @@ class Analytics extends Component {
                 }
             ]
         },
+        pieData: {
+            labels: [],
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: []
+                }
+            ]
+        },
         chartTitle: "",
         timeFrames: [],
         chartBGColor: "",
         chartData: [],
         chartIsLoaded: false,
         doughnutLoaded: false,
+        pieLoaded: false,
+        pieLabels: [],
+        pieQuantities: [],
         totalSales: [],
         averageOrderQuantity: [],
         averageOrderTotal: [],
@@ -126,7 +133,6 @@ class Analytics extends Component {
         API.getBusinessAnalytics(start, end)
             .then(res =>
                 this.setState(state => {
-                    // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
@@ -151,7 +157,6 @@ class Analytics extends Component {
                             lowestOrderTotal
                         };
                     } else {
-                        // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
                         const averageOrderTotal = state.averageOrderTotal.concat(noSale);
@@ -175,7 +180,6 @@ class Analytics extends Component {
         API.getUserOrderAnalytics(id, start, end)
             .then(res =>
                 this.setState(state => {
-                    // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
@@ -200,7 +204,6 @@ class Analytics extends Component {
                             lowestOrderTotal
                         };
                     } else {
-                        // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
                         const averageOrderTotal = state.averageOrderTotal.concat(noSale);
@@ -224,7 +227,6 @@ class Analytics extends Component {
         API.getClientOrderAnalytics(id, start, end)
             .then(res =>
                 this.setState(state => {
-                    // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         let total = res.data[0].profit.toFixed(2);
                         let totalString = total.toString();
@@ -249,7 +251,6 @@ class Analytics extends Component {
                             lowestOrderTotal
                         };
                     } else {
-                        // set to zero if no sales
                         const noSale = "0.00";
                         const totalSales = state.totalSales.concat(noSale);
                         const averageOrderTotal = state.averageOrderTotal.concat(noSale);
@@ -268,6 +269,45 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Client analytics error: " + error));
     }
+    getClientTotals = () => {
+        setTimeout(
+            function () {
+                const clients = this.state.clients;
+                clients.forEach(function (client) {
+                    API.getClientOrderAnalytics(client._id, "1970-01-01", moment().format("YYYY-MM-DD"))
+                        .then(res =>
+                            this.setState(state => {
+                                if (res.data[0] !== undefined) {
+                                    console.log("Here is the client name: " + client.name)
+                                    let clientName = client.name;
+                                    let clientProfit = res.data[0].profit;
+                                    let profitStr = clientProfit.toString();
+                                    console.log(profitStr);
+                                    console.log(state.pieLabels);
+                                    const pieLabels = state.pieLabels.concat(clientName);
+                                    console.log(state.pieQuantities);
+                                    const pieQuantities = state.pieQuantities.concat(profitStr);
+                                    return {
+                                        pieLabels,
+                                        pieQuantities
+                                    }
+                                } else {
+                                    const pieLabels = state.pieLabels;
+                                    const pieQuantities = state.pieQuantities
+                                    return {
+                                        pieLabels,
+                                        pieQuantities
+                                    }
+                                }
+
+                            })
+                        )
+                        .catch(error => console.log("Client totals error: " + error))
+                })
+                this.setUpPie();
+            }.bind(this), 5000
+        )
+    }
     getProductAnalytics = (start, end) => {
         this.setState({ doughnutData: false });
         if (!start) {
@@ -279,7 +319,6 @@ class Analytics extends Component {
         API.getBusinessAnalytics(start, end)
             .then(res =>
                 this.setState(state => {
-                    // if any sales have occured in selected time period
                     if (res.data[0] !== undefined) {
                         for (let i = 0; i < res.data[0].itemsSold.length; i++) {
                             if (res.data[0].itemsSold[i].itemID === "5d6574318debf3d6cb3e549d") {
@@ -312,7 +351,6 @@ class Analytics extends Component {
                             }
                         }
                     } else {
-                        // set to zero if no sales
                         return;
                     }
                 })
@@ -320,7 +358,6 @@ class Analytics extends Component {
             .catch(error => console.log("Business analytics error: " + error));
         this.setUpDonut();
     }
-
     UNSAFE_componentWillMount() {
         this.checkUsers();
         this.checkClients();
@@ -329,8 +366,8 @@ class Analytics extends Component {
     componentDidMount() {
         this.setTimeFrame();
         this.getProductAnalytics();
+        this.getClientTotals();
     }
-
     getLastDayAnalytics = () => {
         this.setState({
             totalSales: [],
@@ -379,7 +416,6 @@ class Analytics extends Component {
             this.getAnalytics(eight, today);
         }
     }
-
     getLastWeekAnalytics = () => {
         const one = moment().subtract(7, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(6, 'days').format("YYYY-MM-DD");
@@ -420,9 +456,7 @@ class Analytics extends Component {
             this.getAnalytics(seven, eight);
             this.getAnalytics(eight, currentTime);
         }
-
     }
-
     getLastMonthAnalytics = () => {
         const one = moment().subtract(28, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(21, 'days').format("YYYY-MM-DD");
@@ -447,9 +481,7 @@ class Analytics extends Component {
             this.getAnalytics(three, four);
             this.getAnalytics(four, today);
         }
-
     }
-
     getLastQuarterAnalytics = () => {
         const one = moment().subtract(84, 'days').format("YYYY-MM-DD");
         const two = moment().subtract(70, 'days').format("YYYY-MM-DD");
@@ -482,9 +514,7 @@ class Analytics extends Component {
             this.getAnalytics(five, six);
             this.getAnalytics(six, today);
         }
-
     }
-
     getLastYearAnalytics = () => {
         const one = moment().subtract(12, 'months').startOf('month').format("YYYY-MM-DD");
         const two = moment().subtract(11, 'months').startOf('month').format("YYYY-MM-DD");
@@ -546,7 +576,7 @@ class Analytics extends Component {
             this.getAnalytics(thisMonth, today);
         }
     }
-    setUpDonut() {
+    setUpDonut = () => {
         setTimeout(
             function () {
                 const ravenString = this.state.blackRavenCount.toString();
@@ -560,50 +590,29 @@ class Analytics extends Component {
                     doughnutData: {
                         ...prevState.doughnutData,
                         labels: [
-                            "Quantity Sold"
+                            "Black Raven Trickster", "Hops Potato", "Sizzlebird Cider", "Sounds Puget", "Extra Foam - Limited Edition", "The Kraken", "Sam's Beer"
                         ],
                         datasets: [
                             {
                                 ...prevState.doughnutData.datasets,
-                                label: "Black Raven Trickster",
-                                backgroundColor: "rgb(236,217,208)",
-                                data: [ravenString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Hops Potato",
-                                backgroundColor: "rgb(233,196,175)",
-                                data: [hopsString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Sizzlebird Cider",
-                                backgroundColor: "rgb(231,143,33)",
-                                data: [ciderString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Sounds Puget",
-                                backgroundColor: "rgb(249,195,129)",
-                                data: [pugetString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Extra Foam - Limited Edition",
-                                backgroundColor: "rgb(238,150,9)",
-                                data: [foamString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "The Kraken",
-                                backgroundColor: "rgb(193,23,10)",
-                                data: [krakenString]
-                            },
-                            {
-                                ...prevState.doughnutData.datasets,
-                                label: "Sam's Beer",
-                                backgroundColor: "rgb(195,65,1)",
-                                data: [samsString]
+                                data: [
+                                    ravenString,
+                                    hopsString,
+                                    ciderString,
+                                    pugetString,
+                                    foamString,
+                                    krakenString,
+                                    samsString
+                                ],
+                                backgroundColor: [
+                                    "rgb(236,217,208)",
+                                    "rgb(233,196,175)",
+                                    "rgb(231,143,33)",
+                                    "rgb(249,195,129)",
+                                    "rgb(238,150,9)",
+                                    "rgb(193,23,10)",
+                                    "rgb(195,65,1)"
+                                ]
                             }
                         ]
                     }
@@ -612,8 +621,42 @@ class Analytics extends Component {
             }.bind(this), 3000
         )
     }
+    randomColorGenerator = () => {
 
-    setTimeFrame() {
+    }
+    setUpPie = () => {
+        setTimeout(
+            function () {
+                this.setState(prevState => ({
+                    pieData: {
+                        ...prevState.pieData,
+                        labels: this.state.pieLabels,
+                        datasets: [
+                            {
+                                ...prevState.pieData.datasets,
+                                data: this.state.pieQuantities,
+                                // backgroundColor: [
+                                //     "rgb(236,217,208)",
+                                //     "rgb(233,196,175)",
+                                //     "rgb(231,143,33)",
+                                //     "rgb(249,195,129)",
+                                //     "rgb(238,150,9)",
+                                //     "rgb(193,23,10)",
+                                //     "rgb(195,65,1)"
+                                // ]
+                            }
+                        ]
+                    }
+                }))
+                console.log(this.state.pieData)
+                console.log(this.state.clients)
+                if (this.state.pieQuantities > 5) {
+                    this.setState({ pieLoaded: true });
+                }
+            }.bind(this), 3000
+        )
+    }
+    setTimeFrame = ()  => {
         this.setState({
             data: {
                 labels: [],
@@ -702,7 +745,7 @@ class Analytics extends Component {
                             }
                         }))
                         this.setState({ chartIsLoaded: true });
-                    }.bind(this), 5000
+                    }.bind(this), 2000
                 )
             }
         }
@@ -986,7 +1029,6 @@ class Analytics extends Component {
             .then(res => {
                 let date = res.data[0].lastSalesDate.slice(0, 10);
                 let dateStr = date.toString();
-                console.log(dateStr);
                 this.setState({ userLastSaleDate: dateStr });
             })
     }
@@ -1057,7 +1099,6 @@ class Analytics extends Component {
                 }
             })
     }
-    // get users
     checkUsers = () => {
         UserAPI.getUsers()
             .then(res =>
@@ -1065,7 +1106,6 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Check users error: " + error));
     }
-    // get all clients
     checkClients = () => {
         API.getClients()
             .then(res =>
@@ -1073,7 +1113,6 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Check clients error: " + error));
     }
-    // get all orders
     checkOrders = () => {
         API.getOrders()
             .then(res =>
@@ -1081,7 +1120,6 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Check orders error: " + error));
     }
-    // create user full name
     fullName = (first, last) => {
         if (first && last) {
             return first + " " + last;
@@ -1089,7 +1127,6 @@ class Analytics extends Component {
             return "";
         }
     }
-    // convert start date
     startDate = (date) => {
         const dateOne = date.slice(0, 10);
         const splitDate = dateOne.split('-');
@@ -1123,7 +1160,6 @@ class Analytics extends Component {
                 return null;
         }
     }
-    // calculate number of sales for each user
     numberOfSales = (userID) => {
         const orders = this.state.orders;
         let counter = [];
@@ -1169,7 +1205,6 @@ class Analytics extends Component {
         const result = users.filter(user =>
             (user.firstName + " " + user.lastName).toUpperCase() === this.state.search.toUpperCase()
         );
-
         this.setState({ searchedUser: result });
         this.getUserTotalRevenue(result[0]._id);
         this.getUserLastMonthRevenue(result[0]._id);
@@ -1183,7 +1218,6 @@ class Analytics extends Component {
     modalClose = () => {
         this.setState({ open: false });
     }
-
     set24Hours = () => (event) => {
         event.preventDefault();
         this.setState({
@@ -1203,7 +1237,6 @@ class Analytics extends Component {
                 }.bind(this), 500
             )
         }
-
     }
     setWeek = () => (event) => {
         event.preventDefault();
@@ -1285,7 +1318,6 @@ class Analytics extends Component {
             )
         }
     }
-
     render() {
         return (
             <div>
@@ -1418,7 +1450,7 @@ class Analytics extends Component {
                                             className={"pacman-loader"}
                                             sizeUnit={"px"}
                                             size={75}
-                                            color={'#9E0031'}
+                                            color={"rgb(63, 81, 181)"}
                                             loading={true}
                                         />
                                     </Grid>
@@ -1426,9 +1458,9 @@ class Analytics extends Component {
                                 </Grid>
                             )}
                     </Grid>
-
                 </div>
                 <div >
+
                     <Grid
                         container
                         direction="row"
@@ -1436,21 +1468,43 @@ class Analytics extends Component {
                         alignItems="center"
                         style={{ margin: "10px" }}
                     >
-                        {this.state.doughnutData ? (
+
+                        {this.state.doughnutData && this.state.doughnutLoaded ? (
                             <Grid item lg={6}>
+                                <h4>Products Percentage of Quantity Sold</h4>
                                 <DoughnutChart
                                     doughnutData={this.state.doughnutData}
                                 />
                             </Grid>
+
+                        ) : (
+                                <div />
+                            )}
+                    </Grid>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        style={{ margin: "10px" }}
+                    >
+                        {this.state.pieData && this.state.pieLoaded ? (
+                            <Grid item lg={6}>
+                                <h4>Clients Percentage of Sales</h4>
+                                <PieChart
+                                    pieData={this.state.pieData}
+                                />
+                            </Grid>
+
                         ) : (
                                 <div />
                             )}
                     </Grid>
                 </div>
-
                 <Grid container>
                     <Grid item lg={4}></Grid>
                     <Grid item lg={4}>
+                        <h4>Find Employee Data</h4>
                         <Search
                             handleInputChange={this.handleInputChange}
                             handleFormSubmit={this.searchAndModal}

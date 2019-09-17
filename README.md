@@ -15,7 +15,7 @@
 
 ## General info
 
-This is mock-CRM(Customer Relations Management Tool) with the focus of a start-up/small brewery company. It will feature a brewery-themed dashboard complete with a login feature and interchangeable dashboard components based upon binary permissions. The componenets will be the minimum set for a business to gleen information from an influx of data (which is stored in mongodb). 
+A mock-CRM(Customer Relations Management Tool) with the focus of a start-up/small brewery company. It will feature a brewery-themed dashboard complete with a login feature and interchangeable dashboard components based upon binary permissions. The componenets will be the minimum set for a business to gleen information from an influx of data (which is stored in mongodb). 
 
 This project utilizes a full MERN stack in order to CRUD data and display it realtime on visualizations. 
 - Mongodb
@@ -44,6 +44,7 @@ Project is created with:
 - [Mongoose](https://mongoosejs.com/)
 - [Socket.io](https://socket.io/)
 - [Bcrypt.js](https://www.npmjs.com/package/bcrypt)
+- [React-Chartjs-2](https://github.com/jerairrest/react-chartjs-2)
 
 ## Containers
 
@@ -55,9 +56,8 @@ Project is created with:
 - Inventory Supplies
 - Client List
 - Purchasing Tool
-- Sales Analytics
 - Manager Task Assignment
-- Sales Team Analytics 
+- Analytics 
 - Check User Messages
 - Discover 
 - Add / Remove Users

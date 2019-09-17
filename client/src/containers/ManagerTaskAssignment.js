@@ -265,7 +265,7 @@ class ManagerTaskAssignment extends Component {
                                 <div key={task._id}>
                                     <Grid item lg={12}>
                                         <TaskTable
-                                            taskNumber={task._id}
+                                            taskNumber={task._id.slice(0, 7)}
                                             user={this.fullName(task.user)}
                                             userImage={this.checkUserImage(task.user)}
                                             client={this.checkIfTaskHasClient(task.client)}
@@ -287,8 +287,8 @@ class ManagerTaskAssignment extends Component {
                                 <GridLoader
                                     className={"grid-loader"}
                                     sizeUnit={"px"}
-                                    size={15}
-                                    color={'#9E0031'}
+                                    size={45}
+                                    color={"rgb(63, 81, 181)"}
                                     loading={true}
                                 />
                             </Grid>
