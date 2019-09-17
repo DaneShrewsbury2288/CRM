@@ -51,8 +51,8 @@ export default function Review() {
   // console.log(rows);
 
   // handle input change
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+  const handleChange = quantity => event => {
+    setValues({ ...values, [quantity]: event.target.value });
   };
 
   const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
