@@ -97,24 +97,24 @@ class Analytics extends Component {
                 }
             ]
         },
-        pieData: {
-            labels: [],
-            datasets: [
-                {
-                    data: [],
-                    backgroundColor: []
-                }
-            ]
-        },
+        // pieData: {
+        //     labels: [],
+        //     datasets: [
+        //         {
+        //             data: [],
+        //             backgroundColor: []
+        //         }
+        //     ]
+        // },
         chartTitle: "",
         timeFrames: [],
         chartBGColor: "",
         chartData: [],
         chartIsLoaded: false,
         doughnutLoaded: false,
-        pieLoaded: false,
-        pieLabels: [],
-        pieQuantities: [],
+        // pieLoaded: false,
+        // pieLabels: [],
+        // pieQuantities: [],
         totalSales: [],
         averageOrderQuantity: [],
         averageOrderTotal: [],
@@ -269,45 +269,45 @@ class Analytics extends Component {
             )
             .catch(error => console.log("Client analytics error: " + error));
     }
-    getClientTotals = () => {
-        setTimeout(
-            function () {
-                const clients = this.state.clients;
-                clients.forEach(function (client) {
-                    API.getClientOrderAnalytics(client._id, "1970-01-01", moment().format("YYYY-MM-DD"))
-                        .then(res =>
-                            this.setState(state => {
-                                if (res.data[0] !== undefined) {
-                                    console.log("Here is the client name: " + client.name)
-                                    let clientName = client.name;
-                                    let clientProfit = res.data[0].profit;
-                                    let profitStr = clientProfit.toString();
-                                    console.log(profitStr);
-                                    console.log(state.pieLabels);
-                                    const pieLabels = state.pieLabels.concat(clientName);
-                                    console.log(state.pieQuantities);
-                                    const pieQuantities = state.pieQuantities.concat(profitStr);
-                                    return {
-                                        pieLabels,
-                                        pieQuantities
-                                    }
-                                } else {
-                                    const pieLabels = state.pieLabels;
-                                    const pieQuantities = state.pieQuantities
-                                    return {
-                                        pieLabels,
-                                        pieQuantities
-                                    }
-                                }
+    // getClientTotals = () => {
+    //     setTimeout(
+    //         function () {
+    //             const clients = this.state.clients;
+    //             clients.forEach(function (client) {
+    //                 API.getClientOrderAnalytics(client._id, "1970-01-01", moment().format("YYYY-MM-DD"))
+    //                     .then(res =>
+    //                         this.setState(state => {
+    //                             if (res.data[0] !== undefined) {
+    //                                 console.log("Here is the client name: " + client.name)
+    //                                 let clientName = client.name;
+    //                                 let clientProfit = res.data[0].profit;
+    //                                 let profitStr = clientProfit.toString();
+    //                                 console.log(profitStr);
+    //                                 console.log(state.pieLabels);
+    //                                 const pieLabels = state.pieLabels.concat(clientName);
+    //                                 console.log(state.pieQuantities);
+    //                                 const pieQuantities = state.pieQuantities.concat(profitStr);
+    //                                 return {
+    //                                     pieLabels,
+    //                                     pieQuantities
+    //                                 }
+    //                             } else {
+    //                                 const pieLabels = state.pieLabels;
+    //                                 const pieQuantities = state.pieQuantities
+    //                                 return {
+    //                                     pieLabels,
+    //                                     pieQuantities
+    //                                 }
+    //                             }
 
-                            })
-                        )
-                        .catch(error => console.log("Client totals error: " + error))
-                })
-                this.setUpPie();
-            }.bind(this), 5000
-        )
-    }
+    //                         })
+    //                     )
+    //                     .catch(error => console.log("Client totals error: " + error))
+    //             })
+    //             this.setUpPie();
+    //         }.bind(this), 5000
+    //     )
+    // }
     getProductAnalytics = (start, end) => {
         this.setState({ doughnutData: false });
         if (!start) {
@@ -366,7 +366,7 @@ class Analytics extends Component {
     componentDidMount() {
         this.setTimeFrame();
         this.getProductAnalytics();
-        this.getClientTotals();
+        // this.getClientTotals();
     }
     getLastDayAnalytics = () => {
         this.setState({
@@ -624,38 +624,38 @@ class Analytics extends Component {
     randomColorGenerator = () => {
 
     }
-    setUpPie = () => {
-        setTimeout(
-            function () {
-                this.setState(prevState => ({
-                    pieData: {
-                        ...prevState.pieData,
-                        labels: this.state.pieLabels,
-                        datasets: [
-                            {
-                                ...prevState.pieData.datasets,
-                                data: this.state.pieQuantities,
-                                // backgroundColor: [
-                                //     "rgb(236,217,208)",
-                                //     "rgb(233,196,175)",
-                                //     "rgb(231,143,33)",
-                                //     "rgb(249,195,129)",
-                                //     "rgb(238,150,9)",
-                                //     "rgb(193,23,10)",
-                                //     "rgb(195,65,1)"
-                                // ]
-                            }
-                        ]
-                    }
-                }))
-                console.log(this.state.pieData)
-                console.log(this.state.clients)
-                if (this.state.pieQuantities > 5) {
-                    this.setState({ pieLoaded: true });
-                }
-            }.bind(this), 3000
-        )
-    }
+    // setUpPie = () => {
+    //     setTimeout(
+    //         function () {
+    //             this.setState(prevState => ({
+    //                 pieData: {
+    //                     ...prevState.pieData,
+    //                     labels: this.state.pieLabels,
+    //                     datasets: [
+    //                         {
+    //                             ...prevState.pieData.datasets,
+    //                             data: this.state.pieQuantities,
+    //                             // backgroundColor: [
+    //                             //     "rgb(236,217,208)",
+    //                             //     "rgb(233,196,175)",
+    //                             //     "rgb(231,143,33)",
+    //                             //     "rgb(249,195,129)",
+    //                             //     "rgb(238,150,9)",
+    //                             //     "rgb(193,23,10)",
+    //                             //     "rgb(195,65,1)"
+    //                             // ]
+    //                         }
+    //                     ]
+    //                 }
+    //             }))
+    //             console.log(this.state.pieData)
+    //             console.log(this.state.clients)
+    //             if (this.state.pieQuantities > 5) {
+    //                 this.setState({ pieLoaded: true });
+    //             }
+    //         }.bind(this), 3000
+    //     )
+    // }
     setTimeFrame = ()  => {
         this.setState({
             data: {
@@ -1450,7 +1450,7 @@ class Analytics extends Component {
                                             className={"pacman-loader"}
                                             sizeUnit={"px"}
                                             size={75}
-                                            color={"rgb(63, 81, 181)"}
+                                            color={"rgb(49, 49, 49)"}
                                             loading={true}
                                         />
                                     </Grid>
@@ -1488,7 +1488,7 @@ class Analytics extends Component {
                         alignItems="center"
                         style={{ margin: "10px" }}
                     >
-                        {this.state.pieData && this.state.pieLoaded ? (
+                        {/* {this.state.pieData && this.state.pieLoaded ? (
                             <Grid item lg={6}>
                                 <h4>Clients Percentage of Sales</h4>
                                 <PieChart
@@ -1498,7 +1498,7 @@ class Analytics extends Component {
 
                         ) : (
                                 <div />
-                            )}
+                            )} */}
                     </Grid>
                 </div>
                 <Grid container>
