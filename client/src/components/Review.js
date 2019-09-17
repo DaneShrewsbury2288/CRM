@@ -7,6 +7,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 // import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import * as Table from '../components/EditableTable';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 // function seeObject(x){
 //   console.log(Table.selectedBrews.arrayOne.slice(-1));
@@ -31,7 +33,8 @@ const selectedProducts = Table.selectedBrews.arrayOne[0];
 
 console.log(selectedProducts);
 
-export default function Review() {
+function Review(props) {
+  const { user } = props.auth;
   const [values, setValues] = React.useState([{
     productid: '',
     BlackRavenQuantity: 0,
@@ -44,7 +47,6 @@ export default function Review() {
     
 
   }]);
-
   const classes = useStyles();
 
 
@@ -66,6 +68,7 @@ export default function Review() {
   function checkState() {
     // console.log(Table.rows);
     console.log(values);
+    console.log(user)
   }
 
   function pushValues(){
@@ -268,3 +271,13 @@ export default function Review() {
     </React.Fragment>
   );
 }
+
+Review.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps
+)(Review);

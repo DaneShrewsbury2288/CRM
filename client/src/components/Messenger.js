@@ -145,7 +145,7 @@ class Messenger extends Component {
                 {userList.map(user => (
 
                   <ListItem key={user._id}>
-                    <Badge badgeContent={user.messages} color="secondary">
+                    <Badge badgeContent={user.messages} color="error">
                       <h2 style={styles.name} id={user._id} onClick={this.handleSetPartner}>
                         {user.firstName} {user.lastName}
                       </h2>
