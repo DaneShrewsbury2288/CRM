@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
 import { logoutUser } from "../actions/authActions";
 import icons from '../permissions'
 
@@ -41,16 +40,6 @@ class ListMap extends Component {
                         :
                         null
                 ))}
-
-                {/* <Button
-                    variant="contained"
-                    onClick={this.onLogoutClick}
-                    style={{backgroundColor: '#f1f1f1'}}
-                >
-                    Logout
-                </Button> */}
-
-
             </div>
         )
     }

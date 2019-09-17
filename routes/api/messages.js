@@ -4,7 +4,8 @@ const messageController = require("../../controllers/messageController");
 // Matches with "/api/messages"
 router.route("/")
   .get(messageController.findAll)
-  .post(messageController.create);
+  .post(messageController.create)
+  .delete(messageController.remove);
 
 router.route("/:userIds")
   .get(messageController.findMessages)

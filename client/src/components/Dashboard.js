@@ -15,11 +15,16 @@ import Grid from '@material-ui/core/Grid';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Button from '@material-ui/core/Button';
 import Messenger from './Messenger';
 import ListItems from './ListItems';
 import Background from '../images/dust_scratches.png'
 import Background2 from '../images/footer_lodyas.png'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import API from '../utils/API';
+import openSocket from 'socket.io-client';
+import { logoutUser } from "../actions/authActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -39,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: '0 8px',
     backgroundColor: '#f1f1f1',
     ...theme.mixins.toolbar,
@@ -102,7 +107,7 @@ const useStyles = makeStyles(theme => ({
     backgroundRepeat: 'repeat',
     backgroundSize: 'auto',
     minHeight: '100%',
-    minWidth: '140%',
+    minWidth: '100%',
   },
   paper: {
     padding: theme.spacing(2),
@@ -113,8 +118,8 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
-  avatar: {
-    marginRight: '10px',
+  name: {
+    marginRight: 'auto',
     color: '#313131'
   },
   drawer: {
@@ -128,6 +133,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Dashboard = (props) => {
+  const socket = openSocket();
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
@@ -135,6 +141,10 @@ const Dashboard = (props) => {
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+  const onLogoutClick = e => {
+    e.preventDefault();
+    props.logoutUser();
   };
   const { user } = props.auth;
   const [unread, setUnread] = useState(0)
@@ -147,7 +157,12 @@ const Dashboard = (props) => {
   }
   useEffect(() => {
     APISearch(user._id)
-    console.log(unread)
+    socket.on('messages checked', user => (
+      APISearch(user._id)
+    ));
+    socket.on('message', data => (
+      APISearch(user._id)
+    ));
   })
   return (
     <div className={classes.root}>
@@ -168,10 +183,17 @@ const Dashboard = (props) => {
             DJAC Brewing Inc.
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={unread} color="secondary">
+            <Badge badgeContent={unread} color='error'>
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <Button
+            variant="contained"
+            onClick={onLogoutClick}
+            style={{ backgroundColor: '#f1f1f1' }}
+          >
+            Logout
+                </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -182,7 +204,10 @@ const Dashboard = (props) => {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <h2 className={classes.avatar}>{user.firstName} {user.lastName}</h2>
+              <ListItemAvatar>
+                <Avatar alt={`${user.firstName}'s profile pic`} src={"https://images.unsplash.com/photo-1504502350688-00f5d59bbdeb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80"} />
+              </ListItemAvatar>
+              <h2 className={classes.name}>{user.firstName} {user.lastName}</h2>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
@@ -205,11 +230,13 @@ const Dashboard = (props) => {
 }
 
 Dashboard.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
 });
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  { logoutUser }
 )(Dashboard);

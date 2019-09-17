@@ -37,7 +37,10 @@ class Dialogue extends Component {
   setAsRead = () => {
     const IDString = this.state.user + "&" + this.state.partner
     API.markAsRead(IDString)
-      .then(console.log('updated'))
+      .then(res =>
+        socket.emit('messages checked', this.state.user)
+      )
+      .catch(err => console.log(err))
   }
 
   sendMessage = message => {

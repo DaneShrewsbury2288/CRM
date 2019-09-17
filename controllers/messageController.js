@@ -6,7 +6,7 @@ module.exports = {
     findAll: function (req, res) {
         Message
             .find(req.query)
-            .sort({ date: -1 })
+            .sort({ created_at: 1 })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
@@ -21,7 +21,7 @@ module.exports = {
                     { $and: [{ sender: partner }, { receiver: user }] }
                 ]
             })
-            .sort({ date: -1 })
+            .sort({ created_at: 1 })
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
@@ -72,7 +72,13 @@ module.exports = {
             )
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
-    }
+    },
+    remove: function (req, res) {
+        Message
+          .deleteMany({ read: false })
+          .then(dbModel => res.json(dbModel))
+          .catch(err => res.status(422).json(err));
+        }
 };
 
 
