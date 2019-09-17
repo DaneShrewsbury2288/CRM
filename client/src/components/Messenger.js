@@ -24,18 +24,20 @@ class Messenger extends Component {
   }
 
   handleSetPartner = event => {
-    this.setState({ partner: event.target.id, user: this.props.auth._id }, () => {
+    this.setState({ partner: event.target.id}, () => {
     });
   };
 
   loadUsers = () => {
+    this.setState({users: []})
     API.getUsersExcept(this.state.user._id)
       .then(res => this.findThese(res.data.users))
       .catch(err => console.log(err))
   }
 
   back = () => {
-    this.setState({ partner: null })
+    this.setState({ partner: null });
+    this.loadUsers();
   }
 
   findThese = (input) => {
@@ -50,7 +52,6 @@ class Messenger extends Component {
               messages: res.data.length
             }
           );
-          console.log(this.state.users)
           this.setState({ users: joined })
         })
         .catch(err => console.log(err))
@@ -60,12 +61,10 @@ class Messenger extends Component {
   hideMessenger = () => {
     if (this.state.display === true) {
       this.setState({ display: false }, () => {
-        console.log(this.state.display)
       })
     }
     else if (this.state.display === false) {
       this.setState({ display: true }, () => {
-        console.log(this.state.display)
       })
     }
   }

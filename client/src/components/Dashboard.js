@@ -115,7 +115,6 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = (props) => {
   const classes = useStyles();
-  console.log(classes)
   const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);

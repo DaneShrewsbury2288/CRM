@@ -57,7 +57,7 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
-    setAllAsRead: function (req, res) {
+    markAsRead: function (req, res) {
         const users = req.params.userIds.split("&")
         const user = users[0]
         const partner = users[1]

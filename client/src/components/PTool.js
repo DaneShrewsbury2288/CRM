@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const steps = ['Client Information', 'Product Selection', 'Review order'];
+const steps = ['Enter a new order'];
 
 function getStepContent(step) {
   switch (step) {
@@ -76,6 +76,7 @@ export default function PurchasingTool(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+   
 
   return (
     <React.Fragment>
@@ -117,6 +118,7 @@ export default function PurchasingTool(props) {
                       onClick={handleNext}
                       className={classes.button}
                     >
+                      {/* Function on click to check if quantity of products greater than 0, POST create order , update */}
                       {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                     </Button>
                   </div>

@@ -35,5 +35,8 @@ export default {
   },
   findTheseUnread: function (userIds) {
     return axios.get("api/messages/many/" + userIds)
-  }
+  },
+  markAsRead: function (userIds) {
+    return axios.put("api/messages/" + userIds)
+  },
 };

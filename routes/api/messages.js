@@ -8,7 +8,7 @@ router.route("/")
 
 router.route("/:userIds")
   .get(messageController.findMessages)
-  .put(messageController.setAllAsRead);
+  .put(messageController.markAsRead);
 
 router.route("/read/:id")
   .get(messageController.findUnread);
