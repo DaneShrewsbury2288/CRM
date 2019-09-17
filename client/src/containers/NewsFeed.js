@@ -4,7 +4,7 @@ import PageTitle from "../components/PageTitle";
 import SalesBreakdown from "../components/SalesBreakdown";
 import RevenueCard from "../components/RevenueCard";
 import ProductChart from "../components/ProductChart";
-import Paper from "@material-ui/core/Paper";
+// import Paper from "@material-ui/core/Paper";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 

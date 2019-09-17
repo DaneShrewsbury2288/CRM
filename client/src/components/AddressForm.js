@@ -10,7 +10,7 @@ import EnhancedTable from '../components/EditableTable';
 import Review from '../components/Review';
 
 const clientArray = [];
-const productArray = [];
+// const productArray = [];
 export let selectedClient = '';
 
 function PopulateClients(){
@@ -73,9 +73,9 @@ export default function ClientInformation(props) {
 
   }
 
-  function seeClient(){
-    console.log(values.client)
-  }
+  // function seeClient(){
+  //   console.log(values.client)
+  // }
 
   function pushValues(){
     selectedClient = values.client
@@ -113,6 +113,11 @@ export default function ClientInformation(props) {
           <MenuItem value={'5d6c53f20ea69bf46a4bb0f1'}>Julia Matthews</MenuItem>
           <MenuItem value={'5d6c52cd0ea69bf46a4bb0ee'}>Kawhi Leonard</MenuItem>
           <MenuItem value={'5d6c54940ea69bf46a4bb0f3'}>Safeway - Seattle</MenuItem>
+          <MenuItem value={'5d6c552c0ea69bf46a4bb0f5'}>Whole Foods Market - Bellevue</MenuItem>
+          <MenuItem value={'5d6c54d60ea69bf46a4bb0f4'}>WinCo Foods - Kent</MenuItem>
+          <MenuItem value={'5d6c55760ea69bf46a4bb0f6'}>Tifa Lockhart</MenuItem>
+          <MenuItem value={'5d6c53150ea69bf46a4bb0ef'}>Thomas Buckley</MenuItem>
+
         </Select>
       </FormControl>
       </form>

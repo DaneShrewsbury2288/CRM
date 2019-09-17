@@ -11,10 +11,10 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import * as Review from './Review';
 // import values from '../components/Review'; 
-import { QuantityState } from '../components/Review';
-import { selectedClient } from '../components/AddressForm';
-import * as Table from '../components/EditableTable';
-import { CreateOrder } from '../components/Review';
+// import { QuantityState } from '../components/Review';
+// import { selectedClient } from '../components/AddressForm';
+// import * as Table from '../components/EditableTable';
+// import { CreateOrder } from '../components/Review';
 
 
 const useStyles = makeStyles(theme => ({
@@ -74,9 +74,9 @@ export default function PurchasingTool(props) {
   const [activeStep, setActiveStep] = React.useState(0);
 
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
+  // const handleNext = () => {
+  //   setActiveStep(activeStep + 1);
+  // };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -85,15 +85,15 @@ export default function PurchasingTool(props) {
 
   // console.log(props.user);
 
-  const client = selectedClient;
+  // const client = selectedClient;
 
-  function checkState(){
-    console.log(QuantityState);
-    console.log(QuantityState[QuantityState.length - 1].TheKrakenQuantity);
-    console.log(selectedClient[selectedClient.length -1]);
-    console.log(Table.rows);
-    console.log(client);
-  }
+  // function checkState(){
+  //   console.log(QuantityState);
+  //   console.log(QuantityState[QuantityState.length - 1].TheKrakenQuantity);
+  //   console.log(selectedClient[selectedClient.length -1]);
+  //   console.log(Table.rows);
+  //   console.log(client);
+  // }
 
 
   return (

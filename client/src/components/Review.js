@@ -7,10 +7,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 // import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import * as Table from '../components/EditableTable';
+// import * as Table from '../components/EditableTable';
 import * as StartForm from '../components/AddressForm';
 import API from '../utilities/api';
-import * as Ptool from '../components/PTool';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -33,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const selectedProducts = Table.selectedBrews.arrayOne[0];
+// const selectedProducts = Table.selectedBrews.arrayOne[0];
 
 
 function Review(props) {
@@ -51,19 +50,19 @@ function Review(props) {
 
   }]);
 
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [y] = React.useState(false);
+  // const [activeStep, setActiveStep] = React.useState(0);
+  // const [y] = React.useState(false);
 
   console.log(props);
 
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
+  // const handleNext = () => {
+  //   setActiveStep(activeStep + 1);
+  // };
 
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+  // // const handleBack = () => {
+  //   setActiveStep(activeStep - 1);
+  // };
    
 
   const classes = useStyles();
@@ -78,7 +77,7 @@ function Review(props) {
 
 
 
-  const x = Table.selectedBrews.arrayOne.slice(-1);
+  // const x = Table.selectedBrews.arrayOne.slice(-1);
   // console.log(x);
   // console.log(Table.rows);
   // console.log(selected);
@@ -93,12 +92,12 @@ function Review(props) {
   // const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
 
   //Checks States
-  function checkState() {
-    // console.log(Table.rows);
-    // console.log(values);
-    // console.log(StartForm.selectedClient);
-    // console.log(newOrder);
-  }
+  // function checkState() {
+  //   console.log(Table.rows);
+  //   console.log(values);
+  //   console.log(StartForm.selectedClient);
+  //   console.log(newOrder);
+  // }
 
   function pushValues(){
     QuantityState.push(values);
