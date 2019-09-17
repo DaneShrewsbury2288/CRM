@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
-
+import API from '../utilities/api';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -64,18 +64,24 @@ function getStepContent(step) {
   }
 }
 
-export default function PurchasingTool() {
+export default function PurchasingTool(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
    
+
+console.log(props.user);
+
+
+
 
   return (
     <React.Fragment>

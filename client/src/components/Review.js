@@ -67,7 +67,7 @@ export default function Review() {
   const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
 
   function checkState() {
-    console.log(Table.rows);
+    // console.log(Table.rows);
     console.log(values);
   }
  
@@ -92,7 +92,7 @@ export default function Review() {
             <ListItemText
               primary="Black Raven Trickster" />
             <Typography
-              variant="body2">$5</Typography>
+              variant="body2">- $5 -</Typography>
             <Typography>
               <TextField
                 id="1"
