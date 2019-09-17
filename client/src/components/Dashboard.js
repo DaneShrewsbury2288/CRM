@@ -154,10 +154,16 @@ const Dashboard = (props) => {
   const [messages, setMessages] = useState(null)
   const APISearch = (id) => {
     API.findUnread(id)
-      .then(res =>
-        setMessages(res.data))
-      .then(res =>
-        setUnread(messages.length))
+      .then(res => {
+        if (res.data.length > 0) {
+          setMessages(res.data)
+        }
+      })
+      .then(res => {
+        if (messages) {
+          setUnread(messages.length)
+        }
+      })
       .catch(err => console.log(err))
   }
   function handleClick(event) {
@@ -192,28 +198,28 @@ const Dashboard = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            DJAC Brewing Inc.
+            J-CARD Brewing Inc.
           </Typography>
-          <IconButton  aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} color="inherit">
+          <IconButton aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} color="inherit">
             <Badge badgeContent={unread} color='error'>
               <NotificationsIcon />
             </Badge>
           </IconButton>
           <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              {messages ?
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {messages ?
               messages.map(message => (
-              <MenuItem onClick={handleClose}>New message from {message.sender}</MenuItem>
+                <MenuItem onClick={handleClose}>New message from {message.sender}</MenuItem>
               ))
               :
               <MenuItem onClick={handleClose}>You have no new messages</MenuItem>
-              }
-            </Menu>
+            }
+          </Menu>
           <Button
             variant="contained"
             onClick={onLogoutClick}
