@@ -11,6 +11,7 @@ import Review from '../components/Review';
 
 const clientArray = [];
 const productArray = [];
+export let selectedClient = '';
 
 function PopulateClients(){
   API.getClients()
@@ -31,8 +32,8 @@ function PopulateProducts(){
 PopulateProducts();
 PopulateClients();
 
-console.log(clientArray);
-console.log(productArray);
+// console.log(clientArray);
+// console.log(productArray);
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,13 +49,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ClientInformation() {
+export default function ClientInformation(props) {
   // const [clientSelection] = React.useState(clientArray);
 
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    client: '',
-    name: 'hai',
+    client: ''
   });
 
   // const inputLabel = React.useRef(null);
@@ -67,16 +67,25 @@ export default function ClientInformation() {
     setValues(oldValues => ({
       ...oldValues,
       [event.target.name]: event.target.value,
-    }));
+    }),
+    selectedClient = values
+    );
+
   }
 
   function seeClient(){
     console.log(values.client)
   }
 
+  function pushValues(){
+    selectedClient = values.client
+  }
+  
+  pushValues();
+
   return (
     <React.Fragment>
-      <button onClick={seeClient}>See Selected Client ID</button>
+      {/* <button onClick={seeClient}>See Selected Client ID</button> */}
       <Typography variant="h6" gutterBottom>
         Please Select a Client
       </Typography>
@@ -108,7 +117,7 @@ export default function ClientInformation() {
       </FormControl>
       </form>
       <EnhancedTable />
-      <Review />
+      <Review user={props.user} />
     </React.Fragment>
   );
 }

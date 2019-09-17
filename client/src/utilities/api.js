@@ -47,6 +47,7 @@ export default {
       return axios.delete("/api/orders/" + id);
     },
     saveOrder: function(orderData) {
+      console.log(orderData);
       return axios.post("/api/orders", orderData);
     },
     updateOrder: function(orderData) {

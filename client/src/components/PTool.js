@@ -9,10 +9,13 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
-import Review from './Review';
-// import API from '../utilities/api';
+import * as Review from './Review';
 // import values from '../components/Review'; 
-import { QuantityState } from '../components/Review'; 
+import { QuantityState } from '../components/Review';
+import { selectedClient } from '../components/AddressForm';
+import * as Table from '../components/EditableTable';
+import { CreateOrder } from '../components/Review';
+
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -70,6 +73,7 @@ export default function PurchasingTool(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
+
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -79,26 +83,17 @@ export default function PurchasingTool(props) {
   };
    
 
-  console.log(props.user);
-  
+  // console.log(props.user);
+
+  const client = selectedClient;
 
   function checkState(){
     console.log(QuantityState);
-    console.log(QuantityState[QuantityState.length - 1].BlackRavenQuantity);
+    console.log(QuantityState[QuantityState.length - 1].TheKrakenQuantity);
+    console.log(selectedClient[selectedClient.length -1]);
+    console.log(Table.rows);
+    console.log(client);
   }
-
-  // const newOrder = {
-  //   client: client,
-  //   user: user,
-    
-
-  // }
-
-  // function CreateOrder(){
-  //   API.saveOrder(newOrder);
-
-  // }
-
 
 
   return (
@@ -111,7 +106,7 @@ export default function PurchasingTool(props) {
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map(label => (
-              <Step key={label}>
+              <Step user={props.user} key={label}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
@@ -135,16 +130,16 @@ export default function PurchasingTool(props) {
                         Back
                     </Button>
                     )}
-                    <Button
+                    {/* <Button
                       variant="contained"
                       color="primary"
                       onClick={handleNext}
                       className={classes.button}
-                    >
+                    > */}
                       {/* Function on click to check if quantity of products greater than 0, POST create order , update */}
-                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                    </Button>
-                    <Button onClick={checkState}>Click me</Button>
+                      {activeStep === steps.length - 1 ? '' : 'Next'}
+                    {/* </Button> */}
+                    {/* <Button onClick={checkState}>Click me</Button> */}
                   </div>
                 </React.Fragment>
               )}
