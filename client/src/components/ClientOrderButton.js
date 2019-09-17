@@ -70,7 +70,7 @@ const titleStyle = {
   textAlign: "center",
 };
 
-export default function ClientAddButton(props) {
+export default function ClientOrderButton(props) {
 
   const classes = useStyles();
 

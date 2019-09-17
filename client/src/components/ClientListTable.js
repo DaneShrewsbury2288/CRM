@@ -165,7 +165,7 @@ let startDate = (date) => {
     }
 }
 
-export default function CustomPaginationActionsTable(props) {
+export default function ClientListTable(props) {
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);

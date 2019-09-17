@@ -28,7 +28,7 @@ console.log(clientArray);
 
 
 export default function ClientInformation() {
-  const [clientSelection] = React.useState(clientArray);
+  // const [clientSelection] = React.useState(clientArray);
   // const [count] = React.useState(0);
 
   // // Similar to componentDidMount and componentDidUpdate:
