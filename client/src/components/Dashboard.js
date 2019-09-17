@@ -179,6 +179,8 @@ const Dashboard = (props) => {
   function handleClose() {
     setAnchorEl(null);
   }
+  
+  APISearch(user._id)
 
   socket.on('refresh', user => (
     APISearch(user._id)
@@ -188,9 +190,6 @@ const Dashboard = (props) => {
     APISearch(user._id)
   ));
 
-  useEffect(() => {
-    APISearch(user._id)
-  })
   return (
     <div className={classes.root}>
       <CssBaseline />
