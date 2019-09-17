@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import AddButton from "../components/AddButton";
 import API from "../utilities/api";
-import { LinearProgress } from '@material-ui/core';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 
 const styles = theme => ({
     root: {
@@ -104,7 +104,13 @@ class Inventory extends Component {
                     <div>
                         <PageTitle title="Inventory" />
                     </div>
-                    <LinearProgress />
+                    <PacmanLoader
+                        className={"pacman-loader"}
+                        sizeUnit={"px"}
+                        size={75}
+                        color={"rgb(63, 81, 181)"}
+                        loading={true}
+                    />
                 </div>
             )
         };

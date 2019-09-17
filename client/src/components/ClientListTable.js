@@ -165,7 +165,7 @@ let startDate = (date) => {
     }
 }
 
-export default function CustomPaginationActionsTable(props) {
+export default function ClientListTable(props) {
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -210,10 +210,16 @@ export default function CustomPaginationActionsTable(props) {
                                 <TableCell align="right">{client.zipCode}</TableCell>
                                 <TableCell align="right">{startDate(client.joinedDate)}</TableCell>
                                 <TableCell align="right">{client.user.map(user => (
-                                        user.firstName + " " + user.lastName
+                                    user.firstName + " " + user.lastName
                                 )).join(" ")}</TableCell>
-                                <TableCell align="right">{<ClientOrderButton />}</TableCell>
-                                <TableCell align="right">{<ClientAddComment />}</TableCell>
+                                <TableCell align="right">{<ClientOrderButton
+                                    clientId={client._id}
+                                    clientName={client.name}
+                                />}</TableCell>
+                                <TableCell align="right">{<ClientAddComment
+                                    clientId={client._id}
+                                    clientName={client.name}
+                                />}</TableCell>
                             </TableRow>
                         ))}
 

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import * as Table from '../components/EditableTable';
 
@@ -61,7 +61,7 @@ export default function Review() {
     
   };
 
-  const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
+  // const addresses = ['costOfCo@costco.com', '206-206-2062', '98188'];
 
   function checkState() {
     // console.log(Table.rows);
