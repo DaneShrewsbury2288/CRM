@@ -181,15 +181,16 @@ const Dashboard = (props) => {
     setAnchorEl(null);
   }
 
+  socket.on('messages checked', user => (
+    APISearch(user._id)
+  ));
+
+  socket.on('message', data => (
+    APISearch(user._id)
+  ));
+
   useEffect(() => {
     APISearch(user._id)
-    socket.on('messages checked', user => (
-      APISearch(user._id)
-    ));
-  
-    socket.on('message', data => (
-      APISearch(user._id)
-    ));
   })
   return (
     <div className={classes.root}>
