@@ -90,7 +90,7 @@ class Messenger extends Component {
         zIndex: 10,
       },
       title: {
-        backgroundColor: '#3f51b5',
+        backgroundColor: '#313131',
         width: '300px',
         margin: 0,
         padding: 8,

@@ -42,26 +42,13 @@ class ListMap extends Component {
                         null
                 ))}
 
-                {/* <button
-                    style={{
-                        width: "150px",
-                        borderRadius: "3px",
-                        letterSpacing: "1.5px",
-                        marginTop: "1rem"
-                    }}
-                    onClick={this.onLogoutClick}
-                    className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
-                    Logout
-                </button> */}
-
-                <Button
+                {/* <Button
                     variant="contained"
-                    color="primary"
                     onClick={this.onLogoutClick}
+                    style={{backgroundColor: '#f1f1f1'}}
                 >
                     Logout
-                </Button>
+                </Button> */}
 
 
             </div>

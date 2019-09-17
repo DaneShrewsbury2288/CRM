@@ -18,6 +18,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Messenger from './Messenger';
 import ListItems from './ListItems';
 import Background from '../images/dust_scratches.png'
+import Background2 from '../images/footer_lodyas.png'
 import API from '../utils/API';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -33,12 +34,14 @@ const useStyles = makeStyles(theme => ({
   },
   toolbar: {
     paddingRight: 24,
+    backgroundColor: '#313131'
   },
   toolbarIcon: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: '0 8px',
+    backgroundColor: '#f1f1f1',
     ...theme.mixins.toolbar,
   },
   appBar: {
@@ -89,15 +92,17 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto',
+    overflowX: 'auto',
+    overflowY: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
     backgroundImage: `url(${Background})`,
     backgroundRepeat: 'repeat',
+    backgroundSize: 'auto',
     minHeight: '100%',
-    minWidth: '100%'
+    minWidth: '140%',
   },
   paper: {
     padding: theme.spacing(2),
@@ -109,7 +114,16 @@ const useStyles = makeStyles(theme => ({
     height: 240,
   },
   avatar: {
-    marginRight: '30px'
+    marginRight: '10px',
+    color: '#313131'
+  },
+  drawer: {
+    backgroundImage: `url(${Background2})`,
+    backgroundRepeat: 'repeat',
+    backgroundSize: 'auto',
+    height: '100%',
+    minWidth: '100%',
+    overflow: 'hidden'
   }
 }));
 
@@ -174,7 +188,7 @@ const Dashboard = (props) => {
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List className={classes.drawer}>
           <ListItems />
         </List>
       </Drawer>

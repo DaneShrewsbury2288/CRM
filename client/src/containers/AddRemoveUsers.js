@@ -24,7 +24,8 @@ class AddRemoveUsers extends Component {
     render() {
         const styles = {
             button: {
-                margin: '.5rem'
+                margin: '.5rem',
+                backgroundColor: '#313131'
             }
         }
         return (
