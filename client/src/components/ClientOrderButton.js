@@ -110,7 +110,7 @@ export default function ClientOrderButton(props) {
   useEffect(() => {
     API.getClientOrders(props.clientId)
       .then(result => setData(result.data));
-  }, []);
+  }, [props.clientId]);
 
   const handleOpen = () => {
     setOpen(true);
