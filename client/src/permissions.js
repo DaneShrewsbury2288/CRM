@@ -24,90 +24,96 @@ import AddRemoveUsers from "./containers/AddRemoveUsers";
 import Permissions from "./containers/Permissions";
 import SalesTeamDaily from "./containers/SalesTeamDaily";
 
+const style = {
+    icon: {
+        color: '#f1f1f1'
+    }
+}
+
 const icons = [
     {
         title: "Dashboard",
         href: "/",
         bitmask: 0b1,
         component: NewsFeed,
-        icon: <DashboardIcon />
+        icon: <DashboardIcon style={style.icon}/>
     },
     {
         title: "Sales Team Daily",
         href: "/salesteamdaily",
         bitmask: 0b10,
         component: SalesTeamDaily,
-        icon: <CheckBoxIcon />
+        icon: <CheckBoxIcon style={style.icon}/>
     },
     {
         title: "Inventory",
         href: "/inventory",
         bitmask: 0b100,
         component: Inventory,
-        icon: <WidgetsIcon />
+        icon: <WidgetsIcon style={style.icon}/>
     },
     {
         title: "Inventory Supplies",
         href: "/inventorysupplies",
         bitmask: 0b1000,
         component: InventorySupplies,
-        icon: <LocalFloristIcon />
+        icon: <LocalFloristIcon style={style.icon}/>
     },
     {
         title: "Client List",
         href: "/clientlist",
         bitmask: 0b10000,
         component: ClientList,
-        icon: <ContactMailIcon />
+        icon: <ContactMailIcon style={style.icon}/>
     },
     {
         title: "Purchasing Tool",
         href: "/purchasingtool",
         bitmask: 0b100000,
         component: PurchasingTool,
-        icon: <ShoppingCartIcon />
+        icon: <ShoppingCartIcon style={style.icon}/>
     },
     {
         title: "Manager Task Assignment",
         href: "/managertaskassignment",
         bitmask: 0b10000000,
         component: ManagerTaskAssignment,
-        icon: <AssignmentTurnedInIcon />
+        icon: <AssignmentTurnedInIcon style={style.icon}/>
     },
     {
         title: "Analytics",
         href: "/analytics",
         bitmask: 0b100000000,
         component: Analytics,
-        icon: <BarChartIcon />
+        icon: <BarChartIcon style={style.icon}/>
     },
     {
         title: "Check User Messages",
         href: "/checkusermessages",
         bitmask: 0b1000000000,
         component: CheckUserMessages,
-        icon: <MailOutlineIcon />
+        icon: <MailOutlineIcon style={style.icon}/>
     },
     {
         title: "Discover",
         href: "/discover",
         bitmask: 0b10000000000,
         component: Discover,
-        icon: <PublicIcon />
+        icon: <PublicIcon style={style.icon}/>
     },
     {
         title: "Add/Remove Users",
         href: "/addremoveusers",
         bitmask: 0b100000000000,
         component: AddRemoveUsers,
-        icon: <PersonAddIcon />
+        icon: <PersonAddIcon style={style.icon}/>
     },
     {
         title: "Permissions",
         href: "/Permissions",
         bitmask: 0b1000000000000,
         component: Permissions,
-        icon: <LockIcon />
+        icon: <LockIcon style={style.icon}/>
     }
 ]
 

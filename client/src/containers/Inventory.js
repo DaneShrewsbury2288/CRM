@@ -12,7 +12,6 @@ import AddButton from "../components/AddButton";
 import API from "../utilities/api";
 import PacmanLoader from 'react-spinners/PacmanLoader';
 
-
 const styles = theme => ({
     root: {
         width: '100%',
@@ -89,7 +88,7 @@ class Inventory extends Component {
                                         <TableCell align="right">{numberWithCommas(totalRow(product.quantity, product.price))}</TableCell>
                                         <TableCell align="right">
                                             <Link href="/PurchasingTool">
-                                                {<AddButton />}
+                                                {<AddButton color='primary' />}
                                             </Link>
                                         </TableCell>
                                     </TableRow>

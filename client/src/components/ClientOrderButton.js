@@ -124,7 +124,7 @@ export default function ClientOrderButton(props) {
   return (
     <div>
       <Tooltip title="Order Information" aria-label="Order Information" onClick={handleOpen}>
-        <Fab color="primary" className={classes.fab}>
+        <Fab style={{backgroundColor: '#313131'}} color="primary" className={classes.fab}>
           <PersonIcon />
         </Fab>
       </Tooltip>

@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 function TaskTable(props) {
     return (
         <div>
-            <Card style= {{marginTop: '20px', marginBottom: '20px', backgroundColor: '#80d8ff'}}>
+            <Card style= {{marginTop: '20px', marginBottom: '20px', backgroundColor: '#c5c5c5'}}>
                 <CardContent>
                     <Grid container spacing={3}>
                         <Grid item lg>
