@@ -1,6 +1,7 @@
 const db = require("../models");
 const mongoose = require("mongoose");
 const Order = db.Order;
+const Product = db.Product;
 
 module.exports = {
   findAll: function (req, res) {
@@ -71,11 +72,29 @@ module.exports = {
       .create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+    // subtract from product quantities
+    for (let i = 0; i < req.body.lineItems.length; i++) {
+      const productID = req.body.lineItems[i].product._id;
+      const productQuantity = req.body.lineItems[i].quantity;
+      console.log("Product id: " + productID);
+      console.log("Amount ordered: " + productQuantity);
+
+      Product
+        .findByIdAndUpdate(
+          {
+            _id: productID,
+            quantity: { $gte: productQuantity }
+          },
+          { $inc:
+              { quantity: -productQuantity }
+          }
+        )
+        .then(dbModel => res.json(dbModel))
+        .catch(err => res.status(422).json(err));
+    }
   },
-  // if order needs to be updated after client completes order
   update: function (req, res) {
     Order
-      // update product quantity
       .findOneAndUpdate({ _id: req.params.id }, req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
