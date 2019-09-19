@@ -68,16 +68,31 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
+    const reqBody = req.body;
+    let items = [];
+    for (let i = 0; i < reqBody.lineItems.length; i++) {
+      if (reqBody.lineItems[i].quantity > 0) {
+        items.push(reqBody.lineItems[i])
+      }
+    }
+    const userOrder = {
+      "client": reqBody.client[0]._id,
+      "user": reqBody.user[0]._id,
+      "created_at": reqBody.created_at,
+      "checked_out": reqBody.checked_out,
+      "completedDate": reqBody.completedDate,
+      "fulfilled": reqBody.fulfilled,
+      "lineItems": items
+    }
     Order
-      .create(req.body)
+      .create(userOrder)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
-    // subtract from product quantities
-    for (let i = 0; i < req.body.lineItems.length; i++) {
-      const productID = req.body.lineItems[i].product._id;
+    for (let i = 0; i < reqBody.lineItems.length; i++) {
+      const productID = reqBody.lineItems[i].product._id;
       let productQuantity = 0;
       if (req.body.lineItems[i].quantity !== undefined) {
-        productQuantity = req.body.lineItems[i].quantity;
+        productQuantity = reqBody.lineItems[i].quantity;
       }
       Product
         .findByIdAndUpdate(

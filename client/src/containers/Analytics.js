@@ -309,7 +309,7 @@ class Analytics extends Component {
     //     )
     // }
     getProductAnalytics = (start, end) => {
-        this.setState({ doughnutData: false });
+        this.setState({ doughnutLoaded: false });
         if (!start) {
             start = moment().subtract(12, 'months').format("YYYY-MM-DD");
         }
@@ -1471,7 +1471,7 @@ class Analytics extends Component {
 
                         {this.state.doughnutData && this.state.doughnutLoaded ? (
                             <Grid item lg={6}>
-                                <h4>Products Percentage of Quantity Sold</h4>
+                                <h4>Products Sold in the Past Year</h4>
                                 <DoughnutChart
                                     doughnutData={this.state.doughnutData}
                                 />
