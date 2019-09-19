@@ -75,10 +75,10 @@ module.exports = {
     // subtract from product quantities
     for (let i = 0; i < req.body.lineItems.length; i++) {
       const productID = req.body.lineItems[i].product._id;
-      const productQuantity = req.body.lineItems[i].quantity;
-      console.log("Product id: " + productID);
-      console.log("Amount ordered: " + productQuantity);
-
+      let productQuantity = 0;
+      if (req.body.lineItems[i].quantity !== undefined) {
+        productQuantity = req.body.lineItems[i].quantity;
+      }
       Product
         .findByIdAndUpdate(
           {
