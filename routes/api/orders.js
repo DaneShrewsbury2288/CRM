@@ -19,7 +19,7 @@ router.route("/usertotal/:userid/:dayone/:daytwo").get(ordersController.getUserO
 // Matches with "/api/orders/clienttotal/:clientid"
 router.route("/clienttotal/:clientid/:dayone/:daytwo").get(ordersController.getClientOrderTotal);
 
-// Matches with "/api/orders/total"
+// Matches with "/api/orders/total/:dayone/:daytwo"
 router.route("/total/:dayone/:daytwo").get(ordersController.getBusinessTotal);
 
 // Matches with "/api/orders/client/:id"

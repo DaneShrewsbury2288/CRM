@@ -1,6 +1,7 @@
 const db = require("../models");
 const mongoose = require("mongoose");
 const Order = db.Order;
+const Product = db.Product;
 
 module.exports = {
   findAll: function (req, res) {
@@ -67,15 +68,48 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
+    const reqBody = req.body;
+    let items = [];
+    for (let i = 0; i < reqBody.lineItems.length; i++) {
+      if (reqBody.lineItems[i].quantity > 0) {
+        items.push(reqBody.lineItems[i])
+      }
+    }
+    const userOrder = {
+      "client": reqBody.client[0]._id,
+      "user": reqBody.user[0]._id,
+      "created_at": reqBody.created_at,
+      "checked_out": reqBody.checked_out,
+      "completedDate": reqBody.completedDate,
+      "fulfilled": reqBody.fulfilled,
+      "lineItems": items
+    }
     Order
-      .create(req.body)
+      .create(userOrder)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+    for (let i = 0; i < reqBody.lineItems.length; i++) {
+      const productID = reqBody.lineItems[i].product._id;
+      let productQuantity = 0;
+      if (req.body.lineItems[i].quantity !== undefined) {
+        productQuantity = reqBody.lineItems[i].quantity;
+      }
+      Product
+        .findByIdAndUpdate(
+          {
+            _id: productID,
+            quantity: { $gte: productQuantity }
+          },
+          { $inc:
+              { quantity: -productQuantity }
+          }
+        )
+        .then(dbModel => res.json(dbModel))
+        .catch(err => res.status(422).json(err));
+    }
   },
-  // if order needs to be updated after client completes order
   update: function (req, res) {
     Order
-      // update product quantity
       .findOneAndUpdate({ _id: req.params.id }, req.query)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

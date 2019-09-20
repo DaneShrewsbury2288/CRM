@@ -14,18 +14,6 @@ function DoughnutChart(props) {
                             defaultFontFamily: "'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue'"
                         }
                     },
-                    // tooltips: {
-                    //     callbacks: {
-                    //         label: function (tooltipItem, data) {
-                    //             var label = data.datasets[tooltipItem.datasetIndex].label || '';
-                    //             if (label) {
-                    //                 label += ': ';
-                    //             }
-                    //             label += Math.round(tooltipItem.yLabel * 100) / 100;
-                    //             return label;
-                    //         }
-                    //     }
-                    // }
                 }}
                 data={props.doughnutData}
             />
