@@ -46,30 +46,61 @@ module.exports = {
     Task
       .aggregate([
         { $match: { 'user': mongoose.Types.ObjectId(userID) } },
-        { $sort: { created_at: 1 } },
-        {
-          $project: {
-            timeBetweenDueComplete: {
-              "$divide": [
-                { $subtract: ['$dueDate', '$completedDate'] },
-                1000 * 60 * 60 * 24 * 365
-              ]
-            }
-          }
-        },
         {
           $group: {
             _id: null,
-            average: { $avg: "$timeBetweenDueComplete" }
-            // average time difference between dueDate and completedDate
-            // averageDueToComplete: { $avg: { $subtract: ["$completedDate", "$dueDate"] } },
-            // average time difference between assignedDate and completedDate
-            // average time difference between  assignDate and dueDate
-            // amount of tasks "to-do"
-            // amount of tasks "in-progress"
-            // amount of tasks "completed"
-            // total number of tasks
-
+            taskCount: { $sum: 1 },
+            avgTimeDueToAssign: {
+              "$avg": {
+                "$subtract": [
+                  { "$ifNull": ["$dueDate", 0] },
+                  { "$ifNull": ["$assignDate", 0] }
+                ]
+              }
+            },
+            avgTimeDueToComplete: {
+              "$avg": {
+                "$subtract": [
+                  { "$ifNull": ["$dueDate", 0] },
+                  { "$ifNull": ["$completedDate", 0] }
+                ]
+              }
+            },
+            avgTimeAssignToComplete: {
+              "$avg": {
+                "$subtract": [
+                  { "$ifNull": ["$assignDate", 0] },
+                  { "$ifNull": ["$completedDate", 0] }
+                ]
+              }
+            },
+            toDoCount: {
+              "$max": {
+                "$cond": [
+                  { "$eq": ["$completionStatus", /to-do/] },
+                  "$count",
+                  0
+                ]
+              }
+            },
+            inProgressCount: {
+              "$max": {
+                "$cond": [
+                  { "$eq": ["$completionStatus", /in-progress/] },
+                  "$count",
+                  0
+                ]
+              }
+            },
+            completedCount: {
+              "$max": {
+                "$cond": [
+                  { "$eq": ["$completionStatus", /completed/] },
+                  "$count",
+                  0
+                ]
+              }
+            }
           }
         }
       ])

@@ -4,13 +4,10 @@ export default {
     getTasks: function() {
       return axios.get("/api/tasks");
     },
-    getTasksByAssignedDate: function() {
-      return axios.get("api/tasks/assignedDate");
-    },
     getTask: function(id) {
       return axios.get("/api/tasks/" + id);
     },
-    getTaskByUser: function(userID) {
+    getUserTaskAnalytics: function(userID) {
       return axios.get("api/tasks/user/" + userID)
     },
     deleteTask: function(id) {
@@ -47,7 +44,6 @@ export default {
       return axios.delete("/api/orders/" + id);
     },
     saveOrder: function(orderData) {
-      console.log(orderData);
       return axios.post("/api/orders", orderData);
     },
     updateOrder: function(orderData) {
