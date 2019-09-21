@@ -3,19 +3,31 @@ import {
   withGoogleMap,
   withScriptjs,
   GoogleMap,
-  // Marker,
+  Marker
   // InfoWindow
 } from "react-google-maps";
-// require('dotenv').config();
+import markers from "./JSON/markers.json";
 
 function Map() {
   return (
     <GoogleMap
-      defaultZoom={10}
-      defaultCenter={{ lat: 47.6062, lng: 122.3321 }}
-    />
+      defaultZoom={12 }
+      defaultCenter={{ lat: 47.6062, lng: -122.3321 }}
+    >
+      {markers.map(function(mark, i){
+        let lat = parseFloat(mark.lat);
+        let lng = parseFloat(mark.lng);
+        return (
+          <Marker
+            key={i}
+            position={{lat, lng}}
+          />
+        )
+      })}
+    </GoogleMap>
   )
 }
+
 const WrappedMap = withScriptjs(withGoogleMap(Map))
 
 export default function DiscoverMap() {

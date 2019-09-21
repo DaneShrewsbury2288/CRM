@@ -23,7 +23,7 @@ export default function AddButton() {
   return (
     <div>
       <Tooltip title="Add" aria-label="add" onClick={addOrder}>
-        <Fab color="primary" className={classes.fab}>
+        <Fab style={{backgroundColor: '#313131'}} color="primary" className={classes.fab}>
           <AddIcon />
         </Fab>
       </Tooltip>

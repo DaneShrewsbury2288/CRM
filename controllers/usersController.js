@@ -25,11 +25,21 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findAllExcept: function (req, res) {
-    console.log(req.params.id)
     User
       .find({ _id: { $ne: req.params.id } })
       .sort({ firstName: 1 })
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        res.status(200).json({
+            users: dbModel.map(model => {
+                return {
+                    _id: model._id,
+                    firstName: model.firstName,
+                    lastName: model.lastName,
+                    messages: null
+                };
+            })
+        })
+    })
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {

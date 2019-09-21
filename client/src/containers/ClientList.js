@@ -4,7 +4,7 @@ import ClientListTable from "../components/ClientListTable";
 import SearchBox from "../components/SearchBox";
 import Grid from '@material-ui/core/Grid';
 import API from "../utilities/api";
-import { LinearProgress } from '@material-ui/core';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 
 
 class ClientList extends Component {
@@ -30,8 +30,8 @@ class ClientList extends Component {
     handleFormSubmit = event => {
         event.preventDefault();
         let temporaryArray = this.state.clients;
-        const result = temporaryArray.filter(client => 
-            client.name.toUpperCase() === this.state.search.toUpperCase() 
+        const result = temporaryArray.filter(client =>
+            client.name.toUpperCase() === this.state.search.toUpperCase()
         );
         this.setState({ clients: result })
         console.log(result)
@@ -81,11 +81,16 @@ class ClientList extends Component {
                                 handleInputChange={this.handleInputChange}
                                 handleRefreshSubmit={this.handleRefreshSubmit}
                                 searchName={this.searchName}
-
                             />
                         </Grid>
                     </Grid>
-                    <LinearProgress />
+                    <PacmanLoader
+                        className={"pacman-loader"}
+                        sizeUnit={"px"}
+                        size={75}
+                        color={"#313131"}
+                        loading={true}
+                    />
                 </div>
             )
         };

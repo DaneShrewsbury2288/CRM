@@ -58,7 +58,7 @@ class ManagerTaskAssignment extends Component {
     saveTask = (data) => {
         API.saveTask(data)
             .then(res =>
-                this.setState({ tasks: res.data })
+                this.setState({ tasks: res.data.tasks })
             )
             .catch(error => console.log("Save task error: " + error))
     }
@@ -66,12 +66,12 @@ class ManagerTaskAssignment extends Component {
     deleteTask = (id) => {
         API.deleteTask(id)
             .then(res =>
-                this.setState({ tasks: res.data })
+                this.setState({ tasks: res.data.tasks })
             )
 
     }
     checkState = () => {
-
+        console.log(this.state.tasks);
     }
     // create user full name
     fullName = (userInfo) => {
@@ -235,6 +235,7 @@ class ManagerTaskAssignment extends Component {
     render() {
         return (
             <div>
+            {/* <button onClick={this.checkState}>Check state</button> */}
                 <PageTitle title="Manager Task Assignment" />
                 <InputForm
                     userOpen={this.state.userOpenOption}
@@ -264,7 +265,7 @@ class ManagerTaskAssignment extends Component {
                                 <div key={task._id}>
                                     <Grid item lg={12}>
                                         <TaskTable
-                                            taskNumber={task._id}
+                                            taskNumber={task._id.slice(0, 7)}
                                             user={this.fullName(task.user)}
                                             userImage={this.checkUserImage(task.user)}
                                             client={this.checkIfTaskHasClient(task.client)}
@@ -286,8 +287,8 @@ class ManagerTaskAssignment extends Component {
                                 <GridLoader
                                     className={"grid-loader"}
                                     sizeUnit={"px"}
-                                    size={15}
-                                    color={'#9E0031'}
+                                    size={45}
+                                    color={"rgb(49, 49, 49)"}
                                     loading={true}
                                 />
                             </Grid>

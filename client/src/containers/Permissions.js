@@ -3,6 +3,7 @@ import PageTitle from "../components/PageTitle";
 import API from "../utils/API";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
 import PermissionsSwitch from "../components/PermissionsSwitch";
 
 
@@ -24,8 +25,6 @@ class Permissions extends Component {
   handleUser = event => {
     console.log(event.target)
     this.setState({ user: event.target.id, permissions: parseInt(event.target.getAttribute('permissions')) }, () => {
-      console.log(this.state.user);
-      console.log(this.state.permissions);
     });
   };
 
@@ -42,7 +41,6 @@ class Permissions extends Component {
   loadUsers = () => {
     API.getUsers()
       .then(res => this.setState({ users: res.data }, () => {
-        console.log(this.state.users)
       }))
       .catch(err => console.log(err))
   }
@@ -58,16 +56,16 @@ class Permissions extends Component {
         {this.state.user
           ?
           <div>
-            <h4 onClick={this.back}>Back</h4>
+            <Button variant="contained" color="primary" style={{backgroundColor: '#313131'}} onClick={this.back}>Back</Button>
           <PermissionsSwitch user={this.state.user} permissions={this.state.permissions} />
           </div>
           :
           <List>
             {this.state.users.map(user => (
               <ListItem key={user._id}>
-                <h4 id={user._id} permissions={user.permissions} onClick={this.handleUser}>
+                <h2 id={user._id} permissions={user.permissions} onClick={this.handleUser}>
                   {user.firstName} {user.lastName}
-                </h4>
+                </h2>
               </ListItem>
             ))}
           </List>

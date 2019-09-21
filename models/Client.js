@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// client can be used for businesses or individual customers
 const ClientSchema = new Schema({
-    // client info
     name: {
         type: String,
         required: true
@@ -19,46 +17,34 @@ const ClientSchema = new Schema({
     zipCode: {
         type: Number
     },
-    // when the client became a client
     joinedDate: {
         type: Date,
         default: Date.now,
         required: true
     },
-    // when this client was last contacted
     lastContacted: {
         type: Date,
         default: Date
     },
-    // if the client is large or small
     isLargeClient: {
         type: Boolean,
         default: false
     },
-    // create notes and associate with client
     note: [
         {
-            // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
-            // The ObjectIds will refer to the ids in the Note model
             ref: "Note"
         }
     ],
-    // order schema reference for orders for the client
-    // can be used to show how much money has been made on the client
     order: [
         {
-            // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
-            // The ObjectIds will refer to the ids in the Order model
             ref: "Order"
         }
     ],
     user: [
         {
-            // Store ObjectIds in the array
             type: Schema.Types.ObjectId,
-            // The ObjectIds will refer to the ids in the User model
             ref: "User"
         }
     ]

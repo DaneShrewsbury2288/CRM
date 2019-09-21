@@ -3,6 +3,7 @@ import PageTitle from "../components/PageTitle";
 import API from "../utils/API";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
 import CheckMessages from "../components/CheckMessages";
 
 
@@ -12,23 +13,32 @@ class MapOfSales extends Component {
   state = {
     users: [],
     user1: null,
-    user2: null
+    user1Name: null,
+    user2: null,
+    user2Name: null
   };
 
   componentDidMount() {
     this.loadUsers();
   }
 
-  handleSetUser = event => {
-    if (this.state.user1) {
-      this.setState({ user2: event.target.id}, () => {
-        console.log(this.state.user2)
-      });
+  handleSetUsers = event => {
+    let id = event.target.id.split(",")[0];
+    let name = event.target.id.split(",")[1];
+    if (id === this.state.user2) {
+      return null
     }
     else {
-      this.setState({user1: event.target.id}, () => {
-        console.log(this.state.user1)
-      })
+      if (this.state.user2) {
+        this.setState({ user1: id, user1Name: name }, () => {
+          console.log(this.state)
+        });
+      }
+      else {
+        this.setState({ user2: id, user2Name: name }, () => {
+          console.log(this.state)
+        })
+      }
     }
   };
 
@@ -40,43 +50,49 @@ class MapOfSales extends Component {
   }
 
   back = () => {
-    this.setState({ user1: null, user2: null })
-  }
-
-  hideMessenger = () => {
-    if (this.state.display === 'block') {
-      this.setState({ display: 'none' }, () => {
-        console.log(this.state.display)
-      })
-    }
-    else if (this.state.display === 'none') {
-      this.setState({ display: 'block' }, () => {
-        console.log(this.state.display)
-      })
-    }
+    this.setState({ user1: null, user1Name: null, user2: null, user2Name: null })
   }
 
   render() {
-
+    const styles = {
+      user: {
+        backgroundColor: 'none',
+        padding: '.5rem',
+        borderRadius: '.75rem'
+      },
+      selected: {
+        backgroundColor: '#bee3f8',
+        padding: '.5rem',
+        borderRadius: '.75rem'
+      }
+    }
 
     return (
-      <div>
+      <div style={{ width: '50%' }}>
         <PageTitle title="Check User Messages" />
         <div>
-          {this.state.user2
+          {this.state.user1
             ?
             <div>
-              <h4 onClick={this.back}>Back</h4>
-              <CheckMessages user={this.state.user1} partner={this.state.user2} />
+              <Button variant="contained" color="primary" style={{backgroundColor: '#313131'}} onClick={this.back}>Back</Button>
+              <CheckMessages user1={this.state.user1} user1Name={this.state.user1Name} user2={this.state.user2} user2Name={this.state.user2Name} />
             </div>
             :
             <List>
               {this.state.users.map(user => (
-                <ListItem key={user._id}>
-                  <h4 id={user._id} onClick={this.handleSetUser}>
-                    {user.firstName} {user.lastName}
-                  </h4>
-                </ListItem>
+                user._id === this.state.user2
+                  ?
+                  <ListItem key={user._id}>
+                    <h2 id={`${user._id},${user.firstName}`} style={styles.selected} onClick={this.handleSetUsers}>
+                      {user.firstName} {user.lastName}
+                    </h2>
+                  </ListItem>
+                  :
+                  <ListItem key={user._id}>
+                    <h2 id={`${user._id},${user.firstName}`} style={styles.user} onClick={this.handleSetUsers}>
+                      {user.firstName} {user.lastName}
+                    </h2>
+                  </ListItem>
               ))}
             </List>
           }

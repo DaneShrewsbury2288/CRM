@@ -109,7 +109,7 @@ const useStyles2 = makeStyles(theme => ({
         marginTop: theme.spacing(3),
     },
     table: {
-        minWidth: 1400,
+        minWidth: 1550,
         minHeight: 500,
     },
     tableWrapper: {
@@ -131,7 +131,41 @@ let formatPhoneNumber = (str) => {
     return null
 };
 
-export default function CustomPaginationActionsTable(props) {
+let startDate = (date) => {
+    const dateOne = date.slice(0, 10);
+    const splitDate = dateOne.split('-');
+    const month = splitDate[1].toString()
+    switch (month) {
+        case "01":
+            return "Jan. " + splitDate[2] + ", " + splitDate[0];
+        case "02":
+            return "Feb. " + splitDate[2] + ", " + splitDate[0];
+        case "03":
+            return "Mar. " + splitDate[2] + ", " + splitDate[0];
+        case "04":
+            return "Apr. " + splitDate[2] + ", " + splitDate[0];
+        case "05":
+            return "May " + splitDate[2] + ", " + splitDate[0];
+        case "06":
+            return "Jun. " + splitDate[2] + ", " + splitDate[0];
+        case "07":
+            return "Jul. " + splitDate[2] + ", " + splitDate[0];
+        case "08":
+            return "Aug. " + splitDate[2] + ", " + splitDate[0];
+        case "09":
+            return "Sep. " + splitDate[2] + ", " + splitDate[0];
+        case "10":
+            return "Oct. " + splitDate[2] + ", " + splitDate[0];
+        case "11":
+            return "Nov. " + splitDate[2] + ", " + splitDate[0];
+        case "12":
+            return "Dec. " + splitDate[2] + ", " + splitDate[0];
+        default:
+            return null;
+    }
+}
+
+export default function ClientListTable(props) {
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -156,9 +190,9 @@ export default function CustomPaginationActionsTable(props) {
                             <TableCell>Client Name</TableCell>
                             <TableCell align="right">Client ID</TableCell>
                             <TableCell align="right">Email&nbsp;</TableCell>
-                            <TableCell align="right">Phone Number&nbsp;(xxx-xxx-xxxx)</TableCell>
-                            <TableCell align="right">Zip Code&nbsp;(xxxxx)</TableCell>
-                            <TableCell align="right">Date Joined&nbsp;(MM/DD/YYYY)</TableCell>
+                            <TableCell align="right">Phone Number&nbsp;</TableCell>
+                            <TableCell align="right">Zip Code&nbsp;</TableCell>
+                            <TableCell align="right">Date Joined&nbsp;</TableCell>
                             <TableCell align="right">Sales Associate&nbsp;</TableCell>
                             <TableCell align="right">Orders&nbsp;</TableCell>
                             <TableCell align="right">Comments&nbsp;</TableCell>
@@ -174,12 +208,18 @@ export default function CustomPaginationActionsTable(props) {
                                 <TableCell align="right">{client.email}</TableCell>
                                 <TableCell align="right">{formatPhoneNumber(client.phone)}</TableCell>
                                 <TableCell align="right">{client.zipCode}</TableCell>
-                                <TableCell align="right">{client.joinedDate}</TableCell>
+                                <TableCell align="right">{startDate(client.joinedDate)}</TableCell>
                                 <TableCell align="right">{client.user.map(user => (
-                                        user.firstName + " " + user.lastName
+                                    user.firstName + " " + user.lastName
                                 )).join(" ")}</TableCell>
-                                <TableCell align="right">{<ClientOrderButton />}</TableCell>
-                                <TableCell align="right">{<ClientAddComment />}</TableCell>
+                                <TableCell align="right">{<ClientOrderButton
+                                    clientId={client._id}
+                                    clientName={client.name}
+                                />}</TableCell>
+                                <TableCell align="right">{<ClientAddComment
+                                    clientId={client._id}
+                                    clientName={client.name}
+                                />}</TableCell>
                             </TableRow>
                         ))}
 
