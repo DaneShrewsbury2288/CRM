@@ -147,6 +147,8 @@ const Dashboard = (props) => {
   const onLogoutClick = e => {
     e.preventDefault();
     props.logoutUser();
+    socket.removeAllListeners('refresh');
+    socket.removeAllListeners('message');
   };
   const { user } = props.auth;
   const [unread, setUnread] = useState(0);
@@ -178,7 +180,6 @@ const Dashboard = (props) => {
   }
 
   useEffect(() => {
-    APISearch();
     socket.on('refresh', user => {
       APISearch()
       console.log('refresh')
@@ -187,6 +188,7 @@ const Dashboard = (props) => {
       APISearch()
       console.log('message')
     });
+    APISearch();
   }, []);
 
   return (
