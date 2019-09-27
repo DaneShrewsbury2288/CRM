@@ -171,7 +171,6 @@ const Dashboard = (props) => {
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
-    APISearch();
   }
 
   function handleClose() {
@@ -180,17 +179,15 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     APISearch();
+    socket.on('refresh', user => {
+      APISearch()
+      console.log('refresh')
+    });
+    socket.on('message', data => {
+      APISearch()
+      console.log('message')
+    });
   }, []);
-
-  socket.on('refresh', user => {
-    APISearch()
-    console.log('refresh')
-  });
-
-  socket.on('message', data => {
-    APISearch()
-    console.log('message')
-  });
 
   return (
     <div className={classes.root}>
