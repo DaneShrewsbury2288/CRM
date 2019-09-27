@@ -147,8 +147,6 @@ const Dashboard = (props) => {
   const onLogoutClick = e => {
     e.preventDefault();
     props.logoutUser();
-    socket.removeAllListeners('refresh');
-    socket.removeAllListeners('message');
   };
   const { user } = props.auth;
   const [unread, setUnread] = useState(0);
@@ -189,6 +187,10 @@ const Dashboard = (props) => {
       console.log('message')
     });
     APISearch();
+    return () => {
+      socket.removeAllListeners('refresh');
+      socket.removeAllListeners('message');
+    }
   }, []);
 
   return (

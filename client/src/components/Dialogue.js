@@ -16,12 +16,20 @@ class Dialogue extends Component {
     content: ''
   };
 
+  _isMounted = false;
+
   componentDidMount() {
+    this._isMounted = true;
     this.loadMessages();
     socket.on('message', data => (
       this.loadMessages()
     ));
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    socket.removeAllListeners('message');
+ }
 
   loadMessages = () => {
     const IDString = this.state.user + "&" + this.state.partner
