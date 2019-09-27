@@ -5,7 +5,7 @@ import API from "../utils/API";
 import openSocket from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 
-const socket = openSocket();
+const socket = openSocket('http://localhost:3001');
 
 class Dialogue extends Component {
 
@@ -38,7 +38,7 @@ class Dialogue extends Component {
     const IDString = this.state.user + "&" + this.state.partner
     API.markAsRead(IDString)
       .then(res => {
-        socket.emit('messages checked', this.state.user)
+        socket.emit('messages checked')
       })
       .catch(err => console.log(err))
   }

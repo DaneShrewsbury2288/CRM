@@ -55,7 +55,7 @@ io.on('connection', (client) => {
         io.emit('message', messageData)
     })
     client.on('messages checked', (user) => {
-        io.emit('refresh', user)
+        io.emit('refresh')
     })
 });
 

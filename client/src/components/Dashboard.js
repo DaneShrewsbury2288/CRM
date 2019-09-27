@@ -151,37 +151,44 @@ const Dashboard = (props) => {
   const { user } = props.auth;
   const [unread, setUnread] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [messages, setMessages] = useState(null)
-  const APISearch = (id) => {
-    API.findUnread(id)
+  const [messages, setMessages] = useState(null);
+
+  const APISearch = () => {
+    API.findUnread(user._id)
       .then(res => {
         if (res.data.length > 0) {
+          console.log(res.data)
           setMessages(res.data)
+          setUnread(res.data.length)
         }
-      })
-      .then(res => {
-        if (messages) {
-          setUnread(messages.length)
+        else { 
+          setMessages(null)
+          setUnread(0)
         }
       })
       .catch(err => console.log(err))
   }
+
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
+    APISearch();
   }
+
   function handleClose() {
     setAnchorEl(null);
   }
 
-  APISearch(user._id)
+  useEffect(() => {
+    APISearch();
+  }, []);
 
   socket.on('refresh', user => {
-    APISearch(user._id)
+    APISearch()
     console.log('refresh')
   });
 
   socket.on('message', data => {
-    APISearch(user._id)
+    APISearch()
     console.log('message')
   });
 
@@ -216,8 +223,8 @@ const Dashboard = (props) => {
             onClose={handleClose}
           >
             {messages ?
-              messages.map(message => (
-                <MenuItem onClick={handleClose}>New message from {message.sender}</MenuItem>
+              messages.map((message, index) => (
+                <MenuItem key={index} onClick={handleClose}>New message from {message.sender}</MenuItem>
               ))
               :
               <MenuItem onClick={handleClose}>You have no new messages</MenuItem>
