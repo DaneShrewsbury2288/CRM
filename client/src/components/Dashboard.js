@@ -157,7 +157,6 @@ const Dashboard = (props) => {
     API.findUnread(user._id)
       .then(res => {
         if (res.data.length > 0) {
-          console.log(res.data)
           setMessages(res.data)
           setUnread(res.data.length)
         }
@@ -180,11 +179,9 @@ const Dashboard = (props) => {
   useEffect(() => {
     socket.on('refresh', user => {
       APISearch()
-      console.log('refresh')
     });
     socket.on('message', data => {
       APISearch()
-      console.log('message')
     });
     APISearch();
     return () => {
