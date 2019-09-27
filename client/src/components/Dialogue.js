@@ -5,7 +5,7 @@ import API from "../utils/API";
 import openSocket from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 
-const socket = openSocket('http://localhost:3001');
+const socket = openSocket();
 
 class Dialogue extends Component {
 
