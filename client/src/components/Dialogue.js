@@ -16,13 +16,20 @@ class Dialogue extends Component {
     content: ''
   };
 
+  _isMounted = false;
+
   componentDidMount() {
+    this._isMounted = true;
     this.loadMessages();
-    this.setAsRead();
     socket.on('message', data => (
       this.loadMessages()
     ));
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    socket.removeAllListeners('message');
+ }
 
   loadMessages = () => {
     const IDString = this.state.user + "&" + this.state.partner
@@ -30,6 +37,7 @@ class Dialogue extends Component {
       .then(res =>
         this.setState({ messages: res.data }, () => {
           this.scrollToBottom();
+          this.setAsRead();
         }))
       .catch(err => console.log(err))
   }
@@ -37,17 +45,17 @@ class Dialogue extends Component {
   setAsRead = () => {
     const IDString = this.state.user + "&" + this.state.partner
     API.markAsRead(IDString)
-      .then(res =>
-        socket.emit('messages checked', this.state.user)
-      )
+      .then(res => {
+        socket.emit('messages checked')
+      })
       .catch(err => console.log(err))
   }
 
   sendMessage = message => {
     API.createMessage(message)
-      .then(res =>
+      .then(res =>{
         socket.emit('new message', message)
-      )
+      })
       .catch(err => console.log(err))
   }
 

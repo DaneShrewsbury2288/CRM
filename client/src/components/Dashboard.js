@@ -151,37 +151,65 @@ const Dashboard = (props) => {
   const { user } = props.auth;
   const [unread, setUnread] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [messages, setMessages] = useState(null)
-  const APISearch = (id) => {
-    API.findUnread(id)
+  const [messages, setMessages] = useState([]);
+
+  const APISearch = () => {
+    API.findUnread(user._id)
       .then(res => {
         if (res.data.length > 0) {
-          setMessages(res.data)
+          findNames(res.data)
+          setUnread(res.data.length)
         }
-      })
-      .then(res => {
-        if (messages) {
-          setUnread(messages.length)
+        else {
+          setMessages([])
+          setUnread(0)
         }
       })
       .catch(err => console.log(err))
   }
+
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
   }
+
   function handleClose() {
     setAnchorEl(null);
   }
 
+  const findNames = (input) => {
+    input.map(message => (
+      API.getUser(`${message.sender}`)
+        .then(res => {
+          setMessages(messages =>
+            [...messages,
+            {
+              _id: message._id,
+              firstName: res.data.firstName,
+              lastName: res.data.lastName,
+              sent: message.created_at,
+              content: message.content
+            }
+            ]
+          );
+        })
+        .catch(err => console.log(err))
+    ))
+  }
+
   useEffect(() => {
-    APISearch(user._id)
-    socket.on('messages checked', user => (
-      APISearch(user._id)
-    ));
-    socket.on('message', data => (
-      APISearch(user._id)
-    ));
-  })
+    socket.on('refresh', user => {
+      APISearch()
+    });
+    socket.on('message', data => {
+      APISearch()
+    });
+    APISearch();
+    return () => {
+      socket.removeAllListeners('refresh');
+      socket.removeAllListeners('message');
+    }
+  }, []);
+  const messageList = messages.sort((a, b) => (a.sent > b.sent) ? 1 : -1)
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -212,9 +240,9 @@ const Dashboard = (props) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            {messages ?
-              messages.map(message => (
-                <MenuItem onClick={handleClose}>New message from {message.sender}</MenuItem>
+            {messageList ?
+              messages.map((message, index) => (
+                <MenuItem key={index} onClick={handleClose}>New message from {message.firstName} {message.lastName}</MenuItem>
               ))
               :
               <MenuItem onClick={handleClose}>You have no new messages</MenuItem>
