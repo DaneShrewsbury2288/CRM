@@ -151,17 +151,17 @@ const Dashboard = (props) => {
   const { user } = props.auth;
   const [unread, setUnread] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [messages, setMessages] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   const APISearch = () => {
     API.findUnread(user._id)
       .then(res => {
         if (res.data.length > 0) {
-          setMessages(res.data)
+          findNames(res.data)
           setUnread(res.data.length)
         }
-        else { 
-          setMessages(null)
+        else {
+          setMessages([])
           setUnread(0)
         }
       })
@@ -174,6 +174,26 @@ const Dashboard = (props) => {
 
   function handleClose() {
     setAnchorEl(null);
+  }
+
+  const findNames = (input) => {
+    input.map(message => (
+      API.getUser(`${message.sender}`)
+        .then(res => {
+          setMessages(messages =>
+            [...messages,
+            {
+              _id: message._id,
+              firstName: res.data.firstName,
+              lastName: res.data.lastName,
+              sent: message.created_at,
+              content: message.content
+            }
+            ]
+          );
+        })
+        .catch(err => console.log(err))
+    ))
   }
 
   useEffect(() => {
@@ -189,7 +209,7 @@ const Dashboard = (props) => {
       socket.removeAllListeners('message');
     }
   }, []);
-
+  const messageList = messages.sort((a, b) => (a.sent > b.sent) ? 1 : -1)
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -220,9 +240,9 @@ const Dashboard = (props) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            {messages ?
+            {messageList ?
               messages.map((message, index) => (
-                <MenuItem key={index} onClick={handleClose}>New message from {message.sender}</MenuItem>
+                <MenuItem key={index} onClick={handleClose}>New message from {message.firstName} {message.lastName}</MenuItem>
               ))
               :
               <MenuItem onClick={handleClose}>You have no new messages</MenuItem>
