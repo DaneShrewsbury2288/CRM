@@ -41,7 +41,7 @@ class Messenger extends Component {
   }
 
   findThese = (input) => {
-    input.map((user, index) => (
+    input.map(user => (
       API.findTheseUnread(`${this.state.user._id}&${user._id}`)
         .then(res => {
           var joined = this.state.users.concat(
