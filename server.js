@@ -44,9 +44,6 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/crm", {
     useFindAndModify: false
 });
 
-// allows us to use .findOneAndUpdate in controllers
-mongoose.set('useFindAndModify', false)
-
 // Passport config
 app.use(passport.initialize());
 require("./config/passport")(passport);
